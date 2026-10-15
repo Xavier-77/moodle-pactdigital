@@ -196,7 +196,7 @@ $quiz_url = $final_quiz
     ? (new moodle_url('/mod/quiz/view.php', ['id' => $final_quiz->cmid]))->out(false)
     : '';
 
-$course_view_url = (new moodle_url('/course/view.php', ['id' => $courseid]))->out(false);
+$course_view_url = (new moodle_url('/course/view.php', ['id' => $courseid, 'noredirect' => 1]))->out(false);
 $sesskey_val     = sesskey();
 
 echo $OUTPUT->header();

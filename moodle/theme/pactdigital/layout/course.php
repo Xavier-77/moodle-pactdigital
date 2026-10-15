@@ -65,6 +65,14 @@ $pactcoursedata = pactdigital_get_course_context($COURSE);
 // Si l'utilisateur est formateur dans ce cours : désactiver le bouton d'édition ici
 if (!empty($pactcoursedata['is_course_trainer'])) {
     $addblockbutton = '';
+} else if (isloggedin() && !isguestuser()) {
+    // Si c'est un apprenant accédant à la racine du cours sans section précise,
+    // le rediriger vers son accueil de cours PACTDIGITAL avec les 2 boutons !
+    $section_param = optional_param('section', 0, PARAM_INT);
+    $noredirect    = optional_param('noredirect', 0, PARAM_INT);
+    if ($section_param == 0 && empty($noredirect)) {
+        redirect(new moodle_url('/local/pactdigital/course_welcome.php', ['id' => $COURSE->id]));
+    }
 }
 
 $templatecontext = array_merge([

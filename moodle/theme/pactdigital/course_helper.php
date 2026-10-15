@@ -20,11 +20,14 @@ function pactdigital_get_course_context($course) {
     $ccontext = context_course::instance($course->id);
     $is_admin = is_siteadmin($USER->id);
 
-    // Vérifier si l'utilisateur est formateur / tuteur / enseignant / gestionnaire dans ce cours
+    // Un utilisateur est formateur UNIQUEMENT s'il est administrateur ou enseignant/gestionnaire.
+    // Les apprenants (étudiants) ne doivent JAMAIS être considérés comme formateurs.
+    // Attention : ne JAMAIS tester 'moodle/course:viewparticipants' car les étudiants la possèdent par défaut.
     $is_trainer = $is_admin 
         || has_capability('moodle/grade:viewall', $ccontext, $USER->id)
-        || has_capability('moodle/course:viewparticipants', $ccontext, $USER->id)
-        || has_capability('moodle/course:update', $ccontext, $USER->id);
+        || has_capability('moodle/grade:edit', $ccontext, $USER->id)
+        || has_capability('moodle/course:update', $ccontext, $USER->id)
+        || has_capability('moodle/course:manageactivities', $ccontext, $USER->id);
 
     if (!$is_trainer) {
         return ['is_course_trainer' => false];
