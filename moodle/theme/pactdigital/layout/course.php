@@ -66,11 +66,15 @@ $pactcoursedata = pactdigital_get_course_context($COURSE);
 if (!empty($pactcoursedata['is_course_trainer'])) {
     $addblockbutton = '';
 } else if (isloggedin() && !isguestuser()) {
-    // Si c'est un apprenant accédant à la racine du cours sans section précise,
-    // le rediriger vers son accueil de cours PACTDIGITAL avec les 2 boutons !
-    $section_param = optional_param('section', 0, PARAM_INT);
-    $noredirect    = optional_param('noredirect', 0, PARAM_INT);
-    if ($section_param == 0 && empty($noredirect)) {
+    // Si c'est un apprenant accédant à la racine de /course/view.php (et non à une page locale),
+    // le rediriger vers son accueil de cours PACTDIGITAL avec les 2 boutons
+    $request_uri = $_SERVER['REQUEST_URI'] ?? '';
+    $is_course_view = (strpos($request_uri, '/course/view.php') !== false)
+                   && (strpos($request_uri, '/local/pactdigital/') === false);
+    $section_param  = optional_param('section', 0, PARAM_INT);
+    $noredirect     = optional_param('noredirect', 0, PARAM_INT);
+
+    if ($is_course_view && $section_param == 0 && empty($noredirect)) {
         redirect(new moodle_url('/local/pactdigital/course_welcome.php', ['id' => $COURSE->id]));
     }
 }

@@ -38,7 +38,7 @@ if (!is_enrolled($context, $USER->id)) {
 
 $PAGE->set_url(new moodle_url('/local/pactdigital/course_welcome.php', ['id' => $courseid]));
 $PAGE->set_context($context);
-$PAGE->set_pagelayout('incourse');
+$PAGE->set_pagelayout('standard');
 $PAGE->set_title('Accueil — ' . $course->fullname);
 $PAGE->set_heading($course->fullname);
 

@@ -88,7 +88,7 @@ $review_url      = (new moodle_url('/mod/quiz/review.php', ['attempt' => $attemp
 
 $PAGE->set_url(new moodle_url('/local/pactdigital/exam_result.php', ['attemptid' => $attemptid]));
 $PAGE->set_context($context);
-$PAGE->set_pagelayout('incourse');
+$PAGE->set_pagelayout('standard');
 $PAGE->set_title('Résultat de l\'examen — ' . $attempt->quizname);
 $PAGE->set_heading($attempt->coursename);
 

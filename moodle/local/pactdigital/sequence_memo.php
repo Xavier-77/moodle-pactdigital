@@ -30,7 +30,7 @@ if (!is_enrolled($context, $USER->id) && !has_capability('moodle/course:viewpart
 
 $PAGE->set_url(new moodle_url('/local/pactdigital/sequence_memo.php', ['courseid' => $courseid, 'section' => $section_id]));
 $PAGE->set_context($context);
-$PAGE->set_pagelayout('incourse');
+$PAGE->set_pagelayout('standard');
 $PAGE->set_title('Fiche Mémo — ' . $course->fullname);
 
 // ── Récupérer les infos de la section ─────────────────────────────────────────
