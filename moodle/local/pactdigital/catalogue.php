@@ -56,12 +56,12 @@ function pact_get_level_badge($shortname) {
 }
 
 // ── Charger tous les cours visibles (hors site) ──────────────────────────────
-$sql = "SELECT c.id, c.fullname, c.shortname, c.summary, c.categoryid,
+$sql = "SELECT c.id, c.fullname, c.shortname, c.summary, c.category,
                c.visible, c.timecreated,
                cat.name AS catname, cat.parent AS catparent,
                cat2.name AS rootcatname
         FROM {course} c
-        JOIN {course_categories} cat ON cat.id = c.categoryid
+        JOIN {course_categories} cat ON cat.id = c.category
         LEFT JOIN {course_categories} cat2 ON cat2.id = (
             CASE WHEN cat.depth = 1 THEN cat.id
                  ELSE (SELECT id FROM {course_categories} WHERE id = cat.parent LIMIT 1)
