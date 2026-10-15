@@ -16,6 +16,69 @@ require_once($CFG->libdir . '/authlib.php');
 require_once($CFG->dirroot . '/user/lib.php');
 require_once($CFG->dirroot . '/user/profile/lib.php');
 
+// ── Endpoint AJAX pour vérification d'unicité en temps réel ────────────────
+$ajax_action = optional_param('action', '', PARAM_ALPHA);
+if ($ajax_action === 'check_username') {
+    header('Content-Type: application/json; charset=utf-8');
+    $uname = trim(optional_param('username', '', PARAM_RAW));
+    $uname_norm = core_text::strtolower(preg_replace('/\s+/', '', $uname));
+
+    if (empty($uname_norm) || strlen($uname_norm) < 3) {
+        echo json_encode([
+            'available' => false,
+            'message'   => 'Le nom d\'utilisateur doit comporter au moins 3 caractères.'
+        ]);
+        exit;
+    }
+
+    $exists = $DB->record_exists_select('user', "deleted = 0 AND LOWER(username) = :u", ['u' => $uname_norm]);
+    if ($exists) {
+        echo json_encode([
+            'available' => false,
+            'message'   => '❌ Ce nom d\'utilisateur est déjà pris. Veuillez en choisir un autre.'
+        ]);
+    } else {
+        echo json_encode([
+            'available' => true,
+            'message'   => '✅ Nom d\'utilisateur disponible !'
+        ]);
+    }
+    exit;
+}
+
+if ($ajax_action === 'check_email') {
+    header('Content-Type: application/json; charset=utf-8');
+    $email = trim(optional_param('email', '', PARAM_RAW));
+
+    if (empty($email)) {
+        echo json_encode(['available' => true, 'message' => '']);
+        exit;
+    }
+
+    $email_norm = core_text::strtolower($email);
+    if (!validate_email($email_norm)) {
+        echo json_encode([
+            'available' => false,
+            'message'   => '❌ Format d\'adresse e-mail invalide.'
+        ]);
+        exit;
+    }
+
+    $exists = $DB->record_exists_select('user', "deleted = 0 AND LOWER(email) = :e", ['e' => $email_norm]);
+    if ($exists) {
+        echo json_encode([
+            'available' => false,
+            'message'   => '❌ Cette adresse e-mail est déjà associée à un compte existant.'
+        ]);
+    } else {
+        echo json_encode([
+            'available' => true,
+            'message'   => '✅ Adresse e-mail disponible !'
+        ]);
+    }
+    exit;
+}
+
 // Si déjà connecté, rediriger vers l'espace apprenant
 if (isloggedin() && !isguestuser()) {
     redirect(new moodle_url('/local/pactdigital/apprenant.php'));
@@ -69,12 +132,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = 'Veuillez renseigner votre nom de famille.';
     }
 
-    // ── 2. Validation Nom d'utilisateur ─────────────────────────────────────
-    $clean_username = core_text::strtolower(clean_param($form_data['username'], PARAM_USERNAME));
+    // ── 2. Validation Nom d'utilisateur (UNICITÉ STRICTE DANS TOUS LES CAS) ─
+    // Le nom d'utilisateur doit être unique, qu'un e-mail soit renseigné ou non
+    $clean_username = core_text::strtolower(preg_replace('/\s+/', '', $form_data['username']));
     if (empty($clean_username) || strlen($clean_username) < 3) {
         $errors[] = 'Le nom d\'utilisateur doit comporter au moins 3 caractères (lettres, chiffres ou tirets).';
-    } else if ($DB->record_exists('user', ['username' => $clean_username, 'mnethostid' => $CFG->mnet_localhost_id])) {
-        $errors[] = 'Ce nom d\'utilisateur est déjà utilisé. Veuillez en choisir un autre (ou utiliser votre numéro de téléphone).';
+    } else {
+        $username_exists = $DB->record_exists_select('user', 
+            "deleted = 0 AND LOWER(username) = :u", 
+            ['u' => $clean_username]
+        );
+        if ($username_exists) {
+            $errors[] = 'Le nom d\'utilisateur « ' . htmlspecialchars($form_data['username']) . ' » est déjà pris. Même si vous avez renseigné une adresse e-mail, chaque compte doit avoir un nom d\'utilisateur strictement unique. Veuillez en choisir un autre (ou utiliser votre numéro de téléphone).';
+        }
     }
 
     // ── 3. Contrôle d'âge minimum (18 ans) ──────────────────────────────────
@@ -94,19 +164,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = 'Les deux mots de passe ne correspondent pas.';
     }
 
-    // ── 5. Gestion de l'EMAIL (OPTIONNEL) ───────────────────────────────────
+    // ── 5. Gestion de l'EMAIL (OPTIONNEL mais UNICITÉ VÉRIFIÉE SI RENSEIGNÉ) ──
     $final_email = '';
     if (!empty($form_data['email'])) {
-        // L'utilisateur a renseigné un email : vérifier sa validité
-        if (!validate_email($form_data['email'])) {
+        $normalized_email = core_text::strtolower(trim($form_data['email']));
+        if (!validate_email($normalized_email)) {
             $errors[] = "L'adresse e-mail renseignée n'est pas valide. Si vous n'avez pas d'e-mail, laissez simplement ce champ vide.";
-        } else if ($DB->record_exists('user', ['email' => $form_data['email'], 'mnethostid' => $CFG->mnet_localhost_id])) {
-            $errors[] = 'Cette adresse e-mail est déjà associée à un compte existant.';
         } else {
-            $final_email = $form_data['email'];
+            $email_exists = $DB->record_exists_select('user', 
+                "deleted = 0 AND LOWER(email) = :e", 
+                ['e' => $normalized_email]
+            );
+            if ($email_exists) {
+                $errors[] = 'Cette adresse e-mail est déjà associée à un compte existant. Si c\'est le vôtre, veuillez vous connecter.';
+            } else {
+                $final_email = $normalized_email;
+            }
         }
     } else {
-        // L'utilisateur N'A PAS d'email : on génère un email interne unique valide
+        // L'utilisateur N'A PAS d'email : on génère un identifiant interne unique valide pour Moodle
         $base_email = $clean_username . '@pactdigital.bf';
         if ($DB->record_exists('user', ['email' => $base_email])) {
             $final_email = $clean_username . '_' . time() . '@pactdigital.bf';
@@ -459,12 +535,15 @@ body.pagelayout-login {
 
                 <!-- 2. Nom d'utilisateur (peut être pseudo ou téléphone) -->
                 <div class="form-group-pact">
-                    <label for="username">Nom d'utilisateur <span class="req">*</span></label>
+                    <label for="username">
+                        Nom d'utilisateur <span class="req">*</span>
+                        <span id="username-status" style="font-size: 0.78rem; font-weight: 600; margin-left: 8px;"></span>
+                    </label>
                     <input type="text" id="username" name="username" class="input-pact"
                            value="<?= htmlspecialchars($form_data['username']) ?>"
                            placeholder="Ex. awa226 ou votre numéro de téléphone" required autocomplete="username">
                     <div class="input-helper">
-                        C'est l'identifiant que vous taperez pour vous connecter à la plateforme.
+                        Chaque nom d'utilisateur doit être <strong>strictement unique</strong> (même si vous renseignez un e-mail). C'est votre identifiant de connexion.
                     </div>
                 </div>
 
@@ -494,6 +573,7 @@ body.pagelayout-login {
                     <label for="email" style="color: var(--green-dark);">
                         📧 Adresse e-mail
                         <span class="badge-optional">Facultatif</span>
+                        <span id="email-status" style="font-size: 0.78rem; font-weight: 600; margin-left: 8px;"></span>
                     </label>
                     <input type="email" id="email" name="email" class="input-pact"
                            value="<?= htmlspecialchars($form_data['email']) ?>"
@@ -545,7 +625,7 @@ body.pagelayout-login {
                 </div>
 
                 <!-- Bouton de soumission -->
-                <button type="submit" class="btn-signup-pact">
+                <button type="submit" id="btn-submit-signup" class="btn-signup-pact">
                     🚀 Créer mon compte et commencer
                 </button>
             </form>
@@ -558,6 +638,107 @@ body.pagelayout-login {
         </div>
     </div>
 </div>
+
+<script>
+(function() {
+    const usernameInput  = document.getElementById('username');
+    const usernameStatus = document.getElementById('username-status');
+    const emailInput     = document.getElementById('email');
+    const emailStatus    = document.getElementById('email-status');
+    const submitBtn      = document.getElementById('btn-submit-signup');
+
+    let usernameAvailable = true;
+    let emailAvailable    = true;
+
+    function updateSubmitState() {
+        if (!usernameAvailable || !emailAvailable) {
+            submitBtn.disabled = true;
+            submitBtn.style.opacity = '0.6';
+            submitBtn.style.cursor = 'not-allowed';
+        } else {
+            submitBtn.disabled = false;
+            submitBtn.style.opacity = '1';
+            submitBtn.style.cursor = 'pointer';
+        }
+    }
+
+    // Debounce timer pour vérification du nom d'utilisateur
+    let userTimer = null;
+    usernameInput.addEventListener('input', function() {
+        clearTimeout(userTimer);
+        const val = this.value.trim();
+        if (val.length < 3) {
+            usernameStatus.textContent = '';
+            usernameInput.style.borderColor = '';
+            usernameAvailable = true;
+            updateSubmitState();
+            return;
+        }
+
+        usernameStatus.textContent = '⏳ Vérification...';
+        usernameStatus.style.color = '#64748b';
+
+        userTimer = setTimeout(async function() {
+            try {
+                const resp = await fetch('<?= (new moodle_url('/local/pactdigital/signup.php'))->out(false) ?>?action=check_username&username=' + encodeURIComponent(val));
+                const data = await resp.json();
+                usernameStatus.textContent = data.message;
+                if (data.available) {
+                    usernameStatus.style.color = '#15803d';
+                    usernameInput.style.borderColor = '#22c55e';
+                    usernameAvailable = true;
+                } else {
+                    usernameStatus.style.color = '#b91c1c';
+                    usernameInput.style.borderColor = '#ef4444';
+                    usernameAvailable = false;
+                }
+            } catch (e) {
+                usernameStatus.textContent = '';
+                usernameAvailable = true;
+            }
+            updateSubmitState();
+        }, 350);
+    });
+
+    // Debounce timer pour vérification de l'e-mail (si renseigné)
+    let emailTimer = null;
+    emailInput.addEventListener('input', function() {
+        clearTimeout(emailTimer);
+        const val = this.value.trim();
+        if (!val) {
+            emailStatus.textContent = '';
+            emailInput.style.borderColor = '';
+            emailAvailable = true;
+            updateSubmitState();
+            return;
+        }
+
+        emailStatus.textContent = '⏳ Vérification...';
+        emailStatus.style.color = '#64748b';
+
+        emailTimer = setTimeout(async function() {
+            try {
+                const resp = await fetch('<?= (new moodle_url('/local/pactdigital/signup.php'))->out(false) ?>?action=check_email&email=' + encodeURIComponent(val));
+                const data = await resp.json();
+                emailStatus.textContent = data.message;
+                if (data.available) {
+                    emailStatus.style.color = '#15803d';
+                    emailInput.style.borderColor = '#22c55e';
+                    emailAvailable = true;
+                } else {
+                    emailStatus.style.color = '#b91c1c';
+                    emailInput.style.borderColor = '#ef4444';
+                    emailAvailable = false;
+                }
+            } catch (e) {
+                emailStatus.textContent = '';
+                emailAvailable = true;
+            }
+            updateSubmitState();
+        }, 350);
+    });
+})();
+</script>
 
 <?php
 echo $OUTPUT->footer();
