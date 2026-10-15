@@ -79,6 +79,16 @@
     </div>
 </div>
 
+<script>
+(function() {
+    // Si l'utilisateur arrive sur /login/signup.php, le rediriger immédiatement
+    // vers la page PACTDIGITAL où l'e-mail est 100% facultatif
+    if (window.location.pathname.indexOf('/signup.php') !== -1) {
+        window.location.replace('/local/pactdigital/signup.php');
+    }
+})();
+</script>
+
 </body>
 </html>
 {{#js}}

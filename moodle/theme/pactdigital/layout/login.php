@@ -1,6 +1,16 @@
 <?php
 defined('MOODLE_INTERNAL') || die();
 
+global $PAGE, $CFG;
+
+// Rediriger toute visite sur /login/signup.php vers l'inscription PACTDIGITAL
+// où l'e-mail est facultatif et sans confirmation bloquante par courriel
+$current_uri = $_SERVER['REQUEST_URI'] ?? '';
+$page_url    = isset($PAGE) ? $PAGE->url->out(false) : '';
+if (strpos($current_uri, 'signup.php') !== false || strpos($page_url, 'signup.php') !== false) {
+    redirect(new moodle_url('/local/pactdigital/signup.php'));
+}
+
 $bodyattributes = $OUTPUT->body_attributes(['pactdigital-split-login']);
 
 $templatecontext = [
