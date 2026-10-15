@@ -9,6 +9,7 @@ services:
       MYSQL_ROOT_PASSWORD: rootpassword
     volumes:
       - dbdata:/var/lib/mysql
+      - ./backup_moodle.sql:/docker-entrypoint-initdb.d/init.sql:ro
 
   mailpit:
     image: axllent/mailpit:latest
@@ -33,7 +34,7 @@ services:
       MOODLE_DOCKER_WEB_HOST: localhost
       MOODLE_DOCKER_WEB_PORT: 8080
     volumes:
-      - /Users/ecoledecode/moodle-docker/moodle:/var/www/html
+      - ${MOODLE_DIR:-/Users/ecoledecode/moodle-docker/moodle}:/var/www/html
       - moodledata:/var/www/moodledata
 
 volumes:
