@@ -177,15 +177,16 @@
     {{/hasidentityproviders}}
     {{#hasinstructions}}
         <div class="login-divider"></div>
-        <div class="login-instructions {{#cansignup}}mb-3{{/cansignup}}">
+        <div class="login-instructions mb-3">
             <h2 class="login-heading">{{#str}}firsttime{{/str}}</h2>
             {{{instructions}}}
         </div>
-        <div class="login-signup mb-3">
-            <a class="btn btn-warning w-100 fw-bold py-2 rounded-pill shadow-sm text-dark" href="/local/pactdigital/signup.php">
-                ✨ Créer un compte (e-mail facultatif)
-            </a>
-        </div>
+    {{/hasinstructions}}
+    <div class="login-signup mb-3">
+        <a class="btn btn-warning w-100 fw-bold py-2 rounded-pill shadow-sm text-dark" href="/local/pactdigital/signup.php">
+            ✨ Créer un compte citoyen (e-mail facultatif)
+        </a>
+    </div>
     {{#canloginasguest}}
         <div class="login-divider"></div>
         <h2 class="login-heading">{{#str}}someallowguest{{/str}}</h2>
