@@ -3,11 +3,11 @@ defined('MOODLE_INTERNAL') || die();
 
 global $PAGE, $CFG;
 
-// Rediriger toute visite sur /login/signup.php vers l'inscription PACTDIGITAL
-// où l'e-mail est facultatif et sans confirmation bloquante par courriel
+// Rediriger uniquement les accès à /login/signup.php (natif Moodle) vers /local/pactdigital/signup.php
 $current_uri = $_SERVER['REQUEST_URI'] ?? '';
 $page_url    = isset($PAGE) ? $PAGE->url->out(false) : '';
-if (strpos($current_uri, 'signup.php') !== false || strpos($page_url, 'signup.php') !== false) {
+if ((strpos($current_uri, '/login/signup.php') !== false || strpos($page_url, '/login/signup.php') !== false)
+    && strpos($current_uri, '/local/pactdigital/') === false) {
     redirect(new moodle_url('/local/pactdigital/signup.php'));
 }
 

@@ -60,10 +60,10 @@
             <!-- COLONNE DROITE : FORMULAIRE DE CONNEXION / INSCRIPTION -->
             <div class="col-lg-6 d-flex flex-column justify-content-center align-items-center p-4 p-md-5 bg-white">
                 <div class="pact-login-box w-100" style="max-width: 460px;">
-                    <!-- Titre de connexion -->
+                    <!-- Titre de connexion / inscription -->
                     <div class="text-center mb-4">
-                        <h2 class="h3 fw-bold text-dark mb-1">Connexion</h2>
-                        <p class="text-muted small">Accédez à votre compte PACTDIGITAL-BF</p>
+                        <h2 class="h3 fw-bold text-dark mb-1" id="pact-login-title">Connexion</h2>
+                        <p class="text-muted small" id="pact-login-subtitle">Accédez à votre compte PACTDIGITAL-BF</p>
                     </div>
 
                     <!-- Contenu Moodle du formulaire -->
@@ -81,9 +81,13 @@
 
 <script>
 (function() {
-    // Si l'utilisateur arrive sur /login/signup.php, le rediriger immédiatement
-    // vers la page PACTDIGITAL où l'e-mail est 100% facultatif
-    if (window.location.pathname.indexOf('/signup.php') !== -1) {
+    var isSignup = (window.location.pathname.indexOf('/signup.php') !== -1);
+    if (isSignup) {
+        var t = document.getElementById('pact-login-title');
+        var s = document.getElementById('pact-login-subtitle');
+        if (t) t.textContent = 'Inscription';
+        if (s) s.textContent = 'Créez votre compte citoyen PACTDIGITAL-BF';
+        // Redirection vers la page d'inscription avec e-mail facultatif
         window.location.replace('/local/pactdigital/signup.php');
     }
 })();

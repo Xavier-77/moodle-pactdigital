@@ -169,8 +169,10 @@ foreach ($courses_raw as $c) {
 
     // ── Boutons d'action selon l'état de l'utilisateur ───────────────────────
     if (!isloggedin() || isguestuser()) {
-        $login_url = (new moodle_url('/login/index.php', ['wantsurl' => $view_url]))->out(false);
-        $courses_html .= '    <a href="' . $login_url . '" class="pact-btn-start">🔐 Se connecter pour s\'inscrire</a>';
+        $signup_url = (new moodle_url('/local/pactdigital/signup.php', ['wantsurl' => $view_url]))->out(false);
+        $login_url  = (new moodle_url('/login/index.php', ['wantsurl' => $view_url]))->out(false);
+        $courses_html .= '    <a href="' . $signup_url . '" class="pact-btn-start">🎓 S\'inscrire à cette formation</a>';
+        $courses_html .= '    <a href="' . $login_url . '" style="display:block; text-align:center; font-size:0.78rem; color:#64748b; margin-top:6px; text-decoration:none;">Déjà un compte ? Se connecter</a>';
     } elseif ($is_enrolled_user) {
         // Déjà inscrit → page d'accueil du cours
         $welcome_url = (new moodle_url('/local/pactdigital/course_welcome.php', ['id' => $c->id]))->out(false);

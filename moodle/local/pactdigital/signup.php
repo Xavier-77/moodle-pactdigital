@@ -17,7 +17,7 @@ require_once($CFG->dirroot . '/user/lib.php');
 require_once($CFG->dirroot . '/user/profile/lib.php');
 
 // ── Endpoint AJAX pour vérification d'unicité en temps réel ────────────────
-$ajax_action = optional_param('action', '', PARAM_ALPHA);
+$ajax_action = optional_param('action', '', PARAM_ALPHAEXT);
 if ($ajax_action === 'check_username') {
     header('Content-Type: application/json; charset=utf-8');
     $uname = trim(optional_param('username', '', PARAM_RAW));
@@ -86,8 +86,8 @@ if (isloggedin() && !isguestuser()) {
 
 $PAGE->set_url(new moodle_url('/local/pactdigital/signup.php'));
 $PAGE->set_context(context_system::instance());
-$PAGE->set_pagelayout('login');
-$PAGE->set_title('Créer mon compte — PACTDIGITAL-BF');
+$PAGE->set_pagelayout('standard');
+$PAGE->set_title('Créer mon compte citoyen — PACTDIGITAL-BF');
 $PAGE->set_heading('Inscription PACTDIGITAL-BF');
 
 // URLs
