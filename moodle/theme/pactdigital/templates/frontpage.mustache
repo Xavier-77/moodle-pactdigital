@@ -1,0 +1,319 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_pactdigital/frontpage
+}}
+{{> theme_boost/head }}
+
+<body {{{ bodyattributes }}}>
+{{> core/local/toast/wrapper}}
+<div id="page-wrapper" class="d-print-block">
+
+    {{{ output.standard_top_of_body_html }}}
+
+    {{#is_user_logged_in}}
+        {{> theme_pactdigital/navbar }}
+    {{/is_user_logged_in}}
+
+    {{#courseindex}}
+        {{< theme_boost/drawer }}
+            {{$id}}theme_boost-drawers-courseindex{{/id}}
+            {{$drawerheadercontent}}
+                {{> theme_boost/courseindexdrawercontrols}}
+            {{/drawerheadercontent}}
+            {{$drawerclasses}}drawer drawer-left {{#courseindexopen}}show{{/courseindexopen}}{{/drawerclasses}}
+            {{$drawercontent}}
+                {{{courseindex}}}
+            {{/drawercontent}}
+            {{$drawerpreferencename}}drawer-open-index{{/drawerpreferencename}}
+            {{$drawerstate}}show-drawer-left{{/drawerstate}}
+            {{$tooltipplacement}}right{{/tooltipplacement}}
+            {{$closebuttontext}}{{#str}}closecourseindex, core{{/str}}{{/closebuttontext}}
+        {{/ theme_boost/drawer}}
+    {{/courseindex}}
+    {{#hasblocks}}
+        {{< theme_boost/drawer }}
+            {{$id}}theme_boost-drawers-blocks{{/id}}
+            {{$drawerclasses}}drawer drawer-right{{#blockdraweropen}} show{{/blockdraweropen}}{{/drawerclasses}}
+            {{$drawercontent}}
+                <div class="d-print-none">
+                    {{{ addblockbutton }}}
+                    {{{ sidepreblocks }}}
+                </div>
+            {{/drawercontent}}
+            {{$drawerpreferencename}}drawer-open-block{{/drawerpreferencename}}
+            {{$forceopen}}{{#forceblockdraweropen}}1{{/forceblockdraweropen}}{{/forceopen}}
+            {{$drawerstate}}show-drawer-right{{/drawerstate}}
+            {{$tooltipplacement}}left{{/tooltipplacement}}
+            {{$drawercloseonresize}}1{{/drawercloseonresize}}
+            {{$closebuttontext}}{{#str}}closeblockdrawer, core{{/str}}{{/closebuttontext}}
+        {{/ theme_boost/drawer}}
+    {{/hasblocks}}
+    <div id="page" data-region="mainpage" data-usertour="scroller" class="drawers {{#courseindexopen}}show-drawer-left{{/courseindexopen}} {{#blockdraweropen}}show-drawer-right{{/blockdraweropen}} drag-container">
+        <div id="topofscroll" class="main-inner">
+            <div class="drawer-toggles d-flex">
+                {{#courseindex}}
+                    <div class="drawer-toggler drawer-left-toggle open-nav d-print-none">
+                        <button
+                            class="btn icon-no-margin"
+                            data-toggler="drawers"
+                            data-action="toggle"
+                            data-target="theme_boost-drawers-courseindex"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="right"
+                            title="{{#str}}opendrawerindex, core{{/str}}"
+                        >
+                            <span class="visually-hidden">{{#str}}opendrawerindex, core{{/str}}</span>
+                            {{#pix}} t/index_drawer, moodle {{/pix}}
+                        </button>
+                    </div>
+                {{/courseindex}}
+                {{#hasblocks}}
+                    <div class="drawer-toggler drawer-right-toggle ms-auto d-print-none">
+                        <button
+                            class="btn icon-no-margin"
+                            data-toggler="drawers"
+                            data-action="toggle"
+                            data-target="theme_boost-drawers-blocks"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="right"
+                            title="{{#str}}opendrawerblocks, core{{/str}}"
+                        >
+                            <span class="visually-hidden">{{#str}}opendrawerblocks, core{{/str}}</span>
+                            <span class="dir-rtl-hide">{{#pix}}t/blocks_drawer, core{{/pix}}</span>
+                            <span class="dir-ltr-hide">{{#pix}}t/blocks_drawer_rtl, core{{/pix}}</span>
+                        </button>
+                    </div>
+                {{/hasblocks}}
+            </div>
+            
+            <div id="page-content" class="pb-3 d-print-block">
+                <div id="region-main-box">
+                    {{#hasregionmainsettingsmenu}}
+                    <div id="region-main-settings-menu" class="d-print-none">
+                        <div> {{{ regionmainsettingsmenu }}} </div>
+                    </div>
+                    {{/hasregionmainsettingsmenu}}
+                    <div id="region-main">
+                        {{#hasregionmainsettingsmenu}}
+                            <div class="region_main_settings_menu_proxy"></div>
+                        {{/hasregionmainsettingsmenu}}
+                        
+                        <!-- PACTDIGITAL CUSTOM FRONT PAGE HERO SECTION -->
+                        <div class="pactdigital-frontpage">
+                                                                                    <!-- Hero Section : pleine largeur avec carte arrondie -->
+                            <div class="pactdigital-hero text-center py-4 px-3">
+                                <div class="pactdigital-hero-card text-center p-4 p-md-5 mx-auto">
+                                    <!-- En-tête institutionnel : Ministère de la Transition Digitale -->
+                                    <div class="ministere-banner mb-4 pb-3 border-bottom">
+                                        <div class="d-flex align-items-center justify-content-center gap-3 flex-wrap">
+                                            {{#armoiries_url}}
+                                                <img src="{{armoiries_url}}" alt="Armoiries du Burkina Faso" class="armoiries-header-img" style="max-height: 55px; width: auto;">
+                                            {{/armoiries_url}}
+                                            <div class="text-center text-md-start">
+                                                <div class="text-uppercase fw-bold text-dark small" style="letter-spacing: 0.5px;">BURKINA FASO</div>
+                                                <div class="fw-bold ministere-title text-success fs-6">
+                                                    Ministère de la Transition Digitale, des Postes et des Communications Électroniques
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+
+                                    <!-- Logo PACTDIGITAL -->
+                                    {{# output.should_display_navbar_logo }}
+                                        <div class="mb-3 text-center">
+                                            <img src="{{output.get_compact_logo_url}}" alt="{{sitename}}" class="pactdigital-logo-img" style="max-height: 95px; width: auto;">
+                                        </div>
+                                    {{/ output.should_display_navbar_logo }}
+                                    {{^ output.should_display_navbar_logo }}
+                                        {{# output.get_logo_url }}
+                                            <div class="mb-3 text-center">
+                                                <img src="{{output.get_logo_url}}" alt="{{sitename}}" class="pactdigital-logo-img" style="max-height: 95px; width: auto;">
+                                            </div>
+                                        {{/ output.get_logo_url }}
+                                    {{/ output.should_display_navbar_logo }}
+
+                                    <h1 class="display-5 fw-bold text-primary mb-2">PACTDIGITAL-BF</h1>
+                                    <p class="fs-5 fw-semibold text-secondary-emphasis mb-3">Plateforme nationale de développement des compétences numériques</p>
+
+                                    <!-- Présentation du projet PACTDIGITAL-BF -->
+                                    <div class="eburkina-presentation-card p-3 p-md-4 mb-4 mx-auto text-start">
+                                        <div class="d-flex align-items-center gap-2 mb-2">
+                                            <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-2 rounded-pill fw-bold">
+                                                🇧🇫 À propos du projet PACTDIGITAL-BF
+                                            </span>
+                                        </div>
+                                        <p class="mb-2 text-dark" style="line-height: 1.6; font-size: 0.98rem;">
+                                            Porté par le <strong>Ministère de la Transition Digitale, des Postes et des Communications Électroniques</strong>, le projet <strong>PACTDIGITAL-BF</strong> est une initiative nationale stratégique visant à renforcer et développer les compétences numériques de l'ensemble de la population au Burkina Faso.
+                                        </p>
+                                        <p class="mb-0 text-muted" style="line-height: 1.6; font-size: 0.93rem;">
+                                            Cette plateforme offre des parcours de formation certifiants et accessibles à tous (citoyens, agents publics, professionnels, étudiants et apprenants) afin d'accélérer l'inclusion numérique et accompagner la transformation digitale de notre pays.
+                                        </p>
+                                    </div>
+
+                                    {{^is_user_logged_in}}
+                                    <!-- Boutons d'action pour visiteurs non connectés -->
+                                    <div class="d-flex flex-wrap justify-content-center gap-3">
+                                        <a href="{{{ config.wwwroot }}}/local/pactdigital/signup.php" class="btn btn-warning btn-lg px-4 rounded-pill shadow-sm fw-semibold">Créer un compte</a>
+                                        <a href="{{{ config.wwwroot }}}/login/index.php" class="btn btn-outline-dark btn-lg px-4 rounded-pill shadow-sm">Se connecter</a>
+                                    </div>
+                                    {{/is_user_logged_in}}
+                                    {{#is_user_logged_in}}
+                                    <!-- Raccourcis pour utilisateur connecté -->
+                                    <div class="d-flex flex-wrap justify-content-center gap-3">
+                                        <a href="{{{ config.wwwroot }}}/my/" class="btn btn-success btn-lg px-4 rounded-pill shadow-sm fw-semibold">📊 Mon Tableau de bord</a>
+                                        <a href="{{{ config.wwwroot }}}/course/index.php" class="btn btn-outline-dark btn-lg px-4 rounded-pill shadow-sm">📚 Explorer les cours</a>
+                                    </div>
+                                    {{/is_user_logged_in}}
+                                </div>
+                            </div>
+
+
+                            <!-- Domaines Section : pleine largeur avec container fluide généreux -->
+                            <div id="formations" class="pactdigital-domains py-5 px-3 px-md-5">
+                                <div class="container-fluid" style="max-width: 1400px;">
+                                    <h2 class="pb-2 text-center mb-5">NOS DOMAINES DE FORMATION</h2>
+                                    <div class="row g-4 row-cols-1 row-cols-md-2 row-cols-xl-4">
+                                        <div class="col">
+                                            <a href="{{{ config.wwwroot }}}/local/pactdigital/catalogue.php?domain=fondamentales" class="text-decoration-none text-dark">
+                                                <div class="card h-100 shadow-sm text-center p-4 domain-card">
+                                                    <div class="display-4 mb-3">💻</div>
+                                                    <h3 class="fs-5 fw-bold">Compétences numériques fondamentales</h3>
+                                                    <div class="mt-3"><span class="explorer-link">Explorer les modules ➔</span></div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col">
+                                            <a href="{{{ config.wwwroot }}}/local/pactdigital/catalogue.php?domain=manageriales" class="text-decoration-none text-dark">
+                                                <div class="card h-100 shadow-sm text-center p-4 domain-card">
+                                                    <div class="display-4 mb-3">📊</div>
+                                                    <h3 class="fs-5 fw-bold">Compétences numériques managériales</h3>
+                                                    <div class="mt-3"><span class="explorer-link">Explorer les modules ➔</span></div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col">
+                                            <a href="{{{ config.wwwroot }}}/local/pactdigital/catalogue.php?domain=sectorielles" class="text-decoration-none text-dark">
+                                                <div class="card h-100 shadow-sm text-center p-4 domain-card">
+                                                    <div class="display-4 mb-3">🏭</div>
+                                                    <h3 class="fs-5 fw-bold">Compétences numériques sectorielles</h3>
+                                                    <div class="mt-3"><span class="explorer-link">Explorer les modules ➔</span></div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col">
+                                            <a href="{{{ config.wwwroot }}}/local/pactdigital/catalogue.php?domain=emergentes" class="text-decoration-none text-dark">
+                                                <div class="card h-100 shadow-sm text-center p-4 domain-card">
+                                                    <div class="display-4 mb-3">🚀</div>
+                                                    <h3 class="fs-5 fw-bold">Compétences numériques émergentes</h3>
+                                                    <div class="mt-3"><span class="explorer-link">Explorer les modules ➔</span></div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Parcours Section : pleine largeur avec container fluide généreux -->
+                            <div class="pactdigital-parcours text-center py-5 px-3 px-md-5">
+                                <div class="container-fluid" style="max-width: 1400px;">
+                                    <h2 class="mb-3">PARCOURS DISPONIBLES</h2>
+                                    <p class="text-muted mb-4 small">Survolez un niveau pour découvrir ses objectifs</p>
+                                    <div class="d-flex justify-content-center align-items-center gap-3 gap-md-4 flex-wrap">
+                                        <!-- Niveau Bronze -->
+                                        <div class="parcours-badge-wrapper">
+                                            <div class="parcours-badge parcours-bronze">
+                                                <span class="parcours-icon">🥉</span>
+                                                <span class="parcours-name">Bronze</span>
+                                            </div>
+                                            <div class="parcours-tooltip">
+                                                <div class="parcours-tooltip-title text-warning">Niveau Débutant</div>
+                                                <div class="parcours-tooltip-desc">Acquisition des compétences numériques de base et maîtrise des outils essentiels.</div>
+                                            </div>
+                                        </div>
+
+                                        <span class="text-muted d-none d-sm-inline">•</span>
+
+                                        <!-- Niveau Argent -->
+                                        <div class="parcours-badge-wrapper">
+                                            <div class="parcours-badge parcours-argent">
+                                                <span class="parcours-icon">🥈</span>
+                                                <span class="parcours-name">Argent</span>
+                                            </div>
+                                            <div class="parcours-tooltip">
+                                                <div class="parcours-tooltip-title text-info">Niveau Intermédiaire</div>
+                                                <div class="parcours-tooltip-desc">Approfondissement des compétences techniques et autonomie dans les usages professionnels.</div>
+                                            </div>
+                                        </div>
+
+                                        <span class="text-muted d-none d-sm-inline">•</span>
+
+                                        <!-- Niveau Or -->
+                                        <div class="parcours-badge-wrapper">
+                                            <div class="parcours-badge parcours-or">
+                                                <span class="parcours-icon">🥇</span>
+                                                <span class="parcours-name">Or</span>
+                                            </div>
+                                            <div class="parcours-tooltip">
+                                                <div class="parcours-tooltip-title text-warning">Niveau Avancé &amp; Expert</div>
+                                                <div class="parcours-tooltip-desc">Maîtrise complète, spécialisation et innovation dans les technologies émergentes.</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END PACTDIGITAL CUSTOM FRONT PAGE HERO SECTION -->
+
+                        {{{ output.course_content_header }}}
+                        {{#headercontent}}
+                            {{> core/activity_header }}
+                        {{/headercontent}}
+                        {{#overflow}}
+                            <div class="container-fluid tertiary-navigation">
+                                <div class="navitem">
+                                    {{> core/url_select}}
+                                </div>
+                            </div>
+                        {{/overflow}}
+                        
+                        <div class="mt-5">
+                            {{{ output.main_content }}}
+                        </div>
+                        
+                        {{{ output.activity_navigation }}}
+                        {{{ output.course_content_footer }}}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{> theme_boost/footer }}
+    </div>
+    {{{ output.standard_after_main_region_html }}}
+</div>
+
+</body>
+</html>
+{{#js}}
+M.util.js_pending('theme_boost/loader');
+require(['theme_boost/loader', 'theme_boost/drawer'], function(Loader, Drawer) {
+    Drawer.init();
+    M.util.js_complete('theme_boost/loader');
+});
+{{/js}}

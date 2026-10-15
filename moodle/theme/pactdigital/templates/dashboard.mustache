@@ -1,0 +1,565 @@
+{{> theme_boost/head }}
+
+<body {{{ bodyattributes }}}>
+{{> core/local/toast/wrapper}}
+<div id="page-wrapper" class="d-print-block">
+
+    {{{ output.standard_top_of_body_html }}}
+
+    {{> theme_pactdigital/navbar }}
+
+    {{#courseindex}}
+        {{< theme_boost/drawer }}
+            {{$id}}theme_boost-drawers-courseindex{{/id}}
+            {{$drawerheadercontent}}
+                {{> theme_boost/courseindexdrawercontrols}}
+            {{/drawerheadercontent}}
+            {{$drawerclasses}}drawer drawer-left {{#courseindexopen}}show{{/courseindexopen}}{{/drawerclasses}}
+            {{$drawercontent}}
+                {{{courseindex}}}
+            {{/drawercontent}}
+            {{$drawerpreferencename}}drawer-open-index{{/drawerpreferencename}}
+            {{$drawerstate}}show-drawer-left{{/drawerstate}}
+            {{$tooltipplacement}}right{{/tooltipplacement}}
+            {{$closebuttontext}}{{#str}}closecourseindex, core{{/str}}{{/closebuttontext}}
+        {{/ theme_boost/drawer}}
+    {{/courseindex}}
+    {{#hasblocks}}
+        {{< theme_boost/drawer }}
+            {{$id}}theme_boost-drawers-blocks{{/id}}
+            {{$drawerclasses}}drawer drawer-right{{#blockdraweropen}} show{{/blockdraweropen}}{{/drawerclasses}}
+            {{$drawercontent}}
+                <div class="d-print-none">
+                    {{{ addblockbutton }}}
+                    {{{ sidepreblocks }}}
+                </div>
+            {{/drawercontent}}
+            {{$drawerpreferencename}}drawer-open-block{{/drawerpreferencename}}
+            {{$forceopen}}{{#forceblockdraweropen}}1{{/forceblockdraweropen}}{{/forceopen}}
+            {{$drawerstate}}show-drawer-right{{/drawerstate}}
+            {{$tooltipplacement}}left{{/tooltipplacement}}
+            {{$drawercloseonresize}}1{{/drawercloseonresize}}
+            {{$closebuttontext}}{{#str}}closeblockdrawer, core{{/str}}{{/closebuttontext}}
+        {{/ theme_boost/drawer}}
+    {{/hasblocks}}
+
+    <div id="page" data-region="mainpage" data-usertour="scroller" class="drawers {{#courseindexopen}}show-drawer-left{{/courseindexopen}} {{#blockdraweropen}}show-drawer-right{{/blockdraweropen}} drag-container">
+        <div id="topofscroll" class="main-inner">
+            <div class="drawer-toggles d-flex">
+                {{#courseindex}}
+                    <div class="drawer-toggler drawer-left-toggle open-nav d-print-none">
+                        <button
+                            class="btn icon-no-margin"
+                            data-toggler="drawers"
+                            data-action="toggle"
+                            data-target="theme_boost-drawers-courseindex"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="right"
+                            title="{{#str}}opendrawerindex, core{{/str}}"
+                        >
+                            <span class="visually-hidden">{{#str}}opendrawerindex, core{{/str}}</span>
+                            {{#pix}} t/index_drawer, moodle {{/pix}}
+                        </button>
+                    </div>
+                {{/courseindex}}
+                {{#hasblocks}}
+                    <div class="drawer-toggler drawer-right-toggle ms-auto d-print-none">
+                        <button
+                            class="btn icon-no-margin"
+                            data-toggler="drawers"
+                            data-action="toggle"
+                            data-target="theme_boost-drawers-blocks"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="right"
+                            title="{{#str}}opendrawerblocks, core{{/str}}"
+                        >
+                            <span class="visually-hidden">{{#str}}opendrawerblocks, core{{/str}}</span>
+                            <span class="dir-rtl-hide">{{#pix}}t/blocks_drawer, core{{/pix}}</span>
+                            <span class="dir-ltr-hide">{{#pix}}t/blocks_drawer_rtl, core{{/pix}}</span>
+                        </button>
+                    </div>
+                {{/hasblocks}}
+            </div>
+
+            {{{ output.full_header }}}
+            {{#secondarymoremenu}}
+                <div class="secondary-navigation d-print-none">
+                    {{> core/moremenu}}
+                </div>
+            {{/secondarymoremenu}}
+
+            <div id="page-content" class="pb-3 d-print-block">
+                <div id="region-main-box">
+                    {{#hasregionmainsettingsmenu}}
+                    <div id="region-main-settings-menu" class="d-print-none">
+                        <div> {{{ regionmainsettingsmenu }}} </div>
+                    </div>
+                    {{/hasregionmainsettingsmenu}}
+                    <div id="region-main">
+                        {{#hasregionmainsettingsmenu}}
+                            <div class="region_main_settings_menu_proxy"></div>
+                        {{/hasregionmainsettingsmenu}}
+
+                        <!-- ========================================================= -->
+                        <!-- ENRICHISSEMENT PACTDIGITAL-BF DU TABLEAU DE BORD         -->
+                        <!-- ========================================================= -->
+                        <div class="pact-dashboard-enrichment mb-4">
+
+                            <!-- 0. ACCÈS RAPIDE — CATALOGUE DES FORMATIONS -->
+                            <div class="pact-quick-access-catalogue">
+                                <div class="pact-qac-text">
+                                    <h3>📚 Netflix du Savoir — PACTDIGITAL-BF</h3>
+                                    <p>Explorez les {{total_courses_available}} formations disponibles par domaine et commencez votre parcours numérique.</p>
+                                </div>
+                                <a href="/local/pactdigital/catalogue.php" class="pact-qac-btn">
+                                    🎯 Voir le Catalogue
+                                </a>
+                            </div>
+
+                            <!-- 1. BANNIÈRE RÉSUMÉ & STATS PERSONNELLES -->
+                            <div class="card border-0 shadow-sm rounded-4 mb-4" style="background: linear-gradient(135deg, #145B37 0%, #1e7a4a 100%); color: #fff;">
+                                <div class="card-body p-4">
+                                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                                        <div>
+                                            <span class="badge bg-white text-success px-3 py-1 rounded-pill mb-2 fw-semibold">
+                                                🇧🇫 PACTDIGITAL-BF
+                                            </span>
+                                            <h2 class="h3 fw-bold mb-1 text-white">Mon Espace de Formation</h2>
+                                            <p class="mb-0 opacity-75 small">Suivez votre avancement, vos compétences validées et téléchargez vos certifications.</p>
+                                        </div>
+                                        <div class="d-flex gap-3 text-center flex-wrap">
+                                            <div class="bg-white bg-opacity-10 px-3 py-2 rounded-3 border border-white border-opacity-25">
+                                                <div class="h4 fw-bold mb-0 text-white">{{total_enrolled}}</div>
+                                                <div class="small opacity-75">Cours suivis</div>
+                                            </div>
+                                            <div class="bg-white bg-opacity-10 px-3 py-2 rounded-3 border border-white border-opacity-25">
+                                                <div class="h4 fw-bold mb-0 text-white">{{certificates_count}}</div>
+                                                <div class="small opacity-75">Attestations</div>
+                                            </div>
+                                            <div class="bg-white bg-opacity-10 px-3 py-2 rounded-3 border border-white border-opacity-25">
+                                                <div class="h4 fw-bold mb-0 text-white">{{global_progress}}%</div>
+                                                <div class="small opacity-75">Réussite</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 2. ONGLET PAR RÔLE (Apprenant, Enseignant, Administrateur) -->
+                            <ul class="nav nav-pills mb-4 gap-2 border-bottom pb-3" id="pactDashTabs" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active rounded-pill fw-semibold px-4" id="tab-apprenant" data-bs-toggle="pill" data-bs-target="#content-apprenant" type="button" role="tab">
+                                        🎓 Espace Apprenant
+                                    </button>
+                                </li>
+                                {{#is_teacher}}
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link rounded-pill fw-semibold px-4" id="tab-enseignant" data-bs-toggle="pill" data-bs-target="#content-enseignant" type="button" role="tab">
+                                        👨‍🏫 Suivi Enseignant &amp; Étudiants
+                                    </button>
+                                </li>
+                                {{/is_teacher}}
+                                {{#is_admin}}
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link rounded-pill fw-semibold px-4" id="tab-admin" data-bs-toggle="pill" data-bs-target="#content-admin" type="button" role="tab">
+                                        ⚙️ Supervision Administrateur
+                                    </button>
+                                </li>
+                                {{/is_admin}}
+                            </ul>
+
+                            <div class="tab-content" id="pactDashTabsContent">
+
+                                <!-- ================= VUE APPRENANT ================= -->
+                                <div class="tab-pane fade show active" id="content-apprenant" role="tabpanel">
+
+                                    <!-- SECTION MES ATTESTATIONS & CERTIFICATS -->
+                                    <div class="card border shadow-sm rounded-4 mb-4">
+                                        <div class="card-header bg-white border-0 pt-4 px-4 pb-2 d-flex justify-content-between align-items-center flex-wrap gap-2">
+                                            <h3 class="h5 fw-bold mb-0 text-dark">
+                                                🏆 Mes Certificats &amp; Attestations Réussis
+                                            </h3>
+                                            <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-2 rounded-pill">
+                                                {{certificates_count}} attestation(s) obtenue(s)
+                                            </span>
+                                        </div>
+                                        <div class="card-body p-4">
+                                            {{#has_certificates}}
+                                                <div class="row g-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
+                                                    {{#certificates}}
+                                                        <div class="col">
+                                                            <div class="pact-cert-card {{level_class}} h-100">
+                                                                <div class="pact-cert-inner">
+                                                                    <!-- En-tête officiel -->
+                                                                    <div class="pact-cert-header">
+                                                                        <span class="pact-cert-nation">🇧🇫 Burkina Faso • PACTDIGITAL-BF</span>
+                                                                        <span class="pact-cert-badge">{{level_badge}}</span>
+                                                                    </div>
+
+                                                                    <!-- Titres du certificat -->
+                                                                    <div class="pact-cert-type">📜 {{certname}}</div>
+                                                                    <h4 class="pact-cert-title">{{coursename}}</h4>
+                                                                    <div class="pact-cert-recipient">
+                                                                        <span>Délivré à</span>
+                                                                        <strong>{{recipient_name}}</strong>
+                                                                    </div>
+
+                                                                    <!-- Boîte de vérification avec QR Code -->
+                                                                    <div class="pact-cert-verify-box">
+                                                                        <div class="pact-cert-meta">
+                                                                            <div class="pact-cert-code-label">ID d'authenticité</div>
+                                                                            <div class="pact-cert-code">{{code}}</div>
+                                                                            <div class="pact-cert-date">Délivré le {{date}}</div>
+                                                                        </div>
+                                                                        {{#qr_code}}
+                                                                        <a href="{{{verify_url}}}" target="_blank" class="pact-cert-qr" title="Scanner ou cliquer pour vérifier l'authenticité sur la plateforme officielle">
+                                                                            <img src="{{{qr_code}}}" alt="QR Code d'authenticité">
+                                                                        </a>
+                                                                        {{/qr_code}}
+                                                                    </div>
+
+                                                                    <!-- Actions de prestige : Télécharger + LinkedIn -->
+                                                                    <div class="pact-cert-actions">
+                                                                        <a href="{{{download_url}}}" class="btn-cert-download" target="_blank" title="Télécharger le PDF officiel de l'attestation">
+                                                                            📥 Télécharger le PDF officiel
+                                                                        </a>
+                                                                        <div class="pact-cert-social-group">
+                                                                            <a href="{{{linkedin_add_url}}}" target="_blank" class="btn-linkedin-add" title="Ajouter cette certification à votre profil LinkedIn">
+                                                                                💼 Ajouter à LinkedIn
+                                                                            </a>
+                                                                            <a href="{{{linkedin_share_url}}}" target="_blank" class="btn-linkedin-share" title="Partager votre réussite avec votre réseau">
+                                                                                📢 Partager
+                                                                            </a>
+                                                                        </div>
+                                                                        <a href="{{{verify_url}}}" target="_blank" class="btn-cert-verify" title="Consulter la fiche officielle de vérification">
+                                                                            🔍 Vérifier l'authenticité
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    {{/certificates}}
+                                                </div>
+                                            {{/has_certificates}}
+                                            {{^has_certificates}}
+                                                <div class="text-center py-4 text-muted">
+                                                    <div class="fs-1 mb-2">🎓</div>
+                                                    <p class="mb-1 fw-semibold">Aucun certificat émis pour le moment</p>
+                                                    <p class="small">Complétez vos parcours de formation (Bronze, Argent, Or) et réussissez les évaluations pour débloquer vos attestations officielles.</p>
+                                                </div>
+                                            {{/has_certificates}}
+                                        </div>
+                                    </div>
+
+                                    <!-- SECTION FILTRES & PROGRESSION COURS DE L'APPRENANT -->
+                                    <div class="card border shadow-sm rounded-4 mb-4">
+                                        <div class="card-header bg-white border-0 pt-4 px-4 pb-2">
+                                            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                                                <h3 class="h5 fw-bold mb-0 text-dark">
+                                                    📚 Mes Formations &amp; Progression par Domaine
+                                                </h3>
+                                                <!-- Filtres pour l'apprenant -->
+                                                <div class="d-flex gap-2 flex-wrap">
+                                                    <input type="text" id="pact-student-search" class="form-control form-control-sm rounded-pill" placeholder="🔍 Rechercher un cours..." style="width: 220px;" onkeyup="filterStudentCourses()">
+                                                    <select id="pact-student-filter-status" class="form-select form-select-sm rounded-pill" style="width: 170px;" onchange="filterStudentCourses()">
+                                                        <option value="all">Tous les statuts</option>
+                                                        <option value="in_progress">En cours</option>
+                                                        <option value="completed">Terminés</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body p-4">
+                                            {{#has_student_courses}}
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover align-middle mb-0" id="studentCoursesTable">
+                                                        <thead class="table-light">
+                                                            <tr>
+                                                                <th>Formation</th>
+                                                                <th>Domaine</th>
+                                                                <th>Parcours</th>
+                                                                <th>Progression</th>
+                                                                <th class="text-end">Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {{#student_courses}}
+                                                                <tr class="course-row" data-name="{{fullname}}" data-status="{{#is_completed}}completed{{/is_completed}}{{^is_completed}}in_progress{{/is_completed}}">
+                                                                    <td>
+                                                                        <strong>{{fullname}}</strong>
+                                                                    </td>
+                                                                    <td><span class="badge bg-secondary-subtle text-secondary rounded-pill">{{domain}}</span></td>
+                                                                    <td><span class="badge bg-success-subtle text-success rounded-pill fw-semibold">{{level}}</span></td>
+                                                                    <td style="min-width: 160px;">
+                                                                        <div class="d-flex align-items-center gap-2">
+                                                                            <div class="progress flex-grow-1" style="height: 8px;">
+                                                                                <div class="progress-bar bg-success" role="progressbar" style="width: {{progress}}%;"></div>
+                                                                            </div>
+                                                                            <span class="small fw-semibold text-muted">{{progress}}%</span>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td class="text-end">
+                                                                        <a href="{{url}}" class="btn btn-sm btn-success rounded-pill px-3">
+                                                                            Accéder ➔
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                            {{/student_courses}}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="text-center pt-3 border-top mt-3" id="pact-course-pagination-wrap">
+                                                    <button type="button" class="btn btn-outline-success rounded-pill px-4 fw-semibold" id="btn-toggle-courses" onclick="toggleStudentCourses()">
+                                                        Voir plus de formations (57 au total) ▾
+                                                    </button>
+                                                </div>
+                                            {{/has_student_courses}}
+                                            {{^has_student_courses}}
+                                                <div class="text-center py-4 text-muted">
+                                                    <p class="mb-2">Vous n'êtes inscrit à aucun cours pour l'instant.</p>
+                                                    <a href="{{{ config.wwwroot }}}/course/index.php" class="btn btn-sm btn-outline-success rounded-pill">Explorer le catalogue des formations</a>
+                                                </div>
+                                            {{/has_student_courses}}
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!-- ================= VUE ENSEIGNANT ================= -->
+                                {{#is_teacher}}
+                                <div class="tab-pane fade" id="content-enseignant" role="tabpanel">
+                                    <div class="card border shadow-sm rounded-4 mb-4">
+                                        <div class="card-header bg-white border-0 pt-4 px-4 pb-2">
+                                            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                                                <div>
+                                                    <h3 class="h5 fw-bold mb-1 text-dark">
+                                                        👥 Suivi de mes Étudiants &amp; Cohortes
+                                                    </h3>
+                                                    <p class="text-muted small mb-0">Consultez l'assiduité et la progression de vos apprenants par formation.</p>
+                                                </div>
+                                                <!-- Filtre enseignant -->
+                                                <div class="d-flex gap-2 flex-wrap">
+                                                    <input type="text" id="pact-teacher-search" class="form-control form-control-sm rounded-pill" placeholder="🔍 Rechercher un étudiant..." style="width: 220px;" onkeyup="filterTeacherStudents()">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body p-4">
+                                            {{#teacher_students_count}}
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover align-middle mb-0" id="teacherStudentsTable">
+                                                        <thead class="table-light">
+                                                            <tr>
+                                                                <th>Étudiant</th>
+                                                                <th>E-mail</th>
+                                                                <th>Cours</th>
+                                                                <th>Dernier accès</th>
+                                                                <th class="text-end">Fiche</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {{#teacher_students}}
+                                                                <tr class="teacher-student-row" data-name="{{fullname}}" data-email="{{email}}">
+                                                                    <td><strong>{{fullname}}</strong></td>
+                                                                    <td><span class="text-muted small">{{email}}</span></td>
+                                                                    <td><span class="badge bg-light text-dark border">{{coursename}}</span></td>
+                                                                    <td><small class="text-muted">{{last_access}}</small></td>
+                                                                    <td class="text-end">
+                                                                        <a href="{{{ config.wwwroot }}}/user/view.php?id={{userid}}&course={{courseid}}" class="btn btn-sm btn-outline-secondary rounded-pill">
+                                                                            Profil
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                            {{/teacher_students}}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="text-center pt-3 border-top mt-3" id="pact-course-pagination-wrap">
+                                                    <button type="button" class="btn btn-outline-success rounded-pill px-4 fw-semibold" id="btn-toggle-courses" onclick="toggleStudentCourses()">
+                                                        Voir plus de formations (57 au total) ▾
+                                                    </button>
+                                                </div>
+                                            {{/teacher_students_count}}
+                                            {{^teacher_students_count}}
+                                                <div class="text-center py-4 text-muted">
+                                                    <p class="mb-0">Aucun étudiant inscrit trouvé dans vos cours.</p>
+                                                </div>
+                                            {{/teacher_students_count}}
+                                        </div>
+                                    </div>
+                                </div>
+                                {{/is_teacher}}
+
+                                <!-- ================= VUE ADMIN ================= -->
+                                {{#is_admin}}
+                                <div class="tab-pane fade" id="content-admin" role="tabpanel">
+                                    <div class="card border shadow-sm rounded-4 mb-4">
+                                        <div class="card-header bg-white border-0 pt-4 px-4 pb-2 d-flex justify-content-between align-items-center flex-wrap gap-2">
+                                            <div>
+                                                <h3 class="h5 fw-bold mb-1 text-dark">
+                                                    🏛️ Pilotage Stratégique PACTDIGITAL-BF
+                                                </h3>
+                                                <p class="text-muted small mb-0">Indicateurs nationaux et accès à la plateforme analytique complète du Ministère.</p>
+                                            </div>
+                                            <a href="{{admin_stats.admin_dashboard_url}}" class="btn btn-success rounded-pill fw-semibold shadow-sm px-4">
+                                                📊 Ouvrir le Grand Tableau Analytique ➔
+                                            </a>
+                                        </div>
+                                        <div class="card-body p-4">
+                                            <div class="row g-3 text-center mb-3">
+                                                <div class="col-md-4">
+                                                    <div class="border rounded-4 p-3 bg-light">
+                                                        <div class="fs-4 fw-bold text-success">{{admin_stats.total_users}}</div>
+                                                        <div class="text-muted small">Citoyens / Apprenants inscrits</div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="border rounded-4 p-3 bg-light">
+                                                        <div class="fs-4 fw-bold text-primary">{{admin_stats.total_courses}}</div>
+                                                        <div class="text-muted small">Modules de formation déployés</div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="border rounded-4 p-3 bg-light">
+                                                        <div class="fs-4 fw-bold text-warning">{{admin_stats.total_certs}}</div>
+                                                        <div class="text-muted small">Certificats officiels délivrés</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="p-3 bg-success-subtle border border-success-subtle rounded-3 text-success small">
+                                                💡 <strong>Note d'administration :</strong> Le grand tableau analytique vous permet de filtrer en temps réel par région (Centre, Hauts-Bassins, etc.), par province, commune, genre, et d'exporter les listes en CSV pour les rapports ministériels.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{/is_admin}}
+
+                            </div>
+                        </div>
+
+                        <!-- LIGNE DE SÉPARATION VISUELLE DOUCE -->
+                        <div class="d-flex align-items-center my-4">
+                            <hr class="flex-grow-1">
+                            <span class="px-3 text-muted small text-uppercase fw-semibold" style="letter-spacing: 0.5px;">Mes Blocs Personnalisés</span>
+                            <hr class="flex-grow-1">
+                        </div>
+
+                        <!-- ========================================================= -->
+                        <!-- CONTENU & BLOCS ORIGINAUX MOODLE (NON MODIFIÉS)          -->
+                        <!-- ========================================================= -->
+                        {{{ output.course_content_header }}}
+                        {{#headercontent}}
+                            {{> core/activity_header }}
+                        {{/headercontent}}
+                        {{#overflow}}
+                            <div class="container-fluid tertiary-navigation">
+                                <div class="navitem">
+                                    {{> core/url_select}}
+                                </div>
+                            </div>
+                        {{/overflow}}
+                        {{{ output.main_content }}}
+                        {{{ output.activity_navigation }}}
+                        {{{ output.course_content_footer }}}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{> theme_boost/footer }}
+    </div>
+    {{{ output.standard_after_main_region_html }}}
+</div>
+
+<script>
+let isCoursesExpanded = false;
+const MAX_VISIBLE_COURSES = 5;
+
+function updateCoursesVisibility() {
+    const q = (document.getElementById('pact-student-search')?.value || '').toLowerCase().trim();
+    const status = document.getElementById('pact-student-filter-status')?.value || 'all';
+    const rows = document.querySelectorAll('#studentCoursesTable .course-row');
+    const wrap = document.getElementById('pact-course-pagination-wrap');
+    const btn = document.getElementById('btn-toggle-courses');
+
+    let matchingRows = [];
+    rows.forEach(row => {
+        const name = (row.getAttribute('data-name') || '').toLowerCase();
+        const rStatus = row.getAttribute('data-status') || '';
+
+        const matchQuery = name.includes(q);
+        const matchStatus = (status === 'all') || (rStatus === status);
+
+        if (matchQuery && matchStatus) {
+            matchingRows.push(row);
+        } else {
+            row.style.display = 'none';
+        }
+    });
+
+    const isFiltering = (q !== '' || status !== 'all');
+    if (isFiltering || matchingRows.length <= MAX_VISIBLE_COURSES) {
+        if (wrap) wrap.style.display = 'none';
+        matchingRows.forEach(row => row.style.display = '');
+    } else {
+        if (wrap) wrap.style.display = 'block';
+        matchingRows.forEach((row, index) => {
+            if (isCoursesExpanded || index < MAX_VISIBLE_COURSES) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+
+        if (btn) {
+            if (isCoursesExpanded) {
+                btn.innerHTML = '▲ Réduire et afficher seulement 5 formations';
+            } else {
+                btn.innerHTML = '▾ Voir plus de formations (' + (matchingRows.length - MAX_VISIBLE_COURSES) + ' de plus)';
+            }
+        }
+    }
+}
+
+function toggleStudentCourses() {
+    isCoursesExpanded = !isCoursesExpanded;
+    updateCoursesVisibility();
+}
+
+function filterStudentCourses() {
+    isCoursesExpanded = false;
+    updateCoursesVisibility();
+}
+
+// Initialisation dès le chargement du DOM
+document.addEventListener('DOMContentLoaded', function() {
+    updateCoursesVisibility();
+});
+setTimeout(updateCoursesVisibility, 300);
+
+// Filtrage des étudiants pour l'enseignant
+function filterTeacherStudents() {
+    const q = (document.getElementById('pact-teacher-search')?.value || '').toLowerCase();
+    const rows = document.querySelectorAll('#teacherStudentsTable .teacher-student-row');
+
+    rows.forEach(row => {
+        const name = (row.getAttribute('data-name') || '').toLowerCase();
+        const email = (row.getAttribute('data-email') || '').toLowerCase();
+
+        if (name.includes(q) || email.includes(q)) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+}
+</script>
+
+</body>
+</html>
+{{#js}}
+M.util.js_pending('theme_boost/loader');
+require(['theme_boost/loader', 'theme_boost/drawer'], function(Loader, Drawer) {
+    Drawer.init();
+    M.util.js_complete('theme_boost/loader');
+});
+{{/js}}

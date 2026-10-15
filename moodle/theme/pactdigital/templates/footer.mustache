@@ -1,0 +1,99 @@
+{{!
+    @template theme_pactdigital/footer
+}}
+<footer id="page-footer" class="bg-dark text-white py-5 mt-5">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Colonne 1 : Branding -->
+            <div class="col-lg-4 col-md-6">
+                <h4 class="text-white fw-bold mb-3">PACTDIGITAL-BF</h4>
+                <p class="text-white-50">Plateforme nationale de développement des compétences numériques du Burkina Faso.</p>
+                <div class="d-flex gap-3 mt-4">
+                    <!-- Placeholder pour des réseaux sociaux si besoin -->
+                    <a href="#" class="text-white-50 text-decoration-none" title="Facebook"><i class="fa fa-facebook-square fa-2x"></i></a>
+                    <a href="#" class="text-white-50 text-decoration-none" title="Twitter"><i class="fa fa-twitter-square fa-2x"></i></a>
+                    <a href="#" class="text-white-50 text-decoration-none" title="LinkedIn"><i class="fa fa-linkedin-square fa-2x"></i></a>
+                </div>
+            </div>
+
+            <!-- Colonne 2 : Liens rapides -->
+            <div class="col-lg-4 col-md-6">
+                <h5 class="text-white mb-3">Liens rapides</h5>
+                <ul class="list-unstyled d-flex flex-column gap-2">
+                    <li><a href="{{{ config.wwwroot }}}" class="text-white-50 text-decoration-none">Accueil</a></li>
+                    <li><a href="{{{ config.wwwroot }}}/local/pactdigital/catalogue.php" class="text-white-50 text-decoration-none">📚 Catalogue des formations</a></li>
+                    <li><a href="{{{ config.wwwroot }}}/login/signup.php" class="text-white-50 text-decoration-none">Créer un compte</a></li>
+                    {{# output.page_doc_link }}
+                        <li><span class="text-white-50">{{{ output.page_doc_link }}}</span></li>
+                    {{/ output.page_doc_link }}
+                </ul>
+            </div>
+
+            <!-- Colonne 3 : Contact & Support -->
+            <div class="col-lg-4 col-md-12">
+                <h5 class="text-white mb-3">Support</h5>
+                <ul class="list-unstyled d-flex flex-column gap-2">
+                    {{# output.supportemail }}
+                        <li><span class="text-white-50">{{{ output.supportemail }}}</span></li>
+                    {{/ output.supportemail }}
+                    {{# output.services_support_link }}
+                        <li><span class="text-white-50">{{{ output.services_support_link }}}</span></li>
+                    {{/ output.services_support_link }}
+                </ul>
+                <div class="mt-4 logininfo text-white-50 small">
+                    {{{ output.login_info }}}
+                </div>
+            </div>
+        </div>
+
+        <hr class="border-secondary mt-5 mb-4">
+
+        <!-- Copyright & Moodle info -->
+        <div class="row align-items-center">
+            <div class="col-md-6 text-white-50 small">
+                &copy; {{# str }} copyright, core {{/ str }} PACTDIGITAL-BF. Tous droits réservés.
+                <br>
+                <div class="mt-2">{{{ output.standard_footer_html }}}</div>
+            </div>
+            <div class="col-md-6 text-md-end text-white-50 small mt-3 mt-md-0">
+                <div>{{#str}}poweredbymoodle, core{{/str}}</div>
+                {{#output.moodle_release}}
+                    <div class="text-muted">
+                        {{#str}}version, core{{/str}} {{{ output.moodle_release }}}
+                    </div>
+                {{/output.moodle_release}}
+            </div>
+        </div>
+    </div>
+
+    <!-- Moodle debug & end of body content -->
+    <div class="tool_usertours-resettourcontainer"></div>
+    {{{ output.standard_end_of_body_html }}}
+    <div class="footer-content-debugging mt-3">
+        <div class="container-fluid text-muted small">
+            {{{ output.debug_footer_html }}}
+        </div>
+    </div>
+</footer>
+
+<script>
+(function() {
+    // Si l'utilisateur est sur la page standard /course/index.php, ajouter un bandeau invitant au Catalogue Netflix
+    const tree = document.querySelector('#page-course-index-category .course_category_tree');
+    if (tree && !document.getElementById('pact-legacy-catalogue-banner')) {
+        const banner = document.createElement('div');
+        banner.id = 'pact-legacy-catalogue-banner';
+        banner.style.cssText = 'background: linear-gradient(135deg, #129b40, #0d7a32); color: white; padding: 1.5rem 2rem; border-radius: 16px; margin-bottom: 2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; box-shadow: 0 4px 20px rgba(18,155,64,0.25);';
+        banner.innerHTML = `
+            <div>
+                <h3 style="margin:0 0 0.3rem; font-size:1.3rem; font-weight:800; color:white;">📚 Nouveau Catalogue Immersif PACTDIGITAL-BF</h3>
+                <p style="margin:0; opacity:0.9; font-size:0.95rem;">Explorez nos 57 formations avec filtres par domaine, badges Bronze/Argent/Or et recherche instantanée.</p>
+            </div>
+            <a href="/local/pactdigital/catalogue.php" style="background:#fad615; color:#1a1a1a; font-weight:800; padding:0.7rem 1.6rem; border-radius:50px; text-decoration:none; white-space:nowrap; box-shadow:0 3px 10px rgba(0,0,0,0.2); transition:transform 0.2s;">
+                🎯 Découvrir le Catalogue ➔
+            </a>
+        `;
+        tree.parentNode.insertBefore(banner, tree);
+    }
+})();
+</script>

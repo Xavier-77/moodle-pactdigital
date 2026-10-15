@@ -1,0 +1,89 @@
+{{> theme_boost/head }}
+
+<body {{{ bodyattributes }}}>
+{{> core/local/toast/wrapper}}
+
+<div id="page-wrapper" class="pact-login-page-wrapper">
+
+    {{{ output.standard_top_of_body_html }}}
+
+    <div class="container-fluid p-0 h-100 min-vh-100 d-flex flex-column justify-content-between">
+        <div class="row g-0 flex-grow-1 align-items-stretch">
+
+            <!-- COLONNE GAUCHE : IDENTITÉ VISUELLE & INSTITUTIONNELLE -->
+            <div class="col-lg-6 d-none d-lg-flex flex-column justify-content-between pact-login-branding p-5">
+                <!-- En-tête haut -->
+                <div class="d-flex align-items-center gap-3">
+                    {{#armoiries_url}}
+                        <img src="{{armoiries_url}}" alt="Armoiries Burkina Faso" style="max-height: 55px; width: auto;">
+                    {{/armoiries_url}}
+                    <div>
+                        <div class="text-uppercase fw-bold text-white small" style="letter-spacing: 1px;">BURKINA FASO</div>
+                        <div class="text-white-50 small">Ministère de la Transition Digitale, des Postes et des Communications Électroniques</div>
+                    </div>
+                </div>
+
+                <!-- Contenu central -->
+                <div class="my-auto py-5">
+                    <span class="badge bg-warning text-dark px-3 py-2 rounded-pill fw-bold mb-3 shadow-sm">
+                        🇧🇫 Initiative Nationale
+                    </span>
+                    <h1 class="display-4 fw-extrabold text-white mb-3" style="font-weight: 800;">
+                        PACTDIGITAL-BF
+                    </h1>
+                    <p class="lead text-white-50 mb-4" style="max-width: 520px; font-size: 1.15rem; line-height: 1.6;">
+                        La plateforme nationale d'apprentissage et de certification des compétences numériques pour toutes les citoyennes et tous les citoyens burkinabè.
+                    </p>
+
+                    <div class="d-flex flex-column gap-3" style="max-width: 480px;">
+                        <div class="d-flex align-items-center gap-3 bg-white bg-opacity-10 p-3 rounded-4 border border-white border-opacity-10">
+                            <span class="fs-3">🥉🥈🥇</span>
+                            <div class="text-white small">
+                                <strong>Parcours certifiants :</strong> Progressez du niveau Bronze jusqu'au niveau Or et valorisez vos acquis professionnels.
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center gap-3 bg-white bg-opacity-10 p-3 rounded-4 border border-white border-opacity-10">
+                            <span class="fs-3">💻</span>
+                            <div class="text-white small">
+                                <strong>Formations pour tous :</strong> Compétences fondamentales, managériales, sectorielles et technologies émergentes.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bas de page gauche -->
+                <div class="text-white-50 small border-top border-white border-opacity-10 pt-3">
+                    © 2026 Ministère de la Transition Digitale • Tous droits réservés.
+                </div>
+            </div>
+
+            <!-- COLONNE DROITE : FORMULAIRE DE CONNEXION / INSCRIPTION -->
+            <div class="col-lg-6 d-flex flex-column justify-content-center align-items-center p-4 p-md-5 bg-white">
+                <div class="pact-login-box w-100" style="max-width: 460px;">
+                    <!-- Titre de connexion -->
+                    <div class="text-center mb-4">
+                        <h2 class="h3 fw-bold text-dark mb-1">Connexion</h2>
+                        <p class="text-muted small">Accédez à votre compte PACTDIGITAL-BF</p>
+                    </div>
+
+                    <!-- Contenu Moodle du formulaire -->
+                    <div class="login-wrapper">
+                        <div class="login-container">
+                            {{{ output.main_content }}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+{{#js}}
+M.util.js_pending('theme_boost/loader');
+require(['theme_boost/loader'], function() {
+  M.util.js_complete('theme_boost/loader');
+});
+{{/js}}

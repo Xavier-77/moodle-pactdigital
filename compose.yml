@@ -1,0 +1,41 @@
+services:
+  db:
+    image: mariadb:11.4
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: moodle
+      MYSQL_USER: moodle
+      MYSQL_PASSWORD: moodlepassword
+      MYSQL_ROOT_PASSWORD: rootpassword
+    volumes:
+      - dbdata:/var/lib/mysql
+
+  mailpit:
+    image: axllent/mailpit:latest
+    restart: unless-stopped
+    ports:
+      - "8025:8025"
+      - "1025:1025"
+
+  moodle:
+    image: moodlehq/moodle-php-apache:8.3
+    restart: unless-stopped
+    depends_on:
+      - db
+    ports:
+      - "8080:80"
+    environment:
+      MOODLE_DOCKER_DBTYPE: mariadb
+      MOODLE_DOCKER_DBNAME: moodle
+      MOODLE_DOCKER_DBUSER: moodle
+      MOODLE_DOCKER_DBPASS: moodlepassword
+      MOODLE_DOCKER_DBCOLLATION: utf8mb4_unicode_ci
+      MOODLE_DOCKER_WEB_HOST: localhost
+      MOODLE_DOCKER_WEB_PORT: 8080
+    volumes:
+      - /Users/ecoledecode/moodle-docker/moodle:/var/www/html
+      - moodledata:/var/www/moodledata
+
+volumes:
+  dbdata:
+  moodledata:

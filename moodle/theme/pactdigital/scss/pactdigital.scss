@@ -1,0 +1,1126 @@
+/* Custom styling for PACTDIGITAL-BF */
+.pactdigital-frontpage {
+
+    .domain-card {
+        transition: all 0.3s ease;
+        border: 2px solid #e9ecef;
+        cursor: pointer;
+        
+        &:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+            border-color: #129b40; /* Green primary color */
+            
+            p {
+                color: #129b40 !important;
+                font-weight: bold;
+            }
+        }
+    }
+}
+
+/* Masquer la barre de navigation du haut sur la page d'accueil UNIQUEMENT pour les visiteurs non connectés */
+body.pagelayout-frontpage.notloggedin {
+    padding-top: 0 !important;
+
+    .navbar,
+    nav.fixed-top,
+    #page-header {
+        display: none !important;
+    }
+
+    #page,
+    #topofscroll,
+    .main-inner {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+    }
+}
+
+/* Quand un utilisateur est connecté sur la page d'accueil */
+body.pagelayout-frontpage.loggedin {
+    padding-top: 60px !important;
+
+    #page-header,
+    .page-context-header,
+    .secondary-navigation {
+        display: none !important;
+    }
+}
+
+/* Supprimer le séparateur "|" entre le logo et la navigation */
+.navbar .divider,
+.navbar .border-start.h-75 {
+    display: none !important;
+}
+
+/* Forcer le centrage du logo dans la navbar avec flexbox */
+.navbar .container-fluid {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar-brand.position-absolute {
+    position: static !important;
+    transform: none !important;
+    order: 0;
+    flex: 1;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Pousser les boutons de gauche à gauche et de droite à droite */
+.navbar .me-auto {
+    flex: 1;
+}
+#usernavigation {
+    flex: 1;
+    justify-content: flex-end;
+}
+
+/* Agrandir légèrement le logo navbar */
+.navbar-brand img.logo {
+    height: 45px !important;
+    max-height: 45px !important;
+    width: auto;
+}
+
+/* ===== PLEINE EXPLOITATION DE LA LARGEUR HORIZONTALE (Cours et Accueil) ===== */
+/* Débloquer la contrainte 830px de Moodle Boost sur tout le site (cours, activités, etc.) */
+#page.drawers {
+    .main-inner {
+        max-width: 1400px !important;
+        width: 100% !important;
+    }
+}
+
+body.limitedwidth #page.drawers .main-inner,
+.pagelayout-standard #page.drawers .main-inner,
+.pagelayout-course #page.drawers .main-inner,
+.pagelayout-incourse #page.drawers .main-inner {
+    max-width: 1400px !important;
+    width: 100% !important;
+}
+
+/* Page d'accueil : supprimer les marges externes pour étendre les sections sur tout l'écran */
+body.pagelayout-frontpage {
+    #page.drawers {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+
+        .main-inner {
+            max-width: 100% !important;
+            width: 100% !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+    }
+
+    #region-main-box,
+    #region-main,
+    #page-content {
+        padding: 0 !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+        width: 100% !important;
+    }
+}
+
+.pactdigital-frontpage {
+    width: 100%;
+}
+
+.pactdigital-hero {
+    background: #f8f9fa;
+    width: 100%;
+    padding-top: 2rem !important;
+    padding-bottom: 2.5rem !important;
+}
+
+.pactdigital-hero-card {
+    background: #ffffff;
+    border-radius: 28px !important; /* Format arrondi très élégant */
+    border: 1px solid #e9ecef;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+    max-width: 1140px; /* Élargi pour occuper l'espace disponible */
+    width: 95%;
+}
+
+.pactdigital-logo-img {
+    border-radius: 16px; /* Format arrondi pour le logo */
+    max-height: 110px;
+    width: auto;
+}
+
+.pactdigital-domains {
+    background: #ffffff;
+    width: 100%;
+}
+
+.domain-card {
+    border-radius: 22px !important; /* Format arrondi pour les cartes domaines */
+}
+
+.pactdigital-parcours {
+    background: #f8f9fa;
+    width: 100%;
+}
+
+/* ===== BADGES ET INFOBULLES DES NIVEAUX (SURVOL) ===== */
+.parcours-badge-wrapper {
+    position: relative;
+    display: inline-block;
+
+    .parcours-badge {
+        padding: 0.65rem 1.4rem;
+        border-radius: 50px;
+        background: #ffffff;
+        border: 2px solid #e2e8f0;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 700;
+        font-size: 1.2rem;
+        cursor: pointer;
+        user-select: none;
+
+        &.parcours-bronze {
+            color: #b05e19;
+            border-color: rgba(205, 127, 50, 0.3);
+        }
+
+        &.parcours-argent {
+            color: #4a5568;
+            border-color: rgba(160, 174, 192, 0.35);
+        }
+
+        &.parcours-or {
+            color: #b7791f;
+            border-color: rgba(236, 179, 36, 0.35);
+        }
+    }
+
+    &:hover .parcours-badge {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+
+        &.parcours-bronze {
+            background: #fdf6ee;
+            border-color: #cd7f32;
+        }
+
+        &.parcours-argent {
+            background: #f7fafc;
+            border-color: #718096;
+        }
+
+        &.parcours-or {
+            background: #fffdf0;
+            border-color: #d69e2e;
+        }
+    }
+
+    /* Boîte d'explication flottante */
+    .parcours-tooltip {
+        position: absolute;
+        bottom: calc(100% + 14px);
+        left: 50%;
+        transform: translateX(-50%) translateY(8px);
+        background: #1a202c;
+        color: #ffffff;
+        padding: 0.85rem 1.15rem;
+        border-radius: 14px;
+        width: 270px;
+        box-shadow: 0 14px 35px rgba(0, 0, 0, 0.25);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1050;
+        text-align: center;
+
+        /* Flèche en dessous de la boîte */
+        &::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 7px;
+            border-style: solid;
+            border-color: #1a202c transparent transparent transparent;
+        }
+
+        .parcours-tooltip-title {
+            font-weight: 700;
+            font-size: 0.92rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .parcours-tooltip-desc {
+            font-weight: 400;
+            color: #e2e8f0;
+            font-size: 0.82rem;
+            line-height: 1.4;
+            margin: 0;
+        }
+    }
+
+    /* Affichage de l'explication dès que le curseur est placé dessus */
+    &:hover .parcours-tooltip {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+
+/* En-tête institutionnel & bloc e-Burkina */
+.ministere-banner {
+    border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+.ministere-title {
+    font-size: 1.05rem !important;
+    color: #129b40 !important;
+    letter-spacing: -0.2px;
+}
+
+.eburkina-presentation-card {
+    background: #fbfcfe;
+    border: 1px solid #e2e8f0;
+    border-left: 5px solid #129b40;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    max-width: 900px;
+}
+
+
+/* ==========================================================================
+   STYLE MODERNE PACTDIGITAL-BF POUR L'INTÉRIEUR DES COURS
+   ========================================================================== */
+
+/* 1. Cadre général et cartes des sections de cours */
+.course-content {
+    ul.topics,
+    ul.weeks,
+    ul.sections {
+        padding-left: 0;
+        list-style: none;
+
+        li.section.course-section {
+            background: #ffffff;
+            border-radius: 20px !important;
+            border: 1px solid #e9ecef !important;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04) !important;
+            margin-bottom: 24px !important;
+            padding: 24px 28px !important;
+            transition: all 0.25s ease-in-out;
+            position: relative;
+            overflow: hidden;
+
+            &:hover {
+                box-shadow: 0 8px 24px rgba(20, 91, 55, 0.08) !important;
+                border-color: #d1e7dd !important;
+            }
+
+            /* Bordure d'accentuation verte à gauche */
+            &::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                width: 6px;
+                background: linear-gradient(180deg, #129b40 0%, #157347 100%);
+                border-top-left-radius: 20px;
+                border-bottom-left-radius: 20px;
+            }
+
+            /* Section actuelle / mise en avant */
+            &.current {
+                border-color: #129b40 !important;
+                background: #fcfdfc;
+                box-shadow: 0 6px 20px rgba(18, 155, 64, 0.12) !important;
+
+                &::before {
+                    width: 8px;
+                    background: #fad615; /* Or pour la section en cours */
+                }
+            }
+        }
+    }
+}
+
+/* 2. Titre de chaque section */
+.course-section-header {
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px dashed #e9ecef;
+
+    .sectionname {
+        font-weight: 700 !important;
+        font-size: 1.25rem !important;
+        color: #1e293b !important;
+        letter-spacing: -0.2px;
+
+        a {
+            color: #1e293b !important;
+            text-decoration: none !important;
+
+            &:hover {
+                color: #129b40 !important;
+            }
+        }
+    }
+
+    /* Bouton d'accordéon / toggle chevron élégant */
+    .btn-icon.icons-collapse-expand {
+        background: #f1f5f9;
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+
+        &:hover {
+            background: #e2e8f0;
+        }
+    }
+}
+
+/* 3. Cartes d'activités & ressources (Quiz, Devoirs, Vidéos, Fichiers, Attestations) */
+.activity-item {
+    background: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 14px !important;
+    padding: 14px 18px !important;
+    margin-bottom: 12px !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &:hover {
+        background: #ffffff !important;
+        border-color: #129b40 !important;
+        box-shadow: 0 4px 14px rgba(18, 155, 64, 0.1) !important;
+        transform: translateX(4px);
+    }
+
+    /* Icône de l'activité */
+    .activityiconcontainer {
+        border-radius: 10px !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    }
+
+    /* Lien et titre de l'activité */
+    .activityname a {
+        font-weight: 600 !important;
+        color: #1e293b !important;
+        font-size: 0.98rem !important;
+
+        &:hover {
+            color: #129b40 !important;
+            text-decoration: none !important;
+        }
+    }
+
+    /* Badge d'achèvement / validation */
+    .badge-completion,
+    .automatic-completion-conditions .badge {
+        border-radius: 50px !important;
+        font-weight: 600 !important;
+        padding: 5px 12px !important;
+    }
+}
+
+/* 4. Bannière d'en-tête du cours */
+.pagelayout-course #page-header,
+.pagelayout-incourse #page-header {
+    background: linear-gradient(135deg, #145B37 0%, #1e7a4a 100%) !important;
+    border-radius: 20px !important;
+    color: #ffffff !important;
+    padding: 24px 32px !important;
+    margin-bottom: 28px !important;
+    box-shadow: 0 10px 25px rgba(20, 91, 55, 0.15) !important;
+
+    .page-header-headings h1 {
+        color: #ffffff !important;
+        font-weight: 800 !important;
+        font-size: 1.85rem !important;
+        letter-spacing: -0.3px;
+    }
+
+    .breadcrumb {
+        background: transparent !important;
+        padding: 0 !important;
+        margin-bottom: 8px !important;
+
+        .breadcrumb-item {
+            color: rgba(255, 255, 255, 0.75) !important;
+
+            a {
+                color: rgba(255, 255, 255, 0.9) !important;
+                text-decoration: none !important;
+
+                &:hover {
+                    color: #fad615 !important;
+                }
+            }
+
+            &::before {
+                color: rgba(255, 255, 255, 0.5) !important;
+            }
+        }
+    }
+}
+
+
+/* ==========================================================================
+   STYLE IMMERSIF SPLIT-SCREEN POUR LA PAGE DE CONNEXION PACTDIGITAL-BF
+   ========================================================================== */
+
+body.pagelayout-login {
+    background: #ffffff !important;
+    padding-top: 0 !important;
+
+    #page-wrapper {
+        min-height: 100vh;
+    }
+}
+
+.pact-login-branding {
+    background: linear-gradient(145deg, #104e2e 0%, #129b40 100%);
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: -50px;
+        right: -50px;
+        width: 350px;
+        height: 350px;
+        background: radial-gradient(circle, rgba(250, 214, 21, 0.15) 0%, transparent 70%);
+        border-radius: 50%;
+        pointer-events: none;
+    }
+}
+
+.pact-login-box {
+    .login-logo {
+        display: none !important; /* Remplacé par notre en-tête moderne */
+    }
+
+    .loginform {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .form-control {
+        border-radius: 12px !important;
+        padding: 12px 16px !important;
+        border: 1.5px solid #e2e8f0 !important;
+        font-size: 0.95rem !important;
+        transition: all 0.2s ease;
+
+        &:focus {
+            border-color: #129b40 !important;
+            box-shadow: 0 0 0 4px rgba(18, 155, 64, 0.15) !important;
+        }
+    }
+
+    #loginbtn {
+        background: #129b40 !important;
+        border-color: #129b40 !important;
+        border-radius: 50px !important;
+        font-weight: 700 !important;
+        padding: 12px 24px !important;
+        width: 100% !important;
+        font-size: 1.05rem !important;
+        box-shadow: 0 4px 14px rgba(18, 155, 64, 0.3) !important;
+        transition: all 0.2s ease;
+
+        &:hover {
+            background: #0d7a31 !important;
+            border-color: #0d7a31 !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(18, 155, 64, 0.4) !important;
+        }
+    }
+
+    .login-form-forgotpassword a {
+        color: #64748b !important;
+        font-size: 0.88rem !important;
+        text-decoration: none !important;
+
+        &:hover {
+            color: #129b40 !important;
+            text-decoration: underline !important;
+        }
+    }
+}
+
+
+/* ==========================================================================
+   ENRICHISSEMENT ESTHÉTIQUE DE LA PAGE D'ACCUEIL PACTDIGITAL-BF
+   ========================================================================== */
+
+/* Cartes des Domaines de Formation */
+.pactdigital-domains {
+    background: #f8fafc !important;
+    border-top: 1px solid #edf2f7;
+    border-bottom: 1px solid #edf2f7;
+
+    h2 {
+        font-weight: 800 !important;
+        letter-spacing: 0.5px;
+        color: #0f172a;
+        font-size: 1.85rem;
+    }
+}
+
+.domain-card {
+    background: #ffffff !important;
+    border-radius: 24px !important;
+    border: 1.5px solid #e2e8f0 !important;
+    padding: 32px 24px !important;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04) !important;
+
+    .display-4 {
+        font-size: 3.2rem;
+        transition: transform 0.3s ease;
+    }
+
+    h3 {
+        color: #0f172a !important;
+        font-size: 1.15rem !important;
+        line-height: 1.4;
+        font-weight: 700 !important;
+        margin-top: 8px;
+    }
+
+    .explorer-link {
+        color: #129b40 !important;
+        font-weight: 600;
+        font-size: 0.92rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 16px;
+        border-radius: 50px;
+        background: rgba(18, 155, 64, 0.08);
+        transition: all 0.25s ease;
+    }
+
+    &:hover {
+        transform: translateY(-8px) !important;
+        border-color: #129b40 !important;
+        box-shadow: 0 16px 32px rgba(18, 155, 64, 0.12) !important;
+
+        .display-4 {
+            transform: scale(1.15);
+        }
+
+        .explorer-link {
+            background: #129b40 !important;
+            color: #ffffff !important;
+        }
+    }
+}
+
+/* Section Parcours Disponibles */
+.pactdigital-parcours {
+    background: #ffffff !important;
+
+    h2 {
+        font-weight: 800 !important;
+        letter-spacing: 0.5px;
+        color: #0f172a;
+        font-size: 1.85rem;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   NAVBAR — Bouton Catalogue des formations
+   ═══════════════════════════════════════════════════════════════ */
+
+.pact-nav-catalogue-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 1rem;
+    background: linear-gradient(135deg, #129b40, #0d7a32);
+    color: #ffffff !important;
+    font-weight: 700;
+    font-size: 0.85rem;
+    border-radius: 50px;
+    text-decoration: none !important;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(18,155,64,0.25);
+    letter-spacing: 0.02em;
+
+    &:hover {
+        background: linear-gradient(135deg, #0d7a32, #075a24);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 16px rgba(18,155,64,0.4);
+        color: #ffffff !important;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   DASHBOARD — Widget accès rapide vers le Catalogue
+   ═══════════════════════════════════════════════════════════════ */
+
+.pact-quick-access-catalogue {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    border-radius: 16px;
+    padding: 1.8rem 2rem;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.pact-quick-access-catalogue::before {
+    content: '📚';
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 5rem;
+    opacity: 0.1;
+}
+
+.pact-quick-access-catalogue .pact-qac-text h3 {
+    font-size: 1.3rem;
+    font-weight: 800;
+    margin: 0 0 0.4rem;
+    color: white;
+}
+
+.pact-quick-access-catalogue .pact-qac-text p {
+    margin: 0;
+    font-size: 0.9rem;
+    opacity: 0.8;
+    color: rgba(255,255,255,0.8);
+}
+
+.pact-quick-access-catalogue .pact-qac-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.5rem;
+    background: #fad615;
+    color: #1a1a1a !important;
+    font-weight: 800;
+    border-radius: 50px;
+    text-decoration: none !important;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.pact-quick-access-catalogue .pact-qac-btn:hover {
+    background: #f5c800;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(250,214,21,0.5);
+    color: #1a1a1a !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PAGE CATALOGUE STANDARD (/course/index.php) — MODERNISATION
+   ═══════════════════════════════════════════════════════════════ */
+
+body#page-course-index-category {
+    .course_category_tree {
+        margin-top: 1.5rem;
+
+        .category {
+            background: #ffffff;
+            border-radius: 14px;
+            padding: 1.2rem 1.5rem;
+            margin-bottom: 1.2rem;
+            border: 2px solid #e9ecef;
+            border-left: 5px solid #129b40;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+            transition: all 0.25s ease;
+
+            &:hover {
+                border-color: #129b40;
+                box-shadow: 0 8px 25px rgba(18,155,64,0.12);
+                transform: translateY(-2px);
+            }
+
+            .categoryname a {
+                color: #0f172a;
+                font-weight: 700;
+                font-size: 1.15rem;
+                text-decoration: none;
+
+                &:hover {
+                    color: #129b40;
+                }
+            }
+        }
+
+        .coursebox {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 1rem 1.2rem;
+            margin-bottom: 0.8rem;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s ease;
+
+            &:hover {
+                background: #ffffff;
+                border-color: #129b40;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            }
+
+            .coursename a {
+                color: #1e293b;
+                font-weight: 700;
+                text-decoration: none;
+
+                &:hover {
+                    color: #129b40;
+                }
+            }
+        }
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   GALERIE DES CERTIFICATS DE PRESTIGE (BRONZE, ARGENT, OR, DIAMANT)
+   ═══════════════════════════════════════════════════════════════ */
+
+.pact-cert-card {
+    position: relative;
+    border-radius: 20px;
+    background: #ffffff;
+    padding: 1.6rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+    overflow: hidden;
+    border: 2px solid transparent;
+
+    &:hover {
+        transform: translateY(-6px);
+    }
+
+    .pact-cert-inner {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    /* En-tête officiel */
+    .pact-cert-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+        gap: 0.5rem;
+    }
+
+    .pact-cert-nation {
+        font-size: 0.68rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #64748b;
+    }
+
+    .pact-cert-badge {
+        padding: 0.3rem 0.85rem;
+        border-radius: 50px;
+        font-size: 0.78rem;
+        font-weight: 800;
+        letter-spacing: 0.03em;
+        white-space: nowrap;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    }
+
+    /* Titres */
+    .pact-cert-type {
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #129b40;
+        margin-bottom: 0.3rem;
+    }
+
+    .pact-cert-title {
+        font-size: 1.15rem;
+        font-weight: 800;
+        color: #0f172a;
+        line-height: 1.35;
+        margin-bottom: 0.6rem;
+    }
+
+    .pact-cert-recipient {
+        font-size: 0.88rem;
+        color: #475569;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+
+        strong {
+            color: #0f172a;
+            font-weight: 700;
+        }
+    }
+
+    /* Zone vérification & QR code */
+    .pact-cert-verify-box {
+        background: rgba(255,255,255,0.85);
+        border: 1px dashed #cbd5e1;
+        border-radius: 12px;
+        padding: 0.75rem 0.9rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        margin-bottom: 1.2rem;
+        backdrop-filter: blur(4px);
+    }
+
+    .pact-cert-meta {
+        flex: 1;
+        min-width: 0;
+
+        .pact-cert-code-label {
+            font-size: 0.7rem;
+            color: #64748b;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 0.1rem;
+        }
+
+        .pact-cert-code {
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #0f172a;
+            word-break: break-all;
+        }
+
+        .pact-cert-date {
+            font-size: 0.75rem;
+            color: #64748b;
+            margin-top: 0.2rem;
+        }
+    }
+
+    .pact-cert-qr {
+        width: 60px;
+        height: 60px;
+        background: #ffffff;
+        padding: 4px;
+        border-radius: 8px;
+        border: 1px solid #e2e8f0;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+        &:hover {
+            transform: scale(1.15);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+    }
+
+    /* Actions */
+    .pact-cert-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-top: auto;
+    }
+
+    .btn-cert-download {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.6rem 1rem;
+        background: linear-gradient(135deg, #129b40, #0d7a32);
+        color: #ffffff !important;
+        font-weight: 700;
+        font-size: 0.85rem;
+        border-radius: 50px;
+        text-decoration: none !important;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 8px rgba(18,155,64,0.25);
+
+        &:hover {
+            background: linear-gradient(135deg, #0d7a32, #075a24);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(18,155,64,0.4);
+            color: #ffffff !important;
+        }
+    }
+
+    .pact-cert-social-group {
+        display: flex;
+        gap: 0.4rem;
+    }
+
+    .btn-linkedin-add {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.35rem;
+        padding: 0.5rem 0.75rem;
+        background: #0a66c2;
+        color: #ffffff !important;
+        font-weight: 700;
+        font-size: 0.78rem;
+        border-radius: 50px;
+        text-decoration: none !important;
+        transition: all 0.2s ease;
+
+        &:hover {
+            background: #004182;
+            transform: translateY(-1px);
+            color: #ffffff !important;
+            box-shadow: 0 3px 10px rgba(10,102,194,0.3);
+        }
+    }
+
+    .btn-linkedin-share {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.5rem 0.8rem;
+        background: #e8f3fc;
+        color: #0a66c2 !important;
+        font-weight: 700;
+        font-size: 0.78rem;
+        border-radius: 50px;
+        text-decoration: none !important;
+        transition: all 0.2s ease;
+        border: 1px solid #bfdbfe;
+
+        &:hover {
+            background: #0a66c2;
+            color: #ffffff !important;
+            transform: translateY(-1px);
+        }
+    }
+
+    .btn-cert-verify {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.35rem;
+        padding: 0.45rem 0.75rem;
+        background: #f1f5f9;
+        color: #475569 !important;
+        font-weight: 600;
+        font-size: 0.75rem;
+        border-radius: 50px;
+        text-decoration: none !important;
+        transition: all 0.2s ease;
+
+        &:hover {
+            background: #e2e8f0;
+            color: #0f172a !important;
+        }
+    }
+
+    /* ── Variantes métalliques ── */
+    &.cert-bronze {
+        border-color: #cd7f32;
+        background: linear-gradient(145deg, #ffffff 0%, #fffcf8 60%, #fbf3ec 100%);
+        box-shadow: 0 4px 20px rgba(205, 127, 50, 0.15);
+
+        &:hover {
+            box-shadow: 0 12px 35px rgba(205, 127, 50, 0.28);
+        }
+        .pact-cert-badge {
+            background: linear-gradient(135deg, #cd7f32, #8c531b);
+            color: #ffffff;
+        }
+    }
+
+    &.cert-argent {
+        border-color: #90a4ae;
+        background: linear-gradient(145deg, #ffffff 0%, #f8fafc 60%, #eef2f6 100%);
+        box-shadow: 0 4px 20px rgba(144, 164, 174, 0.2);
+
+        &:hover {
+            box-shadow: 0 12px 35px rgba(144, 164, 174, 0.35);
+        }
+        .pact-cert-badge {
+            background: linear-gradient(135deg, #78909c, #455a64);
+            color: #ffffff;
+        }
+    }
+
+    &.cert-or {
+        border-color: #d4af37;
+        background: linear-gradient(145deg, #ffffff 0%, #fffef4 60%, #fcf7db 100%);
+        box-shadow: 0 4px 20px rgba(212, 175, 55, 0.22);
+
+        &:hover {
+            box-shadow: 0 12px 40px rgba(212, 175, 55, 0.4);
+        }
+        .pact-cert-badge {
+            background: linear-gradient(135deg, #d4af37, #996515);
+            color: #ffffff;
+        }
+    }
+
+    &.cert-diamant {
+        border-color: #00bcd4;
+        background: linear-gradient(145deg, #ffffff 0%, #f0fdff 60%, #e0f7fa 100%);
+        box-shadow: 0 4px 20px rgba(0, 188, 212, 0.2);
+
+        &:hover {
+            box-shadow: 0 12px 40px rgba(0, 188, 212, 0.38);
+        }
+        .pact-cert-badge {
+            background: linear-gradient(135deg, #00acc1, #00838f);
+            color: #ffffff;
+        }
+    }
+}
+
+/* ── Masquer le bouton "Avis relatif aux cookies" sur la page de connexion ── */
+.pact-login-page-wrapper #cookiepolicy,
+.pact-login-page-wrapper .cookienotice,
+.pact-login-page-wrapper [data-region="cookiepolicy"],
+.pact-login-page-wrapper .logincookies,
+body.pagelayout-login #cookiepolicy,
+body.pagelayout-login .cookienotice,
+body.pagelayout-login [data-region="cookiepolicy"],
+body.pagelayout-login .logincookies {
+    display: none !important;
+}

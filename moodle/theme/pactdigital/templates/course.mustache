@@ -1,0 +1,325 @@
+{{> theme_boost/head }}
+
+<body {{{ bodyattributes }}}>
+{{> core/local/toast/wrapper}}
+<div id="page-wrapper" class="d-print-block">
+
+    {{{ output.standard_top_of_body_html }}}
+
+    {{> theme_pactdigital/navbar }}
+
+    {{#courseindex}}
+        {{< theme_boost/drawer }}
+            {{$id}}theme_boost-drawers-courseindex{{/id}}
+            {{$drawerheadercontent}}
+                {{> theme_boost/courseindexdrawercontrols}}
+            {{/drawerheadercontent}}
+            {{$drawerclasses}}drawer drawer-left {{#courseindexopen}}show{{/courseindexopen}}{{/drawerclasses}}
+            {{$drawercontent}}
+                {{{courseindex}}}
+            {{/drawercontent}}
+            {{$drawerpreferencename}}drawer-open-index{{/drawerpreferencename}}
+            {{$drawerstate}}show-drawer-left{{/drawerstate}}
+            {{$tooltipplacement}}right{{/tooltipplacement}}
+            {{$closebuttontext}}{{#str}}closecourseindex, core{{/str}}{{/closebuttontext}}
+        {{/ theme_boost/drawer}}
+    {{/courseindex}}
+    {{#hasblocks}}
+        {{< theme_boost/drawer }}
+            {{$id}}theme_boost-drawers-blocks{{/id}}
+            {{$drawerclasses}}drawer drawer-right{{#blockdraweropen}} show{{/blockdraweropen}}{{/drawerclasses}}
+            {{$drawercontent}}
+                <div class="d-print-none">
+                    {{{ addblockbutton }}}
+                    {{{ sidepreblocks }}}
+                </div>
+            {{/drawercontent}}
+            {{$drawerpreferencename}}drawer-open-block{{/drawerpreferencename}}
+            {{$forceopen}}{{#forceblockdraweropen}}1{{/forceblockdraweropen}}{{/forceopen}}
+            {{$drawerstate}}show-drawer-right{{/drawerstate}}
+            {{$tooltipplacement}}left{{/tooltipplacement}}
+            {{$drawercloseonresize}}1{{/drawercloseonresize}}
+            {{$closebuttontext}}{{#str}}closeblockdrawer, core{{/str}}{{/closebuttontext}}
+        {{/ theme_boost/drawer}}
+    {{/hasblocks}}
+
+    <div id="page" data-region="mainpage" data-usertour="scroller" class="drawers {{#courseindexopen}}show-drawer-left{{/courseindexopen}} {{#blockdraweropen}}show-drawer-right{{/blockdraweropen}} drag-container">
+        <div id="topofscroll" class="main-inner">
+            <div class="drawer-toggles d-flex">
+                {{#courseindex}}
+                    <div class="drawer-toggler drawer-left-toggle open-nav d-print-none">
+                        <button
+                            class="btn icon-no-margin"
+                            data-toggler="drawers"
+                            data-action="toggle"
+                            data-target="theme_boost-drawers-courseindex"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="right"
+                            title="{{#str}}opendrawerindex, core{{/str}}"
+                        >
+                            <span class="visually-hidden">{{#str}}opendrawerindex, core{{/str}}</span>
+                            {{#pix}} t/index_drawer, moodle {{/pix}}
+                        </button>
+                    </div>
+                {{/courseindex}}
+                {{#hasblocks}}
+                    <div class="drawer-toggler drawer-right-toggle ms-auto d-print-none">
+                        <button
+                            class="btn icon-no-margin"
+                            data-toggler="drawers"
+                            data-action="toggle"
+                            data-target="theme_boost-drawers-blocks"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="right"
+                            title="{{#str}}opendrawerblocks, core{{/str}}"
+                        >
+                            <span class="visually-hidden">{{#str}}opendrawerblocks, core{{/str}}</span>
+                            <span class="dir-rtl-hide">{{#pix}}t/blocks_drawer, core{{/pix}}</span>
+                            <span class="dir-ltr-hide">{{#pix}}t/blocks_drawer_rtl, core{{/pix}}</span>
+                        </button>
+                    </div>
+                {{/hasblocks}}
+            </div>
+
+            {{{ output.full_header }}}
+            {{#secondarymoremenu}}
+                <div class="secondary-navigation d-print-none">
+                    {{> core/moremenu}}
+                </div>
+            {{/secondarymoremenu}}
+
+            <div id="page-content" class="pb-3 d-print-block">
+                <div id="region-main-box">
+                    {{#hasregionmainsettingsmenu}}
+                    <div id="region-main-settings-menu" class="d-print-none">
+                        <div> {{{ regionmainsettingsmenu }}} </div>
+                    </div>
+                    {{/hasregionmainsettingsmenu}}
+                    <div id="region-main">
+                        {{#hasregionmainsettingsmenu}}
+                            <div class="region_main_settings_menu_proxy"></div>
+                        {{/hasregionmainsettingsmenu}}
+
+                        <!-- ========================================================= -->
+                        <!-- EN-TÊTE FORMATEUR DÉDIÉ (VISIBLE SEULEMENT PAR FORMATEUR) -->
+                        <!-- ========================================================= -->
+                        {{#is_course_trainer}}
+                        <style>
+                        /* Désactivation stricte de la modification du cours dans la vue formateur */
+                        .editmode-switch-form,
+                        .activity-add,
+                        .section-actions,
+                        .course-section-header .section_action_menu {
+                            display: none !important;
+                        }
+                        </style>
+                        <div class="pact-trainer-course-banner mb-4">
+                            <!-- Bandeau Principal -->
+                            <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-3" style="background: linear-gradient(135deg, #145B37 0%, #1e7a4a 100%); color: #fff;">
+                                <div class="card-body p-4">
+                                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3">
+                                        <div>
+                                            <div class="d-flex align-items-center gap-2 mb-2 flex-wrap">
+                                                <span class="badge bg-white text-success px-3 py-1 rounded-pill fw-bold">
+                                                    🧑‍🏫 Espace Formateur
+                                                </span>
+                                                <span class="badge bg-white bg-opacity-20 text-white border border-white border-opacity-25 px-3 py-1 rounded-pill">
+                                                    🛡️ Mode Accompagnement (Contenu non modifiable)
+                                                </span>
+                                            </div>
+                                            <h2 class="h4 fw-bold mb-1 text-white">Cockpit Pédagogique — {{course_fullname}}</h2>
+                                            <p class="mb-0 opacity-75 small">Suivez la cohorte, accédez aux guides pédagogiques et évaluez les devoirs en attente.</p>
+                                        </div>
+
+                                        <!-- Boutons d'action prioritaires -->
+                                        <div class="d-flex gap-2 flex-wrap">
+                                            <a href="{{{trainer_cockpit_url}}}" class="btn btn-warning text-dark fw-bold rounded-pill px-4 shadow-sm" style="background: #fad615; border: none;">
+                                                📊 Ouvrir le Grand Cockpit ➔
+                                            </a>
+                                            <a href="{{{grader_report_url}}}" class="btn btn-outline-light rounded-pill px-3" target="_blank" title="Ouvrir le carnet de notes">
+                                                ✍️ Noter les devoirs
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <!-- Mini KPIs de la cohorte en direct -->
+                                    <div class="row g-2 text-center pt-2 border-top border-white border-opacity-15">
+                                        <div class="col-6 col-md-3">
+                                            <div class="bg-white bg-opacity-10 py-2 px-3 rounded-3">
+                                                <div class="h4 fw-bold mb-0 text-white">{{total_students}}</div>
+                                                <div class="small opacity-75">👥 Inscrits</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-md-3">
+                                            <div class="bg-white bg-opacity-10 py-2 px-3 rounded-3">
+                                                <div class="h4 fw-bold mb-0 text-white">{{avg_progress}}%</div>
+                                                <div class="small opacity-75">📈 Progression moy.</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-md-3">
+                                            <div class="bg-white bg-opacity-10 py-2 px-3 rounded-3">
+                                                <div class="h4 fw-bold mb-0 {{#has_inactive}}text-warning{{/has_inactive}}{{^has_inactive}}text-white{{/has_inactive}}">
+                                                    {{inactive_students}}
+                                                </div>
+                                                <div class="small opacity-75">⚠️ Inactifs (> 7j)</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-md-3">
+                                            <div class="bg-white bg-opacity-10 py-2 px-3 rounded-3">
+                                                <div class="h4 fw-bold mb-0 {{#has_pending_grades}}text-warning{{/has_pending_grades}}{{^has_pending_grades}}text-white{{/has_pending_grades}}">
+                                                    {{pending_grades}}
+                                                </div>
+                                                <div class="small opacity-75">📬 À corriger</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Bloc Dédié : Guides & Éléments pour le Formateur -->
+                            <div class="card border shadow-sm rounded-4 mb-4">
+                                <div class="card-header bg-white border-0 pt-3 px-4 pb-2 d-flex justify-content-between align-items-center flex-wrap gap-2">
+                                    <h3 class="h6 fw-bold mb-0 text-dark d-flex align-items-center gap-2">
+                                        📚 Guides Pédagogiques &amp; Ressources Formateur
+                                    </h3>
+                                    <button class="btn btn-sm btn-outline-success rounded-pill px-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTrainerGuides" aria-expanded="true">
+                                        Afficher / Masquer les Guides ▾
+                                    </button>
+                                </div>
+                                <div class="collapse show" id="collapseTrainerGuides">
+                                    <div class="card-body p-4 pt-2">
+
+                                        <!-- 1. Éléments & Ressources spécifiques trouvés dans ce cours -->
+                                        {{#has_trainer_guides}}
+                                        <div class="mb-3">
+                                            <div class="text-muted small fw-semibold text-uppercase mb-2" style="letter-spacing: 0.5px;">
+                                                Ressources &amp; Corrigés intégrés à ce cours :
+                                            </div>
+                                            <div class="row g-2">
+                                                {{#trainer_guides}}
+                                                <div class="col-md-6 col-lg-4">
+                                                    <div class="border rounded-3 p-3 bg-light d-flex align-items-center justify-content-between h-100">
+                                                        <div class="me-2 overflow-hidden">
+                                                            <span class="badge bg-success-subtle text-success border border-success-subtle mb-1">
+                                                                {{badge}}
+                                                            </span>
+                                                            <div class="fw-semibold text-truncate small" title="{{name}}">
+                                                                {{icon}} {{name}}
+                                                            </div>
+                                                        </div>
+                                                        <a href="{{{url}}}" class="btn btn-sm btn-success rounded-pill px-3 text-nowrap" target="_blank">
+                                                            Consulter
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                {{/trainer_guides}}
+                                            </div>
+                                        </div>
+                                        {{/has_trainer_guides}}
+
+                                        <!-- 2. Accordéon des Fiches Pédagogiques Officielles PACTDIGITAL -->
+                                        <div class="accordion accordion-flush border rounded-3 overflow-hidden" id="accordionTrainerPact">
+                                            <!-- Fiche 1 : Objectifs & Animation -->
+                                            <div class="accordion-item">
+                                                <h4 class="accordion-header" id="headingGuideOne">
+                                                    <button class="accordion-button collapsed py-2 px-3 fw-semibold small text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGuideOne">
+                                                        🎯 Fiche d'Animation &amp; Objectifs Clés du Module
+                                                    </button>
+                                                </h4>
+                                                <div id="collapseGuideOne" class="accordion-collapse collapse" data-bs-parent="#accordionTrainerPact">
+                                                    <div class="accordion-body small text-muted bg-white">
+                                                        <p><strong>Rôle du Formateur PACTDIGITAL :</strong> Vous intervenez en tant que facilitateur et garant de la progression. Les cours sont conçus pour un apprentissage autonome, mais votre présence humaine est déterminante pour lever les doutes et maintenir la motivation.</p>
+                                                        <ul class="mb-0">
+                                                            <li>Vérifiez régulièrement l'onglet des inactifs pour déclencher des relances bienveillantes.</li>
+                                                            <li>Privilégiez des exemples concrets tirés du contexte burkinabé pour illustrer les notions techniques.</li>
+                                                            <li>Organisez au besoin un créneau de questions-réponses en visioconférence pour les points d'étape.</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Fiche 2 : Barème & Évaluation -->
+                                            <div class="accordion-item">
+                                                <h4 class="accordion-header" id="headingGuideTwo">
+                                                    <button class="accordion-button collapsed py-2 px-3 fw-semibold small text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGuideTwo">
+                                                        📋 Barème Type &amp; Critères d'Évaluation des Devoirs
+                                                    </button>
+                                                </h4>
+                                                <div id="collapseGuideTwo" class="accordion-collapse collapse" data-bs-parent="#accordionTrainerPact">
+                                                    <div class="accordion-body small text-muted bg-white">
+                                                        <p><strong>Critères de notation recommandés :</strong></p>
+                                                        <ul class="mb-2">
+                                                            <li><strong>Compréhension de la consigne (40%) :</strong> L'apprenant a-t-il bien appliqué les notions du cours ?</li>
+                                                            <li><strong>Qualité du livrable (40%) :</strong> Rigueur, clarté et complétude de la réponse déposée.</li>
+                                                            <li><strong>Esprit critique &amp; Personnalisation (20%) :</strong> Originalité de la démarche et propreté du rendu.</li>
+                                                        </ul>
+                                                        <p class="mb-0"><em>Seuil de validation de l'attestation : 70% de réussite globale. Donnez toujours un retour encourageant dans le feedback textuel.</em></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Fiche 3 : Méthode de Relance Anti-décrochage -->
+                                            <div class="accordion-item">
+                                                <h4 class="accordion-header" id="headingGuideThree">
+                                                    <button class="accordion-button collapsed py-2 px-3 fw-semibold small text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGuideThree">
+                                                        💡 Guide de Relance &amp; Accompagnement Bienveillant
+                                                    </button>
+                                                </h4>
+                                                <div id="collapseGuideThree" class="accordion-collapse collapse" data-bs-parent="#accordionTrainerPact">
+                                                    <div class="accordion-body small text-muted bg-white">
+                                                        <p>Dans l'onglet <strong>📢 Relance &amp; Messagerie</strong> du grand cockpit, vous pouvez cocher en un clic tous les étudiants n'ayant pas ouvert le cours depuis 7 jours et leur envoyer un rappel positif pré-rédigé.</p>
+                                                        <p class="mb-0">Une simple relance à J+7 réduit le taux d'abandon de près de 45% sur les formations à distance !</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Séparateur doux entre le cockpit formateur et les sections de cours -->
+                        <div class="d-flex align-items-center my-4">
+                            <hr class="flex-grow-1">
+                            <span class="px-3 text-muted small text-uppercase fw-semibold" style="letter-spacing: 0.5px;">Contenu du Cours (Vue Apprenant)</span>
+                            <hr class="flex-grow-1">
+                        </div>
+                        {{/is_course_trainer}}
+
+                        <!-- ========================================================= -->
+                        <!-- CONTENU DU COURS MOODLE (AFFICHÉ POUR TOUS)              -->
+                        <!-- ========================================================= -->
+                        {{{ output.course_content_header }}}
+                        {{#headercontent}}
+                            {{> core/activity_header }}
+                        {{/headercontent}}
+                        {{#overflow}}
+                            <div class="container-fluid tertiary-navigation">
+                                <div class="navitem">
+                                    {{> core/url_select}}
+                                </div>
+                            </div>
+                        {{/overflow}}
+                        {{{ output.main_content }}}
+                        {{{ output.activity_navigation }}}
+                        {{{ output.course_content_footer }}}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{> theme_boost/footer }}
+    </div>
+    {{{ output.standard_after_main_region_html }}}
+</div>
+
+</body>
+</html>
+{{#js}}
+M.util.js_pending('theme_boost/loader');
+require(['theme_boost/loader', 'theme_boost/drawer'], function(Loader, Drawer) {
+    Drawer.init();
+    M.util.js_complete('theme_boost/loader');
+});
+{{/js}}
