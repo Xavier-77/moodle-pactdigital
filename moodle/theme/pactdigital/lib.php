@@ -72,6 +72,18 @@ function theme_pactdigital_get_extra_scss($theme) {
 }
 
 /**
+ * Redirige automatiquement l'inscription native Moodle vers la page PACTDIGITAL
+ * où l'e-mail est 100% facultatif et l'activation immédiate.
+ */
+function theme_pactdigital_page_init(\moodle_page $page) {
+    global $CFG;
+    $path = parse_url($page->url->out(false), PHP_URL_PATH);
+    if ($path && strpos($path, '/login/signup.php') !== false) {
+        redirect(new moodle_url('/local/pactdigital/signup.php'));
+    }
+}
+
+/**
  * Injecte l'overlay minuteur PACT sur les pages d'examen quiz,
  * et redirige vers exam_result.php après soumission.
  * Hook appelé par Moodle lors du rendu du pied de page.

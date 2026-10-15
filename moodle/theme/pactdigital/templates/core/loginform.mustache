@@ -181,12 +181,11 @@
             <h2 class="login-heading">{{#str}}firsttime{{/str}}</h2>
             {{{instructions}}}
         </div>
-    {{/hasinstructions}}
-    {{#cansignup}}
-        <div class="login-signup">
-            <a class="btn btn-secondary" href="{{signupurl}}">{{#str}}startsignup{{/str}}</a>
+        <div class="login-signup mb-3">
+            <a class="btn btn-warning w-100 fw-bold py-2 rounded-pill shadow-sm text-dark" href="/local/pactdigital/signup.php">
+                ✨ Créer un compte (e-mail facultatif)
+            </a>
         </div>
-    {{/cansignup}}
     {{#canloginasguest}}
         <div class="login-divider"></div>
         <h2 class="login-heading">{{#str}}someallowguest{{/str}}</h2>
