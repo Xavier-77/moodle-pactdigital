@@ -36,13 +36,22 @@
                 {{/is_logged_in}}
 
                 {{#is_logged_in}}
-                    <a href="{{{ urls.apprenant }}}" class="pact-btn pact-btn-espace">🎓 Mon Espace</a>
-                    <a href="{{{ urls.dashboard }}}" class="pact-btn pact-btn-outline">📊 Tableau de bord</a>
+                    {{#is_trainer}}
+                        <a href="{{{ urls.formateur }}}" class="pact-btn pact-btn-espace">Espace Formateur</a>
+                    {{/is_trainer}}
+                    {{^is_trainer}}
+                        <a href="{{{ urls.apprenant }}}" class="pact-btn pact-btn-espace">Mon Espace</a>
+                    {{/is_trainer}}
+                    {{#is_manager}}
+                        <a href="{{{ urls.management }}}" class="pact-btn pact-btn-outline">Gestion des cours</a>
+                    {{/is_manager}}
+                    <a href="{{{ urls.dashboard }}}" class="pact-btn pact-btn-outline">Tableau de bord</a>
                     <div class="pact-user-badge">
-                        <span class="user-greeting">👋 {{user_fullname}}</span>
+                        <span class="user-greeting">{{user_fullname}}</span>
                         <a href="{{{ urls.logout }}}" class="pact-logout-link" title="Se déconnecter">Déconnexion</a>
                     </div>
                 {{/is_logged_in}}
+
             </div>
         </div>
     </header>

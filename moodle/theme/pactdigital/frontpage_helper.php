@@ -237,8 +237,20 @@ function pactdigital_get_frontpage_context() {
         ];
     }
 
+    $is_trainer = false;
+    $is_manager = false;
+    if ($is_logged_in) {
+        $is_admin = is_siteadmin($USER->id);
+        $trainer_count = $DB->count_records_sql("SELECT COUNT(*) FROM {role_assignments} WHERE userid = :uid AND roleid IN (3, 4, 9, 10)", ['uid' => $USER->id]);
+        $is_trainer = $is_admin || ($trainer_count > 0);
+        $manager_count = $DB->count_records_sql("SELECT COUNT(*) FROM {role_assignments} WHERE userid = :uid AND roleid IN (1, 2)", ['uid' => $USER->id]);
+        $is_manager = $is_admin || ($manager_count > 0);
+    }
+
     return [
         'is_logged_in'    => $is_logged_in,
+        'is_trainer'      => $is_trainer,
+        'is_manager'      => $is_manager,
         'user_fullname'   => $is_logged_in ? fullname($USER) : '',
         'stats' => [
             'courses'     => count($all_courses),
@@ -255,6 +267,7 @@ function pactdigital_get_frontpage_context() {
             'verify'      => (new moodle_url('/local/pactdigital/verify.php'))->out(false),
             'formateur'   => (new moodle_url('/local/pactdigital/formateur.php'))->out(false),
             'apprenant'   => (new moodle_url('/local/pactdigital/apprenant.php'))->out(false),
+            'management'  => (new moodle_url('/course/management.php'))->out(false),
             'dashboard'   => (new moodle_url('/my/'))->out(false),
             'logout'      => (new moodle_url('/login/logout.php', ['sesskey' => sesskey()]))->out(false),
         ],
