@@ -1,319 +1,464 @@
 {{!
-    This file is part of Moodle - http://moodle.org/
-
-    Moodle is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    Moodle is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-}}
-{{!
     @template theme_pactdigital/frontpage
+    Vitrine d'accueil moderne inspirée d'Udemy pour PACTDIGITAL-BF
 }}
 {{> theme_boost/head }}
 
 <body {{{ bodyattributes }}}>
 {{> core/local/toast/wrapper}}
-<div id="page-wrapper" class="d-print-block">
+<div id="page-wrapper" class="d-print-block pact-udemy-wrapper">
 
     {{{ output.standard_top_of_body_html }}}
 
-    {{#is_user_logged_in}}
-        {{> theme_pactdigital/navbar }}
-    {{/is_user_logged_in}}
-
-    {{#courseindex}}
-        {{< theme_boost/drawer }}
-            {{$id}}theme_boost-drawers-courseindex{{/id}}
-            {{$drawerheadercontent}}
-                {{> theme_boost/courseindexdrawercontrols}}
-            {{/drawerheadercontent}}
-            {{$drawerclasses}}drawer drawer-left {{#courseindexopen}}show{{/courseindexopen}}{{/drawerclasses}}
-            {{$drawercontent}}
-                {{{courseindex}}}
-            {{/drawercontent}}
-            {{$drawerpreferencename}}drawer-open-index{{/drawerpreferencename}}
-            {{$drawerstate}}show-drawer-left{{/drawerstate}}
-            {{$tooltipplacement}}right{{/tooltipplacement}}
-            {{$closebuttontext}}{{#str}}closecourseindex, core{{/str}}{{/closebuttontext}}
-        {{/ theme_boost/drawer}}
-    {{/courseindex}}
-    {{#hasblocks}}
-        {{< theme_boost/drawer }}
-            {{$id}}theme_boost-drawers-blocks{{/id}}
-            {{$drawerclasses}}drawer drawer-right{{#blockdraweropen}} show{{/blockdraweropen}}{{/drawerclasses}}
-            {{$drawercontent}}
-                <div class="d-print-none">
-                    {{{ addblockbutton }}}
-                    {{{ sidepreblocks }}}
+    <!-- ── TOP NAVBAR STYLE UDEMY ─────────────────────────────────────────── -->
+    <header class="pact-udemy-navbar">
+        <div class="pact-udemy-nav-inner">
+            <!-- Brand & Armoiries -->
+            <a href="{{{ urls.catalogue }}}" class="pact-nav-brand">
+                {{#armoiries_url}}
+                    <img src="{{armoiries_url}}" alt="Armoiries Burkina Faso" class="pact-nav-flag">
+                {{/armoiries_url}}
+                <div class="pact-nav-brand-text">
+                    <span class="pact-nav-brand-title">PACTDIGITAL-BF</span>
+                    <span class="pact-nav-brand-sub">BURKINA FASO • MTDPCE</span>
                 </div>
-            {{/drawercontent}}
-            {{$drawerpreferencename}}drawer-open-block{{/drawerpreferencename}}
-            {{$forceopen}}{{#forceblockdraweropen}}1{{/forceblockdraweropen}}{{/forceopen}}
-            {{$drawerstate}}show-drawer-right{{/drawerstate}}
-            {{$tooltipplacement}}left{{/tooltipplacement}}
-            {{$drawercloseonresize}}1{{/drawercloseonresize}}
-            {{$closebuttontext}}{{#str}}closeblockdrawer, core{{/str}}{{/closebuttontext}}
-        {{/ theme_boost/drawer}}
-    {{/hasblocks}}
-    <div id="page" data-region="mainpage" data-usertour="scroller" class="drawers {{#courseindexopen}}show-drawer-left{{/courseindexopen}} {{#blockdraweropen}}show-drawer-right{{/blockdraweropen}} drag-container">
-        <div id="topofscroll" class="main-inner">
-            <div class="drawer-toggles d-flex">
-                {{#courseindex}}
-                    <div class="drawer-toggler drawer-left-toggle open-nav d-print-none">
-                        <button
-                            class="btn icon-no-margin"
-                            data-toggler="drawers"
-                            data-action="toggle"
-                            data-target="theme_boost-drawers-courseindex"
-                            data-bs-toggle="tooltip"
-                            data-bs-placement="right"
-                            title="{{#str}}opendrawerindex, core{{/str}}"
-                        >
-                            <span class="visually-hidden">{{#str}}opendrawerindex, core{{/str}}</span>
-                            {{#pix}} t/index_drawer, moodle {{/pix}}
-                        </button>
-                    </div>
-                {{/courseindex}}
-                {{#hasblocks}}
-                    <div class="drawer-toggler drawer-right-toggle ms-auto d-print-none">
-                        <button
-                            class="btn icon-no-margin"
-                            data-toggler="drawers"
-                            data-action="toggle"
-                            data-target="theme_boost-drawers-blocks"
-                            data-bs-toggle="tooltip"
-                            data-bs-placement="right"
-                            title="{{#str}}opendrawerblocks, core{{/str}}"
-                        >
-                            <span class="visually-hidden">{{#str}}opendrawerblocks, core{{/str}}</span>
-                            <span class="dir-rtl-hide">{{#pix}}t/blocks_drawer, core{{/pix}}</span>
-                            <span class="dir-ltr-hide">{{#pix}}t/blocks_drawer_rtl, core{{/pix}}</span>
-                        </button>
-                    </div>
-                {{/hasblocks}}
+            </a>
+
+            <!-- Menu Explorer / Catégories -->
+            <div class="pact-nav-categories">
+                <a href="{{{ urls.catalogue }}}" class="pact-nav-cat-btn">
+                    <span class="cat-icon">☰</span>
+                    <span class="cat-label">Catégories</span>
+                </a>
             </div>
-            
-            <div id="page-content" class="pb-3 d-print-block">
-                <div id="region-main-box">
-                    {{#hasregionmainsettingsmenu}}
-                    <div id="region-main-settings-menu" class="d-print-none">
-                        <div> {{{ regionmainsettingsmenu }}} </div>
+
+            <!-- Barre de recherche centrale façon Udemy -->
+            <form action="{{{ urls.catalogue }}}" method="GET" class="pact-nav-search">
+                <div class="pact-nav-search-box">
+                    <span class="pact-search-icon">🔍</span>
+                    <input type="text" name="q" class="pact-search-input" placeholder="Que souhaitez-vous apprendre ? (IA, Bureautique, Cybersécurité...)" autocomplete="off">
+                    <button type="submit" class="pact-search-btn" aria-label="Rechercher">Rechercher</button>
+                </div>
+            </form>
+
+            <!-- Liens directs & Actions -->
+            <div class="pact-nav-actions">
+                <a href="{{{ urls.verify }}}" class="pact-nav-link text-nowrap" title="Vérifier une attestation officielle">
+                    🛡️ Vérifier attestation
+                </a>
+
+                {{^is_logged_in}}
+                    <a href="{{{ urls.login }}}" class="pact-btn pact-btn-outline">Se connecter</a>
+                    <a href="{{{ urls.signup }}}" class="pact-btn pact-btn-primary">S'inscrire</a>
+                {{/is_logged_in}}
+
+                {{#is_logged_in}}
+                    <a href="{{{ urls.apprenant }}}" class="pact-btn pact-btn-espace">🎓 Mon Espace</a>
+                    <a href="{{{ urls.dashboard }}}" class="pact-btn pact-btn-outline">📊 Tableau de bord</a>
+                    <div class="pact-user-badge">
+                        <span class="user-greeting">👋 {{user_fullname}}</span>
+                        <a href="{{{ urls.logout }}}" class="pact-logout-link" title="Se déconnecter">Déconnexion</a>
                     </div>
-                    {{/hasregionmainsettingsmenu}}
+                {{/is_logged_in}}
+            </div>
+        </div>
+    </header>
+
+    <div id="page" class="pact-page-content">
+        <div id="topofscroll" class="main-inner">
+            <div id="page-content">
+                <div id="region-main-box">
                     <div id="region-main">
-                        {{#hasregionmainsettingsmenu}}
-                            <div class="region_main_settings_menu_proxy"></div>
-                        {{/hasregionmainsettingsmenu}}
-                        
-                        <!-- PACTDIGITAL CUSTOM FRONT PAGE HERO SECTION -->
-                        <div class="pactdigital-frontpage">
-                                                                                    <!-- Hero Section : pleine largeur avec carte arrondie -->
-                            <div class="pactdigital-hero text-center py-4 px-3">
-                                <div class="pactdigital-hero-card text-center p-4 p-md-5 mx-auto">
-                                    <!-- En-tête institutionnel : Ministère de la Transition Digitale -->
-                                    <div class="ministere-banner mb-4 pb-3 border-bottom">
-                                        <div class="d-flex align-items-center justify-content-center gap-3 flex-wrap">
-                                            {{#armoiries_url}}
-                                                <img src="{{armoiries_url}}" alt="Armoiries du Burkina Faso" class="armoiries-header-img" style="max-height: 55px; width: auto;">
-                                            {{/armoiries_url}}
-                                            <div class="text-center text-md-start">
-                                                <div class="text-uppercase fw-bold text-dark small" style="letter-spacing: 0.5px;">BURKINA FASO</div>
-                                                <div class="fw-bold ministere-title text-success fs-6">
-                                                    Ministère de la Transition Digitale, des Postes et des Communications Électroniques
-                                                </div>
-                                            </div>
-                                            
+
+                        <!-- ── 1. HERO BANNER IMMERSIF STYLE UDEMY ────────────── -->
+                        <section class="pact-hero-section">
+                            <div class="pact-hero-container">
+                                <div class="pact-hero-card">
+                                    <div class="pact-hero-badge">
+                                        <span class="flag-dot">🇧🇫</span>
+                                        <span>Programme National de Littératie Numérique</span>
+                                    </div>
+                                    <h1 class="pact-hero-title">
+                                        L'avenir numérique commence avec vos compétences.
+                                    </h1>
+                                    <p class="pact-hero-subtitle">
+                                        Accédez à <strong>60 formations certifiantes 100% gratuites</strong> conçues par le Ministère de la Transition Digitale (MTDPCE). Choisissez la formation complète ou passez directement l'examen pour valoriser vos acquis.
+                                    </p>
+
+                                    <!-- Barre de recherche hero -->
+                                    <form action="{{{ urls.catalogue }}}" method="GET" class="pact-hero-search-form">
+                                        <div class="hero-search-wrapper">
+                                            <span class="hero-search-icon">🔍</span>
+                                            <input type="text" name="q" class="hero-search-input" placeholder="Quelle compétence cherchez-vous ? (ex : Tableur, IA, Réseaux, Vente...)">
+                                            <button type="submit" class="hero-search-submit">Explorer</button>
                                         </div>
+                                    </form>
+
+                                    <!-- Tags de recherche rapide -->
+                                    <div class="pact-hero-tags">
+                                        <span class="tags-label">Tendances :</span>
+                                        <a href="{{{ urls.catalogue }}}?q=ia" class="hero-tag">🤖 Intelligence Artificielle</a>
+                                        <a href="{{{ urls.catalogue }}}?q=securite" class="hero-tag">🔒 Cybersécurité</a>
+                                        <a href="{{{ urls.catalogue }}}?q=bureautique" class="hero-tag">📄 Bureautique</a>
+                                        <a href="{{{ urls.catalogue }}}?q=former" class="hero-tag">👨‍🏫 Former avec le numérique</a>
+                                        <a href="{{{ urls.catalogue }}}?q=vente" class="hero-tag">🛍️ E-commerce</a>
                                     </div>
 
-                                    <!-- Logo PACTDIGITAL -->
-                                    {{# output.should_display_navbar_logo }}
-                                        <div class="mb-3 text-center">
-                                            <img src="{{output.get_compact_logo_url}}" alt="{{sitename}}" class="pactdigital-logo-img" style="max-height: 95px; width: auto;">
-                                        </div>
-                                    {{/ output.should_display_navbar_logo }}
-                                    {{^ output.should_display_navbar_logo }}
-                                        {{# output.get_logo_url }}
-                                            <div class="mb-3 text-center">
-                                                <img src="{{output.get_logo_url}}" alt="{{sitename}}" class="pactdigital-logo-img" style="max-height: 95px; width: auto;">
+                                    <!-- CTA boutons -->
+                                    <div class="pact-hero-ctas">
+                                        <a href="{{{ urls.catalogue }}}" class="btn-hero-primary">
+                                            📚 Explorer les 60 formations ➔
+                                        </a>
+                                        {{^is_logged_in}}
+                                            <a href="{{{ urls.signup }}}" class="btn-hero-secondary">
+                                                ⚡ Créer un compte immédiat
+                                            </a>
+                                        {{/is_logged_in}}
+                                        {{#is_logged_in}}
+                                            <a href="{{{ urls.apprenant }}}" class="btn-hero-secondary">
+                                                🎓 Reprendre mes cours
+                                            </a>
+                                        {{/is_logged_in}}
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- ── 2. BARRE DE STATISTIQUES & RÉASSURANCE ─────────── -->
+                        <section class="pact-stats-strip">
+                            <div class="pact-stats-container">
+                                <div class="pact-stat-item">
+                                    <div class="stat-icon">🎓</div>
+                                    <div class="stat-content">
+                                        <div class="stat-number">{{stats.courses}}</div>
+                                        <div class="stat-label">Formations en ligne</div>
+                                    </div>
+                                </div>
+                                <div class="pact-stat-divider"></div>
+                                <div class="pact-stat-item">
+                                    <div class="stat-icon">🧭</div>
+                                    <div class="stat-content">
+                                        <div class="stat-number">{{stats.domains}}</div>
+                                        <div class="stat-label">Domaines de compétences</div>
+                                    </div>
+                                </div>
+                                <div class="pact-stat-divider"></div>
+                                <div class="pact-stat-item">
+                                    <div class="stat-icon">🥇</div>
+                                    <div class="stat-content">
+                                        <div class="stat-number">{{stats.levels}} Niveaux</div>
+                                        <div class="stat-label">Bronze • Argent • Or</div>
+                                    </div>
+                                </div>
+                                <div class="pact-stat-divider"></div>
+                                <div class="pact-stat-item">
+                                    <div class="stat-icon">🛡️</div>
+                                    <div class="stat-content">
+                                        <div class="stat-number">{{stats.free}}</div>
+                                        <div class="stat-label">Attestation d'État QR Code</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- ── 3. TOUTES LES COMPÉTENCES (ONGLETS STYLE UDEMY) ── -->
+                        <section class="pact-skills-section">
+                            <div class="pact-skills-container">
+                                <div class="pact-section-header">
+                                    <h2 class="pact-section-title">Toutes les compétences dont vous avez besoin au même endroit</h2>
+                                    <p class="pact-section-sub">
+                                        Du citoyen débutant au cadre dirigeant, choisissez votre niveau de certification et développez des compétences concrètes.
+                                    </p>
+                                </div>
+
+                                <!-- Onglets horizontaux -->
+                                <div class="pact-tabs-nav" role="tablist">
+                                    {{#tabs}}
+                                        <button class="pact-tab-btn {{#active}}active{{/active}}" data-target="{{target}}" role="tab">
+                                            {{label}}
+                                        </button>
+                                    {{/tabs}}
+                                </div>
+
+                                <!-- Contenu des onglets -->
+                                <div class="pact-tabs-content">
+                                    {{#tabs}}
+                                        <div id="{{target}}" class="pact-tab-pane {{#active}}active{{/active}}" role="tabpanel">
+                                            <!-- Encart de présentation du pilier / onglet -->
+                                            <div class="pact-tab-lead">
+                                                <div class="tab-lead-text">
+                                                    <h3 class="tab-lead-title">{{title}}</h3>
+                                                    <p class="tab-lead-desc">{{desc}}</p>
+                                                </div>
+                                                <a href="{{explore_url}}" class="tab-lead-link">
+                                                    {{explore_lbl}} ➔
+                                                </a>
                                             </div>
-                                        {{/ output.get_logo_url }}
-                                    {{/ output.should_display_navbar_logo }}
 
-                                    <h1 class="display-5 fw-bold text-primary mb-2">PACTDIGITAL-BF</h1>
-                                    <p class="fs-5 fw-semibold text-secondary-emphasis mb-3">Plateforme nationale de développement des compétences numériques</p>
+                                            <!-- Grille de cours façon Udemy -->
+                                            <div class="pact-courses-grid">
+                                                {{#courses}}
+                                                    <div class="pact-course-card">
+                                                        <a href="{{welcome_url}}" class="card-image-wrap">
+                                                            {{#img_url}}
+                                                                <img src="{{img_url}}" alt="{{title}}" class="card-img" loading="lazy">
+                                                            {{/img_url}}
+                                                            {{^img_url}}
+                                                                <div class="card-img-placeholder" style="background: {{cat_color}}22;">
+                                                                    <span class="placeholder-emoji">{{cat_icon}}</span>
+                                                                </div>
+                                                            {{/img_url}}
+                                                            <span class="card-level-badge {{level_cls}}">
+                                                                {{level_icon}} {{level_label}}
+                                                            </span>
+                                                        </a>
 
-                                    <!-- Présentation du projet PACTDIGITAL-BF -->
-                                    <div class="eburkina-presentation-card p-3 p-md-4 mb-4 mx-auto text-start">
-                                        <div class="d-flex align-items-center gap-2 mb-2">
-                                            <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-2 rounded-pill fw-bold">
-                                                🇧🇫 À propos du projet PACTDIGITAL-BF
+                                                        <div class="card-body">
+                                                            <div class="card-domain-row">
+                                                                <span class="card-domain-tag">{{domain_name}}</span>
+                                                                <span class="card-duration">⏱️ {{duration}}</span>
+                                                            </div>
+                                                            <h4 class="card-title">
+                                                                <a href="{{welcome_url}}">{{title}}</a>
+                                                            </h4>
+                                                            <p class="card-summary">{{summary}}</p>
+                                                            
+                                                            <div class="card-features">
+                                                                <span class="card-feature-pill">✅ Attestation officielle</span>
+                                                                <span class="card-feature-pill">🎯 2 voies au choix</span>
+                                                            </div>
+
+                                                            <div class="card-footer">
+                                                                <div class="card-price">Gratuit</div>
+                                                                <a href="{{welcome_url}}" class="btn-card-action">
+                                                                    Découvrir ➔
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {{/courses}}
+                                            </div>
+
+                                            <div class="pact-tab-bottom-cta text-center mt-4">
+                                                <a href="{{explore_url}}" class="btn-view-all">
+                                                    Voir toutes les formations de cette thématique ➔
+                                                </a>
+                                            </div>
+                                        </div>
+                                    {{/tabs}}
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- ── 4. LES 4 GRANDS PILIERS DE FORMATION ────────────── -->
+                        <section class="pact-pillars-section">
+                            <div class="pact-pillars-container">
+                                <div class="pact-section-header text-center">
+                                    <h2 class="pact-section-title">Explorez par pilier national</h2>
+                                    <p class="pact-section-sub">
+                                        Les 60 cours du programme PACTDIGITAL-BF s'articulent autour de 4 piliers stratégiques pour le développement du Burkina Faso.
+                                    </p>
+                                </div>
+
+                                <div class="pact-pillars-grid">
+                                    {{#pillars}}
+                                        <a href="{{url}}" class="pact-pillar-card" style="border-top-color: {{color}};">
+                                            <div class="pillar-icon" style="background: {{color}}15; color: {{color}};">
+                                                {{icon}}
+                                            </div>
+                                            <div class="pillar-badge" style="background: {{color}}20; color: {{color}};">
+                                                {{badge}}
+                                            </div>
+                                            <h3 class="pillar-title">{{name}}</h3>
+                                            <p class="pillar-desc">{{desc}}</p>
+                                            <span class="pillar-cta" style="color: {{color}};">
+                                                Découvrir les cours ➔
                                             </span>
-                                        </div>
-                                        <p class="mb-2 text-dark" style="line-height: 1.6; font-size: 0.98rem;">
-                                            Porté par le <strong>Ministère de la Transition Digitale, des Postes et des Communications Électroniques</strong>, le projet <strong>PACTDIGITAL-BF</strong> est une initiative nationale stratégique visant à renforcer et développer les compétences numériques de l'ensemble de la population au Burkina Faso.
+                                        </a>
+                                    {{/pillars}}
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- ── 5. POURQUOI CHOISIR PACTDIGITAL-BF ──────────────── -->
+                        <section class="pact-why-section">
+                            <div class="pact-why-container">
+                                <div class="pact-section-header text-center">
+                                    <h2 class="pact-section-title">Pourquoi apprendre sur PACTDIGITAL-BF ?</h2>
+                                    <p class="pact-section-sub">
+                                        Une plateforme moderne pensée pour la réussite et l'inclusion numérique de tous les Burkinabè.
+                                    </p>
+                                </div>
+
+                                <div class="pact-features-grid">
+                                    <div class="pact-feature-card">
+                                        <div class="feature-icon-box">⚡</div>
+                                        <h3 class="feature-title">Double voie d'évaluation</h3>
+                                        <p class="feature-text">
+                                            Suivez la <strong>Formation complète</strong> pas à pas avec vidéos et mémos, ou optez pour l'<strong>Examen direct</strong> pour valoriser immédiatement vos compétences.
                                         </p>
-                                        <p class="mb-0 text-muted" style="line-height: 1.6; font-size: 0.93rem;">
-                                            Cette plateforme offre des parcours de formation certifiants et accessibles à tous (citoyens, agents publics, professionnels, étudiants et apprenants) afin d'accélérer l'inclusion numérique et accompagner la transformation digitale de notre pays.
+                                    </div>
+
+                                    <div class="pact-feature-card">
+                                        <div class="feature-icon-box">🎖️</div>
+                                        <h3 class="feature-title">Attestation officielle infalsifiable</h3>
+                                        <p class="feature-text">
+                                            Chaque réussite génère un certificat PDF officiel du MTDPCE doté d'un numéro d'enregistrement unique et d'un <strong>QR Code vérifiable en ligne</strong>.
                                         </p>
                                     </div>
 
-                                    {{^is_user_logged_in}}
-                                    <!-- Boutons d'action pour visiteurs non connectés -->
-                                    <div class="d-flex flex-wrap justify-content-center gap-3">
-                                        <a href="{{{ config.wwwroot }}}/local/pactdigital/signup.php" class="btn btn-warning btn-lg px-4 rounded-pill shadow-sm fw-semibold">Créer un compte</a>
-                                        <a href="{{{ config.wwwroot }}}/login/index.php" class="btn btn-outline-dark btn-lg px-4 rounded-pill shadow-sm">Se connecter</a>
+                                    <div class="pact-feature-card">
+                                        <div class="feature-icon-box">📱</div>
+                                        <h3 class="feature-title">Accessible sur tous les écrans</h3>
+                                        <p class="feature-text">
+                                            Apprenez sur smartphone, tablette ou ordinateur. Téléchargez les fiches mémos pour continuer à réviser même hors-ligne.
+                                        </p>
                                     </div>
-                                    {{/is_user_logged_in}}
-                                    {{#is_user_logged_in}}
-                                    <!-- Raccourcis pour utilisateur connecté -->
-                                    <div class="d-flex flex-wrap justify-content-center gap-3">
-                                        <a href="{{{ config.wwwroot }}}/my/" class="btn btn-success btn-lg px-4 rounded-pill shadow-sm fw-semibold">📊 Mon Tableau de bord</a>
-                                        <a href="{{{ config.wwwroot }}}/course/index.php" class="btn btn-outline-dark btn-lg px-4 rounded-pill shadow-sm">📚 Explorer les cours</a>
-                                    </div>
-                                    {{/is_user_logged_in}}
-                                </div>
-                            </div>
 
-
-                            <!-- Domaines Section : pleine largeur avec container fluide généreux -->
-                            <div id="formations" class="pactdigital-domains py-5 px-3 px-md-5">
-                                <div class="container-fluid" style="max-width: 1400px;">
-                                    <h2 class="pb-2 text-center mb-5">NOS DOMAINES DE FORMATION</h2>
-                                    <div class="row g-4 row-cols-1 row-cols-md-2 row-cols-xl-4">
-                                        <div class="col">
-                                            <a href="{{{ config.wwwroot }}}/local/pactdigital/catalogue.php?domain=fondamentales" class="text-decoration-none text-dark">
-                                                <div class="card h-100 shadow-sm text-center p-4 domain-card">
-                                                    <div class="display-4 mb-3">💻</div>
-                                                    <h3 class="fs-5 fw-bold">Compétences numériques fondamentales</h3>
-                                                    <div class="mt-3"><span class="explorer-link">Explorer les modules ➔</span></div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="col">
-                                            <a href="{{{ config.wwwroot }}}/local/pactdigital/catalogue.php?domain=manageriales" class="text-decoration-none text-dark">
-                                                <div class="card h-100 shadow-sm text-center p-4 domain-card">
-                                                    <div class="display-4 mb-3">📊</div>
-                                                    <h3 class="fs-5 fw-bold">Compétences numériques managériales</h3>
-                                                    <div class="mt-3"><span class="explorer-link">Explorer les modules ➔</span></div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="col">
-                                            <a href="{{{ config.wwwroot }}}/local/pactdigital/catalogue.php?domain=sectorielles" class="text-decoration-none text-dark">
-                                                <div class="card h-100 shadow-sm text-center p-4 domain-card">
-                                                    <div class="display-4 mb-3">🏭</div>
-                                                    <h3 class="fs-5 fw-bold">Compétences numériques sectorielles</h3>
-                                                    <div class="mt-3"><span class="explorer-link">Explorer les modules ➔</span></div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="col">
-                                            <a href="{{{ config.wwwroot }}}/local/pactdigital/catalogue.php?domain=emergentes" class="text-decoration-none text-dark">
-                                                <div class="card h-100 shadow-sm text-center p-4 domain-card">
-                                                    <div class="display-4 mb-3">🚀</div>
-                                                    <h3 class="fs-5 fw-bold">Compétences numériques émergentes</h3>
-                                                    <div class="mt-3"><span class="explorer-link">Explorer les modules ➔</span></div>
-                                                </div>
-                                            </a>
-                                        </div>
+                                    <div class="pact-feature-card">
+                                        <div class="feature-icon-box">🤝</div>
+                                        <h3 class="feature-title">Réseau de formateurs certifiés</h3>
+                                        <p class="feature-text">
+                                            Bénéficiez d'ateliers en présentiel animés par des formateurs relais certifiés dans les 13 régions et 45 provinces du Burkina Faso.
+                                        </p>
                                     </div>
                                 </div>
                             </div>
+                        </section>
 
-                            <!-- Parcours Section : pleine largeur avec container fluide généreux -->
-                            <div class="pactdigital-parcours text-center py-5 px-3 px-md-5">
-                                <div class="container-fluid" style="max-width: 1400px;">
-                                    <h2 class="mb-3">PARCOURS DISPONIBLES</h2>
-                                    <p class="text-muted mb-4 small">Survolez un niveau pour découvrir ses objectifs</p>
-                                    <div class="d-flex justify-content-center align-items-center gap-3 gap-md-4 flex-wrap">
-                                        <!-- Niveau Bronze -->
-                                        <div class="parcours-badge-wrapper">
-                                            <div class="parcours-badge parcours-bronze">
-                                                <span class="parcours-icon">🥉</span>
-                                                <span class="parcours-name">Bronze</span>
-                                            </div>
-                                            <div class="parcours-tooltip">
-                                                <div class="parcours-tooltip-title text-warning">Niveau Débutant</div>
-                                                <div class="parcours-tooltip-desc">Acquisition des compétences numériques de base et maîtrise des outils essentiels.</div>
-                                            </div>
-                                        </div>
+                        <!-- ── 6. ESPACE FORMATEUR & VÉRIFICATION D'ATTESTATION ── -->
+                        <section class="pact-dual-cta-section">
+                            <div class="pact-dual-container">
+                                <!-- Encart Formateur (façon Enseignez sur Udemy) -->
+                                <div class="pact-cta-box trainer-box">
+                                    <div class="box-icon">👨‍🏫</div>
+                                    <div class="box-content">
+                                        <span class="box-tag">Réseau National</span>
+                                        <h3 class="box-title">Vous êtes formateur ou animateur ?</h3>
+                                        <p class="box-desc">
+                                            Accédez à votre espace pédagogique pour piloter vos sessions, enregistrer les présences numériques et télécharger les guides d'animation officiels.
+                                        </p>
+                                        <a href="{{{ urls.formateur }}}" class="btn-box-action">
+                                            Accéder à l'Espace Formateur ➔
+                                        </a>
+                                    </div>
+                                </div>
 
-                                        <span class="text-muted d-none d-sm-inline">•</span>
-
-                                        <!-- Niveau Argent -->
-                                        <div class="parcours-badge-wrapper">
-                                            <div class="parcours-badge parcours-argent">
-                                                <span class="parcours-icon">🥈</span>
-                                                <span class="parcours-name">Argent</span>
-                                            </div>
-                                            <div class="parcours-tooltip">
-                                                <div class="parcours-tooltip-title text-info">Niveau Intermédiaire</div>
-                                                <div class="parcours-tooltip-desc">Approfondissement des compétences techniques et autonomie dans les usages professionnels.</div>
-                                            </div>
-                                        </div>
-
-                                        <span class="text-muted d-none d-sm-inline">•</span>
-
-                                        <!-- Niveau Or -->
-                                        <div class="parcours-badge-wrapper">
-                                            <div class="parcours-badge parcours-or">
-                                                <span class="parcours-icon">🥇</span>
-                                                <span class="parcours-name">Or</span>
-                                            </div>
-                                            <div class="parcours-tooltip">
-                                                <div class="parcours-tooltip-title text-warning">Niveau Avancé &amp; Expert</div>
-                                                <div class="parcours-tooltip-desc">Maîtrise complète, spécialisation et innovation dans les technologies émergentes.</div>
-                                            </div>
-                                        </div>
+                                <!-- Encart Vérification Attestation -->
+                                <div class="pact-cta-box verify-box">
+                                    <div class="box-icon">🛡️</div>
+                                    <div class="box-content">
+                                        <span class="box-tag">Employeurs & Recruteurs</span>
+                                        <h3 class="box-title">Vérifier l'authenticité d'une attestation</h3>
+                                        <p class="box-desc">
+                                            Contrôlez instantanément la validité d'un certificat PACTDIGITAL-BF présenté par un candidat grâce au code à 10 caractères ou au QR Code.
+                                        </p>
+                                        <form action="{{{ urls.verify }}}" method="GET" class="verify-quick-form">
+                                            <input type="text" name="code" class="verify-input" placeholder="Ex : IWHZ4Smehu" required>
+                                            <button type="submit" class="verify-submit-btn">Vérifier</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- END PACTDIGITAL CUSTOM FRONT PAGE HERO SECTION -->
+                        </section>
 
-                        {{{ output.course_content_header }}}
-                        {{#headercontent}}
-                            {{> core/activity_header }}
-                        {{/headercontent}}
-                        {{#overflow}}
-                            <div class="container-fluid tertiary-navigation">
-                                <div class="navitem">
-                                    {{> core/url_select}}
-                                </div>
-                            </div>
-                        {{/overflow}}
-                        
-                        <div class="mt-5">
-                            {{{ output.main_content }}}
-                        </div>
-                        
-                        {{{ output.activity_navigation }}}
-                        {{{ output.course_content_footer }}}
+                        {{{ output.main_content }}}
 
                     </div>
                 </div>
             </div>
         </div>
-        {{> theme_boost/footer }}
     </div>
-    {{{ output.standard_after_main_region_html }}}
+
+    <!-- ── 7. FOOTER INSTITUTIONNEL PACTDIGITAL-BF ────────────────────────── -->
+    <footer class="pact-udemy-footer">
+        <div class="footer-top">
+            <div class="footer-container">
+                <div class="footer-col brand-col">
+                    <div class="footer-brand">
+                        {{#armoiries_url}}
+                            <img src="{{armoiries_url}}" alt="Armoiries Burkina Faso" class="footer-flag">
+                        {{/armoiries_url}}
+                        <div>
+                            <div class="footer-country">BURKINA FASO</div>
+                            <div class="footer-ministry">Ministère de la Transition Digitale, des Postes et des Communications Électroniques</div>
+                        </div>
+                    </div>
+                    <p class="footer-about">
+                        PACTDIGITAL-BF est la plateforme nationale de renforcement des compétences numériques portée par la Direction Générale de la Transition Digitale (DGTD).
+                    </p>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-col-title">Navigation</h4>
+                    <ul class="footer-links">
+                        <li><a href="{{{ urls.catalogue }}}">Catalogue des 60 cours</a></li>
+                        <li><a href="{{{ urls.catalogue }}}?domain=fondamentales">Compétences Fondamentales</a></li>
+                        <li><a href="{{{ urls.catalogue }}}?domain=manageriales">Compétences Managériales</a></li>
+                        <li><a href="{{{ urls.catalogue }}}?domain=sectorielles">Compétences Sectorielles</a></li>
+                        <li><a href="{{{ urls.catalogue }}}?domain=emergentes">Technologies Émergentes</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-col-title">Services & Outils</h4>
+                    <ul class="footer-links">
+                        <li><a href="{{{ urls.verify }}}">Vérification d'attestation</a></li>
+                        <li><a href="{{{ urls.apprenant }}}">Mon Espace Apprenant</a></li>
+                        <li><a href="{{{ urls.formateur }}}">Espace Formateur</a></li>
+                        <li><a href="{{{ urls.signup }}}">Créer un compte</a></li>
+                        <li><a href="{{{ urls.login }}}">Se connecter</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-col-title">Cadre Légal & Support</h4>
+                    <p class="footer-legal-note">
+                        Plateforme conforme à la <strong>Loi n°001-2021/AN</strong> portant protection des données à caractère personnel au Burkina Faso.
+                    </p>
+                    <div class="footer-badge-pact">
+                        🇧🇫 Un Peuple • Un Progrès • Une Justice
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="footer-bottom-inner">
+                <div>© 2026 PACTDIGITAL-BF — Tous droits réservés. République du Burkina Faso.</div>
+                <div class="footer-bottom-links">
+                    <a href="{{{ urls.verify }}}">Vérification QR Code</a>
+                    <span>•</span>
+                    <a href="{{{ urls.catalogue }}}">Catalogue officiel</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
 </div>
+
+<!-- Script interactif léger pour la commutation des onglets -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var tabBtns = document.querySelectorAll('.pact-tab-btn');
+    var tabPanes = document.querySelectorAll('.pact-tab-pane');
+
+    tabBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var targetId = this.getAttribute('data-target');
+
+            tabBtns.forEach(function(b) { b.classList.remove('active'); });
+            tabPanes.forEach(function(p) { p.classList.remove('active'); });
+
+            this.classList.add('active');
+            var targetPane = document.getElementById(targetId);
+            if (targetPane) {
+                targetPane.classList.add('active');
+            }
+        });
+    });
+});
+</script>
 
 </body>
 </html>
-{{#js}}
-M.util.js_pending('theme_boost/loader');
-require(['theme_boost/loader', 'theme_boost/drawer'], function(Loader, Drawer) {
-    Drawer.init();
-    M.util.js_complete('theme_boost/loader');
-});
-{{/js}}

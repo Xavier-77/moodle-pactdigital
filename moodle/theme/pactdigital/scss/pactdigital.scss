@@ -19,13 +19,15 @@
     }
 }
 
-/* Masquer la barre de navigation du haut sur la page d'accueil UNIQUEMENT pour les visiteurs non connectés */
-body.pagelayout-frontpage.notloggedin {
+/* Page d'accueil : plein écran sans marges Moodle par défaut */
+body.pagelayout-frontpage {
     padding-top: 0 !important;
 
-    .navbar,
-    nav.fixed-top,
-    #page-header {
+    .navbar:not(.pact-udemy-navbar),
+    nav.fixed-top:not(.pact-udemy-navbar),
+    #page-header,
+    .page-context-header,
+    .secondary-navigation {
         display: none !important;
     }
 
@@ -37,16 +39,6 @@ body.pagelayout-frontpage.notloggedin {
     }
 }
 
-/* Quand un utilisateur est connecté sur la page d'accueil */
-body.pagelayout-frontpage.loggedin {
-    padding-top: 60px !important;
-
-    #page-header,
-    .page-context-header,
-    .secondary-navigation {
-        display: none !important;
-    }
-}
 
 /* Supprimer le séparateur "|" entre le logo et la navigation */
 .navbar .divider,
@@ -1124,3 +1116,1232 @@ body.pagelayout-login [data-region="cookiepolicy"],
 body.pagelayout-login .logincookies {
     display: none !important;
 }
+
+/* ==========================================================================
+   PACTDIGITAL-BF — VITRINE ACCUEIL STYLE UDEMY
+   ========================================================================== */
+
+.pact-udemy-wrapper {
+    background-color: #f8fafc;
+    color: #1e293b;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    min-height: 100vh;
+}
+
+/* ── 1. Top Navbar Style Udemy ── */
+.pact-udemy-navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1030;
+    background: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+    height: 72px;
+    display: flex;
+    align-items: center;
+}
+
+.pact-udemy-nav-inner {
+    max-width: 1440px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.pact-nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: inherit;
+    flex-shrink: 0;
+}
+
+.pact-nav-flag {
+    height: 44px;
+    width: auto;
+    object-fit: contain;
+}
+
+.pact-nav-brand-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.pact-nav-brand-title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+}
+
+.pact-nav-brand-sub {
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: #129b40;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.pact-nav-categories {
+    flex-shrink: 0;
+}
+
+.pact-nav-cat-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #334155;
+    text-decoration: none;
+    border-radius: 9999px;
+    background: #f1f5f9;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background: #e2e8f0;
+        color: #0f172a;
+    }
+}
+
+.pact-nav-search {
+    flex: 1;
+    max-width: 600px;
+}
+
+.pact-nav-search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 9999px;
+    padding: 0.35rem 0.6rem 0.35rem 1.1rem;
+    transition: all 0.2s ease;
+
+    &:focus-within {
+        border-color: #129b40;
+        background: #ffffff;
+        box-shadow: 0 0 0 3px rgba(18, 155, 64, 0.15);
+    }
+}
+
+.pact-search-icon {
+    font-size: 0.95rem;
+    color: #94a3b8;
+    margin-right: 0.5rem;
+}
+
+.pact-search-input {
+    border: none;
+    background: transparent;
+    outline: none;
+    width: 100%;
+    font-size: 0.92rem;
+    color: #1e293b;
+
+    &::placeholder {
+        color: #94a3b8;
+    }
+}
+
+.pact-search-btn {
+    background: #129b40;
+    color: #ffffff;
+    border: none;
+    border-radius: 9999px;
+    padding: 0.4rem 1rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+
+    &:hover {
+        background: #0e7a32;
+    }
+}
+
+.pact-nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+.pact-nav-link {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #475569;
+    text-decoration: none;
+    padding: 0.4rem 0.6rem;
+    border-radius: 6px;
+    transition: color 0.2s;
+
+    &:hover {
+        color: #129b40;
+    }
+}
+
+.pact-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1.15rem;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.pact-btn-outline {
+    border: 1px solid #0f172a;
+    color: #0f172a;
+    background: transparent;
+
+    &:hover {
+        background: #f1f5f9;
+        color: #0f172a;
+    }
+}
+
+.pact-btn-primary {
+    background: #129b40;
+    border: 1px solid #129b40;
+    color: #ffffff;
+
+    &:hover {
+        background: #0e7a32;
+        color: #ffffff;
+    }
+}
+
+.pact-btn-espace {
+    background: #fef9c3;
+    border: 1px solid #facc15;
+    color: #854d0e;
+
+    &:hover {
+        background: #fef08a;
+        color: #713f12;
+    }
+}
+
+.pact-user-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: #f1f5f9;
+    padding: 0.35rem 0.8rem;
+    border-radius: 9999px;
+    font-size: 0.85rem;
+
+    .user-greeting {
+        font-weight: 600;
+        color: #0f172a;
+    }
+    .pact-logout-link {
+        color: #dc2626;
+        text-decoration: none;
+        font-size: 0.78rem;
+        margin-left: 0.3rem;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+/* ── 2. Hero Section ── */
+.pact-hero-section {
+    background: linear-gradient(135deg, #091e3a 0%, #0f3959 50%, #124e38 100%);
+    padding: 3.5rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: radial-gradient(circle at 80% 20%, rgba(250, 214, 21, 0.12) 0%, transparent 60%);
+        pointer-events: none;
+    }
+}
+
+.pact-hero-container {
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
+.pact-hero-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 2.75rem;
+    max-width: 680px;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 2;
+}
+
+.pact-hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    color: #065f46;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 0.35rem 0.85rem;
+    border-radius: 9999px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 1.25rem;
+}
+
+.pact-hero-title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+}
+
+.pact-hero-subtitle {
+    font-size: 1.05rem;
+    color: #475569;
+    line-height: 1.6;
+    margin-bottom: 1.75rem;
+
+    strong {
+        color: #0f172a;
+    }
+}
+
+.pact-hero-search-form {
+    margin-bottom: 1.25rem;
+}
+
+.hero-search-wrapper {
+    display: flex;
+    align-items: center;
+    background: #f8fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 0.4rem 0.5rem 0.4rem 1rem;
+    transition: all 0.2s ease;
+
+    &:focus-within {
+        border-color: #129b40;
+        background: #ffffff;
+        box-shadow: 0 0 0 4px rgba(18, 155, 64, 0.12);
+    }
+}
+
+.hero-search-icon {
+    font-size: 1.1rem;
+    color: #94a3b8;
+    margin-right: 0.6rem;
+}
+
+.hero-search-input {
+    border: none;
+    outline: none;
+    background: transparent;
+    width: 100%;
+    font-size: 0.98rem;
+    color: #0f172a;
+
+    &::placeholder {
+        color: #94a3b8;
+    }
+}
+
+.hero-search-submit {
+    background: #129b40;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.6rem 1.4rem;
+    font-size: 0.92rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+        background: #0e7a32;
+    }
+}
+
+.pact-hero-tags {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.75rem;
+    font-size: 0.82rem;
+
+    .tags-label {
+        font-weight: 600;
+        color: #64748b;
+    }
+
+    .hero-tag {
+        background: #f1f5f9;
+        color: #334155;
+        text-decoration: none;
+        padding: 0.25rem 0.65rem;
+        border-radius: 6px;
+        font-weight: 500;
+        transition: all 0.2s ease;
+
+        &:hover {
+            background: #e2e8f0;
+            color: #129b40;
+        }
+    }
+}
+
+.pact-hero-ctas {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    flex-wrap: wrap;
+}
+
+.btn-hero-primary {
+    display: inline-flex;
+    align-items: center;
+    background: #129b40;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    text-decoration: none;
+    box-shadow: 0 4px 14px rgba(18, 155, 64, 0.35);
+    transition: all 0.2s ease;
+
+    &:hover {
+        background: #0e7a32;
+        color: #ffffff;
+        transform: translateY(-2px);
+    }
+}
+
+.btn-hero-secondary {
+    display: inline-flex;
+    align-items: center;
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    color: #0f172a;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 0.75rem 1.4rem;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background: #e2e8f0;
+        color: #0f172a;
+    }
+}
+
+/* ── 3. Stats Strip ── */
+.pact-stats-strip {
+    background: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 1.5rem;
+}
+
+.pact-stats-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+
+.pact-stat-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.stat-icon {
+    font-size: 2rem;
+}
+
+.stat-number {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.1;
+}
+
+.stat-label {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: #64748b;
+}
+
+.pact-stat-divider {
+    width: 1px;
+    height: 40px;
+    background: #e2e8f0;
+    display: block;
+
+    @media (max-width: 768px) {
+        display: none;
+    }
+}
+
+/* ── 4. Skills Tabs Section (Style Udemy) ── */
+.pact-skills-section {
+    padding: 4rem 1.5rem;
+    background: #ffffff;
+}
+
+.pact-skills-container {
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
+.pact-section-header {
+    margin-bottom: 2rem;
+}
+
+.pact-section-title {
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+}
+
+.pact-section-sub {
+    font-size: 1.05rem;
+    color: #64748b;
+    margin-bottom: 0;
+}
+
+.pact-tabs-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid #f1f5f9;
+}
+
+.pact-tab-btn {
+    border: none;
+    background: transparent;
+    padding: 0.65rem 1.25rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #64748b;
+    border-radius: 9999px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background: #f1f5f9;
+        color: #0f172a;
+    }
+
+    &.active {
+        background: #0f172a;
+        color: #ffffff;
+        font-weight: 700;
+    }
+}
+
+.pact-tabs-content {
+    position: relative;
+}
+
+.pact-tab-pane {
+    display: none;
+
+    &.active {
+        display: block;
+        animation: fadeIn 0.3s ease;
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.pact-tab-lead {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 1.5rem 2rem;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.tab-lead-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 0.35rem;
+}
+
+.tab-lead-desc {
+    font-size: 0.92rem;
+    color: #475569;
+    margin-bottom: 0;
+}
+
+.tab-lead-link {
+    display: inline-flex;
+    align-items: center;
+    font-weight: 700;
+    font-size: 0.92rem;
+    color: #129b40;
+    text-decoration: none;
+    white-space: nowrap;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+/* Grille de cours façon Udemy */
+.pact-courses-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+
+    @media (max-width: 1200px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    @media (max-width: 900px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    @media (max-width: 600px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.pact-course-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.25s ease;
+
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+        border-color: #cbd5e1;
+    }
+
+    .card-image-wrap {
+        position: relative;
+        display: block;
+        aspect-ratio: 16 / 9;
+        overflow: hidden;
+        background: #0f172a;
+
+        .card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        &:hover .card-img {
+            transform: scale(1.05);
+        }
+
+        .card-img-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .card-level-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 0.25rem 0.6rem;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+
+            &.level-bronze {
+                background: #b45309;
+                color: #ffffff;
+            }
+            &.level-argent {
+                background: #475569;
+                color: #ffffff;
+            }
+            &.level-or {
+                background: #d97706;
+                color: #ffffff;
+            }
+        }
+    }
+
+    .card-body {
+        padding: 1.15rem;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+
+    .card-domain-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+        font-size: 0.78rem;
+    }
+
+    .card-domain-tag {
+        font-weight: 700;
+        color: #129b40;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+    }
+
+    .card-duration {
+        color: #64748b;
+    }
+
+    .card-title {
+        font-size: 0.98rem;
+        font-weight: 700;
+        color: #0f172a;
+        line-height: 1.35;
+        margin-bottom: 0.5rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        height: 2.7em;
+
+        a {
+            color: inherit;
+            text-decoration: none;
+
+            &:hover {
+                color: #129b40;
+            }
+        }
+    }
+
+    .card-summary {
+        font-size: 0.85rem;
+        color: #64748b;
+        line-height: 1.5;
+        margin-bottom: 0.85rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        flex: 1;
+    }
+
+    .card-features {
+        display: flex;
+        gap: 0.4rem;
+        flex-wrap: wrap;
+        margin-bottom: 0.85rem;
+    }
+
+    .card-feature-pill {
+        background: #f1f5f9;
+        color: #334155;
+        font-size: 0.72rem;
+        font-weight: 600;
+        padding: 0.2rem 0.5rem;
+        border-radius: 4px;
+    }
+
+    .card-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-top: 0.75rem;
+        border-top: 1px solid #f1f5f9;
+        margin-top: auto;
+    }
+
+    .card-price {
+        font-size: 0.92rem;
+        font-weight: 800;
+        color: #129b40;
+    }
+
+    .btn-card-action {
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: #0f172a;
+        text-decoration: none;
+        padding: 0.35rem 0.75rem;
+        border-radius: 6px;
+        background: #f1f5f9;
+        transition: all 0.2s;
+
+        &:hover {
+            background: #129b40;
+            color: #ffffff;
+        }
+    }
+}
+
+.btn-view-all {
+    display: inline-flex;
+    align-items: center;
+    background: #ffffff;
+    border: 2px solid #0f172a;
+    color: #0f172a;
+    font-weight: 700;
+    padding: 0.65rem 1.75rem;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background: #0f172a;
+        color: #ffffff;
+    }
+}
+
+/* ── 5. Pillars Section ── */
+.pact-pillars-section {
+    padding: 4.5rem 1.5rem;
+    background: #f8fafc;
+}
+
+.pact-pillars-container {
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
+.pact-pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+
+    @media (max-width: 1100px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    @media (max-width: 600px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.pact-pillar-card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 2rem 1.75rem;
+    border: 1px solid #e2e8f0;
+    border-top: 4px solid #129b40;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.25s ease;
+
+    &:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 16px 32px rgba(0, 0, 0, 0.07);
+    }
+
+    .pillar-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .pillar-badge {
+        display: inline-block;
+        font-size: 0.72rem;
+        font-weight: 700;
+        padding: 0.25rem 0.6rem;
+        border-radius: 6px;
+        margin-bottom: 0.75rem;
+        align-self: flex-start;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+    }
+
+    .pillar-title {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: #0f172a;
+        margin-bottom: 0.65rem;
+        line-height: 1.3;
+    }
+
+    .pillar-desc {
+        font-size: 0.88rem;
+        color: #64748b;
+        line-height: 1.55;
+        margin-bottom: 1.25rem;
+        flex: 1;
+    }
+
+    .pillar-cta {
+        font-size: 0.88rem;
+        font-weight: 700;
+        margin-top: auto;
+    }
+}
+
+/* ── 6. Why Choose Us Section ── */
+.pact-why-section {
+    padding: 4.5rem 1.5rem;
+    background: #ffffff;
+}
+
+.pact-why-container {
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
+.pact-features-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+
+    @media (max-width: 1100px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    @media (max-width: 600px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.pact-feature-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 2rem 1.5rem;
+    text-align: left;
+    transition: all 0.2s ease;
+
+    &:hover {
+        border-color: #cbd5e1;
+        background: #ffffff;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+    }
+
+    .feature-icon-box {
+        font-size: 2.2rem;
+        margin-bottom: 1rem;
+    }
+
+    .feature-title {
+        font-size: 1.08rem;
+        font-weight: 700;
+        color: #0f172a;
+        margin-bottom: 0.65rem;
+    }
+
+    .feature-text {
+        font-size: 0.88rem;
+        color: #64748b;
+        line-height: 1.6;
+        margin-bottom: 0;
+
+        strong {
+            color: #0f172a;
+        }
+    }
+}
+
+/* ── 7. Dual CTA Section (Trainer + Verify) ── */
+.pact-dual-cta-section {
+    padding: 4rem 1.5rem;
+    background: #f1f5f9;
+}
+
+.pact-dual-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+
+    @media (max-width: 900px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.pact-cta-box {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 2.5rem;
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.03);
+
+    .box-icon {
+        font-size: 2.5rem;
+        flex-shrink: 0;
+    }
+
+    .box-content {
+        flex: 1;
+    }
+
+    .box-tag {
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #129b40;
+        letter-spacing: 0.04em;
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+
+    .box-title {
+        font-size: 1.25rem;
+        font-weight: 800;
+        color: #0f172a;
+        margin-bottom: 0.65rem;
+    }
+
+    .box-desc {
+        font-size: 0.9rem;
+        color: #64748b;
+        line-height: 1.6;
+        margin-bottom: 1.25rem;
+    }
+
+    .btn-box-action {
+        display: inline-flex;
+        align-items: center;
+        background: #0f172a;
+        color: #ffffff;
+        font-weight: 700;
+        font-size: 0.88rem;
+        padding: 0.65rem 1.25rem;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: background 0.2s;
+
+        &:hover {
+            background: #129b40;
+            color: #ffffff;
+        }
+    }
+}
+
+.verify-quick-form {
+    display: flex;
+    gap: 0.5rem;
+
+    .verify-input {
+        flex: 1;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        padding: 0.6rem 0.85rem;
+        font-size: 0.9rem;
+        outline: none;
+
+        &:focus {
+            border-color: #129b40;
+        }
+    }
+
+    .verify-submit-btn {
+        background: #129b40;
+        color: #ffffff;
+        border: none;
+        border-radius: 8px;
+        padding: 0.6rem 1.2rem;
+        font-weight: 700;
+        font-size: 0.88rem;
+        cursor: pointer;
+
+        &:hover {
+            background: #0e7a32;
+        }
+    }
+}
+
+/* ── 8. Footer Institutionnel Style Udemy ── */
+.pact-udemy-footer {
+    background: #0b1329;
+    color: #94a3b8;
+    border-top: 1px solid #1e293b;
+    padding-top: 4rem;
+
+    .footer-container {
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 0 1.5rem 3rem 1.5rem;
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1.5fr;
+        gap: 2.5rem;
+
+        @media (max-width: 1024px) {
+            grid-template-columns: 1fr 1fr;
+        }
+        @media (max-width: 600px) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .footer-brand {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .footer-flag {
+        height: 48px;
+        width: auto;
+    }
+
+    .footer-country {
+        font-size: 1.05rem;
+        font-weight: 800;
+        color: #ffffff;
+        letter-spacing: 0.05em;
+    }
+
+    .footer-ministry {
+        font-size: 0.78rem;
+        color: #129b40;
+        font-weight: 600;
+        line-height: 1.3;
+    }
+
+    .footer-about {
+        font-size: 0.85rem;
+        color: #64748b;
+        line-height: 1.6;
+        max-width: 360px;
+    }
+
+    .footer-col-title {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 1.25rem;
+    }
+
+    .footer-links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        li {
+            margin-bottom: 0.65rem;
+        }
+
+        a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.2s;
+
+            &:hover {
+                color: #ffffff;
+            }
+        }
+    }
+
+    .footer-legal-note {
+        font-size: 0.82rem;
+        line-height: 1.6;
+        color: #64748b;
+        margin-bottom: 1rem;
+
+        strong {
+            color: #94a3b8;
+        }
+    }
+
+    .footer-badge-pact {
+        background: #1e293b;
+        border: 1px solid #334155;
+        color: #fad615;
+        font-size: 0.75rem;
+        font-weight: 700;
+        padding: 0.4rem 0.8rem;
+        border-radius: 6px;
+        display: inline-block;
+    }
+
+    .footer-bottom {
+        border-top: 1px solid #1e293b;
+        padding: 1.5rem;
+        font-size: 0.82rem;
+        color: #64748b;
+    }
+
+    .footer-bottom-inner {
+        max-width: 1440px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .footer-bottom-links {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+
+        a {
+            color: #64748b;
+            text-decoration: none;
+
+            &:hover {
+                color: #ffffff;
+            }
+        }
+    }
+}
+

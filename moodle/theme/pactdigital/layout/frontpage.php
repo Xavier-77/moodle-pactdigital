@@ -57,6 +57,10 @@ $regionmainsettingsmenu = $buildregionmainsettings ? $OUTPUT->region_main_settin
 $header = $PAGE->activityheader;
 $headercontent = $header->export_for_template($renderer);
 
+require_once($CFG->dirroot . '/theme/pactdigital/frontpage_helper.php');
+
+$fp_data = pactdigital_get_frontpage_context();
+
 $templatecontext = [
     'sitename' => format_string($SITE->shortname, true, ['context' => context_course::instance(SITEID), "escape" => false]),
     'output' => $OUTPUT,
@@ -82,4 +86,7 @@ $templatecontext = [
     'is_user_logged_in' => isloggedin() && !isguestuser()
 ];
 
+$templatecontext = array_merge($templatecontext, $fp_data);
+
 echo $OUTPUT->render_from_template('theme_pactdigital/frontpage', $templatecontext);
+
