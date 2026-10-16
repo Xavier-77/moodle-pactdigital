@@ -121,7 +121,15 @@ foreach ($courses_raw as $c) {
         }
     }
 
-    $safe_fullname = htmlspecialchars($c->fullname, ENT_QUOTES, 'UTF-8');
+    // Formatter le titre du cours : si juste "Bronze", "Diamant", "Or", préfixer par le nom du domaine
+    $raw_title = trim($c->fullname);
+    if (in_array($raw_title, ['Bronze', 'Argent', 'Or', 'Diamant'])) {
+        $level_label = ($raw_title === 'Diamant') ? 'Argent' : $raw_title;
+        $course_title = $c->catname . ' — ' . $level_label;
+    } else {
+        $course_title = $c->fullname;
+    }
+    $safe_fullname = htmlspecialchars($course_title, ENT_QUOTES, 'UTF-8');
     $safe_summary  = htmlspecialchars(strip_tags($c->summary ?? ''), ENT_QUOTES, 'UTF-8');
     $summary_short = mb_strimwidth(strip_tags($c->summary ?? ''), 0, 120, '…');
 
@@ -192,6 +200,7 @@ foreach ($courses_raw as $c) {
 }
 
 $total_courses = count($courses_raw);
+$total_domains = $DB->count_records('course_categories', ['depth' => 2]);
 
 // ─── Render ───────────────────────────────────────────────────────────────────
 echo $OUTPUT->header();
@@ -561,16 +570,16 @@ echo $OUTPUT->header();
                 <span class="lbl">Formations</span>
             </div>
             <div class="pact-hero-stat">
-                <span class="val"><?= count($root_cats) ?></span>
+                <span class="val"><?= $total_domains ?></span>
                 <span class="lbl">Domaines</span>
             </div>
             <div class="pact-hero-stat">
-                <span class="val">100%</span>
-                <span class="lbl">En ligne</span>
+                <span class="val"><?= count($root_cats) ?></span>
+                <span class="lbl">Catégories</span>
             </div>
             <div class="pact-hero-stat">
                 <span class="val">🆓</span>
-                <span class="lbl">Gratuit</span>
+                <span class="lbl">100% Gratuit</span>
             </div>
         </div>
     </div>
