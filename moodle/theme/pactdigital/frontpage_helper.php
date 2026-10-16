@@ -130,9 +130,6 @@ function pactdigital_get_frontpage_context() {
         }
         $summary_short = mb_strimwidth($clean_summary, 0, 100, '…');
 
-        // Durée estimée
-        $duration = ($level_info['level'] === 'bronze') ? '8h à 10h' : (($level_info['level'] === 'argent') ? '12h à 15h' : '15h à 20h');
-
         $course_card = [
             'id'            => $c->id,
             'title'         => $display_title,
@@ -142,7 +139,6 @@ function pactdigital_get_frontpage_context() {
             'level_label'   => $level_info['label'],
             'level_icon'    => '',
             'level_cls'     => $level_info['cls'],
-            'duration'      => $duration,
             'img_url'       => $img_url,
             'view_url'      => (new moodle_url('/course/view.php', ['id' => $c->id]))->out(false),
             'welcome_url'   => (new moodle_url('/local/pactdigital/course_welcome.php', ['id' => $c->id]))->out(false),
@@ -150,6 +146,7 @@ function pactdigital_get_frontpage_context() {
             'cat_color'     => $cat_meta[$root_id]['color'] ?? '#129b40',
             'cat_icon'      => '',
         ];
+
 
         // Remplir les onglets de catégories
         if (count($courses_by_cat[$slug]) < 8) {
