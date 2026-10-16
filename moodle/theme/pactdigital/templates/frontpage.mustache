@@ -13,38 +13,21 @@
     <!-- ── TOP NAVBAR STYLE UDEMY ─────────────────────────────────────────── -->
     <header class="pact-udemy-navbar">
         <div class="pact-udemy-nav-inner">
-            <!-- Brand & Armoiries -->
+            <!-- Brand & Armoiries collés à gauche -->
             <a href="{{{ urls.catalogue }}}" class="pact-nav-brand">
                 {{#armoiries_url}}
                     <img src="{{armoiries_url}}" alt="Armoiries Burkina Faso" class="pact-nav-flag">
                 {{/armoiries_url}}
                 <div class="pact-nav-brand-text">
-                    <span class="pact-nav-brand-title">PACTDIGITAL-BF</span>
-                    <span class="pact-nav-brand-sub">BURKINA FASO • MTDPCE</span>
+                    <span class="pact-nav-ministry-title">Ministère de la Transition Digitale, des Postes et des Communications Électroniques</span>
+                    <span class="pact-nav-project-subtitle">Pact Digital</span>
                 </div>
             </a>
-
-            <!-- Menu Explorer / Catégories -->
-            <div class="pact-nav-categories">
-                <a href="{{{ urls.catalogue }}}" class="pact-nav-cat-btn">
-                    <span class="cat-icon">☰</span>
-                    <span class="cat-label">Catégories</span>
-                </a>
-            </div>
-
-            <!-- Barre de recherche centrale façon Udemy -->
-            <form action="{{{ urls.catalogue }}}" method="GET" class="pact-nav-search">
-                <div class="pact-nav-search-box">
-                    <span class="pact-search-icon">🔍</span>
-                    <input type="text" name="q" class="pact-search-input" placeholder="Que souhaitez-vous apprendre ? (IA, Bureautique, Cybersécurité...)" autocomplete="off">
-                    <button type="submit" class="pact-search-btn" aria-label="Rechercher">Rechercher</button>
-                </div>
-            </form>
 
             <!-- Liens directs & Actions -->
             <div class="pact-nav-actions">
                 <a href="{{{ urls.verify }}}" class="pact-nav-link text-nowrap" title="Vérifier une attestation officielle">
-                    🛡️ Vérifier attestation
+                    Vérifier attestation
                 </a>
 
                 {{^is_logged_in}}
@@ -70,59 +53,34 @@
                 <div id="region-main-box">
                     <div id="region-main">
 
-                        <!-- ── 1. HERO BANNER IMMERSIF STYLE UDEMY ────────────── -->
+                        <!-- ── 1. HERO BANNER : DESCRIPTION DU PROJET PACT DIGITAL ────────────── -->
                         <section class="pact-hero-section">
                             <div class="pact-hero-container">
-                                <div class="pact-hero-card">
+                                <div class="pact-hero-card pact-hero-card-fullwidth">
                                     <div class="pact-hero-badge">
                                         <span class="flag-dot">🇧🇫</span>
-                                        <span>Programme National de Littératie Numérique</span>
+                                        <span>Projet Pact Digital</span>
                                     </div>
                                     <h1 class="pact-hero-title">
-                                        L'avenir numérique commence avec vos compétences.
+                                        Projet PACTDIGITAL-BF : La formation aux compétences numériques au Burkina Faso
                                     </h1>
                                     <p class="pact-hero-subtitle">
-                                        Accédez à <strong>60 formations certifiantes 100% gratuites</strong> conçues par le Ministère de la Transition Digitale (MTDPCE). Choisissez la formation complète ou passez directement l'examen pour valoriser vos acquis.
+                                        Porté par le <strong>Ministère de la Transition Digitale, des Postes et des Communications Électroniques</strong>, le projet <strong>PACTDIGITAL-BF</strong> est l'initiative nationale stratégique entièrement dédiée à la formation, au renforcement et à la certification des compétences numériques de l'ensemble de la population (citoyens, étudiants, professionnels et agents publics).
+                                    </p>
+                                    <p class="pact-hero-desc-lead">
+                                        Ce projet met à disposition <strong>60 parcours de formation certifiants et gratuits</strong> couvrant 20 domaines essentiels du numérique (du niveau débutant Bronze au niveau expert Or). Chaque formation permet d'acquérir des compétences pratiques reconnues par l'État et de décrocher une <strong>attestation officielle avec QR Code de vérification</strong>.
                                     </p>
 
-                                    <!-- Barre de recherche hero -->
-                                    <form action="{{{ urls.catalogue }}}" method="GET" class="pact-hero-search-form">
-                                        <div class="hero-search-wrapper">
-                                            <span class="hero-search-icon">🔍</span>
-                                            <input type="text" name="q" class="hero-search-input" placeholder="Quelle compétence cherchez-vous ? (ex : Tableur, IA, Réseaux, Vente...)">
-                                            <button type="submit" class="hero-search-submit">Explorer</button>
-                                        </div>
-                                    </form>
-
-                                    <!-- Tags de recherche rapide -->
-                                    <div class="pact-hero-tags">
-                                        <span class="tags-label">Tendances :</span>
-                                        <a href="{{{ urls.catalogue }}}?q=ia" class="hero-tag">🤖 Intelligence Artificielle</a>
-                                        <a href="{{{ urls.catalogue }}}?q=securite" class="hero-tag">🔒 Cybersécurité</a>
-                                        <a href="{{{ urls.catalogue }}}?q=bureautique" class="hero-tag">📄 Bureautique</a>
-                                        <a href="{{{ urls.catalogue }}}?q=former" class="hero-tag">👨‍🏫 Former avec le numérique</a>
-                                        <a href="{{{ urls.catalogue }}}?q=vente" class="hero-tag">🛍️ E-commerce</a>
-                                    </div>
-
-                                    <!-- CTA boutons -->
+                                    <!-- CTA bouton épuré sans icône ni flèche -->
                                     <div class="pact-hero-ctas">
                                         <a href="{{{ urls.catalogue }}}" class="btn-hero-primary">
-                                            📚 Explorer les 60 formations ➔
+                                            Explorer les sessions de formation
                                         </a>
-                                        {{^is_logged_in}}
-                                            <a href="{{{ urls.signup }}}" class="btn-hero-secondary">
-                                                ⚡ Créer un compte immédiat
-                                            </a>
-                                        {{/is_logged_in}}
-                                        {{#is_logged_in}}
-                                            <a href="{{{ urls.apprenant }}}" class="btn-hero-secondary">
-                                                🎓 Reprendre mes cours
-                                            </a>
-                                        {{/is_logged_in}}
                                     </div>
                                 </div>
                             </div>
                         </section>
+
 
                         <!-- ── 2. BARRE DE STATISTIQUES & RÉASSURANCE ─────────── -->
                         <section class="pact-stats-strip">
