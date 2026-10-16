@@ -86,13 +86,13 @@ function pactdigital_get_frontpage_context() {
         $level_info = [
             'level' => 'bronze',
             'label' => 'Bronze',
-            'icon'  => '🥉',
+            'icon'  => '',
             'cls'   => 'level-bronze'
         ];
         if (stripos($raw_title, 'argent') !== false || $raw_title === 'Diamant') {
-            $level_info = ['level' => 'argent', 'label' => 'Argent', 'icon' => '🥈', 'cls' => 'level-argent'];
+            $level_info = ['level' => 'argent', 'label' => 'Argent', 'icon' => '', 'cls' => 'level-argent'];
         } else if (stripos($raw_title, 'or') !== false) {
-            $level_info = ['level' => 'or', 'label' => 'Or', 'icon' => '🥇', 'cls' => 'level-or'];
+            $level_info = ['level' => 'or', 'label' => 'Or', 'icon' => '', 'cls' => 'level-or'];
         }
 
         // Titre d'affichage harmonisé
@@ -140,7 +140,7 @@ function pactdigital_get_frontpage_context() {
             'summary'       => $summary_short,
             'level'         => $level_info['level'],
             'level_label'   => $level_info['label'],
-            'level_icon'    => $level_info['icon'],
+            'level_icon'    => '',
             'level_cls'     => $level_info['cls'],
             'duration'      => $duration,
             'img_url'       => $img_url,
@@ -148,7 +148,7 @@ function pactdigital_get_frontpage_context() {
             'welcome_url'   => (new moodle_url('/local/pactdigital/course_welcome.php', ['id' => $c->id]))->out(false),
             'catalogue_url' => (new moodle_url('/local/pactdigital/catalogue.php', ['domain' => $slug]))->out(false),
             'cat_color'     => $cat_meta[$root_id]['color'] ?? '#129b40',
-            'cat_icon'      => $cat_meta[$root_id]['icon'] ?? '💻',
+            'cat_icon'      => '',
         ];
 
         // Remplir les onglets de catégories
@@ -164,12 +164,12 @@ function pactdigital_get_frontpage_context() {
         $domain_counts[$c->domain_name] = true;
     }
 
-    // Structure des onglets pour le template
+    // Structure des onglets pour le template (sans icônes)
     $tabs = [
         [
             'id'          => 'tab-featured',
             'target'      => 'pane-featured',
-            'label'       => '⭐ À la une',
+            'label'       => 'À la une',
             'active'      => true,
             'title'       => 'Formations recommandées pour démarrer',
             'desc'        => 'Une sélection des formations les plus consultées pour acquérir rapidement les compétences numériques indispensables.',
@@ -180,7 +180,7 @@ function pactdigital_get_frontpage_context() {
         [
             'id'          => 'tab-fondamentales',
             'target'      => 'pane-fondamentales',
-            'label'       => '💻 Fondamentales',
+            'label'       => 'Fondamentales',
             'active'      => false,
             'title'       => $cat_meta[9]['name'],
             'desc'        => $cat_meta[9]['desc'],
@@ -191,7 +191,7 @@ function pactdigital_get_frontpage_context() {
         [
             'id'          => 'tab-manageriales',
             'target'      => 'pane-manageriales',
-            'label'       => '📊 Managériales',
+            'label'       => 'Managériales',
             'active'      => false,
             'title'       => $cat_meta[10]['name'],
             'desc'        => $cat_meta[10]['desc'],
@@ -202,7 +202,7 @@ function pactdigital_get_frontpage_context() {
         [
             'id'          => 'tab-sectorielles',
             'target'      => 'pane-sectorielles',
-            'label'       => '🏭 Sectorielles',
+            'label'       => 'Sectorielles',
             'active'      => false,
             'title'       => $cat_meta[11]['name'],
             'desc'        => $cat_meta[11]['desc'],
@@ -213,7 +213,7 @@ function pactdigital_get_frontpage_context() {
         [
             'id'          => 'tab-emergentes',
             'target'      => 'pane-emergentes',
-            'label'       => '🚀 Émergentes',
+            'label'       => 'Émergentes',
             'active'      => false,
             'title'       => $cat_meta[12]['name'],
             'desc'        => $cat_meta[12]['desc'],
@@ -222,6 +222,7 @@ function pactdigital_get_frontpage_context() {
             'explore_lbl' => 'Voir les 18 cours Émergents',
         ],
     ];
+
 
     // Grille des 4 piliers thématiques
     $pillars = [];

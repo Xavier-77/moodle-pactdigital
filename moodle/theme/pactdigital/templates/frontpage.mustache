@@ -149,7 +149,7 @@
                                                     <p class="tab-lead-desc">{{desc}}</p>
                                                 </div>
                                                 <a href="{{explore_url}}" class="tab-lead-link">
-                                                    {{explore_lbl}} ➔
+                                                    {{explore_lbl}}
                                                 </a>
                                             </div>
 
@@ -163,18 +163,18 @@
                                                             {{/img_url}}
                                                             {{^img_url}}
                                                                 <div class="card-img-placeholder" style="background: {{cat_color}}22;">
-                                                                    <span class="placeholder-emoji">{{cat_icon}}</span>
+                                                                    <span class="placeholder-emoji"></span>
                                                                 </div>
                                                             {{/img_url}}
                                                             <span class="card-level-badge {{level_cls}}">
-                                                                {{level_icon}} {{level_label}}
+                                                                {{level_label}}
                                                             </span>
                                                         </a>
 
                                                         <div class="card-body">
                                                             <div class="card-domain-row">
                                                                 <span class="card-domain-tag">{{domain_name}}</span>
-                                                                <span class="card-duration">⏱️ {{duration}}</span>
+                                                                <span class="card-duration">{{duration}}</span>
                                                             </div>
                                                             <h4 class="card-title">
                                                                 <a href="{{welcome_url}}">{{title}}</a>
@@ -182,14 +182,14 @@
                                                             <p class="card-summary">{{summary}}</p>
                                                             
                                                             <div class="card-features">
-                                                                <span class="card-feature-pill">✅ Attestation officielle</span>
-                                                                <span class="card-feature-pill">🎯 2 voies au choix</span>
+                                                                <span class="card-feature-pill">Attestation officielle</span>
+                                                                <span class="card-feature-pill">2 voies au choix</span>
                                                             </div>
 
                                                             <div class="card-footer">
                                                                 <div class="card-price">Gratuit</div>
                                                                 <a href="{{welcome_url}}" class="btn-card-action">
-                                                                    Découvrir ➔
+                                                                    Découvrir
                                                                 </a>
                                                             </div>
                                                         </div>
@@ -199,7 +199,7 @@
 
                                             <div class="pact-tab-bottom-cta text-center mt-4">
                                                 <a href="{{explore_url}}" class="btn-view-all">
-                                                    Voir toutes les formations de cette thématique ➔
+                                                    Voir toutes les formations de cette thématique
                                                 </a>
                                             </div>
                                         </div>
@@ -221,16 +221,13 @@
                                 <div class="pact-pillars-grid">
                                     {{#pillars}}
                                         <a href="{{url}}" class="pact-pillar-card" style="border-top-color: {{color}};">
-                                            <div class="pillar-icon" style="background: {{color}}15; color: {{color}};">
-                                                {{icon}}
-                                            </div>
                                             <div class="pillar-badge" style="background: {{color}}20; color: {{color}};">
                                                 {{badge}}
                                             </div>
                                             <h3 class="pillar-title">{{name}}</h3>
                                             <p class="pillar-desc">{{desc}}</p>
                                             <span class="pillar-cta" style="color: {{color}};">
-                                                Découvrir les cours ➔
+                                                Découvrir les cours
                                             </span>
                                         </a>
                                     {{/pillars}}
