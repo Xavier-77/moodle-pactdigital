@@ -86,6 +86,19 @@ $welcome_url     = (new moodle_url('/local/pactdigital/course_welcome.php', ['id
 $my_results_url  = (new moodle_url('/local/pactdigital/apprenant.php'))->out(false);
 $review_url      = (new moodle_url('/mod/quiz/review.php', ['attempt' => $attemptid]))->out(false);
 
+// Récupérer l'attestation si disponible
+$user_cert_issue = null;
+if ($passed) {
+    $sql_issue = "SELECT ci.id, ci.code, ci.timecreated, cm.id AS cmid
+                  FROM {customcert_issues} ci
+                  JOIN {customcert} cert ON cert.id = ci.customcertid
+                  LEFT JOIN {modules} m ON m.name = 'customcert'
+                  LEFT JOIN {course_modules} cm ON cm.module = m.id AND cm.instance = cert.id
+                  WHERE ci.userid = :userid AND cert.course = :courseid
+                  ORDER BY ci.timecreated DESC";
+    $user_cert_issue = $DB->get_record_sql($sql_issue, ['userid' => $attempt->userid, 'courseid' => $attempt->courseid], IGNORE_MULTIPLE);
+}
+
 $PAGE->set_url(new moodle_url('/local/pactdigital/exam_result.php', ['attemptid' => $attemptid]));
 $PAGE->set_context($context);
 $PAGE->set_pagelayout('standard');
@@ -410,6 +423,14 @@ echo $OUTPUT->header();
     <!-- ── Actions ── -->
     <div class="result-actions">
         <?php if ($passed): ?>
+            <?php if ($user_cert_issue && !empty($user_cert_issue->cmid)): ?>
+            <a href="<?= (new moodle_url('/mod/customcert/view.php', ['id' => $user_cert_issue->cmid, 'downloadissue' => $user_cert_issue->id]))->out(false) ?>" target="_blank" class="btn-result primary" style="background: linear-gradient(135deg, #129b40, #0d7a32); text-decoration: none;">
+                📥 Télécharger mon attestation officielle (PDF)
+            </a>
+            <a href="<?= (new moodle_url('/local/pactdigital/verify.php', ['code' => $user_cert_issue->code]))->out(false) ?>" target="_blank" class="btn-result outline" style="text-decoration: none; border-color: #129b40; color: #129b40;">
+                🛡️ Vérifier l'attestation en ligne
+            </a>
+            <?php endif; ?>
         <button class="btn-result primary" onclick="openShareOverlay()">
             🔗 Partager mon badge & résultat
         </button>

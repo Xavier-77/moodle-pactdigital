@@ -72,21 +72,64 @@ $sql_badges = "SELECT bi.id, b.name, b.description, b.imageauthorname,
 
 $my_badges = $DB->get_records_sql($sql_badges, ['userid' => $USER->id]);
 
-// ── Récupérer les attestations (course_completions avec certificate) ──────────
+// ── Récupérer les attestations délivrées (mod_customcert) ───────────────────
+$sql_customcerts = "SELECT ci.id AS issueid, ci.code, ci.timecreated,
+                           c.id AS courseid, c.fullname AS coursename, c.shortname,
+                           cm.id AS cmid
+                    FROM {customcert_issues} ci
+                    JOIN {customcert} cert ON cert.id = ci.customcertid
+                    JOIN {course} c ON c.id = cert.course
+                    LEFT JOIN {modules} m ON m.name = 'customcert'
+                    LEFT JOIN {course_modules} cm ON cm.module = m.id AND cm.instance = cert.id
+                    WHERE ci.userid = :userid
+                    ORDER BY ci.timecreated DESC";
+$issued_certs = $DB->get_records_sql($sql_customcerts, ['userid' => $USER->id]);
+
+// Récupérer aussi les cours complétés au cas où l'émission customcert est en attente
 $sql_certs = "SELECT cc.id, cc.course AS courseid, cc.timecompleted,
                      c.fullname AS coursename, c.shortname
               FROM {course_completions} cc
               JOIN {course} c ON c.id = cc.course
               WHERE cc.userid = :userid AND cc.timecompleted IS NOT NULL
               ORDER BY cc.timecompleted DESC";
+$my_completions = $DB->get_records_sql($sql_certs, ['userid' => $USER->id]);
 
-$my_certs = $DB->get_records_sql($sql_certs, ['userid' => $USER->id]);
+// Combiner les attestations
+$my_certs = [];
+foreach ($issued_certs as $ic) {
+    $my_certs[$ic->courseid] = (object) [
+        'id'            => $ic->issueid,
+        'courseid'      => $ic->courseid,
+        'coursename'    => $ic->coursename,
+        'shortname'     => $ic->shortname,
+        'timecompleted' => $ic->timecreated,
+        'code'          => $ic->code,
+        'cmid'          => $ic->cmid,
+        'download_url'  => $ic->cmid ? (new moodle_url('/mod/customcert/view.php', ['id' => $ic->cmid, 'downloadissue' => $ic->issueid]))->out(false) : null,
+        'verify_url'    => (new moodle_url('/local/pactdigital/verify.php', ['code' => $ic->code]))->out(false),
+    ];
+}
+foreach ($my_completions as $mc) {
+    if (!isset($my_certs[$mc->courseid])) {
+        $my_certs[$mc->courseid] = (object) [
+            'id'            => $mc->id,
+            'courseid'      => $mc->courseid,
+            'coursename'    => $mc->coursename,
+            'shortname'     => $mc->shortname,
+            'timecompleted' => $mc->timecompleted,
+            'code'          => null,
+            'cmid'          => null,
+            'download_url'  => (new moodle_url('/course/view.php', ['id' => $mc->courseid]))->out(false),
+            'verify_url'    => null,
+        ];
+    }
+}
 
 // ── Statistiques globales de l'apprenant ─────────────────────────────────────
 $total_enrolled     = count($enrolled_courses);
 $total_completed    = count($my_certs);
 $total_badges       = count($my_badges);
-$total_in_progress  = $total_enrolled - $total_completed;
+$total_in_progress  = max(0, $total_enrolled - $total_completed);
 
 // ── Calcul de la progression par cours ───────────────────────────────────────
 $courses_data = [];
@@ -771,18 +814,39 @@ echo $OUTPUT->header();
         <!-- ── Attestations ─────────────────────────────────────────── -->
         <?php if (!empty($my_certs)): ?>
         <div class="section-card">
-            <div class="section-title">📜 Mes Attestations de réussite</div>
+            <div class="section-title">📜 Mes Attestations officielles de réussite (EF-CER-01 / EF-CER-03)</div>
+            <p style="color:var(--grey); font-size:0.88rem; margin-top:-0.5rem; margin-bottom:1.2rem;">
+                Toutes vos attestations délivrées par le MTDPCE sont disponibles ci-dessous avec leur numéro unique vérifiable publiquement.
+            </p>
             <?php foreach ($my_certs as $cert): ?>
-            <div class="course-card" style="border-left: 4px solid var(--yellow);">
-                <div class="course-icon" style="background: linear-gradient(135deg, #fad61520, #fad61540);">🏅</div>
-                <div class="course-info">
-                    <div class="course-name"><?= htmlspecialchars($cert->coursename) ?></div>
-                    <div class="course-cat">Validé le <?= userdate($cert->timecompleted, '%d/%m/%Y') ?></div>
+            <div class="course-card" style="border-left: 4px solid var(--yellow); padding: 1.2rem 1.4rem; margin-bottom: 1rem;">
+                <div class="course-icon" style="background: linear-gradient(135deg, #fad61520, #fad61540); font-size: 2rem;">🏅</div>
+                <div class="course-info" style="flex: 1;">
+                    <div class="course-name" style="font-size: 1.05rem;"><?= htmlspecialchars($cert->coursename) ?></div>
+                    <div class="course-cat" style="margin-top: 4px;">
+                        🗓️ Délivrée le <?= userdate($cert->timecompleted, '%d/%m/%Y') ?>
+                        <?php if (!empty($cert->code)): ?>
+                            &nbsp;·&nbsp; 🔑 Code unique : <strong style="font-family:monospace; background:#e2e8f0; padding:2px 6px; border-radius:4px;"><?= htmlspecialchars($cert->code) ?></strong>
+                        <?php endif; ?>
+                    </div>
                 </div>
-                <span class="badge-status badge-green">✅ Formation validée</span>
-                <a href="<?= (new moodle_url('/course/view.php', ['id' => $cert->courseid]))->out(false) ?>" class="btn-outline-course btn-course" style="font-size:0.82rem; padding:0.45rem 1rem;">
-                    Revoir le cours
-                </a>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+                    <?php if (!empty($cert->download_url) && !empty($cert->cmid)): ?>
+                    <a href="<?= $cert->download_url ?>" target="_blank" class="btn-course" style="font-size:0.82rem; padding:0.45rem 0.9rem; background: linear-gradient(135deg, #129b40, #0d7a32); color:white; text-decoration:none;">
+                        📥 Télécharger l'attestation PDF
+                    </a>
+                    <?php endif; ?>
+
+                    <?php if (!empty($cert->verify_url)): ?>
+                    <a href="<?= $cert->verify_url ?>" target="_blank" class="btn-outline-course btn-course" style="font-size:0.82rem; padding:0.45rem 0.9rem; text-decoration:none; border-color: #129b40; color: #129b40;">
+                        🛡️ Page de vérification publique
+                    </a>
+                    <?php endif; ?>
+
+                    <a href="<?= (new moodle_url('/course/view.php', ['id' => $cert->courseid]))->out(false) ?>" class="btn-outline-course btn-course" style="font-size:0.82rem; padding:0.45rem 0.9rem; text-decoration:none;">
+                        Revoir le cours
+                    </a>
+                </div>
             </div>
             <?php endforeach; ?>
         </div>

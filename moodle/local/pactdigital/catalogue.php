@@ -42,17 +42,17 @@ function pact_get_domain_meta($catname) {
 // ── Niveau badge selon shortname ─────────────────────────────────────────────
 function pact_get_level_badge($shortname) {
     $s = strtolower($shortname);
-    if (strpos($s, 'or') !== false || strpos($s, 'gold') !== false || strpos($s, 'diaman') !== false) {
-        return ['label' => '💎 Diamant',  'cls' => 'badge-diamant'];
+    if (preg_match('/(^|_|\s)or($|_|\s)/i', $s)) {
+        return ['label' => '🥇 Or', 'cls' => 'badge-or', 'level' => 'or'];
     }
-    if (strpos($s, 'argent') !== false || strpos($s, 'silver') !== false) {
-        return ['label' => '🥈 Argent', 'cls' => 'badge-argent'];
+    if (strpos($s, 'argent') !== false || strpos($s, 'silver') !== false || strpos($s, 'diaman') !== false) {
+        return ['label' => '🥈 Argent', 'cls' => 'badge-argent', 'level' => 'argent'];
     }
     if (strpos($s, 'bronze') !== false) {
-        return ['label' => '🥉 Bronze',  'cls' => 'badge-bronze'];
+        return ['label' => '🥉 Bronze', 'cls' => 'badge-bronze', 'level' => 'bronze'];
     }
     // Fallback: chercher dans le nom
-    return ['label' => '🎓 Formation', 'cls' => 'badge-default'];
+    return ['label' => '🎓 Formation', 'cls' => 'badge-default', 'level' => 'all'];
 }
 
 // ── Charger tous les cours visibles (hors site) ──────────────────────────────
@@ -148,7 +148,7 @@ foreach ($courses_raw as $c) {
     $btn_icon  = ($progress_pct > 0 && $progress_pct < 100) ? '▶️' :
                  ($progress_pct >= 100 ? '✅' : '🎯');
 
-    $courses_html .= '<div class="pact-course-card" data-domain="' . $domain_meta['slug'] . '" data-title="' . $safe_fullname . '">';
+    $courses_html .= '<div class="pact-course-card" data-domain="' . $domain_meta['slug'] . '" data-level="' . $level_badge['level'] . '" data-title="' . $safe_fullname . '">';
     $courses_html .= '  <div class="pact-card-image" style="' . $card_style . '">';
     if (!$img_url) {
         $courses_html .= '    <div class="pact-card-emoji">' . $domain_meta['emoji'] . '</div>';
@@ -409,10 +409,33 @@ echo $OUTPUT->header();
     font-size: 0.7rem;
     font-weight: 700;
 }
-.badge-bronze  { background: #cd7f32; color: white; }
-.badge-argent  { background: #aaa; color: white; }
-.badge-diamant { background: linear-gradient(135deg, #b9f2ff, #89cff0); color: #003; }
+.badge-bronze  { background: #b45309; color: white; }
+.badge-argent  { background: #64748b; color: white; }
+.badge-or      { background: linear-gradient(135deg, #d97706, #b45309); color: white; }
+.badge-diamant { background: #64748b; color: white; }
 .badge-default { background: #eee; color: #555; }
+
+.pact-level-pill {
+    padding: 0.35rem 0.9rem;
+    border-radius: 50px;
+    border: 1.5px solid #cbd5e1;
+    background: white;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: #475569;
+    white-space: nowrap;
+}
+.pact-level-pill:hover {
+    border-color: #0284c7;
+    color: #0284c7;
+}
+.pact-level-pill.active {
+    background: #0f172a;
+    border-color: #0f172a;
+    color: white;
+}
 
 /* Card body */
 .pact-card-body {
@@ -555,10 +578,10 @@ echo $OUTPUT->header();
     <!-- ── Barre de filtres ── -->
     <div class="pact-filters-bar">
         <div class="pact-filter-search">
-            <input type="text" id="pact-search" placeholder="Rechercher une formation…" autocomplete="off">
+            <input type="text" id="pact-search" placeholder="Rechercher une formation (ex. protection, bureautique, IA…)…" autocomplete="off">
         </div>
         <div class="pact-filter-pills">
-            <button class="pact-pill active" data-domain="all">🌐 Tous</button>
+            <button class="pact-pill active" data-domain="all">🌐 Tous les domaines</button>
             <?php foreach ($root_cats as $cat):
                 $meta = pact_get_domain_meta($cat->name);
             ?>
@@ -566,6 +589,13 @@ echo $OUTPUT->header();
                 <?= $meta['emoji'] ?> <?= $meta['label'] ?>
             </button>
             <?php endforeach; ?>
+        </div>
+        <div class="pact-filter-pills" style="width: 100%; margin-top: 0.35rem; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+            <span style="font-size: 0.84rem; font-weight: 700; color: #475569; margin-right: 4px;">Niveau :</span>
+            <button class="pact-level-pill active" data-level="all">Tous</button>
+            <button class="pact-level-pill" data-level="bronze">🥉 Bronze (Débutant)</button>
+            <button class="pact-level-pill" data-level="argent">🥈 Argent (Intermédiaire)</button>
+            <button class="pact-level-pill" data-level="or">🥇 Or (Avancé)</button>
         </div>
     </div>
 
@@ -588,22 +618,26 @@ echo $OUTPUT->header();
 
 <script>
 (function() {
-    const pills   = document.querySelectorAll('.pact-pill');
-    const cards   = document.querySelectorAll('.pact-course-card');
-    const search  = document.getElementById('pact-search');
-    const counter = document.getElementById('pact-count');
-    const empty   = document.getElementById('pact-empty');
+    const pills      = document.querySelectorAll('.pact-pill');
+    const levelPills = document.querySelectorAll('.pact-level-pill');
+    const cards      = document.querySelectorAll('.pact-course-card');
+    const search     = document.getElementById('pact-search');
+    const counter    = document.getElementById('pact-count');
+    const empty      = document.getElementById('pact-empty');
     let activeDomain = 'all';
+    let activeLevel  = 'all';
     let searchQuery  = '';
 
     function applyFilters() {
         let visible = 0;
         cards.forEach(card => {
             const domain = card.dataset.domain;
+            const level  = card.dataset.level;
             const title  = (card.dataset.title || '').toLowerCase();
             const matchDomain = (activeDomain === 'all' || domain === activeDomain);
+            const matchLevel  = (activeLevel === 'all' || level === activeLevel);
             const matchSearch = !searchQuery || title.includes(searchQuery);
-            if (matchDomain && matchSearch) {
+            if (matchDomain && matchLevel && matchSearch) {
                 card.classList.remove('hidden');
                 visible++;
             } else {
@@ -623,6 +657,14 @@ echo $OUTPUT->header();
         });
     });
 
+    levelPills.forEach(lpill => {
+        lpill.addEventListener('click', () => {
+            levelPills.forEach(p => p.classList.remove('active'));
+            lpill.classList.add('active');
+            activeLevel = lpill.dataset.level;
+            applyFilters();
+        });
+    });
 
     search.addEventListener('input', () => {
         searchQuery = search.value.trim().toLowerCase();
