@@ -1550,9 +1550,13 @@ body.pagelayout-login .logincookies {
 .pact-hero-ctas {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0.85rem;
     flex-wrap: wrap;
+    margin-top: 1.5rem;
+    width: 100%;
 }
+
 
 .btn-hero-primary {
     display: inline-flex;
