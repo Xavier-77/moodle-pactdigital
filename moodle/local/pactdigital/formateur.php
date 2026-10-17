@@ -646,7 +646,7 @@ table.pact-table tr:hover td {
   <!-- Selecteur de cours -->
   <div class="course-selector-bar">
     <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;flex:1;">
-      <label for="course-picker">📚 Formation encadrée :</label>
+      <label for="course-picker">👨‍🏫 Cohorte / Cours sous votre responsabilité :</label>
       <select id="course-picker" class="course-select-input" onchange="window.location.href='formateur.php?id=' + this.value;">
         <?php if (empty($my_courses)): ?>
           <option value="0">Aucun cours sous votre encadrement</option>
@@ -663,8 +663,8 @@ table.pact-table tr:hover td {
     <?php if ($courseid > 0): ?>
       <div>
         <a href="<?= (new moodle_url('/course/view.php', ['id' => $courseid]))->out(false) ?>" 
-           class="btn-pact btn-pact-outline" target="_blank" title="Voir la page du cours">
-          👁️ Consulter la vue du cours
+           class="btn-pact btn-pact-outline" target="_blank" title="Consulter la vue de la classe">
+          👁️ Accéder à la classe
         </a>
       </div>
     <?php endif; ?>
@@ -673,9 +673,9 @@ table.pact-table tr:hover td {
   <?php if ($courseid === 0 || empty($course)): ?>
     <!-- Écran d'accueil sans cours sélectionné -->
     <div class="panel-card empty-box">
-      <div class="icon">📖</div>
-      <h3>Veuillez sélectionner un cours ci-dessus</h3>
-      <p>Choisissez l'une de vos formations pour accéder au suivi en temps réel de votre cohorte.</p>
+      <div class="icon">🎓</div>
+      <h3>Veuillez sélectionner une cohorte à superviser ci-dessus</h3>
+      <p>Choisissez l'un de vos cours pour accéder au tableau de bord de vos apprenants et corriger leurs devoirs.</p>
     </div>
   <?php else: ?>
 

@@ -76,10 +76,29 @@ function theme_pactdigital_get_extra_scss($theme) {
  * où l'e-mail est 100% facultatif et l'activation immédiate.
  */
 function theme_pactdigital_page_init(\moodle_page $page) {
-    global $CFG;
+    global $CFG, $USER, $DB;
     $path = parse_url($page->url->out(false), PHP_URL_PATH);
     if ($path && strpos($path, '/login/signup.php') !== false) {
         redirect(new moodle_url('/local/pactdigital/signup.php'));
+    }
+
+    // Détection des rôles pour affichage contextuel des boutons de la barre de navigation
+    if (isloggedin() && !isguestuser()) {
+        if (is_siteadmin($USER->id)) {
+            $page->add_body_class('pact-role-admin');
+        } else {
+            $trainer_count = $DB->count_records_sql(
+                "SELECT COUNT(*) FROM {role_assignments} WHERE userid = :uid AND roleid IN (3, 4, 9, 10)",
+                ['uid' => $USER->id]
+            );
+            if ($trainer_count > 0) {
+                $page->add_body_class('pact-role-trainer');
+            } else {
+                $page->add_body_class('pact-role-learner');
+            }
+        }
+    } else {
+        $page->add_body_class('pact-role-guest');
     }
 }
 

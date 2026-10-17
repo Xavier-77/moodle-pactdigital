@@ -666,6 +666,21 @@ body.pagelayout-login {
     }
 }
 
+/* Visibilité contextuelle des boutons navbar selon le rôle */
+body.pact-role-guest .pact-nav-apprenant-btn,
+body.pact-role-guest .pact-nav-formateur-btn {
+    display: none !important;
+}
+
+body.pact-role-learner:not(.pact-role-admin) .pact-nav-formateur-btn {
+    display: none !important;
+}
+
+body.pact-role-trainer:not(.pact-role-admin) .pact-nav-apprenant-btn {
+    display: none !important;
+}
+
+
 /* ═══════════════════════════════════════════════════════════════
    DASHBOARD — Widget accès rapide vers le Catalogue
    ═══════════════════════════════════════════════════════════════ */
