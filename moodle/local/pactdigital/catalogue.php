@@ -20,15 +20,15 @@ $PAGE->set_heading('Catalogue des formations');
 // ── Récupérer les catégories racines (profondeur 1) ──────────────────────────
 $root_cats = $DB->get_records('course_categories', ['depth' => 1, 'visible' => 1], 'sortorder ASC');
 
-// ── Mapping domaine → slug, couleur, emoji ───────────────────────────────────
+// ── Mapping domaine → slug, couleur ───────────────────────────────────────────
 function pact_get_domain_meta($catname) {
     $map = [
-        'fondamentales' => ['slug' => 'fondamentales', 'color' => '#129b40', 'light' => '#e8f7ee', 'emoji' => '🌱', 'label' => 'Fondamentales'],
-        'managériales'  => ['slug' => 'manageriales',  'color' => '#1a6faf', 'light' => '#e3eef8', 'emoji' => '📊', 'label' => 'Managériales'],
-        'manageri'      => ['slug' => 'manageriales',  'color' => '#1a6faf', 'light' => '#e3eef8', 'emoji' => '📊', 'label' => 'Managériales'],
-        'sectorielles'  => ['slug' => 'sectorielles',  'color' => '#e67e22', 'light' => '#fef3e8', 'emoji' => '🏛️', 'label' => 'Sectorielles'],
-        'émergentes'    => ['slug' => 'emergentes',    'color' => '#8e44ad', 'light' => '#f4eafb', 'emoji' => '🚀', 'label' => 'Émergentes'],
-        'emergentes'    => ['slug' => 'emergentes',    'color' => '#8e44ad', 'light' => '#f4eafb', 'emoji' => '🚀', 'label' => 'Émergentes'],
+        'fondamentales' => ['slug' => 'fondamentales', 'color' => '#129b40', 'light' => '#e8f7ee', 'emoji' => '', 'label' => 'Fondamentales'],
+        'managériales'  => ['slug' => 'manageriales',  'color' => '#1a6faf', 'light' => '#e3eef8', 'emoji' => '', 'label' => 'Managériales'],
+        'manageri'      => ['slug' => 'manageriales',  'color' => '#1a6faf', 'light' => '#e3eef8', 'emoji' => '', 'label' => 'Managériales'],
+        'sectorielles'  => ['slug' => 'sectorielles',  'color' => '#e67e22', 'light' => '#fef3e8', 'emoji' => '', 'label' => 'Sectorielles'],
+        'émergentes'    => ['slug' => 'emergentes',    'color' => '#8e44ad', 'light' => '#f4eafb', 'emoji' => '', 'label' => 'Émergentes'],
+        'emergentes'    => ['slug' => 'emergentes',    'color' => '#8e44ad', 'light' => '#f4eafb', 'emoji' => '', 'label' => 'Émergentes'],
     ];
     $name_lower = mb_strtolower($catname);
     foreach ($map as $keyword => $meta) {
@@ -36,7 +36,7 @@ function pact_get_domain_meta($catname) {
             return $meta;
         }
     }
-    return ['slug' => 'autres', 'color' => '#555', 'light' => '#f5f5f5', 'emoji' => '📚', 'label' => 'Autres'];
+    return ['slug' => 'autres', 'color' => '#555', 'light' => '#f5f5f5', 'emoji' => '', 'label' => 'Autres'];
 }
 
 // ── Niveau badge selon shortname ─────────────────────────────────────────────
@@ -158,11 +158,11 @@ foreach ($courses_raw as $c) {
 
     $courses_html .= '<div class="pact-course-card" data-domain="' . $domain_meta['slug'] . '" data-level="' . $level_badge['level'] . '" data-title="' . $safe_fullname . '">';
     $courses_html .= '  <div class="pact-card-image" style="' . $card_style . '">';
-    if (!$img_url) {
+    if (!$img_url && !empty($domain_meta['emoji'])) {
         $courses_html .= '    <div class="pact-card-emoji">' . $domain_meta['emoji'] . '</div>';
     }
     $courses_html .= '    <span class="pact-domain-chip" style="background:' . $domain_meta['color'] . '">'
-                       . $domain_meta['emoji'] . ' ' . $domain_meta['label'] . '</span>';
+                       . $domain_meta['label'] . '</span>';
     $courses_html .= '    <span class="pact-level-badge ' . $level_badge['cls'] . '">' . $level_badge['label'] . '</span>';
     $courses_html .= '  </div>';
     $courses_html .= '  <div class="pact-card-body">';
@@ -562,7 +562,7 @@ echo $OUTPUT->header();
 
     <!-- ── Hero banner ── -->
     <div class="pact-catalogue-hero">
-        <h1>📚 Catalogue des formations</h1>
+        <h1>Catalogue des formations</h1>
         <p>Explorez les formations numériques du <strong>Programme PACTDIGITAL-BF</strong> — Ministère de la Transition Digitale, des Postes et des Communications Électroniques</p>
         <div class="pact-hero-stats">
             <div class="pact-hero-stat">
@@ -590,12 +590,12 @@ echo $OUTPUT->header();
             <input type="text" id="pact-search" placeholder="Rechercher une formation (ex. protection, bureautique, IA…)…" autocomplete="off">
         </div>
         <div class="pact-filter-pills">
-            <button class="pact-pill active" data-domain="all">🌐 Tous les domaines</button>
+            <button class="pact-pill active" data-domain="all">Tous les domaines</button>
             <?php foreach ($root_cats as $cat):
                 $meta = pact_get_domain_meta($cat->name);
             ?>
             <button class="pact-pill" data-domain="<?= $meta['slug'] ?>">
-                <?= $meta['emoji'] ?> <?= $meta['label'] ?>
+                <?= $meta['label'] ?>
             </button>
             <?php endforeach; ?>
         </div>
