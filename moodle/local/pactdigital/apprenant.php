@@ -27,7 +27,7 @@ $PAGE->set_title('Mon Espace Apprenant — PACTDIGITAL-BF');
 $PAGE->set_heading('Mon Espace Apprenant');
 
 // ── Récupérer les cours auxquels l'apprenant est inscrit ─────────────────────
-$sql_enrolled = "SELECT DISTINCT c.id, c.fullname, c.shortname, c.summary, c.categoryid,
+$sql_enrolled = "SELECT DISTINCT c.id, c.fullname, c.shortname, c.summary, c.category,
                         cat.name AS catname,
                         ue.timecreated AS enrol_date,
                         cc.timecompleted,
@@ -35,7 +35,7 @@ $sql_enrolled = "SELECT DISTINCT c.id, c.fullname, c.shortname, c.summary, c.cat
                  FROM {course} c
                  JOIN {enrol} e ON e.courseid = c.id
                  JOIN {user_enrolments} ue ON ue.enrolid = e.id AND ue.userid = :userid
-                 JOIN {course_categories} cat ON cat.id = c.categoryid
+                 JOIN {course_categories} cat ON cat.id = c.category
                  LEFT JOIN {course_completions} cc ON cc.userid = :userid2 AND cc.course = c.id
                  LEFT JOIN {user_lastaccess} ula ON ula.userid = :userid3 AND ula.courseid = c.id
                  WHERE c.id > 1 AND c.visible = 1
@@ -61,7 +61,7 @@ $sql_quiz_attempts = "SELECT qa.id, qa.quiz AS quizid, q.name AS quizname,
 $quiz_attempts = $DB->get_records_sql($sql_quiz_attempts, ['userid' => $USER->id]);
 
 // ── Récupérer les badges de l'apprenant ──────────────────────────────────────
-$sql_badges = "SELECT bi.id, b.name, b.description, b.imageauthorname,
+$sql_badges = "SELECT bi.id, b.name, b.description, b.issuername,
                       bi.dateissued, b.courseid,
                       c.fullname AS coursename
                FROM {badge_issued} bi
