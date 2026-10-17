@@ -105,17 +105,6 @@
                         <!-- ========================================================= -->
                         <div class="pact-dashboard-enrichment mb-4">
 
-                            <!-- 0. ACCÈS RAPIDE — CATALOGUE DES FORMATIONS -->
-                            <div class="pact-quick-access-catalogue">
-                                <div class="pact-qac-text">
-                                    <h3>📚 Netflix du Savoir — PACTDIGITAL-BF</h3>
-                                    <p>Explorez les {{total_courses_available}} formations disponibles par domaine et commencez votre parcours numérique.</p>
-                                </div>
-                                <a href="/local/pactdigital/catalogue.php" class="pact-qac-btn">
-                                    🎯 Voir le Catalogue
-                                </a>
-                            </div>
-
                             <!-- 1. BANNIÈRE RÉSUMÉ & STATS PERSONNELLES -->
                             <div class="card border-0 shadow-sm rounded-4 mb-4" style="background: linear-gradient(135deg, #145B37 0%, #1e7a4a 100%); color: #fff;">
                                 <div class="card-body p-4">
@@ -145,28 +134,44 @@
                                 </div>
                             </div>
 
-                            <!-- 2. ONGLET PAR RÔLE (Apprenant, Enseignant, Administrateur) -->
+                            <!-- ONGLET PAR RÔLE (Affiché uniquement si rôle Enseignant ou Administrateur) -->
+                            {{#is_teacher}}
                             <ul class="nav nav-pills mb-4 gap-2 border-bottom pb-3" id="pactDashTabs" role="tablist">
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link active rounded-pill fw-semibold px-4" id="tab-apprenant" data-bs-toggle="pill" data-bs-target="#content-apprenant" type="button" role="tab">
-                                        🎓 Espace Apprenant
+                                        Espace Personnel
                                     </button>
                                 </li>
-                                {{#is_teacher}}
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link rounded-pill fw-semibold px-4" id="tab-enseignant" data-bs-toggle="pill" data-bs-target="#content-enseignant" type="button" role="tab">
-                                        👨‍🏫 Suivi Enseignant &amp; Étudiants
+                                        Suivi Enseignant &amp; Étudiants
                                     </button>
                                 </li>
-                                {{/is_teacher}}
                                 {{#is_admin}}
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link rounded-pill fw-semibold px-4" id="tab-admin" data-bs-toggle="pill" data-bs-target="#content-admin" type="button" role="tab">
-                                        ⚙️ Supervision Administrateur
+                                        Supervision Administrateur
                                     </button>
                                 </li>
                                 {{/is_admin}}
                             </ul>
+                            {{/is_teacher}}
+                            {{^is_teacher}}
+                            {{#is_admin}}
+                            <ul class="nav nav-pills mb-4 gap-2 border-bottom pb-3" id="pactDashTabs" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active rounded-pill fw-semibold px-4" id="tab-apprenant" data-bs-toggle="pill" data-bs-target="#content-apprenant" type="button" role="tab">
+                                        Espace Personnel
+                                    </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link rounded-pill fw-semibold px-4" id="tab-admin" data-bs-toggle="pill" data-bs-target="#content-admin" type="button" role="tab">
+                                        Supervision Administrateur
+                                    </button>
+                                </li>
+                            </ul>
+                            {{/is_admin}}
+                            {{/is_teacher}}
 
                             <div class="tab-content" id="pactDashTabsContent">
 
@@ -177,7 +182,7 @@
                                     <div class="card border shadow-sm rounded-4 mb-4">
                                         <div class="card-header bg-white border-0 pt-4 px-4 pb-2 d-flex justify-content-between align-items-center flex-wrap gap-2">
                                             <h3 class="h5 fw-bold mb-0 text-dark">
-                                                🏆 Mes Certificats &amp; Attestations Réussis
+                                                Mes Certificats &amp; Attestations Réussis
                                             </h3>
                                             <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-2 rounded-pill">
                                                 {{certificates_count}} attestation(s) obtenue(s)
@@ -256,7 +261,7 @@
                                         <div class="card-header bg-white border-0 pt-4 px-4 pb-2">
                                             <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
                                                 <h3 class="h5 fw-bold mb-0 text-dark">
-                                                    📚 Mes Formations &amp; Progression par Domaine
+                                                    Mes Formations &amp; Progression par Domaine
                                                 </h3>
                                                 <!-- Filtres pour l'apprenant -->
                                                 <div class="d-flex gap-2 flex-wrap">

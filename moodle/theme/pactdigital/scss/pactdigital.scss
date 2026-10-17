@@ -680,6 +680,34 @@ body.pact-role-trainer:not(.pact-role-admin) .pact-nav-apprenant-btn {
     display: none !important;
 }
 
+/* Boutons d'action dans le header (#page-header) alignés sur la même ligne horizontale que Customize */
+#page-header .ms-auto.d-flex {
+    align-items: center;
+    gap: 0.5rem;
+}
+#page-header .pact-nav-catalogue-btn {
+    height: 38px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 1.1rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    border-radius: 50px;
+}
+#page-header form {
+    margin: 0;
+    display: inline-flex;
+}
+#page-header form .btn {
+    height: 38px;
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+    border-radius: 50px;
+    padding: 0 1.1rem;
+}
+
 
 /* ═══════════════════════════════════════════════════════════════
    DASHBOARD — Widget accès rapide vers le Catalogue
