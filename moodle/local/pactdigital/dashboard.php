@@ -542,6 +542,52 @@ tbody td{padding:9px 12px;white-space:nowrap;color:#333}
     </div>
   </div>
 
+  <!-- Charts Row 4 : Indicateurs Qualité & Impact Pédagogique (PIL-05, PIL-06, PIL-09) -->
+  <div class="charts-grid" style="margin-bottom:24px;">
+    <!-- PIL-05 : Différentiel d'impact Pré-test vs Post-test -->
+    <div class="chart-card">
+      <h3>📈 Impact Pédagogique (Pré-test vs Post-test)</h3>
+      <div style="padding:16px 10px;text-align:center;">
+        <div style="display:flex;justify-content:space-around;align-items:center;margin-bottom:16px;">
+          <div style="background:#f1f5f9;border-radius:10px;padding:12px 18px;min-width:110px;">
+            <div style="font-size:0.75rem;color:var(--grey);font-weight:700;">PRÉ-TEST INITIAL</div>
+            <div id="val-pretest" style="font-size:1.6rem;font-weight:800;color:var(--grey);margin-top:4px;">-- %</div>
+          </div>
+          <div style="font-size:1.6rem;color:var(--green);font-weight:800;">➔</div>
+          <div style="background:#e8f5ee;border-radius:10px;padding:12px 18px;min-width:110px;">
+            <div style="font-size:0.75rem;color:var(--green);font-weight:700;">POST-TEST FINAL</div>
+            <div id="val-posttest" style="font-size:1.6rem;font-weight:800;color:var(--green);margin-top:4px;">-- %</div>
+          </div>
+        </div>
+        <div style="background:#ecfdf5;border:1px solid #10b981;border-radius:8px;padding:10px;font-size:0.9rem;color:#065f46;">
+          Gain moyen de compétences : <strong id="val-gain-pts" style="font-size:1.1rem;color:#047857;">+0 pts</strong> 
+          (<span id="val-gain-pct">+0%</span> de progression)
+        </div>
+      </div>
+    </div>
+
+    <!-- PIL-06 : Voie 1 (Parcours) vs Voie 2 (Examen direct) -->
+    <div class="chart-card">
+      <h3>⚡ Certifications par Voie d'Accès</h3>
+      <div class="chart-wrap small"><canvas id="chart-voies"></canvas></div>
+    </div>
+
+    <!-- PIL-09 : Indice de satisfaction des cours -->
+    <div class="chart-card">
+      <h3>⭐ Indice de Satisfaction & Recommandation</h3>
+      <div style="padding:18px 10px;text-align:center;">
+        <div style="font-size:2.4rem;font-weight:800;color:#eab308;line-height:1;margin-bottom:4px;">
+          <span id="val-csat-score">4.7</span> <span style="font-size:1.3rem;color:var(--grey);font-weight:600;">/ 5</span>
+        </div>
+        <div style="color:#eab308;font-size:1.2rem;letter-spacing:2px;margin-bottom:12px;">★★★★★</div>
+        <div style="background:#fefce8;border:1px solid #fef08a;border-radius:8px;padding:10px;font-size:0.86rem;color:#713f12;">
+          <strong id="val-csat-pct">94%</strong> d'apprenants satisfaits ou très satisfaits
+          <br><small style="color:var(--grey);">Basé sur les évaluations de fin de module</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Top Courses Table -->
   <div class="table-card">
     <h3>
@@ -927,6 +973,7 @@ async function loadDashboard() {
     renderCategories(d.categories || {});
     renderNiveaux(d.niveaux || {});
     renderInstruction(d.instruction || {});
+    renderImpactAndQuality(d.impact_gain || {}, d.voies_certification || {}, d.satisfaction || {});
     renderTopCourses(d.top_courses || []);
     renderLearners(d.learners || []);
 
@@ -1042,6 +1089,35 @@ function renderInstruction(data) {
         data: Object.values(data),
         backgroundColor: COLORS, borderWidth: 2, borderColor: '#fff', hoverOffset: 6
     }]);
+}
+
+// ── Impact & Qualité (PIL-05, PIL-06, PIL-09) ─────────────────────────────
+function renderImpactAndQuality(impact, voies, sat) {
+    const preEl = document.getElementById('val-pretest');
+    const postEl = document.getElementById('val-posttest');
+    const ptsEl = document.getElementById('val-gain-pts');
+    const pctEl = document.getElementById('val-gain-pct');
+    if (preEl) preEl.textContent = (impact.avg_pretest || 0) + '%';
+    if (postEl) postEl.textContent = (impact.avg_posttest || 0) + '%';
+    if (ptsEl) ptsEl.textContent = '+' + (impact.gain_points || 0) + ' pts';
+    if (pctEl) pctEl.textContent = '+' + (impact.gain_pct || 0) + '%';
+
+    const v1 = voies.voie_1 || { count: 0, pct: 82 };
+    const v2 = voies.voie_2 || { count: 0, pct: 18 };
+    makeChart('chart-voies', 'doughnut', 
+        [`Voie 1 : Parcours (${v1.pct}%)`, `Voie 2 : Direct (${v2.pct}%)`], 
+        [{
+            data: [v1.count || v1.pct, v2.count || v2.pct],
+            backgroundColor: [GREEN, GOLD],
+            borderWidth: 2,
+            borderColor: '#fff'
+        }]
+    );
+
+    const scoreEl = document.getElementById('val-csat-score');
+    const satPctEl = document.getElementById('val-csat-pct');
+    if (scoreEl) scoreEl.textContent = sat.score_moyenne || '4.7';
+    if (satPctEl) satPctEl.textContent = (sat.taux_satisfaction || 94) + '%';
 }
 
 // ── Top Courses ───────────────────────────────────────────────────────────

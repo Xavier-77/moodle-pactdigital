@@ -23,6 +23,9 @@
                     <li><a href="{{{ config.wwwroot }}}" class="text-white-50 text-decoration-none">Accueil</a></li>
                     <li><a href="{{{ config.wwwroot }}}/local/pactdigital/catalogue.php" class="text-white-50 text-decoration-none">📚 Catalogue des formations</a></li>
                     <li><a href="{{{ config.wwwroot }}}/local/pactdigital/signup.php" class="text-white-50 text-decoration-none">Créer un compte</a></li>
+                    <li><a href="{{{ config.wwwroot }}}/local/pactdigital/verify.php" class="text-white-50 text-decoration-none">🔍 Vérifier une attestation</a></li>
+                    <li><a href="{{{ config.wwwroot }}}/local/pactdigital/faq.php" class="text-white-50 text-decoration-none">❓ Foire Aux Questions (FAQ)</a></li>
+                    <li><a href="{{{ config.wwwroot }}}/local/pactdigital/legal.php" class="text-white-50 text-decoration-none">⚖️ Mentions Légales & Confidentialité</a></li>
                     {{# output.page_doc_link }}
                         <li><span class="text-white-50">{{{ output.page_doc_link }}}</span></li>
                     {{/ output.page_doc_link }}
@@ -31,8 +34,11 @@
 
             <!-- Colonne 3 : Contact & Support -->
             <div class="col-lg-4 col-md-12">
-                <h5 class="text-white mb-3">Support</h5>
+                <h5 class="text-white mb-3">Assistance & Support</h5>
                 <ul class="list-unstyled d-flex flex-column gap-2">
+                    <li><a href="{{{ config.wwwroot }}}/local/pactdigital/contact.php" class="text-white-50 text-decoration-none">💬 Formulaire de Contact & Ticket</a></li>
+                    <li><span class="text-warning fw-bold">📞 Numéro vert gratuit : 34 34</span></li>
+                    <li><span class="text-white-50">✉️ support@pactdigital.bf</span></li>
                     {{# output.supportemail }}
                         <li><span class="text-white-50">{{{ output.supportemail }}}</span></li>
                     {{/ output.supportemail }}

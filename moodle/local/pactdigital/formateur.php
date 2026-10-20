@@ -17,6 +17,32 @@
 require_once(__DIR__ . '/../../config.php');
 require_once($CFG->libdir . '/gradelib.php');
 require_once($CFG->libdir . '/completionlib.php');
+require_once($CFG->dirroot . '/user/lib.php');
+require_once($CFG->dirroot . '/group/lib.php');
+
+if (!function_exists('pactdigital_set_user_field')) {
+    function pactdigital_set_user_field($userid, $shortname, $value) {
+        global $DB;
+        if ($value === '' || $value === null) {
+            return;
+        }
+        $field = $DB->get_record('user_info_field', ['shortname' => $shortname]);
+        if (!$field) {
+            return;
+        }
+        $rec = $DB->get_record('user_info_data', ['userid' => $userid, 'fieldid' => $field->id]);
+        if ($rec) {
+            $rec->data = (string)$value;
+            $DB->update_record('user_info_data', $rec);
+        } else {
+            $rec = new \stdClass();
+            $rec->userid = $userid;
+            $rec->fieldid = $field->id;
+            $rec->data = (string)$value;
+            $DB->insert_record('user_info_data', $rec);
+        }
+    }
+}
 
 require_login();
 
@@ -58,10 +84,273 @@ if ($courseid === 0 && count($my_courses) === 1) {
     $courseid = $first_course->id;
 }
 
+// ── Téléchargement du modèle de fichier CSV ─────────────────────────────────
+if ($action === 'download_template') {
+    while (ob_get_level()) { ob_end_clean(); }
+    header('Content-Type: text/csv; charset=utf-8');
+    header('Content-Disposition: attachment; filename="modele_import_cohorte_pactdigital.csv"');
+    echo "\xEF\xBB\xBF"; // UTF-8 BOM
+    echo "nom;prenom;telephone;sexe;annee_naissance;region;province;commune;statut;niveau_instruction\n";
+    echo "OUEDRAOGO;Fatou;70123456;F;1998;Centre;Kadiogo;Ouagadougou;Etudiant;Superieur\n";
+    echo "SAWADOGO;Moussa;76543210;M;2001;Hauts-Bassins;Houet;Bobo-Dioulasso;Sans emploi;Secondaire\n";
+    echo "KABORE;Amina;65987412;F;1995;Centre-Nord;Sanmatenga;Kaya;Salarie;Primaire\n";
+    exit;
+}
+
+// ── Export du Rapport Officiel de Session (Procès-Verbal CSV) ───────────────
+if ($action === 'export_session_report' && $courseid > 0) {
+    $report_course = $DB->get_record('course', ['id' => $courseid]);
+    if ($report_course) {
+        $context = context_course::instance($courseid);
+        if ($is_admin || has_capability('moodle/course:viewparticipants', $context) || isset($my_courses[$courseid])) {
+            while (ob_get_level()) { ob_end_clean(); }
+            $filename = "rapport_officiel_session_cours_" . $courseid . "_" . date('Ymd_His') . ".csv";
+            header('Content-Type: text/csv; charset=utf-8');
+            header('Content-Disposition: attachment; filename="' . $filename . '"');
+            echo "\xEF\xBB\xBF"; // UTF-8 BOM
+
+            $session_closed_time = get_config('local_pactdigital', "session_closed_{$courseid}_{$USER->id}");
+            $status_label = $session_closed_time ? ("Cloturee officiellement le " . date('d/m/Y H:i', $session_closed_time)) : "En cours (Suivi intermediaire)";
+
+            echo "PROGRAMME NATIONAL DE LITTERATIE NUMERIQUE — PACTDIGITAL-BF\n";
+            echo "MINISTERE DE LA TRANSITION DIGITALE, DES POSTES ET DES COMMUNICATIONS ELECTRONIQUES\n";
+            echo "PROCES-VERBAL & RAPPORT OFFICIEL DE SESSION DE FORMATION\n";
+            echo "Formation;\"" . str_replace('"', '""', $report_course->fullname) . "\"\n";
+            echo "Code cours;\"" . str_replace('"', '""', $report_course->shortname) . "\"\n";
+            echo "Formateur / Encadrant;\"" . str_replace('"', '""', fullname($USER)) . "\"\n";
+            echo "Email Formateur;\"" . str_replace('"', '""', $USER->email) . "\"\n";
+            echo "Date d'exportation;\"" . date('d/m/Y H:i') . "\"\n";
+            echo "Statut de la session;\"" . $status_label . "\"\n\n";
+
+            $sql_st = "SELECT DISTINCT u.id, u.firstname, u.lastname, u.email, u.phone1, u.lastaccess,
+                              ula.timeaccess AS lastcourseaccess,
+                              cc.timecompleted,
+                              (SELECT d.data FROM {user_info_data} d JOIN {user_info_field} f ON f.id = d.fieldid WHERE f.shortname = 'sexe' AND d.userid = u.id LIMIT 1) AS sexe,
+                              (SELECT d.data FROM {user_info_data} d JOIN {user_info_field} f ON f.id = d.fieldid WHERE f.shortname = 'annee_naissance' AND d.userid = u.id LIMIT 1) AS annee_naissance,
+                              (SELECT d.data FROM {user_info_data} d JOIN {user_info_field} f ON f.id = d.fieldid WHERE f.shortname = 'region' AND d.userid = u.id LIMIT 1) AS region,
+                              (SELECT d.data FROM {user_info_data} d JOIN {user_info_field} f ON f.id = d.fieldid WHERE f.shortname = 'commune' AND d.userid = u.id LIMIT 1) AS commune,
+                              (SELECT d.data FROM {user_info_data} d JOIN {user_info_field} f ON f.id = d.fieldid WHERE f.shortname = 'statut' AND d.userid = u.id LIMIT 1) AS statut,
+                              (SELECT d.data FROM {user_info_data} d JOIN {user_info_field} f ON f.id = d.fieldid WHERE f.shortname = 'niveau_instruction' AND d.userid = u.id LIMIT 1) AS niveau_instruction
+                       FROM {user} u
+                       JOIN {user_enrolments} ue ON ue.userid = u.id
+                       JOIN {enrol} e ON e.id = ue.enrolid AND e.courseid = :courseid
+                       LEFT JOIN {user_lastaccess} ula ON ula.userid = u.id AND ula.courseid = :courseid2
+                       LEFT JOIN {course_completions} cc ON cc.userid = u.id AND cc.course = :courseid3
+                       WHERE u.deleted = 0 AND ue.status = 0
+                       ORDER BY u.lastname ASC, u.firstname ASC";
+            $st_list = $DB->get_records_sql($sql_st, ['courseid' => $courseid, 'courseid2' => $courseid, 'courseid3' => $courseid]);
+
+            $c_info = new completion_info($report_course);
+            $c_enabled = $c_info->is_enabled();
+
+            $total_count = count($st_list);
+            $f_count = 0;
+            $y_count = 0;
+            $comp_count = 0;
+
+            $export_rows = [];
+            foreach ($st_list as $st) {
+                $pct = 0;
+                if ($c_enabled) {
+                    $p = \core_completion\progress::get_course_progress_percentage($report_course, $st->id);
+                    if ($p !== null) $pct = (int)round($p);
+                } elseif (!empty($st->timecompleted)) {
+                    $pct = 100;
+                }
+                $is_comp = (!empty($st->timecompleted) || $pct >= 100);
+                if ($is_comp) $comp_count++;
+
+                $sx = strtoupper(trim($st->sexe ?? ''));
+                if ($sx === 'F' || strpos($sx, 'FEM') !== false) $f_count++;
+
+                $by = (int)($st->annee_naissance ?? 0);
+                if ($by >= 1991 && $by <= 2011) $y_count++;
+
+                $export_rows[] = [
+                    $st->lastname,
+                    $st->firstname,
+                    $st->phone1 ?: '–',
+                    $st->email,
+                    $st->sexe ?: 'Non renseigné',
+                    $st->annee_naissance ?: '–',
+                    $st->region ?: 'Non renseignée',
+                    $st->commune ?: '–',
+                    $st->statut ?: '–',
+                    $st->niveau_instruction ?: '–',
+                    $pct . '%',
+                    $is_comp ? 'Certifié (Validé)' : ($pct > 0 ? 'En cours' : 'Non débuté'),
+                    $st->timecompleted ? date('d/m/Y H:i', $st->timecompleted) : '–'
+                ];
+            }
+
+            $taux_f = $total_count > 0 ? round(($f_count / $total_count) * 100, 1) : 0;
+            $taux_y = $total_count > 0 ? round(($y_count / $total_count) * 100, 1) : 0;
+            $taux_c = $total_count > 0 ? round(($comp_count / $total_count) * 100, 1) : 0;
+
+            echo "SYNTHESE DES INDICATEURS DE SESSION\n";
+            echo "Effectif total apprenants;\"" . $total_count . "\"\n";
+            echo "Participation feminine;\"" . $f_count . " (" . $taux_f . "%)\"\n";
+            echo "Jeunes 15-35 ans;\"" . $y_count . " (" . $taux_y . "%)\"\n";
+            echo "Taux de reussite / completion;\"" . $comp_count . " (" . $taux_c . "%)\"\n\n";
+
+            echo "LISTE DES APPRENANTS ET RESULTATS INDIVIDUELS\n";
+            echo "Nom;Prenom;Telephone;Email;Sexe;Annee Naissance;Region;Commune;Statut Socio-professionnel;Niveau Instruction;Progression;Statut Final;Date Reussite\n";
+            foreach ($export_rows as $row) {
+                $escaped = array_map(function($val) {
+                    return '"' . str_replace('"', '""', $val) . '"';
+                }, $row);
+                echo implode(';', $escaped) . "\n";
+            }
+            exit;
+        }
+    }
+}
+
 // ── Traitement d'un envoi de relance (Message / Notification) ───────────────
 $notification_msg = '';
 $notification_type = 'success';
 
+// 1. Clôture de session
+if ($action === 'close_session' && $courseid > 0 && confirm_sesskey()) {
+    set_config("session_closed_{$courseid}_{$USER->id}", time(), 'local_pactdigital');
+    $notification_msg = "🏁 La session a été clôturée avec succès. Les résultats finaux ont été validés et le procès-verbal officiel est prêt au téléchargement.";
+    $notification_type = 'success';
+}
+
+// 2. Importation de cohorte CSV
+if ($action === 'import_csv' && $courseid > 0 && confirm_sesskey()) {
+    if (!empty($_FILES['cohort_csv']['tmp_name']) && is_uploaded_file($_FILES['cohort_csv']['tmp_name'])) {
+        $handle = fopen($_FILES['cohort_csv']['tmp_name'], 'r');
+        if ($handle !== false) {
+            $row_idx = 0;
+            $created_count = 0;
+            $enrolled_count = 0;
+            $existing_count = 0;
+            $errors = [];
+
+            // Group setup
+            $group_name = 'Cohorte — ' . fullname($USER);
+            $group = $DB->get_record('groups', ['courseid' => $courseid, 'name' => $group_name]);
+            if (!$group) {
+                $newgroup = new \stdClass();
+                $newgroup->courseid = $courseid;
+                $newgroup->name = $group_name;
+                $newgroup->description = 'Cohorte encadrée par ' . fullname($USER);
+                $newgroup->timecreated = time();
+                $newgroup->timemodified = time();
+                $groupid = groups_create_group($newgroup);
+            } else {
+                $groupid = $group->id;
+            }
+
+            $enrol = $DB->get_record('enrol', ['courseid' => $courseid, 'enrol' => 'manual']);
+            $enrol_plugin = enrol_get_plugin('manual');
+            $student_role = $DB->get_record('role', ['shortname' => 'student']);
+
+            while (($data = fgetcsv($handle, 2048, ';')) !== false) {
+                if (count($data) === 1 && strpos($data[0], ',') !== false) {
+                    $data = str_getcsv($data[0], ',');
+                }
+                $row_idx++;
+                if ($row_idx === 1) {
+                    continue; // En-tête
+                }
+                if (empty($data) || empty(trim($data[0] ?? ''))) {
+                    continue;
+                }
+
+                $nom       = clean_param(trim($data[0] ?? ''), PARAM_TEXT);
+                $prenom    = clean_param(trim($data[1] ?? ''), PARAM_TEXT);
+                $raw_phone = clean_param(trim($data[2] ?? ''), PARAM_RAW);
+                $sexe      = clean_param(trim($data[3] ?? ''), PARAM_TEXT);
+                $annee     = clean_param(trim($data[4] ?? ''), PARAM_INT);
+                $region    = clean_param(trim($data[5] ?? ''), PARAM_TEXT);
+                $province  = clean_param(trim($data[6] ?? ''), PARAM_TEXT);
+                $commune   = clean_param(trim($data[7] ?? ''), PARAM_TEXT);
+                $statut    = clean_param(trim($data[8] ?? ''), PARAM_TEXT);
+                $niveau    = clean_param(trim($data[9] ?? ''), PARAM_TEXT);
+
+                $clean_phone = preg_replace('/[^0-9]/', '', $raw_phone);
+                if (empty($nom) || empty($clean_phone)) {
+                    $errors[] = "Ligne $row_idx : Nom ou numéro de téléphone manquant.";
+                    continue;
+                }
+
+                $target_user = $DB->get_record_select('user', "phone1 = :p1 OR username = :u1 OR email = :e1", [
+                    'p1' => $clean_phone,
+                    'u1' => $clean_phone,
+                    'e1' => $clean_phone . '@pactdigital.bf'
+                ]);
+
+                if (!$target_user) {
+                    $newuser = new \stdClass();
+                    $newuser->auth = 'manual';
+                    $newuser->confirmed = 1;
+                    $newuser->mnethostid = $CFG->mnet_localhost_id;
+                    $newuser->username = $clean_phone;
+                    $newuser->password = hash_internal_user_password('Pactdigital2026!');
+                    $newuser->firstname = $prenom ?: 'Apprenant';
+                    $newuser->lastname = $nom;
+                    $newuser->phone1 = $clean_phone;
+                    $newuser->email = $clean_phone . '@pactdigital.bf';
+                    $newuser->lang = 'fr';
+                    $newuser->country = 'BF';
+                    $newuser->city = $commune ?: 'Ouagadougou';
+                    $newuser->timecreated = time();
+                    $newuser->timemodified = time();
+
+                    try {
+                        $userid = user_create_user($newuser, false, false);
+                        $created_count++;
+                    } catch (\Exception $e) {
+                        $errors[] = "Ligne $row_idx : Erreur création compte ({$e->getMessage()})";
+                        continue;
+                    }
+                } else {
+                    $userid = $target_user->id;
+                    $existing_count++;
+                }
+
+                // Champs de profil personnalisés
+                pactdigital_set_user_field($userid, 'sexe', $sexe);
+                if ($annee > 1900 && $annee < 2026) {
+                    pactdigital_set_user_field($userid, 'annee_naissance', strtotime("$annee-01-01"));
+                }
+                pactdigital_set_user_field($userid, 'region', $region);
+                pactdigital_set_user_field($userid, 'province', $province);
+                pactdigital_set_user_field($userid, 'commune', $commune);
+                pactdigital_set_user_field($userid, 'statut', $statut);
+                pactdigital_set_user_field($userid, 'niveau_instruction', $niveau);
+
+                // Inscription au cours
+                if ($enrol && $enrol_plugin && $student_role) {
+                    $enrol_plugin->enrol_user($enrol, $userid, $student_role->id);
+                    $enrolled_count++;
+                }
+
+                // Rattachement au groupe cohorte
+                if ($groupid && !groups_is_member($groupid, $userid)) {
+                    groups_add_member($groupid, $userid);
+                }
+            }
+            fclose($handle);
+
+            $notification_msg = "✅ Inscription réussie : {$enrolled_count} apprenant(s) inscrit(s) dans la formation ({$created_count} nouveaux comptes créés avec mot de passe 'Pactdigital2026!', {$existing_count} comptes existants). Tous rattachés au groupe '{$group_name}'.";
+            if (!empty($errors)) {
+                $notification_msg .= "<br><small style='color:#b91c1c;'>" . implode("<br>", array_slice($errors, 0, 5)) . "</small>";
+            }
+            $notification_type = 'success';
+        } else {
+            $notification_msg = "Impossible de lire le fichier téléversé.";
+            $notification_type = 'error';
+        }
+    } else {
+        $notification_msg = "Veuillez sélectionner un fichier CSV valide.";
+        $notification_type = 'error';
+    }
+}
+
+// 3. Traitement d'un envoi de relance (Message / Notification)
 if ($action === 'send_reminder' && $courseid > 0 && confirm_sesskey()) {
     $selected_users = optional_param_array('userids', [], PARAM_INT);
     $subject        = clean_text(required_param('subject', PARAM_TEXT));
@@ -136,15 +425,30 @@ if ($courseid > 0) {
     $PAGE->set_heading($course->fullname);
 
     // 1. Liste des apprenants inscrits
-    $sql_students = "SELECT DISTINCT u.id, u.firstname, u.lastname, u.email, u.lastaccess,
+    $sql_students = "SELECT DISTINCT u.id, u.firstname, u.lastname, u.email, u.phone1, u.lastaccess,
                             ula.timeaccess AS lastcourseaccess,
                             cc.timecompleted,
+                            (SELECT d.data FROM {user_info_data} d 
+                             JOIN {user_info_field} f ON f.id = d.fieldid 
+                             WHERE f.shortname = 'sexe' AND d.userid = u.id LIMIT 1) AS sexe,
+                            (SELECT d.data FROM {user_info_data} d 
+                             JOIN {user_info_field} f ON f.id = d.fieldid 
+                             WHERE f.shortname = 'annee_naissance' AND d.userid = u.id LIMIT 1) AS annee_naissance,
                             (SELECT d.data FROM {user_info_data} d 
                              JOIN {user_info_field} f ON f.id = d.fieldid 
                              WHERE f.shortname = 'region' AND d.userid = u.id LIMIT 1) AS region,
                             (SELECT d.data FROM {user_info_data} d 
                              JOIN {user_info_field} f ON f.id = d.fieldid 
-                             WHERE f.shortname = 'commune' AND d.userid = u.id LIMIT 1) AS commune
+                             WHERE f.shortname = 'province' AND d.userid = u.id LIMIT 1) AS province,
+                            (SELECT d.data FROM {user_info_data} d 
+                             JOIN {user_info_field} f ON f.id = d.fieldid 
+                             WHERE f.shortname = 'commune' AND d.userid = u.id LIMIT 1) AS commune,
+                            (SELECT d.data FROM {user_info_data} d 
+                             JOIN {user_info_field} f ON f.id = d.fieldid 
+                             WHERE f.shortname = 'statut' AND d.userid = u.id LIMIT 1) AS statut,
+                            (SELECT d.data FROM {user_info_data} d 
+                             JOIN {user_info_field} f ON f.id = d.fieldid 
+                             WHERE f.shortname = 'niveau_instruction' AND d.userid = u.id LIMIT 1) AS niveau_instruction
                      FROM {user} u
                      JOIN {user_enrolments} ue ON ue.userid = u.id
                      JOIN {enrol} e ON e.id = ue.enrolid AND e.courseid = :courseid
@@ -166,6 +470,8 @@ if ($courseid > 0) {
     $now = time();
     $seven_days_ago = $now - (7 * 86400);
     $total_progress_sum = 0;
+    $female_count = 0;
+    $youth_count = 0;
 
     foreach ($raw_learners as $l) {
         $progress_pct = 0;
@@ -192,12 +498,36 @@ if ($courseid > 0) {
             $kpis['inactive_learners']++;
         }
 
+        $sx = strtoupper(trim($l->sexe ?? ''));
+        if ($sx === 'F' || strpos($sx, 'FEM') !== false) {
+            $female_count++;
+        }
+
+        $annee_val = $l->annee_naissance;
+        $birth_year = 0;
+        if (!empty($annee_val)) {
+            if (is_numeric($annee_val) && (int)$annee_val > 100000) {
+                $birth_year = (int)date('Y', (int)$annee_val);
+            } elseif (is_numeric($annee_val) && (int)$annee_val > 1900 && (int)$annee_val < 2030) {
+                $birth_year = (int)$annee_val;
+            }
+        }
+        if ($birth_year >= 1991 && $birth_year <= 2011) {
+            $youth_count++;
+        }
+
         $learners_data[] = [
             'id'           => $l->id,
             'name'         => fullname($l),
             'email'        => $l->email,
+            'phone1'       => $l->phone1 ?: '–',
+            'sexe'         => $l->sexe ?: 'Non renseigné',
+            'annee_naissance' => $birth_year ? $birth_year : ($l->annee_naissance ?: '–'),
             'region'       => $l->region ?: 'Non renseignée',
+            'province'     => $l->province ?: '–',
             'commune'      => $l->commune ?: '–',
+            'statut'       => $l->statut ?: '–',
+            'niveau_instruction' => $l->niveau_instruction ?: '–',
             'last_access'  => $last_seen ? userdate($last_seen, '%d/%m/%Y %H:%M') : 'Jamais',
             'is_inactive'  => $is_inactive,
             'is_completed' => $is_completed,
@@ -207,6 +537,12 @@ if ($courseid > 0) {
 
     $kpis['total_learners'] = count($learners_data);
     $kpis['avg_progress'] = $kpis['total_learners'] > 0 ? (int) round($total_progress_sum / $kpis['total_learners']) : 0;
+
+    $female_pct = $kpis['total_learners'] > 0 ? round(($female_count / $kpis['total_learners']) * 100) : 0;
+    $youth_pct = $kpis['total_learners'] > 0 ? round(($youth_count / $kpis['total_learners']) * 100) : 0;
+    $completion_pct = $kpis['total_learners'] > 0 ? round(($kpis['completed_learners'] / $kpis['total_learners']) * 100) : 0;
+    $session_closed_time = get_config('local_pactdigital', "session_closed_{$courseid}_{$USER->id}");
+
 
     // 2. Activités Devoirs (Assign) & soumissions à corriger
     $sql_assigns = "SELECT a.id, a.name, a.duedate, cm.id AS cmid,
@@ -723,6 +1059,12 @@ table.pact-table tr:hover td {
       <button class="tab-btn" onclick="switchTab('tab-certifications')">
         🏆 Certifications délivrées (<?= $kpis['completed_learners'] ?>)
       </button>
+      <button class="tab-btn" onclick="switchTab('tab-import')">
+        📥 Inscription & Cohorte (CSV)
+      </button>
+      <button class="tab-btn" onclick="switchTab('tab-cloture')">
+        🏁 Clôture & Rapport officiel
+      </button>
     </div>
 
     <!-- ═══════════════════════════════════════════════════════════ -->
@@ -1043,6 +1385,204 @@ table.pact-table tr:hover td {
             </table>
           </div>
         <?php endif; ?>
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  ONGLET 5 : INSCRIPTION & COHORTE (CSV)                     -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <div class="tab-panel" id="tab-import">
+      <div class="panel-card" style="margin-bottom:20px;">
+        <div class="panel-header">
+          <h3>📥 Inscription massive & Rattachement à votre cohorte</h3>
+          <a href="formateur.php?id=<?= $courseid ?>&action=download_template" class="btn-pact btn-pact-outline">
+            📄 Télécharger le modèle de fichier CSV
+          </a>
+        </div>
+
+        <div style="background:#f0fdf4;border-left:4px solid var(--green);padding:14px 18px;border-radius:6px;margin-bottom:20px;font-size:0.88rem;color:#166534;line-height:1.5;">
+          <strong>💡 Instructions pour l'importation de votre cohorte :</strong>
+          <ul style="margin:8px 0 0 18px;padding:0;">
+            <li>Format attendu : <strong>Fichier CSV (séparateur point-virgule <code>;</code> ou virgule <code>,</code>)</strong> encodé en UTF-8.</li>
+            <li>Colonnes : <code>nom ; prenom ; telephone ; sexe ; annee_naissance ; region ; province ; commune ; statut ; niveau_instruction</code>.</li>
+            <li>L'identifiant de connexion pour chaque apprenant créé est son <strong>numéro de téléphone</strong>.</li>
+            <li>Le mot de passe initial sécurisé attribué par défaut est <strong><code>Pactdigital2026!</code></strong>.</li>
+            <li>Les apprenants sont automatiquement inscrits au cours et rattachés au groupe <strong>Cohorte — <?= htmlspecialchars(fullname($USER)) ?></strong>.</li>
+          </ul>
+        </div>
+
+        <form method="post" action="formateur.php?id=<?= $courseid ?>&action=import_csv" enctype="multipart/form-data">
+          <input type="hidden" name="sesskey" value="<?= sesskey() ?>">
+
+          <div class="msg-form-group">
+            <label for="cohort_csv_file">Sélectionnez le fichier CSV de votre cohorte :</label>
+            <input type="file" name="cohort_csv" id="cohort_csv_file" accept=".csv,text/csv" required
+                   style="background:#fff;border:2px dashed var(--green);padding:20px;text-align:center;cursor:pointer;">
+          </div>
+
+          <div style="display:flex;justify-content:flex-end;margin-top:14px;">
+            <button type="submit" class="btn-pact btn-pact-green" style="padding:10px 22px;font-size:0.92rem;">
+              🚀 Importer et inscrire les apprenants
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Aperçu de la cohorte actuelle -->
+      <div class="panel-card">
+        <div class="panel-header">
+          <h3>👥 Effectif de votre cohorte (<?= count($learners_data) ?> inscrits)</h3>
+          <span style="font-size:0.85rem;color:var(--grey);">
+            Groupe : <strong>Cohorte — <?= htmlspecialchars(fullname($USER)) ?></strong>
+          </span>
+        </div>
+
+        <div class="table-responsive">
+          <table class="pact-table">
+            <thead>
+              <tr>
+                <th>Apprenant</th>
+                <th>Téléphone / Identifiant</th>
+                <th>Sexe</th>
+                <th>Région / Commune</th>
+                <th>Progression</th>
+                <th>Statut</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php if (empty($learners_data)): ?>
+                <tr><td colspan="6" class="empty-box">Aucun apprenant dans la cohorte pour le moment. Téléversez un fichier CSV ci-dessus.</td></tr>
+              <?php else: ?>
+                <?php foreach ($learners_data as $l): ?>
+                  <tr>
+                    <td><strong><?= htmlspecialchars($l['name']) ?></strong></td>
+                    <td><code><?= htmlspecialchars($l['phone1']) ?></code></td>
+                    <td><?= htmlspecialchars($l['sexe']) ?></td>
+                    <td><?= htmlspecialchars($l['region']) ?> / <?= htmlspecialchars($l['commune']) ?></td>
+                    <td>
+                      <div class="progress-track">
+                        <div class="progress-fill" style="width: <?= $l['progress'] ?>%;"></div>
+                      </div>
+                      <small><?= $l['progress'] ?>%</small>
+                    </td>
+                    <td>
+                      <?php if ($l['is_completed']): ?>
+                        <span class="badge-pill badge-green">Certifié</span>
+                      <?php elseif ($l['is_inactive']): ?>
+                        <span class="badge-pill badge-red">Inactif</span>
+                      <?php else: ?>
+                        <span class="badge-pill badge-blue">En cours</span>
+                      <?php endif; ?>
+                    </td>
+                  </tr>
+                <?php endforeach; ?>
+              <?php endif; ?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!--  ONGLET 6 : CLÔTURE & RAPPORT OFFICIEL                     -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <div class="tab-panel" id="tab-cloture">
+      <div class="panel-card">
+        <div class="panel-header">
+          <h3>🏁 Clôture de session & Procès-verbal officiel</h3>
+          <a href="formateur.php?id=<?= $courseid ?>&action=export_session_report" class="btn-pact btn-pact-green">
+            📥 Télécharger le Rapport Officiel de Session (CSV)
+          </a>
+        </div>
+
+        <?php if (!empty($session_closed_time)): ?>
+          <div style="background:#ecfdf5;border:1.5px solid #10b981;border-radius:10px;padding:18px 22px;margin-bottom:24px;display:flex;align-items:center;gap:16px;">
+            <div style="font-size:2.2rem;">🏆</div>
+            <div>
+              <h4 style="margin:0 0 4px 0;color:#065f46;font-size:1.1rem;font-weight:700;">
+                Session officiellement clôturée et attestée
+              </h4>
+              <p style="margin:0;color:#047857;font-size:0.88rem;">
+                Cette session a été validée le <strong><?= date('d/m/Y à H:i', $session_closed_time) ?></strong> par le formateur <strong><?= htmlspecialchars(fullname($USER)) ?></strong>. Les résultats consolidés ci-dessous font foi pour le MTDPCE / DGTD.
+              </p>
+            </div>
+          </div>
+        <?php else: ?>
+          <div style="background:#eff6ff;border:1.5px solid #3b82f6;border-radius:10px;padding:18px 22px;margin-bottom:24px;display:flex;align-items:center;gap:16px;">
+            <div style="font-size:2.2rem;">⏳</div>
+            <div>
+              <h4 style="margin:0 0 4px 0;color:#1e40af;font-size:1.1rem;font-weight:700;">
+                Session en cours d'encadrement pédagogique
+              </h4>
+              <p style="margin:0;color:#1d4ed8;font-size:0.88rem;">
+                La session est toujours ouverte. Une fois toutes les séances et évaluations achevées, clôturez-la pour figer les métriques et éditer le procès-verbal officiel.
+              </p>
+            </div>
+          </div>
+        <?php endif; ?>
+
+        <!-- Grille des 4 indicateurs de clôture -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(210px, 1fr));gap:16px;margin-bottom:28px;">
+          <div style="background:#f8fafc;border:1px solid var(--border);border-radius:10px;padding:16px 20px;">
+            <div style="font-size:0.82rem;font-weight:700;color:var(--grey);text-transform:uppercase;">Apprenants inscrits</div>
+            <div style="font-size:1.8rem;font-weight:800;color:var(--green);margin:6px 0;"><?= count($learners_data) ?></div>
+            <div style="font-size:0.78rem;color:var(--grey);">Taille de la cohorte</div>
+          </div>
+
+          <div style="background:#f8fafc;border:1px solid var(--border);border-radius:10px;padding:16px 20px;">
+            <div style="font-size:0.82rem;font-weight:700;color:var(--grey);text-transform:uppercase;">Taux de Femmes</div>
+            <div style="font-size:1.8rem;font-weight:800;color:<?= ($female_pct >= 30) ? '#15803d' : '#b45309' ?>;margin:6px 0;">
+              <?= $female_pct ?>% <small style="font-size:0.9rem;font-weight:600;">(<?= $female_count ?>)</small>
+            </div>
+            <div style="font-size:0.78rem;color:<?= ($female_pct >= 30) ? '#15803d' : '#b45309' ?>;">
+              <?= ($female_pct >= 30) ? '🎯 Cible nationale atteinte (≥ 30%)' : '⚠️ En dessous de la cible (30%)' ?>
+            </div>
+          </div>
+
+          <div style="background:#f8fafc;border:1px solid var(--border);border-radius:10px;padding:16px 20px;">
+            <div style="font-size:0.82rem;font-weight:700;color:var(--grey);text-transform:uppercase;">Jeunes 15-35 ans</div>
+            <div style="font-size:1.8rem;font-weight:800;color:#1e40af;margin:6px 0;">
+              <?= $youth_pct ?>% <small style="font-size:0.9rem;font-weight:600;">(<?= $youth_count ?>)</small>
+            </div>
+            <div style="font-size:0.78rem;color:var(--grey);">Priorité stratégique nationale</div>
+          </div>
+
+          <div style="background:#f8fafc;border:1px solid var(--border);border-radius:10px;padding:16px 20px;">
+            <div style="font-size:0.82rem;font-weight:700;color:var(--grey);text-transform:uppercase;">Taux de complétion</div>
+            <div style="font-size:1.8rem;font-weight:800;color:<?= ($completion_pct >= 70) ? '#15803d' : '#1e293b' ?>;margin:6px 0;">
+              <?= $completion_pct ?>% <small style="font-size:0.9rem;font-weight:600;">(<?= $kpis['completed_learners'] ?> certifiés)</small>
+            </div>
+            <div style="font-size:0.78rem;color:var(--grey);">Attestations délivrées</div>
+          </div>
+        </div>
+
+        <!-- Clôture form action -->
+        <?php if (empty($session_closed_time)): ?>
+          <div style="border-top:1px solid var(--border);padding-top:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;">
+            <div>
+              <strong style="font-size:0.92rem;color:var(--dark);">Prêt à clôturer cette session ?</strong>
+              <p style="margin:4px 0 0 0;font-size:0.82rem;color:var(--grey);">
+                Cette opération enregistre l'horodatage de clôture et valide le procès-verbal officiel.
+              </p>
+            </div>
+            <form method="post" action="formateur.php?id=<?= $courseid ?>&action=close_session" 
+                  onsubmit="return confirm('Êtes-vous certain de vouloir clôturer officiellement cette session de formation ? Le procès-verbal officiel sera figé et validé.');">
+              <input type="hidden" name="sesskey" value="<?= sesskey() ?>">
+              <button type="submit" class="btn-pact btn-pact-green" style="padding:11px 24px;font-size:0.92rem;">
+                🏁 Clôturer officiellement la session
+              </button>
+            </form>
+          </div>
+        <?php else: ?>
+          <div style="border-top:1px solid var(--border);padding-top:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;">
+            <div>
+              <span class="badge-pill badge-green" style="font-size:0.82rem;padding:6px 12px;">
+                ✓ Session archivée au registre national des formations
+              </span>
+            </div>
+            <a href="formateur.php?id=<?= $courseid ?>&action=export_session_report" class="btn-pact btn-pact-green" style="padding:11px 24px;">
+              📄 Télécharger le Procès-Verbal Officiel (.csv)
+            </a>
+          </div>
+        <?php endif; ?>
+
       </div>
     </div>
 
