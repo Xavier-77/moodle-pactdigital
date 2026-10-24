@@ -20,15 +20,15 @@ $PAGE->set_heading('Catalogue des formations');
 // ── Récupérer les catégories racines (profondeur 1) ──────────────────────────
 $root_cats = $DB->get_records('course_categories', ['depth' => 1, 'visible' => 1], 'sortorder ASC');
 
-// ── Mapping domaine → slug, couleur ───────────────────────────────────────────
+// ── Mapping domaine → slug, couleur (Charte Graphique v2.0 MTDPCE) ───────────
 function pact_get_domain_meta($catname) {
     $map = [
-        'fondamentales' => ['slug' => 'fondamentales', 'color' => '#129b40', 'light' => '#e8f7ee', 'emoji' => '', 'label' => 'Fondamentales'],
-        'managériales'  => ['slug' => 'manageriales',  'color' => '#1a6faf', 'light' => '#e3eef8', 'emoji' => '', 'label' => 'Managériales'],
-        'manageri'      => ['slug' => 'manageriales',  'color' => '#1a6faf', 'light' => '#e3eef8', 'emoji' => '', 'label' => 'Managériales'],
-        'sectorielles'  => ['slug' => 'sectorielles',  'color' => '#e67e22', 'light' => '#fef3e8', 'emoji' => '', 'label' => 'Sectorielles'],
-        'émergentes'    => ['slug' => 'emergentes',    'color' => '#8e44ad', 'light' => '#f4eafb', 'emoji' => '', 'label' => 'Émergentes'],
-        'emergentes'    => ['slug' => 'emergentes',    'color' => '#8e44ad', 'light' => '#f4eafb', 'emoji' => '', 'label' => 'Émergentes'],
+        'fondamentales' => ['slug' => 'fondamentales', 'color' => '#00843b', 'light' => '#ecf7f0', 'emoji' => '', 'label' => 'Fondamentales'],
+        'managériales'  => ['slug' => 'manageriales',  'color' => '#2a6d9b', 'light' => '#eef4f9', 'emoji' => '', 'label' => 'Managériales'],
+        'manageri'      => ['slug' => 'manageriales',  'color' => '#2a6d9b', 'light' => '#eef4f9', 'emoji' => '', 'label' => 'Managériales'],
+        'sectorielles'  => ['slug' => 'sectorielles',  'color' => '#b07800', 'light' => '#fdf4e3', 'emoji' => '', 'label' => 'Sectorielles'],
+        'émergentes'    => ['slug' => 'emergentes',    'color' => '#045527', 'light' => '#d5f0e0', 'emoji' => '', 'label' => 'Émergentes'],
+        'emergentes'    => ['slug' => 'emergentes',    'color' => '#045527', 'light' => '#d5f0e0', 'emoji' => '', 'label' => 'Émergentes'],
     ];
     $name_lower = mb_strtolower($catname);
     foreach ($map as $keyword => $meta) {
@@ -36,7 +36,7 @@ function pact_get_domain_meta($catname) {
             return $meta;
         }
     }
-    return ['slug' => 'autres', 'color' => '#555', 'light' => '#f5f5f5', 'emoji' => '', 'label' => 'Autres'];
+    return ['slug' => 'autres', 'color' => '#635c55', 'light' => '#f7f5f2', 'emoji' => '', 'label' => 'Autres'];
 }
 
 // ── Niveau badge selon shortname ─────────────────────────────────────────────
@@ -121,10 +121,10 @@ foreach ($courses_raw as $c) {
         }
     }
 
-    // Formatter le titre du cours : si juste "Bronze", "Diamant", "Or", préfixer par le nom du domaine
+    // Formatter le titre du cours : si juste "Bronze", "Argent", "Or", préfixer par le nom du domaine
     $raw_title = trim($c->fullname);
-    if (in_array($raw_title, ['Bronze', 'Argent', 'Or', 'Diamant'])) {
-        $level_label = ($raw_title === 'Diamant') ? 'Argent' : $raw_title;
+    if (in_array($raw_title, ['Bronze', 'Argent', 'Or'])) {
+        $level_label = $raw_title;
         $course_title = $c->catname . ' — ' . $level_label;
     } else {
         $course_title = $c->fullname;
@@ -179,20 +179,20 @@ foreach ($courses_raw as $c) {
     if (!isloggedin() || isguestuser()) {
         $signup_url = (new moodle_url('/local/pactdigital/signup.php', ['wantsurl' => $view_url]))->out(false);
         $login_url  = (new moodle_url('/login/index.php', ['wantsurl' => $view_url]))->out(false);
-        $courses_html .= '    <a href="' . $signup_url . '" class="pact-btn-start">🎓 S\'inscrire à cette formation</a>';
+        $courses_html .= '    <a href="' . $signup_url . '" class="pact-btn-start">S\'inscrire à cette formation</a>';
         $courses_html .= '    <a href="' . $login_url . '" style="display:block; text-align:center; font-size:0.78rem; color:#64748b; margin-top:6px; text-decoration:none;">Déjà un compte ? Se connecter</a>';
     } elseif ($is_enrolled_user) {
         // Déjà inscrit → page d'accueil du cours
         $welcome_url = (new moodle_url('/local/pactdigital/course_welcome.php', ['id' => $c->id]))->out(false);
-        $courses_html .= '    <a href="' . $welcome_url . '" class="pact-btn-start">' . $btn_icon . ' ' . $btn_label . '</a>';
+        $courses_html .= '    <a href="' . $welcome_url . '" class="pact-btn-start">' . $btn_label . '</a>';
     } else {
-        // Non inscrit → bouton d'inscription 1 clic avec contrôle d'âge
+        // Non inscrit → inscription directe en 1 clic (âge vérifié à la création du compte)
         $sesskey_val = sesskey();
         $courses_html .= '    <button class="pact-btn-start pact-btn-enrol"'
             . ' data-courseid="' . $c->id . '"'
             . ' data-coursename="' . $safe_fullname . '"'
             . ' data-sesskey="' . $sesskey_val . '"'
-            . ' onclick="openEnrolModal(this)">🎓 S\'inscrire en 1 clic</button>';
+            . ' onclick="directEnrol(this)">S\'inscrire en 1 clic</button>';
     }
 
     $courses_html .= '  </div>';
@@ -207,24 +207,26 @@ echo $OUTPUT->header();
 ?>
 
 <style>
-/* ═══ CATALOGUE NETFLIX DU SAVOIR — PACTDIGITAL-BF ═══════════════════════ */
+/* ═══ CATALOGUE DES FORMATIONS — CONFORME CHARTE GRAPHIQUE V2.0 (MTDPCE) ═════ */
 
 .pact-catalogue-page {
     max-width: 1400px;
     margin: 0 auto;
     padding: 0 1.5rem 4rem;
-    font-family: 'Segoe UI', 'Plus Jakarta Sans', Arial, sans-serif;
+    font-family: var(--police-texte, "Inter", system-ui, sans-serif);
+    color: var(--texte, #211d1a);
 }
 
 /* ── Hero banner ─────────────────────────────────────────────── */
 .pact-catalogue-hero {
-    background: linear-gradient(135deg, #0d7a32 0%, #129b40 50%, #1db954 100%);
-    border-radius: 20px;
-    padding: 3rem 2.5rem;
+    background: linear-gradient(135deg, var(--vert-900, #032e16) 0%, var(--vert-700, #045527) 50%, var(--vert-500, #00843b) 100%);
+    border-radius: var(--rayon-lg, 12px);
+    padding: 2.75rem 2.5rem;
     margin-bottom: 2.5rem;
     color: white;
     position: relative;
     overflow: hidden;
+    box-shadow: var(--ombre-md);
 }
 .pact-catalogue-hero::before {
     content: '';
@@ -243,14 +245,16 @@ echo $OUTPUT->header();
     border-radius: 50%;
 }
 .pact-catalogue-hero h1 {
-    font-size: 2.4rem;
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
+    font-size: 2.3rem;
     font-weight: 800;
     margin: 0 0 0.5rem;
     position: relative; z-index: 1;
+    color: #ffffff;
 }
 .pact-catalogue-hero p {
-    font-size: 1.1rem;
-    opacity: 0.9;
+    font-size: 1.05rem;
+    opacity: 0.92;
     margin: 0 0 1.5rem;
     position: relative; z-index: 1;
 }
@@ -264,14 +268,15 @@ echo $OUTPUT->header();
     text-align: center;
 }
 .pact-hero-stat .val {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     font-size: 2rem;
     font-weight: 800;
-    color: #fad615;
+    color: var(--or-300, #ffed00);
     display: block;
 }
 .pact-hero-stat .lbl {
-    font-size: 0.8rem;
-    opacity: 0.85;
+    font-size: 0.78rem;
+    opacity: 0.88;
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
@@ -292,15 +297,17 @@ echo $OUTPUT->header();
 .pact-filter-search input {
     width: 100%;
     padding: 0.65rem 1rem 0.65rem 2.8rem;
-    border: 2px solid #e0e0e0;
-    border-radius: 50px;
+    border: 1.5px solid var(--bordure-forte, #8e867f);
+    border-radius: var(--rayon-md, 8px);
     font-size: 0.95rem;
+    color: var(--texte, #211d1a);
+    background: var(--surface, #ffffff);
     transition: border-color 0.2s, box-shadow 0.2s;
     outline: none;
 }
 .pact-filter-search input:focus {
-    border-color: #129b40;
-    box-shadow: 0 0 0 3px rgba(18,155,64,0.15);
+    border-color: var(--vert-500, #00843b);
+    box-shadow: 0 0 0 3px var(--vert-50, #ecf7f0);
 }
 .pact-filter-search::before {
     content: '🔍';
@@ -316,46 +323,48 @@ echo $OUTPUT->header();
     gap: 0.5rem;
 }
 .pact-pill {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     padding: 0.5rem 1.2rem;
-    border-radius: 50px;
-    border: 2px solid #e0e0e0;
-    background: white;
+    border-radius: var(--rayon-md, 8px);
+    border: 1.5px solid var(--bordure, #e2ddd6);
+    background: var(--surface, #ffffff);
     font-size: 0.88rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
-    color: #555;
+    color: var(--texte-attenue, #635c55);
     white-space: nowrap;
 }
 .pact-pill:hover {
-    border-color: #129b40;
-    color: #129b40;
+    border-color: var(--vert-500, #00843b);
+    color: var(--vert-700, #045527);
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(18,155,64,0.15);
+    box-shadow: var(--ombre-sm);
 }
 .pact-pill.active {
-    background: #129b40;
-    border-color: #129b40;
+    background: var(--action, #00843b);
+    border-color: var(--action, #00843b);
     color: white;
-    box-shadow: 0 4px 12px rgba(18,155,64,0.3);
+    box-shadow: var(--ombre-sm);
 }
-.pact-pill[data-domain="fondamentales"].active { background: #129b40; border-color: #129b40; }
-.pact-pill[data-domain="manageriales"].active  { background: #1a6faf; border-color: #1a6faf; }
-.pact-pill[data-domain="sectorielles"].active  { background: #e67e22; border-color: #e67e22; }
-.pact-pill[data-domain="emergentes"].active    { background: #8e44ad; border-color: #8e44ad; }
+.pact-pill[data-domain="fondamentales"].active { background: #00843b; border-color: #00843b; }
+.pact-pill[data-domain="manageriales"].active  { background: #2a6d9b; border-color: #2a6d9b; }
+.pact-pill[data-domain="sectorielles"].active  { background: #b07800; border-color: #b07800; }
+.pact-pill[data-domain="emergentes"].active    { background: #045527; border-color: #045527; }
 
 /* ── Compteur de résultats ───────────────────────────────────── */
 .pact-results-info {
     font-size: 0.9rem;
-    color: #666;
+    color: var(--texte-attenue, #635c55);
     margin-bottom: 1.5rem;
     display: flex;
     align-items: center;
     gap: 0.5rem;
 }
 .pact-results-count {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     font-weight: 700;
-    color: #129b40;
+    color: var(--vert-700, #045527);
     font-size: 1rem;
 }
 
@@ -368,18 +377,20 @@ echo $OUTPUT->header();
 
 /* ── Card ────────────────────────────────────────────────────── */
 .pact-course-card {
-    background: white;
-    border-radius: 16px;
+    background: var(--surface, #ffffff);
+    border: 1px solid var(--bordure, #e2ddd6);
+    border-radius: var(--rayon-lg, 12px);
     overflow: hidden;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    box-shadow: var(--ombre-sm);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
     display: flex;
     flex-direction: column;
     position: relative;
 }
 .pact-course-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+    transform: translateY(-5px);
+    box-shadow: var(--ombre-lg);
+    border-color: var(--vert-500, #00843b);
 }
 .pact-course-card.hidden {
     display: none !important;
@@ -389,7 +400,7 @@ echo $OUTPUT->header();
 .pact-card-image {
     height: 160px;
     position: relative;
-    background: linear-gradient(135deg, #129b4022, #129b4044);
+    background: linear-gradient(135deg, rgba(0,132,59,0.12), rgba(0,132,59,0.25));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -399,10 +410,11 @@ echo $OUTPUT->header();
     opacity: 0.7;
 }
 .pact-domain-chip {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     position: absolute;
     top: 10px; left: 10px;
     padding: 0.25rem 0.75rem;
-    border-radius: 50px;
+    border-radius: var(--rayon-sm, 4px);
     font-size: 0.72rem;
     font-weight: 700;
     color: white;
@@ -411,38 +423,40 @@ echo $OUTPUT->header();
     box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 .pact-level-badge {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     position: absolute;
     top: 10px; right: 10px;
     padding: 0.2rem 0.6rem;
-    border-radius: 8px;
+    border-radius: var(--rayon-sm, 4px);
     font-size: 0.7rem;
     font-weight: 700;
 }
-.badge-bronze  { background: #b45309; color: white; }
-.badge-argent  { background: #64748b; color: white; }
-.badge-or      { background: linear-gradient(135deg, #d97706, #b45309); color: white; }
-.badge-diamant { background: #64748b; color: white; }
-.badge-default { background: #eee; color: #555; }
+.badge-bronze  { background: var(--ocre-700, #7d5500); color: white; }
+.badge-argent  { background: var(--neutre-700, #4d4742); color: white; }
+.badge-or      { background: var(--or-300, #ffed00); color: var(--neutre-900, #211d1a); }
+.badge-diamant { background: var(--bleu-500, #2a6d9b); color: white; }
+.badge-default { background: var(--surface-enfoncee, #f7f5f2); color: var(--texte-attenue, #635c55); }
 
 .pact-level-pill {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     padding: 0.35rem 0.9rem;
-    border-radius: 50px;
-    border: 1.5px solid #cbd5e1;
-    background: white;
+    border-radius: var(--rayon-md, 8px);
+    border: 1.5px solid var(--bordure, #e2ddd6);
+    background: var(--surface, #ffffff);
     font-size: 0.82rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
-    color: #475569;
+    color: var(--texte-attenue, #635c55);
     white-space: nowrap;
 }
 .pact-level-pill:hover {
-    border-color: #0284c7;
-    color: #0284c7;
+    border-color: var(--vert-500, #00843b);
+    color: var(--vert-700, #045527);
 }
 .pact-level-pill.active {
-    background: #0f172a;
-    border-color: #0f172a;
+    background: var(--neutre-900, #211d1a);
+    border-color: var(--neutre-900, #211d1a);
     color: white;
 }
 
@@ -454,9 +468,10 @@ echo $OUTPUT->header();
     flex: 1;
 }
 .pact-card-title {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     font-size: 1rem;
     font-weight: 700;
-    color: #1a1a1a;
+    color: var(--texte, #211d1a);
     margin: 0 0 0.5rem;
     line-height: 1.35;
     display: -webkit-box;
@@ -466,7 +481,7 @@ echo $OUTPUT->header();
 }
 .pact-card-desc {
     font-size: 0.82rem;
-    color: #777;
+    color: var(--texte-attenue, #635c55);
     line-height: 1.5;
     margin: 0 0 0.8rem;
     display: -webkit-box;
@@ -483,13 +498,13 @@ echo $OUTPUT->header();
 }
 .pact-meta-item {
     font-size: 0.78rem;
-    color: #888;
+    color: var(--texte-faible, #756d66);
 }
 
 /* Progress bar */
 .pact-card-progress {
     height: 6px;
-    background: #eee;
+    background: var(--bordure, #e2ddd6);
     border-radius: 3px;
     margin-bottom: 0.8rem;
     position: relative;
@@ -497,7 +512,7 @@ echo $OUTPUT->header();
 }
 .pact-progress-bar {
     height: 100%;
-    background: linear-gradient(90deg, #129b40, #1db954);
+    background: var(--vert-500, #00843b);
     border-radius: 3px;
     transition: width 0.6s ease;
 }
@@ -506,27 +521,29 @@ echo $OUTPUT->header();
     right: 0; top: -18px;
     font-size: 0.72rem;
     font-weight: 700;
-    color: #129b40;
+    color: var(--vert-700, #045527);
 }
 
 /* Bouton commencer */
 .pact-btn-start {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     display: block;
     text-align: center;
     padding: 0.65rem 1rem;
-    background: linear-gradient(135deg, #129b40, #0d7a32);
+    background: var(--action, #00843b);
     color: white !important;
     font-weight: 700;
     font-size: 0.9rem;
-    border-radius: 10px;
+    border-radius: var(--rayon-md, 8px);
     text-decoration: none !important;
     transition: all 0.2s ease;
     margin-top: auto;
+    border: none;
 }
 .pact-btn-start:hover {
-    background: linear-gradient(135deg, #0d7a32, #075a24);
+    background: var(--action-survol, #026c31);
     transform: translateY(-1px);
-    box-shadow: 0 4px 15px rgba(18,155,64,0.4);
+    box-shadow: var(--ombre-md);
     color: white !important;
 }
 
@@ -707,7 +724,7 @@ echo $OUTPUT->header();
     to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 .enrol-modal-header {
-    background: linear-gradient(135deg, #129b40 0%, #0d7a32 100%);
+    background: linear-gradient(135deg, var(--vert-800, #04411f) 0%, var(--vert-500, #00843b) 100%);
     color: white;
     padding: 1.3rem 1.6rem;
     display: flex;
@@ -715,6 +732,7 @@ echo $OUTPUT->header();
     align-items: center;
 }
 .enrol-modal-header h2 {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     font-size: 1.05rem;
     font-weight: 800;
     margin: 0;
@@ -738,14 +756,15 @@ echo $OUTPUT->header();
 .enrol-modal-close:hover { background: rgba(255,255,255,0.35); }
 .enrol-modal-body { padding: 1.5rem; }
 .enrol-course-name {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     font-weight: 700;
     font-size: 1rem;
-    color: #129b40;
+    color: var(--vert-700, #045527);
     margin-bottom: 1rem;
     padding: 0.7rem 1rem;
-    background: #f0faf5;
-    border-radius: 8px;
-    border-left: 4px solid #129b40;
+    background: var(--vert-50, #ecf7f0);
+    border-radius: var(--rayon-md, 8px);
+    border-left: 4px solid var(--vert-500, #00843b);
 }
 .enrol-age-group {
     margin-bottom: 1.2rem;
@@ -754,19 +773,19 @@ echo $OUTPUT->header();
     display: block;
     font-size: 0.83rem;
     font-weight: 700;
-    color: #555;
+    color: var(--texte, #211d1a);
     margin-bottom: 6px;
 }
 .enrol-age-group .help-text {
     font-size: 0.76rem;
-    color: #888;
+    color: var(--texte-attenue, #635c55);
     margin-top: 4px;
 }
 .enrol-year-input {
     width: 100%;
     padding: 0.75rem 1rem;
-    border: 2px solid #e0e0e0;
-    border-radius: 10px;
+    border: 1.5px solid var(--bordure-forte, #8e867f);
+    border-radius: var(--rayon-md, 8px);
     font-size: 1rem;
     font-weight: 600;
     text-align: center;
@@ -776,14 +795,14 @@ echo $OUTPUT->header();
 }
 .enrol-year-input:focus {
     outline: none;
-    border-color: #129b40;
-    box-shadow: 0 0 0 3px rgba(18,155,64,0.15);
+    border-color: var(--vert-500, #00843b);
+    box-shadow: 0 0 0 3px var(--vert-50, #ecf7f0);
 }
 .enrol-error {
-    background: #fee2e2;
-    color: #b91c1c;
+    background: var(--rouge-50, #fdecef);
+    color: var(--rouge-700, #a2040e);
     padding: 0.75rem 1rem;
-    border-radius: 8px;
+    border-radius: var(--rayon-md, 8px);
     font-size: 0.85rem;
     font-weight: 600;
     margin-bottom: 1rem;
@@ -792,10 +811,10 @@ echo $OUTPUT->header();
     gap: 8px;
 }
 .enrol-success {
-    background: #dcfce7;
-    color: #15803d;
+    background: var(--vert-50, #ecf7f0);
+    color: var(--vert-700, #045527);
     padding: 0.75rem 1rem;
-    border-radius: 8px;
+    border-radius: var(--rayon-md, 8px);
     font-size: 0.85rem;
     font-weight: 600;
     margin-bottom: 1rem;
@@ -805,18 +824,19 @@ echo $OUTPUT->header();
 }
 .enrol-modal-footer {
     padding: 1rem 1.5rem;
-    background: #f8f8f8;
-    border-top: 1px solid #eee;
+    background: var(--surface-enfoncee, #f7f5f2);
+    border-top: 1px solid var(--bordure, #e2ddd6);
     display: flex;
     gap: 0.7rem;
     justify-content: flex-end;
 }
 .btn-enrol-confirm {
-    background: linear-gradient(135deg, #129b40, #0d7a32);
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
+    background: var(--action, #00843b);
     color: white;
     border: none;
     padding: 0.7rem 1.6rem;
-    border-radius: 10px;
+    border-radius: var(--rayon-md, 8px);
     font-size: 0.95rem;
     font-weight: 700;
     cursor: pointer;
@@ -826,21 +846,21 @@ echo $OUTPUT->header();
     transition: all 0.2s;
 }
 .btn-enrol-confirm:hover:not(:disabled) {
-    background: linear-gradient(135deg, #0d7a32, #075a24);
+    background: var(--action-survol, #026c31);
     transform: translateY(-1px);
-    box-shadow: 0 4px 15px rgba(18,155,64,0.35);
+    box-shadow: var(--ombre-md);
 }
 .btn-enrol-confirm:disabled { opacity: 0.6; cursor: not-allowed; }
 .btn-enrol-cancel {
-    background: white;
-    color: #666;
-    border: 1px solid #ddd;
+    background: var(--surface, #ffffff);
+    color: var(--texte-attenue, #635c55);
+    border: 1px solid var(--bordure, #e2ddd6);
     padding: 0.7rem 1.2rem;
-    border-radius: 10px;
+    border-radius: var(--rayon-md, 8px);
     font-size: 0.88rem;
     cursor: pointer;
 }
-.btn-enrol-cancel:hover { background: #f5f5f5; }
+.btn-enrol-cancel:hover { background: var(--surface-enfoncee, #f7f5f2); }
 .pact-btn-enrol { cursor: pointer; font-family: inherit; }
 
 /* Toast notification */
@@ -854,183 +874,90 @@ echo $OUTPUT->header();
     gap: 10px;
 }
 .pact-toast {
-    background: #1e293b;
+    background: var(--neutre-900, #211d1a);
     color: white;
     padding: 12px 18px;
-    border-radius: 10px;
+    border-radius: var(--rayon-md, 8px);
     font-size: 0.9rem;
     font-weight: 600;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.25);
-    border-left: 4px solid #129b40;
+    box-shadow: var(--ombre-lg);
+    border-left: 4px solid var(--vert-500, #00843b);
     max-width: 400px;
     animation: toastIn 0.25s ease-out;
 }
-.pact-toast.error { border-left-color: #ef4444; background: #7f1d1d; }
-.pact-toast.success { border-left-color: #22c55e; background: #14532d; }
+.pact-toast.error { border-left-color: var(--rouge-500, #e30613); background: var(--rouge-700, #a2040e); }
+.pact-toast.success { border-left-color: var(--vert-500, #00843b); background: var(--vert-800, #04411f); }
 @keyframes toastIn {
     from { opacity: 0; transform: translateX(20px); }
     to   { opacity: 1; transform: translateX(0); }
 }
 </style>
 
-<div class="enrol-modal-backdrop" id="enrol-modal-backdrop" onclick="if(event.target===this)closeEnrolModal()">
-    <div class="enrol-modal">
-        <div class="enrol-modal-header">
-            <h2>🎓 Inscription à la formation</h2>
-            <button class="enrol-modal-close" onclick="closeEnrolModal()">&times;</button>
-        </div>
-        <div class="enrol-modal-body">
-            <div class="enrol-course-name" id="enrol-course-name">–</div>
-
-            <div class="enrol-error" id="enrol-error">
-                <span>⚠️</span><span id="enrol-error-msg"></span>
-            </div>
-            <div class="enrol-success" id="enrol-success">
-                <span>✅</span><span id="enrol-success-msg"></span>
-            </div>
-
-            <div class="enrol-age-group">
-                <label for="enrol-birth-year">📅 Votre année de naissance</label>
-                <input type="number"
-                       id="enrol-birth-year"
-                       class="enrol-year-input"
-                       placeholder="Ex: 1995"
-                       min="1900"
-                       max="<?= date('Y') - 18 ?>"
-                       inputmode="numeric">
-                <div class="help-text">
-                    ℹ️ L'inscription est réservée aux personnes de 18 ans et plus. Votre année de naissance est utilisée uniquement pour vérification.
-                </div>
-            </div>
-        </div>
-        <div class="enrol-modal-footer">
-            <button class="btn-enrol-cancel" onclick="closeEnrolModal()">Annuler</button>
-            <button class="btn-enrol-confirm" id="btn-enrol-confirm" onclick="submitEnrolment()">
-                🎓 Confirmer l'inscription
-            </button>
-        </div>
-    </div>
-</div>
-
 <div class="pact-toast-container" id="toast-container"></div>
 
 <script>
 (function() {
-    let currentCourseId  = null;
-    let currentSesskey   = null;
-    let currentCourseName = '';
+    window.directEnrol = async function(btn) {
+        if (!btn || btn.disabled) return;
+        const courseId   = btn.dataset.courseid;
+        const sesskey    = btn.dataset.sesskey;
+        const courseName = btn.dataset.coursename;
 
-    window.openEnrolModal = function(btn) {
-        currentCourseId   = btn.dataset.courseid;
-        currentSesskey    = btn.dataset.sesskey;
-        currentCourseName = btn.dataset.coursename;
-
-        document.getElementById('enrol-course-name').textContent = currentCourseName;
-        document.getElementById('enrol-birth-year').value = '';
-        document.getElementById('enrol-error').style.display = 'none';
-        document.getElementById('enrol-success').style.display = 'none';
-        document.getElementById('btn-enrol-confirm').disabled = false;
-        document.getElementById('btn-enrol-confirm').textContent = '🎓 Confirmer l\'inscription';
-
-        document.getElementById('enrol-modal-backdrop').classList.add('open');
-        setTimeout(() => document.getElementById('enrol-birth-year').focus(), 200);
-    };
-
-    window.closeEnrolModal = function() {
-        document.getElementById('enrol-modal-backdrop').classList.remove('open');
-    };
-
-    window.submitEnrolment = async function() {
-        const birthYear = parseInt(document.getElementById('enrol-birth-year').value, 10);
-        const errBox    = document.getElementById('enrol-error');
-        const errMsg    = document.getElementById('enrol-error-msg');
-        const sucBox    = document.getElementById('enrol-success');
-        const sucMsg    = document.getElementById('enrol-success-msg');
-        const btnConfirm = document.getElementById('btn-enrol-confirm');
-
-        errBox.style.display = 'none';
-        sucBox.style.display = 'none';
-
-        // Validation côté client
-        const currentYear = new Date().getFullYear();
-        if (!birthYear || isNaN(birthYear) || birthYear < 1900 || birthYear > currentYear) {
-            errMsg.textContent = 'Veuillez entrer une année de naissance valide (ex: 1995).';
-            errBox.style.display = 'flex';
-            return;
-        }
-
-        if ((currentYear - birthYear) < 18) {
-            errMsg.textContent = `Vous devez avoir au moins 18 ans pour vous inscrire. Selon votre année (${birthYear}), vous n'avez que ${currentYear - birthYear} ans.`;
-            errBox.style.display = 'flex';
-            return;
-        }
-
-        // Envoi AJAX
-        btnConfirm.disabled = true;
-        btnConfirm.textContent = '⏳ Inscription en cours…';
+        btn.disabled = true;
+        const originalText = btn.innerHTML;
+        btn.innerHTML = 'Inscription en cours…';
 
         try {
             const formData = new URLSearchParams({
-                sesskey:    currentSesskey,
-                courseid:   currentCourseId,
-                birth_year: birthYear,
+                sesskey:    sesskey,
+                courseid:   courseId
             });
 
             const resp = await fetch('<?= (new moodle_url('/local/pactdigital/enrol_ajax.php'))->out(false) ?>', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: formData.toString(),
+                body: formData.toString()
             });
 
             const data = await resp.json();
 
             if (data.success) {
-                sucMsg.textContent = data.message;
-                sucBox.style.display = 'flex';
-                btnConfirm.textContent = '✅ Inscrit(e) !';
+                btn.innerHTML = 'Inscrit !';
+                btn.style.background = 'var(--vert-700, #045527)';
+                showToast(data.message || 'Inscription réussie !', 'success');
 
-                showToast(data.message, 'success');
-
-                // Redirection après 1.5s
                 setTimeout(() => {
                     if (data.course_url) {
                         window.location.href = data.course_url;
                     } else {
-                        closeEnrolModal();
                         window.location.reload();
                     }
-                }, 1500);
+                }, 600);
             } else {
-                errMsg.textContent = data.message || 'Une erreur est survenue. Veuillez réessayer.';
-                errBox.style.display = 'flex';
-                btnConfirm.disabled = false;
-                btnConfirm.textContent = '🎓 Confirmer l\'inscription';
+                showToast(data.message || 'Une erreur est survenue lors de l\'inscription.', 'error');
+                btn.disabled = false;
+                btn.innerHTML = originalText;
 
                 if (data.redirect) {
-                    setTimeout(() => { window.location.href = data.redirect; }, 2000);
+                    setTimeout(() => { window.location.href = data.redirect; }, 1500);
                 }
             }
         } catch (err) {
-            errMsg.textContent = 'Erreur réseau. Vérifiez votre connexion et réessayez.';
-            errBox.style.display = 'flex';
-            btnConfirm.disabled = false;
-            btnConfirm.textContent = '🎓 Confirmer l\'inscription';
+            showToast('Erreur réseau. Veuillez réessayer.', 'error');
+            btn.disabled = false;
+            btn.innerHTML = originalText;
         }
     };
 
     function showToast(msg, type = 'success') {
         const container = document.getElementById('toast-container');
+        if (!container) return;
         const toast = document.createElement('div');
         toast.className = 'pact-toast ' + type;
         toast.textContent = msg;
         container.appendChild(toast);
-        setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 400); }, 4000);
+        setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 400); }, 3500);
     }
-
-    // Permettre de confirmer avec la touche Entrée
-    document.getElementById('enrol-birth-year').addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') { window.submitEnrolment(); }
-    });
 })();
 </script>
 

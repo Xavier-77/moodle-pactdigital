@@ -19,32 +19,33 @@ echo $OUTPUT->header();
 
 <style>
 :root {
-    --pact-green: #145B37;
-    --pact-green-light: #e8f5ee;
-    --pact-yellow: #fad615;
-    --pact-red: #D32F2F;
-    --pact-dark: #1e293b;
-    --pact-grey: #64748b;
-    --pact-border: #e2e8f0;
+    --pact-green: var(--vert-700, #045527);
+    --pact-green-light: var(--vert-50, #ecf7f0);
+    --pact-yellow: var(--or-300, #ffed00);
+    --pact-red: var(--rouge-500, #e30613);
+    --pact-dark: var(--texte, #211d1a);
+    --pact-grey: var(--texte-attenue, #635c55);
+    --pact-border: var(--bordure, #e2ddd6);
 }
 
 .faq-container {
     max-width: 1100px;
     margin: 0 auto 50px auto;
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-family: var(--police-texte, "Inter", system-ui, -apple-system, sans-serif);
     color: var(--pact-dark);
 }
 
 .faq-hero {
-    background: linear-gradient(135deg, #145B37 0%, #1e7a4a 100%);
-    border-radius: 16px;
+    background: linear-gradient(135deg, var(--vert-900, #032e16) 0%, var(--vert-700, #045527) 60%, var(--vert-500, #00843b) 100%);
+    border-radius: var(--rayon-lg, 12px);
     padding: 40px 30px;
     color: #fff;
     text-align: center;
     margin-bottom: 30px;
-    box-shadow: 0 4px 20px rgba(20, 91, 55, 0.15);
+    box-shadow: var(--ombre-md);
 }
 .faq-hero h1 {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     font-size: 2.1rem;
     font-weight: 800;
     margin: 0 0 10px 0;
@@ -65,10 +66,10 @@ echo $OUTPUT->header();
 .faq-search-input {
     width: 100%;
     padding: 14px 20px 14px 48px;
-    border-radius: 50px;
+    border-radius: var(--rayon-md, 8px);
     border: none;
     font-size: 1rem;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+    box-shadow: var(--ombre-md);
     outline: none;
     color: var(--pact-dark);
 }
@@ -90,10 +91,11 @@ echo $OUTPUT->header();
     margin-bottom: 30px;
 }
 .faq-filter-btn {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     background: #fff;
     border: 1px solid var(--pact-border);
     padding: 8px 18px;
-    border-radius: 30px;
+    border-radius: var(--rayon-md, 8px);
     font-size: 0.88rem;
     font-weight: 600;
     color: var(--pact-grey);
@@ -101,9 +103,9 @@ echo $OUTPUT->header();
     transition: all 0.2s;
 }
 .faq-filter-btn:hover, .faq-filter-btn.active {
-    background: var(--pact-green);
+    background: var(--action, #00843b);
     color: #fff;
-    border-color: var(--pact-green);
+    border-color: var(--action, #00843b);
 }
 
 /* ── Accordion ───────────────────────────────────────────────── */
@@ -115,16 +117,17 @@ echo $OUTPUT->header();
 .faq-item {
     background: #fff;
     border: 1px solid var(--pact-border);
-    border-radius: 12px;
+    border-radius: var(--rayon-lg, 12px);
     overflow: hidden;
     transition: all 0.2s;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    box-shadow: var(--ombre-sm);
 }
 .faq-item.active {
-    border-color: var(--pact-green);
-    box-shadow: 0 4px 15px rgba(20, 91, 55, 0.08);
+    border-color: var(--vert-500, #00843b);
+    box-shadow: var(--ombre-md);
 }
 .faq-question {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     padding: 18px 24px;
     font-size: 1.05rem;
     font-weight: 700;
@@ -137,7 +140,7 @@ echo $OUTPUT->header();
     user-select: none;
 }
 .faq-question:hover {
-    background: #fbfdfc;
+    background: var(--surface-basse, #fcfbf9);
     color: var(--pact-green);
 }
 .faq-toggle-icon {
@@ -156,7 +159,7 @@ echo $OUTPUT->header();
     padding: 0 24px;
     font-size: 0.95rem;
     line-height: 1.6;
-    color: #334155;
+    color: var(--pact-dark);
     border-top: 1px solid transparent;
 }
 .faq-item.active .faq-answer {
@@ -167,7 +170,7 @@ echo $OUTPUT->header();
 .faq-tag {
     display: inline-block;
     padding: 3px 8px;
-    border-radius: 12px;
+    border-radius: 6px;
     font-size: 0.72rem;
     font-weight: 700;
     background: var(--pact-green-light);
@@ -178,14 +181,15 @@ echo $OUTPUT->header();
 
 /* ── Bottom CTA ──────────────────────────────────────────────── */
 .faq-cta-box {
-    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-    border: 1.5px dashed var(--pact-border);
-    border-radius: 16px;
+    background: var(--surface-enfoncee, #f7f5f2);
+    border: 1.5px dashed var(--bordure-forte, #8e867f);
+    border-radius: var(--rayon-lg, 12px);
     padding: 30px;
     text-align: center;
     margin-top: 40px;
 }
 .faq-cta-box h3 {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     font-size: 1.25rem;
     font-weight: 700;
     color: var(--pact-green);
@@ -197,20 +201,21 @@ echo $OUTPUT->header();
     margin: 0 0 18px 0;
 }
 .btn-faq-contact {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: var(--pact-green);
+    background: var(--action, #00843b);
     color: #fff;
     font-weight: 700;
     font-size: 0.92rem;
     padding: 10px 24px;
-    border-radius: 50px;
+    border-radius: var(--rayon-md, 8px);
     text-decoration: none;
     transition: all 0.2s;
 }
 .btn-faq-contact:hover {
-    background: #0e4428;
+    background: var(--action-survol, #026c31);
     color: #fff;
     transform: translateY(-1px);
 }
@@ -342,7 +347,7 @@ echo $OUTPUT->header();
                 <span class="faq-toggle-icon">+</span>
             </div>
             <div class="faq-answer">
-                Des cohortes présentielles encadrées par des formateurs certifiés PACTDIGITAL sont déployées dans les 13 régions et 47 provinces du Burkina Faso. Les séances ont lieu dans les Maisons de la Jeunesse, cyberclasses scolaires et centres communaux. Renseignez-vous auprès de votre direction régionale MTDPCE ou sur notre page de contact.
+                Des cohortes présentielles encadrées par des formateurs certifiés PACTDIGITAL sont déployées dans les 17 régions et 47 provinces du Burkina Faso. Les séances ont lieu dans les Maisons de la Jeunesse, cyberclasses scolaires et centres communaux. Renseignez-vous auprès de votre direction régionale MTDPCE ou sur notre page de contact.
             </div>
         </div>
 

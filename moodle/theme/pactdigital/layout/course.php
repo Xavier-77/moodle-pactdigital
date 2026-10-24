@@ -99,6 +99,7 @@ $templatecontext = array_merge([
     'overflow' => $overflow,
     'headercontent' => $headercontent,
     'addblockbutton' => $addblockbutton,
+    'armoiries_url' => $OUTPUT->image_url('armoiries', 'theme_pactdigital')->out(),
 ], $pactcoursedata);
 
 echo $OUTPUT->render_from_template('theme_pactdigital/course', $templatecontext);

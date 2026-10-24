@@ -134,23 +134,25 @@ echo $OUTPUT->header();
 ?>
 
 <style>
-/* ═══ FICHE MÉMO — PACTDIGITAL-BF ═══════════════════════════════════════ */
+/* ═══ FICHE MÉMO — CONFORME CHARTE GRAPHIQUE V2.0 (MTDPCE) ══════════════════ */
 .memo-page {
     max-width: 800px;
     margin: 0 auto;
     padding: 1.5rem;
-    font-family: 'Segoe UI', Arial, sans-serif;
+    font-family: var(--police-texte, "Inter", Arial, sans-serif);
+    color: var(--texte, #211d1a);
 }
 
 /* ── En-tête fiche ──────────────────────────────────────────────────── */
 .memo-header {
-    background: linear-gradient(135deg, #0d7a32, #129b40);
+    background: linear-gradient(135deg, var(--vert-900, #032e16), var(--vert-600, #026c31));
     color: white;
-    border-radius: 14px;
+    border-radius: var(--rayon-lg, 12px);
     padding: 2rem 2.5rem;
     margin-bottom: 1.5rem;
     position: relative;
     overflow: hidden;
+    box-shadow: var(--ombre-md);
 }
 .memo-header::before {
     content: '';
@@ -161,8 +163,9 @@ echo $OUTPUT->header();
     border-radius: 50%;
 }
 .memo-badge {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     display: inline-block;
-    background: rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.18);
     border: 1px solid rgba(255,255,255,0.35);
     padding: 4px 12px;
     border-radius: 20px;
@@ -172,6 +175,7 @@ echo $OUTPUT->header();
     letter-spacing: 0.04em;
 }
 .memo-header h1 {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     font-size: 1.5rem;
     font-weight: 800;
     margin: 0 0 0.4rem;
@@ -179,7 +183,7 @@ echo $OUTPUT->header();
     position: relative; z-index: 1;
 }
 .memo-header p {
-    opacity: 0.85;
+    opacity: 0.88;
     margin: 0;
     font-size: 0.9rem;
     position: relative; z-index: 1;
@@ -195,17 +199,18 @@ echo $OUTPUT->header();
 /* ── Section résumé ─────────────────────────────────────────────────── */
 .memo-section-card {
     background: white;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
+    border: 1px solid var(--bordure, #e2ddd6);
+    border-radius: var(--rayon-lg, 12px);
     padding: 1.5rem;
     margin-bottom: 1.2rem;
-    box-shadow: 0 2px 10px rgba(18,155,64,0.06);
+    box-shadow: var(--ombre-sm);
 }
 .memo-section-title {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     font-size: 0.78rem;
     font-weight: 700;
     text-transform: uppercase;
-    color: #129b40;
+    color: var(--vert-700, #045527);
     letter-spacing: 0.05em;
     margin-bottom: 0.8rem;
     display: flex;
@@ -215,7 +220,7 @@ echo $OUTPUT->header();
 .memo-summary-text {
     font-size: 0.9rem;
     line-height: 1.7;
-    color: #374151;
+    color: var(--texte, #211d1a);
 }
 
 /* ── Activités ──────────────────────────────────────────────────────── */
@@ -225,45 +230,47 @@ echo $OUTPUT->header();
     align-items: center;
     gap: 0.8rem;
     padding: 0.7rem 0.9rem;
-    border: 1px solid #f1f5f9;
-    border-radius: 8px;
+    border: 1px solid var(--bordure, #e2ddd6);
+    border-radius: var(--rayon-md, 8px);
     margin-bottom: 0.5rem;
-    background: #fafafa;
+    background: var(--surface-basse, #fcfbf9);
     transition: background 0.15s;
 }
-.memo-activity-item:hover { background: #f0faf5; }
+.memo-activity-item:hover { background: var(--vert-50, #ecf7f0); }
 .memo-activity-icon { font-size: 1.3rem; flex-shrink: 0; }
 .memo-activity-name {
     flex: 1;
     font-size: 0.88rem;
     font-weight: 600;
-    color: #1a1a1a;
+    color: var(--texte, #211d1a);
 }
 .memo-activity-link {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     font-size: 0.8rem;
-    color: #129b40;
+    color: var(--vert-700, #045527);
     text-decoration: none;
     font-weight: 700;
     padding: 0.3rem 0.7rem;
-    border: 1px solid #129b40;
+    border: 1px solid var(--vert-500, #00843b);
     border-radius: 6px;
     white-space: nowrap;
 }
-.memo-activity-link:hover { background: #f0faf5; }
+.memo-activity-link:hover { background: var(--vert-50, #ecf7f0); }
 
 /* ── Notes personnelles ─────────────────────────────────────────────── */
 .memo-notes {
-    border: 2px dashed #cbd5e1;
-    border-radius: 12px;
+    border: 2px dashed var(--bordure-forte, #8e867f);
+    border-radius: var(--rayon-lg, 12px);
     padding: 1.5rem;
-    background: #f8fafc;
+    background: var(--surface-basse, #fcfbf9);
     margin-top: 1.2rem;
 }
 .memo-notes-title {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     font-size: 0.78rem;
     font-weight: 700;
     text-transform: uppercase;
-    color: #64748b;
+    color: var(--texte-attenue, #635c55);
     letter-spacing: 0.05em;
     margin-bottom: 0.8rem;
     display: flex;
@@ -276,7 +283,7 @@ echo $OUTPUT->header();
     gap: 0.8rem;
 }
 .note-line {
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid var(--bordure, #e2ddd6);
     height: 30px;
     width: 100%;
 }
@@ -286,11 +293,11 @@ echo $OUTPUT->header();
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-top: 1px solid #e2e8f0;
+    border-top: 1px solid var(--bordure, #e2ddd6);
     padding-top: 1rem;
     margin-top: 1.5rem;
     font-size: 0.78rem;
-    color: #94a3b8;
+    color: var(--texte-attenue, #635c55);
     flex-wrap: wrap;
     gap: 0.5rem;
 }
@@ -303,10 +310,11 @@ echo $OUTPUT->header();
     flex-wrap: wrap;
 }
 .btn-print {
-    background: linear-gradient(135deg, #129b40, #0d7a32);
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
+    background: var(--action, #00843b);
     color: white;
     padding: 0.65rem 1.4rem;
-    border-radius: 10px;
+    border-radius: var(--rayon-md, 8px);
     border: none;
     font-size: 0.9rem;
     font-weight: 700;
@@ -318,16 +326,17 @@ echo $OUTPUT->header();
     text-decoration: none;
 }
 .btn-print:hover {
+    background: var(--action-survol, #026c31);
     transform: translateY(-1px);
-    box-shadow: 0 5px 15px rgba(18,155,64,0.3);
+    box-shadow: var(--ombre-md);
     color: white;
 }
 .btn-back {
     background: white;
-    color: #64748b;
+    color: var(--texte-attenue, #635c55);
     padding: 0.65rem 1.2rem;
-    border-radius: 10px;
-    border: 1px solid #e2e8f0;
+    border-radius: var(--rayon-md, 8px);
+    border: 1px solid var(--bordure, #e2ddd6);
     font-size: 0.88rem;
     font-weight: 600;
     cursor: pointer;
@@ -336,7 +345,7 @@ echo $OUTPUT->header();
     align-items: center;
     gap: 6px;
 }
-.btn-back:hover { background: #f1f5f9; color: #64748b; }
+.btn-back:hover { background: var(--surface-enfoncee, #f7f5f2); color: var(--texte, #211d1a); }
 
 /* ── Print mode ─────────────────────────────────────────────────────── */
 @media print {

@@ -9,19 +9,19 @@ require_once($CFG->dirroot . '/course/lib.php');
  * @return array Contexte complet pour le template frontpage
  */
 function pactdigital_get_frontpage_context() {
-    global $DB, $CFG, $USER;
+    global $DB, $CFG, $USER, $PAGE, $SITE;
 
     $is_logged_in = isloggedin() && !isguestuser();
     $wwwroot = $CFG->wwwroot;
 
-    // 1. Catégories racines officielles (Piliers)
+    // 1. Catégories racines officielles (Piliers) — Palette Charte Graphique v2.0
     $cat_meta = [
         9 => [
             'slug'        => 'fondamentales',
             'name'        => 'Compétences numériques fondamentales',
             'short'       => 'Fondamentales',
             'icon'        => '💻',
-            'color'       => '#129b40',
+            'color'       => '#00843b', // --vert-500
             'desc'        => 'Bureautique, navigation internet, communication numérique et sécurité essentielle au quotidien.',
             'badge'       => '9 domaines • 27 cours'
         ],
@@ -30,7 +30,7 @@ function pactdigital_get_frontpage_context() {
             'name'        => 'Compétences numériques managériales',
             'short'       => 'Managériales',
             'icon'        => '📊',
-            'color'       => '#0284c7',
+            'color'       => '#2a6d9b', // --bleu-500
             'desc'        => 'Outils collaboratifs, gouvernance numérique, management de projets et transition digitale du service public.',
             'badge'       => '3 domaines • 9 cours'
         ],
@@ -39,7 +39,7 @@ function pactdigital_get_frontpage_context() {
             'name'        => 'Compétences numériques sectorielles',
             'short'       => 'Sectorielles',
             'icon'        => '🏭',
-            'color'       => '#f59e0b',
+            'color'       => '#b07800', // --ocre-500
             'desc'        => 'Usages spécialisés par métier : commerce et vente en ligne, animation et formation à l\'aide du numérique.',
             'badge'       => '2 domaines • 6 cours'
         ],
@@ -48,7 +48,7 @@ function pactdigital_get_frontpage_context() {
             'name'        => 'Compétences numériques émergentes',
             'short'       => 'Émergentes',
             'icon'        => '🚀',
-            'color'       => '#7c3aed',
+            'color'       => '#045527', // --vert-700
             'desc'        => 'Technologies de pointe : Intelligence Artificielle, Blockchain, Réalité virtuelle, IoT et Informatique quantique.',
             'badge'       => '6 domaines • 18 cours'
         ],
@@ -89,14 +89,14 @@ function pactdigital_get_frontpage_context() {
             'icon'  => '',
             'cls'   => 'level-bronze'
         ];
-        if (stripos($raw_title, 'argent') !== false || $raw_title === 'Diamant') {
+        if (preg_match('/(^|_|\s|-|\b)(argent|silver)($|_|\s|-|\b)/ui', $raw_title)) {
             $level_info = ['level' => 'argent', 'label' => 'Argent', 'icon' => '', 'cls' => 'level-argent'];
-        } else if (stripos($raw_title, 'or') !== false) {
+        } else if (preg_match('/(^|_|\s|-|\b)(or|gold)($|_|\s|-|\b)/ui', $raw_title)) {
             $level_info = ['level' => 'or', 'label' => 'Or', 'icon' => '', 'cls' => 'level-or'];
         }
 
         // Titre d'affichage harmonisé
-        if (in_array($raw_title, ['Bronze', 'Argent', 'Or', 'Diamant'])) {
+        if (in_array($raw_title, ['Bronze', 'Argent', 'Or'])) {
             $display_title = $c->domain_name . ' — ' . $level_info['label'];
         } else {
             $display_title = $c->fullname;
@@ -143,7 +143,7 @@ function pactdigital_get_frontpage_context() {
             'view_url'      => (new moodle_url('/course/view.php', ['id' => $c->id]))->out(false),
             'welcome_url'   => (new moodle_url('/local/pactdigital/course_welcome.php', ['id' => $c->id]))->out(false),
             'catalogue_url' => (new moodle_url('/local/pactdigital/catalogue.php', ['domain' => $slug]))->out(false),
-            'cat_color'     => $cat_meta[$root_id]['color'] ?? '#129b40',
+            'cat_color'     => $cat_meta[$root_id]['color'] ?? '#00843b',
             'cat_icon'      => '',
         ];
 
@@ -247,11 +247,28 @@ function pactdigital_get_frontpage_context() {
         $is_manager = $is_admin || ($manager_count > 0);
     }
 
+    // Vérification des annonces du site actives
+    $has_announcements = false;
+    $site_news_forum = $DB->get_record('forum', ['course' => $SITE->id, 'type' => 'news']);
+    if ($site_news_forum) {
+        $now = time();
+        $has_announcements = $DB->record_exists_select(
+            'forum_discussions',
+            'forum = :forum AND (timestart = 0 OR timestart <= :now1) AND (timeend = 0 OR timeend > :now2)',
+            ['forum' => $site_news_forum->id, 'now1' => $now, 'now2' => $now]
+        );
+    }
+    $is_editing = !empty($PAGE) && method_exists($PAGE, 'user_is_editing') && $PAGE->user_is_editing();
+    $show_main_content = $has_announcements || $is_editing;
+
     return [
-        'is_logged_in'    => $is_logged_in,
-        'is_trainer'      => $is_trainer,
-        'is_manager'      => $is_manager,
-        'user_fullname'   => $is_logged_in ? fullname($USER) : '',
+        'is_logged_in'        => $is_logged_in,
+        'is_trainer'          => $is_trainer,
+        'is_manager'          => $is_manager,
+        'is_editing'          => $is_editing,
+        'has_announcements'   => $has_announcements,
+        'show_main_content'   => $show_main_content,
+        'user_fullname'       => $is_logged_in ? fullname($USER) : '',
         'stats' => [
             'courses'     => count($all_courses),
             'domains'     => count($domain_counts),

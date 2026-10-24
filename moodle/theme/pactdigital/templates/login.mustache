@@ -7,31 +7,40 @@
 
     {{{ output.standard_top_of_body_html }}}
 
+    <div class="fs-officiel">
+        <div class="fs-conteneur">
+            <span class="fs-officiel-sceau">Site officiel de l'administration burkinabè</span>
+            <span class="fs-masque-mobile">MTDPCE — Domaine officiel <code>gov.bf</code></span>
+        </div>
+    </div>
+    <div class="fs-filet"></div>
+
     <div class="container-fluid p-0 h-100 min-vh-100 d-flex flex-column justify-content-between">
         <div class="row g-0 flex-grow-1 align-items-stretch">
 
             <!-- COLONNE GAUCHE : IDENTITÉ VISUELLE & INSTITUTIONNELLE -->
             <div class="col-lg-6 d-none d-lg-flex flex-column justify-content-between pact-login-branding p-5">
-                <!-- En-tête haut -->
-                <div class="d-flex align-items-center gap-3">
+                <!-- En-tête haut (.fs-marque) -->
+                <a href="{{{ config.wwwroot }}}" class="fs-marque text-white text-decoration-none">
                     {{#armoiries_url}}
-                        <img src="{{armoiries_url}}" alt="Armoiries Burkina Faso" style="max-height: 55px; width: auto;">
+                        <img src="{{armoiries_url}}" alt="Armoiries du Burkina Faso" style="height: 56px; width: auto;">
                     {{/armoiries_url}}
-                    <div>
-                        <div class="text-uppercase fw-bold text-white small" style="letter-spacing: 1px;">BURKINA FASO</div>
-                        <div class="text-white-50 small">Ministère de la Transition Digitale, des Postes et des Communications Électroniques</div>
-                    </div>
-                </div>
+                    <span class="fs-marque-texte">
+                        <span class="fs-marque-pays text-white">Burkina Faso</span>
+                        <span class="fs-marque-devise" style="color: rgba(255,255,255,0.8);">La Patrie ou la Mort, nous Vaincrons</span>
+                        <span class="fs-marque-entite" style="color: rgba(255,255,255,0.85);">Ministère de la Transition Digitale, des Postes et des Communications Électroniques</span>
+                    </span>
+                </a>
 
                 <!-- Contenu central -->
                 <div class="my-auto py-5">
-                    <span class="badge bg-warning text-dark px-3 py-2 rounded-pill fw-bold mb-3 shadow-sm">
-                        🇧🇫 Initiative Nationale
+                    <span class="badge px-3 py-2 rounded-pill fw-bold mb-3 shadow-sm" style="background: var(--or-300, #ffed00); color: var(--neutre-900, #211d1a); font-family: var(--police-titre);">
+                        🇧🇫 Service Public Numérique
                     </span>
-                    <h1 class="display-4 fw-extrabold text-white mb-3" style="font-weight: 800;">
+                    <h1 class="display-4 fw-extrabold text-white mb-3" style="font-weight: 800; font-family: var(--police-titre);">
                         PACTDIGITAL-BF
                     </h1>
-                    <p class="lead text-white-50 mb-4" style="max-width: 520px; font-size: 1.15rem; line-height: 1.6;">
+                    <p class="lead text-white mb-4" style="max-width: 520px; font-size: 1.15rem; line-height: 1.6; opacity: 0.9;">
                         La plateforme nationale d'apprentissage et de certification des compétences numériques pour toutes les citoyennes et tous les citoyens burkinabè.
                     </p>
 

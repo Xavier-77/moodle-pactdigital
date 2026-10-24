@@ -35,14 +35,13 @@ function pactdigital_get_dashboard_context() {
             $total_completed++;
         }
 
-        // Récupérer le niveau (Bronze, Argent, Or) d'après le nom
+        // Récupérer le niveau officiel (Bronze, Argent, Or) d'après le nom
         $level = 'Bronze';
-        if (stripos($c->fullname, 'Argent') !== false) {
+        $full_tokens = $c->fullname . ' ' . $c->shortname;
+        if (preg_match('/(^|_|\s|-|\b)(argent|silver)($|_|\s|-|\b)/ui', $full_tokens)) {
             $level = 'Argent';
-        } else if (stripos($c->fullname, 'Or') !== false) {
+        } else if (preg_match('/(^|_|\s|-|\b)(or|gold)($|_|\s|-|\b)/ui', $full_tokens)) {
             $level = 'Or';
-        } else if (stripos($c->fullname, 'Diamant') !== false) {
-            $level = 'Diamant';
         }
 
         // Catégorie / Domaine
@@ -101,34 +100,27 @@ function pactdigital_get_dashboard_context() {
             $is_short_title = in_array(strtolower(trim($iss->coursename)), ['bronze', 'argent', 'or', 'diamant']);
             $display_coursename = ($is_short_title && !empty($iss->catname)) ? $iss->catname . ' — ' . $iss->coursename : $iss->coursename;
 
-            // Détection du niveau métallique
-            $haystack = strtolower($iss->coursename . ' ' . $iss->shortname);
+            // Détection du niveau métallique officiel (Bronze, Argent, Or)
+            $tokens = strtolower($iss->coursename . ' ' . $iss->shortname);
             $cert_level = 'Bronze';
             $level_class = 'cert-bronze';
             $level_badge = '🥉 Bronze';
             $is_bronze = true;
             $is_argent = false;
             $is_or = false;
-            $is_diamant = false;
 
-            if (strpos($haystack, 'diamant') !== false) {
-                $cert_level = 'Diamant';
-                $level_class = 'cert-diamant';
-                $level_badge = '💎 Diamant';
-                $is_bronze = false;
-                $is_diamant = true;
-            } else if (strpos($haystack, 'or') !== false || strpos($haystack, 'gold') !== false) {
-                $cert_level = 'Or';
-                $level_class = 'cert-or';
-                $level_badge = '🥇 Or';
-                $is_bronze = false;
-                $is_or = true;
-            } else if (strpos($haystack, 'argent') !== false || strpos($haystack, 'silver') !== false) {
+            if (preg_match('/(^|_|\s|-|\b)(argent|silver)($|_|\s|-|\b)/ui', $tokens)) {
                 $cert_level = 'Argent';
                 $level_class = 'cert-argent';
                 $level_badge = '🥈 Argent';
                 $is_bronze = false;
                 $is_argent = true;
+            } else if (preg_match('/(^|_|\s|-|\b)(or|gold)($|_|\s|-|\b)/ui', $tokens)) {
+                $cert_level = 'Or';
+                $level_class = 'cert-or';
+                $level_badge = '🥇 Or';
+                $is_bronze = false;
+                $is_or = true;
             }
 
             // Génération QR Code vectoriel intégré (SVG pur)
@@ -169,7 +161,6 @@ function pactdigital_get_dashboard_context() {
                 'is_bronze' => $is_bronze,
                 'is_argent' => $is_argent,
                 'is_or' => $is_or,
-                'is_diamant' => $is_diamant,
                 'recipient_name' => fullname($USER),
                 'date' => userdate($iss->timecreated, '%d/%m/%Y'),
                 'download_url' => $download_url,

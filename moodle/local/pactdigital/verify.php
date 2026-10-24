@@ -58,10 +58,13 @@ if ($searched) {
     if ($res) {
         $cert_found = true;
         $lvl = pact_verify_level($res->courseshort, $res->coursename);
+        $display_coursename = in_array($res->coursename, ['Bronze', 'Argent', 'Or'])
+            ? ($res->categoryname ? $res->categoryname . ' — ' . $res->coursename : $res->coursename)
+            : $res->coursename;
         $cert_data = [
             'code'         => $res->code,
             'fullname'     => fullname($res),
-            'coursename'   => $res->coursename,
+            'coursename'   => $display_coursename,
             'courseshort'  => $res->courseshort,
             'category'     => $res->categoryname ?: 'Littératie Numérique',
             'level'        => $lvl['name'],
@@ -78,21 +81,22 @@ echo $OUTPUT->header();
 
 <style>
 :root {
-    --green: #129b40;
-    --green-dark: #0d7a32;
-    --yellow: #fad615;
-    --red: #d02027;
-    --border: #e2e8f0;
-    --card-bg: #ffffff;
-    --slate: #1e293b;
-    --muted: #64748b;
+    --green: var(--vert-500, #00843b);
+    --green-dark: var(--vert-700, #045527);
+    --yellow: var(--or-300, #ffed00);
+    --red: var(--rouge-500, #e30613);
+    --border: var(--bordure, #e2ddd6);
+    --card-bg: var(--surface, #ffffff);
+    --slate: var(--texte, #211d1a);
+    --muted: var(--texte-attenue, #635c55);
 }
 
 .pact-verify-wrapper {
     max-width: 760px;
     margin: 2rem auto 4rem;
     padding: 0 1rem;
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-family: var(--police-texte, "Inter", system-ui, -apple-system, sans-serif);
+    color: var(--slate);
 }
 
 .pact-verify-header {
@@ -103,16 +107,17 @@ echo $OUTPUT->header();
 .pact-flag-strip {
     display: flex;
     height: 6px;
-    border-radius: 4px;
+    border-radius: 9999px;
     overflow: hidden;
     max-width: 180px;
     margin: 0 auto 1.2rem;
 }
-.flag-red    { flex: 1; background: var(--red); }
-.flag-yellow { width: 24px; background: var(--yellow); }
-.flag-green  { flex: 1; background: var(--green); }
+.flag-red    { flex: 1; background: var(--rouge-500, #e30613); }
+.flag-yellow { width: 28px; background: var(--or-300, #ffed00); }
+.flag-green  { flex: 1; background: var(--vert-500, #00843b); }
 
 .pact-verify-header h1 {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     font-size: 1.8rem;
     font-weight: 800;
     color: var(--slate);
@@ -129,9 +134,9 @@ echo $OUTPUT->header();
 /* ── Barre de recherche de certificat ──────────────────────────────────── */
 .search-card {
     background: white;
-    border-radius: 16px;
+    border-radius: var(--rayon-lg, 12px);
     padding: 1.5rem;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    box-shadow: var(--ombre-sm);
     border: 1px solid var(--border);
     margin-bottom: 2rem;
 }
@@ -151,18 +156,19 @@ echo $OUTPUT->header();
 .search-input-wrap input {
     width: 100%;
     padding: 0.85rem 1rem 0.85rem 2.8rem;
-    border: 2px solid var(--border);
-    border-radius: 12px;
+    border: 1.5px solid var(--bordure-forte, #8e867f);
+    border-radius: var(--rayon-md, 8px);
     font-size: 1rem;
     box-sizing: border-box;
     transition: all 0.2s;
     outline: none;
-    font-family: monospace, sans-serif;
+    font-family: var(--police-mono, monospace);
+    color: var(--slate);
 }
 
 .search-input-wrap input:focus {
     border-color: var(--green);
-    box-shadow: 0 0 0 3px rgba(18, 155, 64, 0.15);
+    box-shadow: 0 0 0 3px var(--vert-50, #ecf7f0);
 }
 
 .search-icon-inside {
@@ -175,11 +181,12 @@ echo $OUTPUT->header();
 }
 
 .btn-search-verify {
-    background: linear-gradient(135deg, #129b40, #0d7a32);
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
+    background: var(--action, #00843b);
     color: white;
     border: none;
     padding: 0.85rem 1.6rem;
-    border-radius: 12px;
+    border-radius: var(--rayon-md, 8px);
     font-weight: 700;
     font-size: 0.95rem;
     cursor: pointer;
@@ -190,7 +197,7 @@ echo $OUTPUT->header();
 }
 
 .btn-search-verify:hover {
-    background: linear-gradient(135deg, #0d7a32, #075a24);
+    background: var(--action-survol, #026c31);
     transform: translateY(-1px);
     color: white;
 }
@@ -198,15 +205,15 @@ echo $OUTPUT->header();
 /* ── Carte de vérification officielle ───────────────────────────────────── */
 .cert-card-official {
     background: white;
-    border-radius: 20px;
-    box-shadow: 0 12px 40px rgba(18, 155, 64, 0.12);
-    border: 2px solid #bbf7d0;
+    border-radius: var(--rayon-lg, 12px);
+    box-shadow: var(--ombre-lg);
+    border: 2px solid var(--vert-200, #a2e0bc);
     overflow: hidden;
     position: relative;
 }
 
 .cert-card-header {
-    background: linear-gradient(135deg, #0d7a32, #129b40);
+    background: linear-gradient(135deg, var(--vert-900, #032e16), var(--vert-700, #045527));
     color: white;
     padding: 1.8rem 2rem;
     text-align: center;
@@ -219,6 +226,7 @@ echo $OUTPUT->header();
 }
 
 .cert-card-header h2 {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     font-size: 1.25rem;
     font-weight: 800;
     color: white;
@@ -234,8 +242,9 @@ echo $OUTPUT->header();
 }
 
 .valid-banner {
-    background: #dcfce7;
-    color: #15803d;
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
+    background: var(--vert-50, #ecf7f0);
+    color: var(--vert-700, #045527);
     padding: 0.9rem 1.5rem;
     display: flex;
     align-items: center;
@@ -243,7 +252,7 @@ echo $OUTPUT->header();
     gap: 10px;
     font-weight: 800;
     font-size: 0.98rem;
-    border-bottom: 1px solid #bbf7d0;
+    border-bottom: 1px solid var(--vert-200, #a2e0bc);
 }
 
 .valid-banner .icon {
@@ -262,13 +271,14 @@ echo $OUTPUT->header();
 }
 
 .cert-meta-item {
-    background: #f8fafc;
+    background: var(--surface-basse, #fcfbf9);
     border: 1px solid var(--border);
-    border-radius: 12px;
+    border-radius: var(--rayon-md, 8px);
     padding: 1rem 1.2rem;
 }
 
 .cert-meta-label {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -278,22 +288,24 @@ echo $OUTPUT->header();
 }
 
 .cert-meta-value {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     font-size: 1.1rem;
     font-weight: 700;
     color: var(--slate);
 }
 
 .level-badge-pill {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     display: inline-block;
     padding: 4px 12px;
     border-radius: 20px;
     font-size: 0.82rem;
     font-weight: 800;
 }
-.level-bronze  { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
-.level-argent  { background: #f1f5f9; color: #334155; border: 1px solid #cbd5e1; }
-.level-or      { background: #fef08a; color: #854d0e; border: 1px solid #facc15; }
-.level-default { background: #e2e8f0; color: #475569; }
+.level-bronze  { background: var(--ocre-50, #fdf4e3); color: var(--ocre-700, #7d5500); border: 1px solid var(--ocre-500, #b07800); }
+.level-argent  { background: var(--surface-enfoncee, #f7f5f2); color: var(--neutre-800, #38332f); border: 1px solid var(--bordure-forte, #8e867f); }
+.level-or      { background: var(--or-300, #ffed00); color: var(--neutre-900, #211d1a); border: 1px solid var(--or-500, #d4bc00); }
+.level-default { background: var(--surface-enfoncee, #f7f5f2); color: var(--muted); }
 
 .cert-footer-auth {
     border-top: 1px solid var(--border);
@@ -312,15 +324,15 @@ echo $OUTPUT->header();
     align-items: center;
     gap: 8px;
     font-weight: 600;
-    color: #065f46;
+    color: var(--vert-700, #045527);
 }
 
 /* ── Erreur / Introuvable ───────────────────────────────────────────────── */
 .cert-card-error {
     background: white;
-    border-radius: 20px;
-    box-shadow: 0 8px 30px rgba(220, 38, 38, 0.08);
-    border: 2px solid #fca5a5;
+    border-radius: var(--rayon-lg, 12px);
+    box-shadow: var(--ombre-md);
+    border: 2px solid var(--rouge-500, #e30613);
     padding: 2.5rem 2rem;
     text-align: center;
 }
@@ -331,14 +343,15 @@ echo $OUTPUT->header();
 }
 
 .cert-card-error h2 {
-    color: #991b1b;
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
+    color: var(--rouge-700, #a2040e);
     font-size: 1.4rem;
     font-weight: 800;
     margin-bottom: 0.5rem;
 }
 
 .cert-card-error p {
-    color: #64748b;
+    color: var(--muted);
     font-size: 0.95rem;
     max-width: 520px;
     margin: 0 auto 1.5rem;

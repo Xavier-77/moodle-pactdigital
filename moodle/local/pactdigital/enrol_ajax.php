@@ -159,8 +159,8 @@ try {
     echo json_encode([
         'success'    => true,
         'already'    => false,
-        'message'    => '✅ Inscription réussie ! Vous êtes maintenant inscrit à la formation "' . htmlspecialchars($course->fullname) . '".',
-        'course_url' => (new moodle_url('/course/view.php', ['id' => $courseid]))->out(false),
+        'message'    => 'Inscription réussie ! Vous êtes maintenant inscrit à la formation "' . htmlspecialchars($course->fullname) . '".',
+        'course_url' => (new moodle_url('/local/pactdigital/course_welcome.php', ['id' => $courseid]))->out(false),
         'course_name'=> $course->fullname,
     ]);
     

@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <title>01_Guide_Visiteur_Inscription - Guide du Visiteur et de l'Inscription Citoyenne — PACTDIGITAL-BF</title>
+    <style>
+        
+@page {
+    size: A4;
+    margin: 20mm 15mm 20mm 15mm;
+}
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: #211d1a;
+    background-color: #ffffff;
+    line-height: 1.45;
+    font-size: 10.5pt;
+    margin: 0;
+    padding: 0;
+}
+.cover-page {
+    page-break-after: always;
+    padding: 30px 20px;
+    text-align: center;
+}
+.header-timbre {
+    width: 100%;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #0a5496;
+    padding-bottom: 12px;
+}
+.header-timbre table {
+    width: 100%;
+    border-collapse: collapse;
+    border: none;
+}
+.header-timbre td {
+    border: none;
+    padding: 0;
+    vertical-align: top;
+}
+.timbre-left {
+    text-align: left;
+    font-size: 8.5pt;
+    font-weight: bold;
+    color: #0a5496;
+    line-height: 1.25;
+}
+.timbre-right {
+    text-align: right;
+    font-size: 9pt;
+    font-weight: bold;
+    color: #211d1a;
+    line-height: 1.3;
+}
+.devise {
+    font-style: italic;
+    color: #b07800;
+    font-size: 8.5pt;
+}
+.tricolor-ribbon {
+    height: 4px;
+    width: 100%;
+    margin: 15px 0 25px 0;
+    display: table;
+}
+.ribbon-red { display: table-cell; width: 33.33%; background-color: #ed1c24; height: 4px; }
+.ribbon-yellow { display: table-cell; width: 33.34%; background-color: #f9cf0c; height: 4px; }
+.ribbon-green { display: table-cell; width: 33.33%; background-color: #0e9c49; height: 4px; }
+
+.cover-badge {
+    display: inline-block;
+    background-color: #ecf7f0;
+    color: #00843b;
+    border: 1px solid #00843b;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 9pt;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+.cover-title {
+    font-size: 22pt;
+    color: #0a5496;
+    font-weight: bold;
+    margin: 15px 0 10px 0;
+    line-height: 1.2;
+}
+.cover-subtitle {
+    font-size: 13pt;
+    color: #00843b;
+    font-weight: 600;
+    margin-bottom: 25px;
+}
+.cover-profile-box {
+    background-color: #f7f5f2;
+    border: 1px solid #e2ddd6;
+    border-left: 6px solid #0a5496;
+    padding: 15px;
+    margin: 25px auto;
+    text-align: left;
+    max-width: 500px;
+    border-radius: 4px;
+}
+.cover-meta {
+    margin-top: 35px;
+    font-size: 9pt;
+    color: #635c55;
+    line-height: 1.5;
+}
+
+h1 {
+    color: #0a5496;
+    font-size: 15pt;
+    border-bottom: 1.5px solid #00843b;
+    padding-bottom: 4px;
+    margin-top: 24px;
+    margin-bottom: 12px;
+    page-break-after: avoid;
+}
+h2 {
+    color: #00843b;
+    font-size: 12.5pt;
+    margin-top: 18px;
+    margin-bottom: 8px;
+    page-break-after: avoid;
+}
+h3 {
+    color: #211d1a;
+    font-size: 11pt;
+    margin-top: 14px;
+    margin-bottom: 6px;
+    font-weight: bold;
+}
+p, li {
+    text-align: justify;
+    margin-bottom: 6px;
+}
+ul, ol {
+    margin-top: 4px;
+    margin-bottom: 10px;
+    padding-left: 22px;
+}
+li {
+    margin-bottom: 4px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 16px 0;
+    font-size: 9.5pt;
+}
+th, td {
+    border: 1px solid #e2ddd6;
+    padding: 6px 10px;
+    vertical-align: top;
+}
+th {
+    background-color: #0a5496;
+    color: #ffffff;
+    font-weight: bold;
+    text-align: left;
+}
+tr:nth-child(even) td {
+    background-color: #fcfbf9;
+}
+
+.box-alert {
+    padding: 10px 14px;
+    margin: 12px 0;
+    border-radius: 4px;
+    font-size: 9.5pt;
+}
+.box-tip {
+    background-color: #ecf7f0;
+    border-left: 4px solid #00843b;
+    color: #04411f;
+}
+.box-warn {
+    background-color: #fef9e7;
+    border-left: 4px solid #b07800;
+    color: #5c3f00;
+}
+.box-error {
+    background-color: #fdf2f2;
+    border-left: 4px solid #e30613;
+    color: #63050a;
+}
+
+.step-card {
+    background-color: #ffffff;
+    border: 1px solid #e2ddd6;
+    border-radius: 4px;
+    padding: 10px 14px;
+    margin-bottom: 10px;
+}
+.step-header {
+    font-weight: bold;
+    color: #0a5496;
+    margin-bottom: 4px;
+}
+.badge-req {
+    background-color: #e30613;
+    color: white;
+    font-size: 7.5pt;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: bold;
+}
+.badge-opt {
+    background-color: #756d66;
+    color: white;
+    font-size: 7.5pt;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: bold;
+}
+.badge-verified {
+    background-color: #00843b;
+    color: white;
+    font-size: 7.5pt;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: bold;
+}
+
+.ui-capture {
+    background-color: #f7f5f2;
+    border: 1px dashed #8e867f;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+    font-size: 9pt;
+}
+.ui-capture-title {
+    font-weight: bold;
+    color: #0a5496;
+    margin-bottom: 6px;
+}
+.ui-capture-caption {
+    font-style: italic;
+    color: #635c55;
+    font-size: 8.5pt;
+    margin-top: 6px;
+}
+
+    </style>
+</head>
+<body>
+    <!-- PAGE DE COUVERTURE -->
+    <div class="cover-page">
+        <div class="header-timbre">
+            <table>
+                <tr>
+                    <td class="timbre-left">
+                        MINISTÈRE DE LA TRANSITION DIGITALE, DES POSTES<br>
+                        ET DES COMMUNICATIONS ÉLECTRONIQUES<br>
+                        ------------------------------------<br>
+                        SECRÉTARIAT GÉNÉRAL<br>
+                        ------------------------------------<br>
+                        DIRECTION GÉNÉRALE DE LA TRANSITION DIGITALE
+                    </td>
+                    <td class="timbre-right">
+                        BURKINA FASO<br>
+                        <span class="devise">La Patrie ou la Mort, nous Vaincrons</span><br>
+                        ------------------------------------<br>
+                        <strong>PROGRAMME PACTDIGITAL-BF</strong>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="tricolor-ribbon">
+            <div class="ribbon-red"></div>
+            <div class="ribbon-yellow"></div>
+            <div class="ribbon-green"></div>
+        </div>
+
+        <div class="cover-badge">Guide Utilisateur Officiel</div>
+        <div class="cover-title">Guide du Visiteur et de l'Inscription Citoyenne</div>
+        <div class="cover-subtitle">Plateforme Nationale d'Apprentissage PACTDIGITAL-BF</div>
+
+        <div class="cover-profile-box">
+            <p style="margin: 0 0 5px 0;"><strong>Profil utilisateur :</strong> Visiteur, Citoyen, Futur Apprenant</p>
+            <p style="margin: 0 0 5px 0;"><strong>Référence document :</strong> 01_Guide_Visiteur_Inscription</p>
+            <p style="margin: 0 0 5px 0;"><strong>Conformité :</strong> Implémentation réelle PACTDIGITAL-BF (Moodle 4.3+)</p>
+            <p style="margin: 0;"><strong>Charte graphique :</strong> MTDPCE v1.0 (mai 2026) / v2.0</p>
+        </div>
+
+        <div class="cover-meta">
+            <p><strong>Éditeur :</strong> Direction Générale de la Transition Digitale (DGTD)</p>
+            <p><strong>Assistance Citoyenne Gratuite :</strong> Numéro Vert <strong>34 34</strong> | support@pactdigital.bf</p>
+            <p><strong>Version :</strong> 1.0 (Octobre 2026) — Diffusion officielle</p>
+        </div>
+    </div>
+
+    <!-- CORPS DU GUIDE -->
+    <div class="guide-content">
+        
+    <h1>Sommaire</h1>
+    <ol>
+        <li><strong>Présentation de la plateforme et public visé</strong></li>
+        <li><strong>Objectifs du guide</strong></li>
+        <li><strong>Prérequis et conditions d'accès</strong></li>
+        <li><strong>Fonctionnalités accessibles sans compte</strong></li>
+        <li><strong>Procédures pas à pas</strong>
+            <ul>
+                <li>5.1. Accéder à la plateforme et naviguer sur la page d'accueil</li>
+                <li>5.2. Explorer le catalogue des formations et filtrer les cours</li>
+                <li>5.3. Consulter les fiches de cours et les niveaux Bronze, Argent, Or</li>
+                <li>5.4. Créer son compte citoyen (sans e-mail obligatoire)</li>
+                <li>5.5. Se connecter à son compte utilisateur</li>
+                <li>5.6. Récupérer son compte ou son mot de passe en cas d'oubli</li>
+                <li>5.7. Contacter l'assistance citoyenne et ouvrir un ticket</li>
+            </ul>
+        </li>
+        <li><strong>Exemples pratiques d'utilisation</strong></li>
+        <li><strong>Résolution des difficultés courantes</strong></li>
+        <li><strong>Foire Aux Questions (FAQ) du Visiteur</strong></li>
+        <li><strong>Coordonnées officielles de l'assistance</strong></li>
+        <li><strong>Glossaire des termes clés</strong></li>
+        <li><strong>Historique des versions</strong></li>
+    </ol>
+
+    <h1>1. Présentation de la plateforme et public visé</h1>
+    <p>La plateforme <strong>PACTDIGITAL-BF</strong> est l'infrastructure nationale d'apprentissage en ligne développée sous la tutelle du Ministère de la Transition Digitale, des Postes et des Communications Électroniques (MTDPCE) et pilotée par la Direction Générale de la Transition Digitale (DGTD). Elle constitue le bras armé numérique du <em>Programme National de Littératie Numérique (PNLN)</em> du Burkina Faso.</p>
+    <p>Le public visé comprend l'ensemble des citoyennes et citoyens burkinabè, sans distinction d'âge, de niveau d'instruction ou de situation géographique : élèves, étudiants, agents de l'administration publique, entrepreneurs, agriculteurs, commerçants, demandeurs d'emploi et membres de la société civile. L'accès à la formation et la délivrance des attestations officielles y sont <strong>100% gratuits</strong>.</p>
+
+    <h1>2. Objectifs du guide</h1>
+    <p>Ce guide a pour objectif de permettre à toute personne accédant pour la première fois à la plateforme :</p>
+    <ul>
+        <li>De découvrir l'offre de formation nationale sans obligation préalable de créer un compte.</li>
+        <li>De rechercher facilement une formation par compétence, par domaine ou par niveau.</li>
+        <li>De comprendre la structure des certifications nationales (Bronze, Argent, Or).</li>
+        <li>De créer un compte citoyen en quelques minutes, <strong>même sans disposer d'une adresse de messagerie électronique</strong>.</li>
+        <li>De se connecter de manière sécurisée et de solliciter l'assistance gratuite en cas de blocage.</li>
+    </ul>
+
+    <h1>3. Prérequis et conditions d'accès</h1>
+    <table>
+        <tr><th>Élément</th><th>Exigence minimale</th><th>Observations</th></tr>
+        <tr><td><strong>Équipement</strong></td><td>Smartphone, tablette ou ordinateur</td><td>L'interface s'adapte automatiquement à la taille de votre écran.</td></tr>
+        <tr><td><strong>Navigateur web</strong></td><td>Google Chrome, Mozilla Firefox, Safari, Edge</td><td>Navigateur récent avec JavaScript activé.</td></tr>
+        <tr><td><strong>Connexion Internet</strong></td><td>Connexion 3G/4G ou Wi-Fi stable</td><td>Faible consommation de bande passante privilégiée par l'hébergement souverain.</td></tr>
+        <tr><td><strong>Âge requis</strong></td><td>18 ans révolus</td><td>Vérification obligatoire lors de l'inscription conformément à la politique nationale.</td></tr>
+        <tr><td><strong>Contact téléphonique</strong></td><td>Numéro de téléphone national (Orange, Moov, Telecel)</td><td>Obligatoire pour les notifications et l'identification du compte.</td></tr>
+    </table>
+
+    <h1>4. Présentation des fonctionnalités accessibles au visiteur</h1>
+    <p>En tant que visiteur non connecté, vous avez un accès libre et direct aux fonctionnalités suivantes :</p>
+    <ul>
+        <li><strong>Page d'accueil institutionnelle :</strong> consultation des indicateurs nationaux, présentation des compétences numériques et accès aux actualités.</li>
+        <li><strong>Catalogue public des formations :</strong> consultation des 60 parcours de formation répartis en 20 domaines et 4 piliers nationaux.</li>
+        <li><strong>Moteur de recherche et filtres :</strong> recherche par mots-clés, filtrage par pilier thématique et par niveau d'expertise.</li>
+        <li><strong>Vérification publique d'attestation :</strong> contrôle de l'authenticité d'un certificat d'État par numéro de vérification ou QR code.</li>
+        <li><strong>Assistance citoyenne et FAQ :</strong> accès aux questions fréquentes et au formulaire de contact du support.</li>
+    </ul>
+
+    <div class="box-alert box-warn">
+        <strong>Limite du profil visiteur :</strong> Pour suivre les cours, réaliser les activités interactives, passer les quiz, obtenir des badges et télécharger des attestations officielles, la création d'un compte citoyen et la connexion sont indispensables.
+    </div>
+
+    <h1>5. Procédures pas à pas</h1>
+
+    <h2>5.1. Accéder à la plateforme et naviguer sur la page d'accueil</h2>
+    <div class="step-card">
+        <div class="step-header">Étape 1 : Ouvrir le navigateur et saisir l'adresse</div>
+        <p>1. Lancez votre navigateur web (sur smartphone ou ordinateur).<br>
+        2. Saisissez l'adresse officielle de la plateforme : <code>http://localhost:8080</code> (ou l'URL officielle gouvernementale <code>pactdigital.bf</code>).<br>
+        3. Appuyez sur la touche <em>Entrée</em> ou <em>Accéder</em>.</p>
+    </div>
+    <div class="step-card">
+        <div class="step-header">Étape 2 : Vérifier les éléments d'identification officielle de l'État</div>
+        <p>Conformément à la Charte Graphique officielle du MTDPCE, vérifiez la présence des éléments souverains :</p>
+        <ul>
+            <li>En haut de page, le <strong>bandeau d'identification officielle</strong> (<code>.fs-officiel</code>) mentionnant <em>« Site officiel de l'administration burkinabè — MTDPCE »</em>.</li>
+            <li>Le <strong>filet tricolore national</strong> rouge et vert frappé de l'étoile d'or au centre.</li>
+            <li>Le <strong>bloc-marque officiel</strong> associant les Armoiries du Burkina Faso et la devise nationale : <em>« La Patrie ou la Mort, nous Vaincrons »</em>.</li>
+        </ul>
+    </div>
+
+    <h2>5.2. Explorer le catalogue des formations et filtrer les cours</h2>
+    <p>L'accès au catalogue s'effectue en cliquant sur le bouton <strong>« Explorer les sessions de formation »</strong> sur la bannière d'accueil, ou sur le lien <strong>« Catalogue »</strong> situé dans la barre de navigation supérieure (URL directe : <code>/local/pactdigital/catalogue.php</code>).</p>
+    
+    <div class="step-card">
+        <div class="step-header">Utiliser les filtres thématiques et de niveau</div>
+        <p>La barre de filtres propose une recherche multi-critères instantanée :</p>
+        <ul>
+            <li><strong>Champ de recherche :</strong> tapez un mot-clé (ex: <em>protection</em>, <em>bureautique</em>, <em>IA</em>, <em>tableur</em>). Le filtrage s'applique en temps réel.</li>
+            <li><strong>Pills des 4 Piliers Nationaux :</strong>
+                <ul>
+                    <li><span class="badge-verified">Fondamentales</span> (Vert `#00843b`) : 9 domaines de base (découverte, bureautique, communication, protection...).</li>
+                    <li><span class="badge-verified">Managériales</span> (Bleu `#2a6d9b`) : 3 domaines de gouvernance et de direction du service public.</li>
+                    <li><span class="badge-verified">Sectorielles</span> (Ocre `#b07800`) : commerce numérique et métiers sectoriels.</li>
+                    <li><span class="badge-verified">Émergentes</span> (Vert foncé `#045527`) : IA, blockchain, IoT, réalités virtuelles, quantique.</li>
+                </ul>
+            </li>
+            <li><strong>Pills de niveau d'expertise :</strong>
+                <ul>
+                    <li>🥉 <strong>Bronze (Débutant) :</strong> acquisition des savoirs et gestes fondamentaux.</li>
+                    <li>🥈 <strong>Argent (Intermédiaire) :</strong> autonomie dans la pratique et la résolution de problèmes courants.</li>
+                    <li>🥇 <strong>Or (Avancé) :</strong> maîtrise experte, conception et leadership numérique.</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <h2>5.3. Consulter les fiches de cours</h2>
+    <p>Chaque carte de formation affiche les informations essentielles :</p>
+    <ul>
+        <li>L'intitulé normalisé : <code>Domaine — Niveau</code> (ex: <em>Découvrir l'informatique — Bronze</em>).</li>
+        <li>Le badge de niveau coloré et le badge du pilier thématique.</li>
+        <li>Le résumé pédagogique (compétences visées).</li>
+        <li>Le volume d'activités estimé et la gratuité garantie (<em>100% Gratuit</em>).</li>
+        <li><strong>Bouton d'action pour le visiteur :</strong> <code>🎓 S'inscrire à cette formation</code>. Un clic vous oriente immédiatement vers le formulaire d'inscription en conservant votre formation pré-sélectionnée.</li>
+    </ul>
+
+    <h2>5.4. Créer son compte citoyen (Procédure sans e-mail obligatoire)</h2>
+    <p>L'inscription sur PACTDIGITAL-BF a été spécifiquement conçue pour lever la barrière de l'e-mail. L'accès au formulaire se fait via le bouton <strong>« S'inscrire »</strong> en haut à droite ou via l'URL <code>/local/pactdigital/signup.php</code>.</p>
+
+    <table>
+        <tr><th>Champ du formulaire</th><th>Statut</th><th>Description et consignes de saisie</th></tr>
+        <tr><td><strong>Prénom</strong></td><td><span class="badge-req">Obligatoire</span></td><td>Votre prénom d'état civil (ex: <em>Awa</em>, <em>Moussa</em>).</td></tr>
+        <tr><td><strong>Nom de famille</strong></td><td><span class="badge-req">Obligatoire</span></td><td>Votre nom de famille (ex: <em>Ouedraogo</em>, <em>Traoré</em>).</td></tr>
+        <tr><td><strong>Nom d'utilisateur</strong></td><td><span class="badge-req">Obligatoire</span></td><td>Votre identifiant unique de connexion (au moins 3 caractères, lettres ou chiffres sans espace, ex: <em>awa226</em>). Le système vérifie instantanément sa disponibilité.</td></tr>
+        <tr><td><strong>Téléphone (contact)</strong></td><td><span class="badge-req">Obligatoire</span></td><td>Numéro actif au Burkina Faso (ex: <em>70 12 34 56</em>). Requis pour le suivi et les notifications.</td></tr>
+        <tr><td><strong>Année de naissance</strong></td><td><span class="badge-req">Obligatoire</span></td><td>Ex: <em>1998</em>. Réservé aux personnes de 18 ans et plus (année &le; 2008).</td></tr>
+        <tr><td><strong>Sexe</strong></td><td><span class="badge-req">Obligatoire</span></td><td>Sélectionner <em>Femme</em> ou <em>Homme</em> (pour le suivi de la cible nationale de 30% minimum de femmes).</td></tr>
+        <tr><td><strong>Région</strong></td><td><span class="badge-opt">Facultatif</span></td><td>Sélectionnez parmi les 17 nouvelles régions administratives (ex: <em>Kadiogo</em>, <em>Guiriko</em>, <em>Bankui</em>...).</td></tr>
+        <tr><td><strong>Province</strong></td><td><span class="badge-opt">Facultatif</span></td><td>Sélectionnez votre province de résidence (47 provinces disponibles).</td></tr>
+        <tr><td><strong>Commune / Ville</strong></td><td><span class="badge-opt">Facultatif</span></td><td>Saisissez les premières lettres de votre commune pour choisir dans la liste proposée.</td></tr>
+        <tr><td><strong>Statut professionnel</strong></td><td><span class="badge-req">Obligatoire</span></td><td>Sélectionnez : <em>Élève / Étudiant</em>, <em>Agent public</em>, <em>Entrepreneur</em>, <em>Agriculteur / Éleveur</em>, <em>En recherche d'emploi</em> ou <em>Autre</em>.</td></tr>
+        <tr><td><strong>Niveau d'instruction</strong></td><td><span class="badge-opt">Facultatif</span></td><td>Sélectionnez : <em>Aucun</em>, <em>Primaire</em>, <em>Secondaire</em>, <em>Supérieur</em>, <em>Autre</em>.</td></tr>
+        <tr><td><strong>Structure d'appartenance</strong></td><td><span class="badge-opt">Facultatif</span></td><td>Nom de votre ministère, établissement, association ou entreprise.</td></tr>
+        <tr><td><strong>Adresse e-mail</strong></td><td><span class="badge-opt">Facultatif</span></td><td><strong>Laissez vide si vous n'avez pas d'e-mail.</strong> La plateforme vous créera automatiquement une adresse interne <code>username@pactdigital.bf</code>. Si vous renseignez un e-mail personnel, il servira à recevoir vos notifications et à réinitialiser votre mot de passe en cas d'oubli.</td></tr>
+        <tr><td><strong>Mot de passe</strong></td><td><span class="badge-req">Obligatoire</span></td><td>Au moins 6 caractères de votre choix. Mémorisez-le soigneusement.</td></tr>
+        <tr><td><strong>Confirmer le mot de passe</strong></td><td><span class="badge-req">Obligatoire</span></td><td>Répétez exactement le même mot de passe.</td></tr>
+        <tr><td><strong>Consentement CIL</strong></td><td><span class="badge-req">Obligatoire</span></td><td>Cochez la case d'acceptation du traitement des données personnelles conformément à la <em>Loi n°001-2021/AN</em>.</td></tr>
+    </table>
+
+    <div class="step-card">
+        <div class="step-header">Validation et accès immédiat</div>
+        <p>Après avoir complété le formulaire, cliquez sur le bouton vert :<br>
+        <strong>« 🚀 Créer mon compte citoyen et commencer »</strong>.<br>
+        Votre compte est activé <strong>instantanément sans délai d'attente</strong>. Vous êtes automatiquement connecté et redirigé vers le catalogue des formations pour débuter votre premier cours.</p>
+    </div>
+
+    <h2>5.5. Se connecter à son compte utilisateur</h2>
+    <div class="step-card">
+        <div class="step-header">Procédure de connexion standard</div>
+        <p>1. Cliquez sur le bouton <strong>« Se connecter »</strong> en haut à droite de l'écran (URL : <code>/login/index.php</code>).<br>
+        2. Dans le champ <em>Nom d'utilisateur</em>, saisissez votre identifiant (ex: <em>awa226</em>) ou votre adresse e-mail si vous en aviez renseigné une.<br>
+        3. Dans le champ <em>Mot de passe</em>, saisissez votre mot de passe.<br>
+        4. Cliquez sur le bouton bleu <strong>« Connexion »</strong>.<br>
+        5. Vous accédez directement à votre <strong>Espace Apprenant</strong> (ou à votre espace Formateur / Administrateur selon votre profil).</p>
+    </div>
+
+    <h2>5.6. Récupérer son accès en cas d'oubli de mot de passe</h2>
+    <div class="box-alert box-tip">
+        <strong>Cas 1 : Vous aviez renseigné une adresse e-mail personnelle lors de l'inscription</strong><br>
+        Sur la page de connexion, cliquez sur le lien <em>« Vous avez oublié votre nom d'utilisateur et/ou votre mot de passe ? »</em>. Saisissez votre e-mail. Un lien de réinitialisation sécurisé vous est immédiatement envoyé par messagerie.
+    </div>
+    <div class="box-alert box-warn">
+        <strong>Cas 2 : Vous vous êtes inscrit SANS adresse e-mail personnelle</strong><br>
+        Puisque votre compte utilise une adresse technique interne (<code>@pactdigital.bf</code>), vous ne pouvez pas recevoir d'e-mail de réinitialisation en libre-service.<br>
+        <strong>Solution :</strong> Vous devez contacter votre formateur communal relais ou joindre l'assistance téléphonique au <strong>34 34</strong> (appel gratuit). Un agent habilité vérifiera votre identité à l'aide de votre numéro de téléphone et réinitialisera votre mot de passe.
+    </div>
+
+    <h2>5.7. Contacter l'assistance citoyenne</h2>
+    <p>En cas de doute, d'erreur technique ou pour toute demande d'orientation, accédez à la page <strong>« Contact & Assistance »</strong> (lien en pied de page ou URL : <code>/local/pactdigital/contact.php</code>).</p>
+    <ul>
+        <li>Renseignez votre nom, votre numéro de téléphone et choisissez la catégorie de votre demande (<em>Compte et Inscription</em>, <em>Difficulté sur un module</em>, etc.).</li>
+        <li>Saisissez l'objet et décrivez votre situation.</li>
+        <li>Cliquez sur <strong>« 🚀 Transmettre ma demande au support »</strong>.</li>
+        <li>Notez précieusement le numéro de référence qui s'affiche (ex: <code>PACT-BF-2026-A1B2C3</code>) : il vous servira lors des échanges avec le support technique.</li>
+    </ul>
+
+    <h1>6. Exemples pratiques d'utilisation</h1>
+    <div class="step-card">
+        <div class="step-header">Exemple 1 : Inscription réussie sur smartphone par Awa à Koudougou</div>
+        <p><em>Situation :</em> Awa est commerçante à Koudougou. Elle utilise WhatsApp mais ne possède pas d'adresse e-mail. Elle souhaite apprendre à sécuriser ses transactions en ligne.<br>
+        <em>Démarche :</em> Awa se connecte sur <code>pactdigital.bf</code> depuis son smartphone. Elle clique sur « S'inscrire ». Elle renseigne son prénom (Awa), son nom (Ouedraogo), choisit l'identifiant <em>awa_kdg</em>, indique son numéro Orange, son année de naissance (1995), son statut (Entrepreneur) et sélectionne la région <em>Nando</em> (Centre-Ouest). Elle laisse le champ e-mail vide, définit son mot de passe et coche le consentement légal. En un clic, son compte est créé et elle peut débuter la formation <em>Se protéger — Bronze</em>.</p>
+    </div>
+
+    <h1>7. Résolution des difficultés courantes</h1>
+    <table>
+        <tr><th>Message ou difficulté constatée</th><th>Cause probable</th><th>Solution à appliquer</th></tr>
+        <tr><td><em>« Ce nom d'utilisateur est déjà pris »</em></td><td>Un autre apprenant utilise déjà cet identifiant.</td><td>Ajoutez des chiffres ou votre code régional (ex: <em>awa_226</em>, <em>awa_kdg</em>) jusqu'à ce que le message vert <em>« Nom d'utilisateur disponible »</em> apparaisse.</td></tr>
+        <tr><td><em>« Vous devez avoir au moins 18 ans »</em></td><td>L'année saisie indique un âge inférieur à 18 ans.</td><td>Vérifiez votre année de naissance. L'inscription est réservée aux personnes majeures.</td></tr>
+        <tr><td><em>« Les deux mots de passe ne correspondent pas »</em></td><td>Erreur de frappe dans l'un des deux champs.</td><td>Effacez les deux champs et ressaisissez soigneusement votre mot de passe dans les deux zones.</td></tr>
+        <tr><td><em>« Erreur : vous devez accepter le traitement de vos données »</em></td><td>La case de consentement légal CIL n'a pas été cochée.</td><td>Cochez impérativement la case relative à la Loi n°001-2021/AN située au bas du formulaire.</td></tr>
+    </table>
+
+    <h1>8. Foire Aux Questions (FAQ) du Visiteur</h1>
+    <p><strong>Q1 : La création de compte ou les formations sont-elles payantes ?</strong><br>
+    <em>Réponse :</em> Non. PACTDIGITAL-BF est une initiative publique de l'État burkinabè financée pour l'ensemble des citoyens. L'inscription, les cours, les examens et la délivrance des attestations officielles sont 100% gratuits.</p>
+
+    <p><strong>Q2 : Puis-je m'inscrire si je n'ai pas d'ordinateur ?</strong><br>
+    <em>Réponse :</em> Absolument. La plateforme est optimisée pour fonctionner sur n'importe quel smartphone connecté à Internet. Toutes les fonctionnalités de découverte, d'inscription et d'apprentissage sont accessibles sur mobile.</p>
+
+    <p><strong>Q3 : Qu'est-ce qu'une attestation officielle PACTDIGITAL-BF ?</strong><br>
+    <em>Réponse :</em> C'est un document certifié par le Ministère (MTDPCE) attestant de vos compétences numériques. Chaque attestation comporte un QR code sécurisé infalsifiable vérifiable publiquement par tout employeur.</p>
+
+    <h1>9. Coordonnées officielles de l'assistance</h1>
+    <ul>
+        <li><strong>Numéro Vert gratuit :</strong> <strong>34 34</strong> (appel gratuit depuis tous les opérateurs nationaux).</li>
+        <li><strong>Courriel du support citoyen :</strong> <code>support@pactdigital.bf</code></li>
+        <li><strong>Courriel institutionnel :</strong> <code>contact@transition-digitale.gov.bf</code></li>
+        <li><strong>Adresse physique :</strong> Ministère de la Transition Digitale, des Postes et des Communications Électroniques (MTDPCE) — Direction Générale de la Transition Digitale (DGTD), Avenue de l'Indépendance, Ouagadougou, Burkina Faso.</li>
+        <li><strong>Horaires d'assistance :</strong> Du lundi au vendredi de 07h30 à 16h00 (heure locale).</li>
+    </ul>
+
+    <h1>10. Glossaire des termes clés</h1>
+    <ul>
+        <li><strong>Pilier :</strong> Grande famille thématique regroupant plusieurs compétences numériques (Fondamentales, Managériales, Sectorielles, Émergentes).</li>
+        <li><strong>Niveau Bronze :</strong> Niveau d'initiation et d'acquisition des compétences de base.</li>
+        <li><strong>Niveau Argent :</strong> Niveau de pratique autonome et de traitement des opérations courantes.</li>
+        <li><strong>Niveau Or :</strong> Niveau d'expertise avancée et de maîtrise approfondie.</li>
+        <li><strong>CIL :</strong> Commission de l'Informatique et des Libertés du Burkina Faso, autorité de contrôle de la protection des données personnelles.</li>
+    </ul>
+
+    <h1>11. Historique des versions</h1>
+    <table>
+        <tr><th>Version</th><th>Date</th><th>Auteur</th><th>Nature des modifications</th></tr>
+        <tr><td>1.0</td><td>Octobre 2026</td><td>DGTD / MTDPCE</td><td>Version initiale officielle basée sur l'audit de l'implémentation réelle de PACTDIGITAL-BF.</td></tr>
+    </table>
+    
+    </div>
+</body>
+</html>

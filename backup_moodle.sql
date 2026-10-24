@@ -1470,7 +1470,7 @@ CREATE TABLE `m_attendance_log` (
   KEY `m_attelog_ses_ix` (`sessionid`),
   KEY `m_attelog_stu_ix` (`studentid`),
   KEY `m_attelog_sta_ix` (`statusid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='attendance_log table retrofitted from MySQL';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='attendance_log table retrofitted from MySQL';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1479,6 +1479,9 @@ CREATE TABLE `m_attendance_log` (
 
 LOCK TABLES `m_attendance_log` WRITE;
 /*!40000 ALTER TABLE `m_attendance_log` DISABLE KEYS */;
+INSERT INTO `m_attendance_log` VALUES
+(1,4,10,0,'',1792857174,12,'Present',''),
+(2,4,11,0,'',1792857174,12,'Present','');
 /*!40000 ALTER TABLE `m_attendance_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1548,7 +1551,7 @@ CREATE TABLE `m_attendance_sessions` (
   KEY `m_attesess_gro_ix` (`groupid`),
   KEY `m_attesess_ses_ix` (`sessdate`),
   KEY `m_attesess_cal_ix` (`caleventid`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='attendance_sessions table';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='attendance_sessions table';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1560,7 +1563,11 @@ LOCK TABLES `m_attendance_sessions` WRITE;
 INSERT INTO `m_attendance_sessions` VALUES
 (1,1,55,1791849600,0,NULL,0,1791899693,'',1,0,0,0,0,'',NULL,0,0,0,1,0,NULL,1,1,0,0,'',0),
 (2,52,1,1791849600,0,NULL,0,1791900222,'',1,0,0,0,0,'',NULL,0,0,0,1,0,NULL,2,1,0,0,'',0),
-(3,52,2,1791849600,0,NULL,0,1791900259,'',1,0,0,0,0,'',NULL,0,0,0,1,0,NULL,3,1,0,0,'',0);
+(3,52,2,1791849600,0,NULL,0,1791900259,'',1,0,0,0,0,'',NULL,0,0,0,1,0,NULL,3,1,0,0,'',0),
+(4,58,0,1792800000,0,1792857174,12,1792856957,'Session régulière de cours',1,1,0,0,0,'',NULL,0,0,0,1,0,NULL,4,1,0,0,'',0),
+(5,58,97,1792862732,10800,0,0,1792862732,'Séance d\'émargement — Session Ouagadougou',1,0,0,0,0,'',NULL,0,0,0,1,0,0,0,0,0,0,NULL,0),
+(6,58,98,1792862732,10800,0,0,1792862732,'Séance d\'émargement — Session Bobo-Dioulasso',1,0,0,0,0,'',NULL,0,0,0,1,0,0,0,0,0,0,NULL,0),
+(7,58,99,1792862732,10800,0,0,1792862732,'Séance d\'émargement — Session Koudougou',1,0,0,0,0,'',NULL,0,0,0,1,0,0,0,0,0,0,NULL,0);
 /*!40000 ALTER TABLE `m_attendance_sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2187,7 +2194,7 @@ CREATE TABLE `m_badge` (
   KEY `m_badg_cou_ix` (`courseid`),
   KEY `m_badg_use_ix` (`usermodified`),
   KEY `m_badg_use2_ix` (`usercreated`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Defines badge';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Defines badge';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2196,6 +2203,9 @@ CREATE TABLE `m_badge` (
 
 LOCK TABLES `m_badge` WRITE;
 /*!40000 ALTER TABLE `m_badge` DISABLE KEYS */;
+INSERT INTO `m_badge` VALUES
+(1,'Badge Bronze — Former avec le numérique','Atteste de la validation des compétences numériques fondamentales du niveau Bronze dans le domaine Former avec le numérique.',1792843058,1792845458,2,2,'MTDPCE — PACTDIGITAL-BF','https://pactdigital.gov.bf','contact@pactdigital.gov.bf',NULL,NULL,2,81,'Félicitations pour l\'obtention de votre badge numérique Bronze !','Nouveau badge obtenu : Badge Bronze',1,1,2,NULL,'1.0','fr','Badge Bronze MTDPCE'),
+(2,'Badge Bronze — Vendre','Atteste de la validation des compétences numériques du cours Vendre (Bronze).',1792848192,1792848192,2,2,'MTDPCE — PACTDIGITAL-BF','https://pactdigital.gov.bf','contact@pactdigital.gov.bf',NULL,NULL,2,78,'Félicitations pour l\'obtention de votre badge numérique PACTDIGITAL-BF !','Nouveau badge obtenu : Badge Bronze — Vendre',1,1,2,NULL,'1.0','fr','Badge PACTDIGITAL-BF');
 /*!40000 ALTER TABLE `m_badge` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2517,7 +2527,7 @@ CREATE TABLE `m_badge_issued` (
   UNIQUE KEY `m_badgissu_baduse_uix` (`badgeid`,`userid`),
   KEY `m_badgissu_bad_ix` (`badgeid`),
   KEY `m_badgissu_use_ix` (`userid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Defines issued badges';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Defines issued badges';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2526,6 +2536,8 @@ CREATE TABLE `m_badge_issued` (
 
 LOCK TABLES `m_badge_issued` WRITE;
 /*!40000 ALTER TABLE `m_badge_issued` DISABLE KEYS */;
+INSERT INTO `m_badge_issued` VALUES
+(1,1,11,'ad622c516573c8ff68cf2ad669a007c9dfeba34c',1792845458,NULL,1,1792845458);
 /*!40000 ALTER TABLE `m_badge_issued` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2820,7 +2832,7 @@ CREATE TABLE `m_block_instances` (
   KEY `m_blocinst_tim_ix` (`timemodified`),
   KEY `m_blocinst_blo_ix` (`blockname`),
   KEY `m_blocinst_par_ix` (`parentcontextid`)
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='This table stores block instances. The type of block this is';
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='This table stores block instances. The type of block this is';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2870,7 +2882,12 @@ INSERT INTO `m_block_instances` VALUES
 (38,'timeline',604,0,0,'my-index','12','content',2,'',1792161459,1792161459),
 (39,'calendar_month',604,0,0,'my-index','12','content',3,'',1792161459,1792161459),
 (40,'myoverview',604,0,0,'my-index','12','content',4,'',1792161459,1792161459),
-(41,'html',604,1,0,'my-index','12','content',2,'Tzo4OiJzdGRDbGFzcyI6Mzp7czo0OiJ0ZXh0IjtzOjU0ODoiPHA+PHN0cm9uZz5QQUNURElHSVRBTC1CRjwvc3Ryb25nPjwvcD4NCjxoMz5QbGF0ZWZvcm1lIGRlIGTDqXZlbG9wcGVtZW50IGRlcyBjb21ww6l0ZW5jZXMgbnVtw6lyaXF1ZXM8L2gzPg0KPHA+QmllbnZlbnVlIHN1ciB2b3RyZSBlc3BhY2UgZGUgZm9ybWF0aW9uLjwvcD4NCjxwPkTDqWNvdXZyZXogbm9zIHBhcmNvdXJzIGRlIGZvcm1hdGlvbiBldCBkw6l2ZWxvcHBleiB2b3MgY29tcMOpdGVuY2VzIGRhbnMgbGVzIGRvbWFpbmVzIHN1aXZhbnRzIDo8L3A+DQo8cD7wn5OaIDxzdHJvbmc+Q29tcMOpdGVuY2VzIG51bcOpcmlxdWVzIGZvbmRhbWVudGFsZXM8L3N0cm9uZz48YnI+8J+Pm++4jyA8c3Ryb25nPlNlcnZpY2UgcHVibGljPC9zdHJvbmc+PGJyPvCfkrwgPHN0cm9uZz5FbnRyZXByZW5hcmlhdCBudW3DqXJpcXVlPC9zdHJvbmc+PGJyPvCfmoAgPHN0cm9uZz5Eb21haW5lcyDDqW1lcmdlbnRzPC9zdHJvbmc+PC9wPg0KPHA+PHN0cm9uZz5BcHByZW5leiDigKIgRMOpdmVsb3BwZXogdm9zIGNvbXDDqXRlbmNlcyDigKIgSW5ub3Zlejwvc3Ryb25nPjwvcD4iO3M6NToidGl0bGUiO3M6Mjg6IkJpZW52ZW51ZSBzdXIgUEFDVERJR0lUQUwtQkYiO3M6NjoiZm9ybWF0IjtzOjE6IjEiO30=',1792161459,1792161459);
+(41,'html',604,1,0,'my-index','12','content',2,'Tzo4OiJzdGRDbGFzcyI6Mzp7czo0OiJ0ZXh0IjtzOjU0ODoiPHA+PHN0cm9uZz5QQUNURElHSVRBTC1CRjwvc3Ryb25nPjwvcD4NCjxoMz5QbGF0ZWZvcm1lIGRlIGTDqXZlbG9wcGVtZW50IGRlcyBjb21ww6l0ZW5jZXMgbnVtw6lyaXF1ZXM8L2gzPg0KPHA+QmllbnZlbnVlIHN1ciB2b3RyZSBlc3BhY2UgZGUgZm9ybWF0aW9uLjwvcD4NCjxwPkTDqWNvdXZyZXogbm9zIHBhcmNvdXJzIGRlIGZvcm1hdGlvbiBldCBkw6l2ZWxvcHBleiB2b3MgY29tcMOpdGVuY2VzIGRhbnMgbGVzIGRvbWFpbmVzIHN1aXZhbnRzIDo8L3A+DQo8cD7wn5OaIDxzdHJvbmc+Q29tcMOpdGVuY2VzIG51bcOpcmlxdWVzIGZvbmRhbWVudGFsZXM8L3N0cm9uZz48YnI+8J+Pm++4jyA8c3Ryb25nPlNlcnZpY2UgcHVibGljPC9zdHJvbmc+PGJyPvCfkrwgPHN0cm9uZz5FbnRyZXByZW5hcmlhdCBudW3DqXJpcXVlPC9zdHJvbmc+PGJyPvCfmoAgPHN0cm9uZz5Eb21haW5lcyDDqW1lcmdlbnRzPC9zdHJvbmc+PC9wPg0KPHA+PHN0cm9uZz5BcHByZW5leiDigKIgRMOpdmVsb3BwZXogdm9zIGNvbXDDqXRlbmNlcyDigKIgSW5ub3Zlejwvc3Ryb25nPjwvcD4iO3M6NToidGl0bGUiO3M6Mjg6IkJpZW52ZW51ZSBzdXIgUEFDVERJR0lUQUwtQkYiO3M6NjoiZm9ybWF0IjtzOjE6IjEiO30=',1792161459,1792161459),
+(42,'recentlyaccesseditems',615,0,0,'my-index','13','side-post',0,'',1792781193,1792781193),
+(43,'timeline',615,0,0,'my-index','13','content',2,'',1792781193,1792781193),
+(44,'calendar_month',615,0,0,'my-index','13','content',3,'',1792781193,1792781193),
+(45,'myoverview',615,0,0,'my-index','13','content',4,'',1792781193,1792781193),
+(46,'html',615,1,0,'my-index','13','content',2,'Tzo4OiJzdGRDbGFzcyI6Mzp7czo0OiJ0ZXh0IjtzOjU0ODoiPHA+PHN0cm9uZz5QQUNURElHSVRBTC1CRjwvc3Ryb25nPjwvcD4NCjxoMz5QbGF0ZWZvcm1lIGRlIGTDqXZlbG9wcGVtZW50IGRlcyBjb21ww6l0ZW5jZXMgbnVtw6lyaXF1ZXM8L2gzPg0KPHA+QmllbnZlbnVlIHN1ciB2b3RyZSBlc3BhY2UgZGUgZm9ybWF0aW9uLjwvcD4NCjxwPkTDqWNvdXZyZXogbm9zIHBhcmNvdXJzIGRlIGZvcm1hdGlvbiBldCBkw6l2ZWxvcHBleiB2b3MgY29tcMOpdGVuY2VzIGRhbnMgbGVzIGRvbWFpbmVzIHN1aXZhbnRzIDo8L3A+DQo8cD7wn5OaIDxzdHJvbmc+Q29tcMOpdGVuY2VzIG51bcOpcmlxdWVzIGZvbmRhbWVudGFsZXM8L3N0cm9uZz48YnI+8J+Pm++4jyA8c3Ryb25nPlNlcnZpY2UgcHVibGljPC9zdHJvbmc+PGJyPvCfkrwgPHN0cm9uZz5FbnRyZXByZW5hcmlhdCBudW3DqXJpcXVlPC9zdHJvbmc+PGJyPvCfmoAgPHN0cm9uZz5Eb21haW5lcyDDqW1lcmdlbnRzPC9zdHJvbmc+PC9wPg0KPHA+PHN0cm9uZz5BcHByZW5leiDigKIgRMOpdmVsb3BwZXogdm9zIGNvbXDDqXRlbmNlcyDigKIgSW5ub3Zlejwvc3Ryb25nPjwvcD4iO3M6NToidGl0bGUiO3M6Mjg6IkJpZW52ZW51ZSBzdXIgUEFDVERJR0lUQUwtQkYiO3M6NjoiZm9ybWF0IjtzOjE6IjEiO30=',1792781193,1792781193);
 /*!40000 ALTER TABLE `m_block_instances` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2894,7 +2911,7 @@ CREATE TABLE `m_block_positions` (
   UNIQUE KEY `m_blocposi_bloconpagsub_uix` (`blockinstanceid`,`contextid`,`pagetype`,`subpage`),
   KEY `m_blocposi_blo_ix` (`blockinstanceid`),
   KEY `m_blocposi_con_ix` (`contextid`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Stores the position of a sticky block_instance on a another ';
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Stores the position of a sticky block_instance on a another ';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2910,7 +2927,8 @@ INSERT INTO `m_block_positions` VALUES
 (4,26,191,'my-index','9',1,'content',1),
 (5,31,572,'my-index','10',1,'content',1),
 (6,36,603,'my-index','11',1,'content',1),
-(7,41,604,'my-index','12',1,'content',1);
+(7,41,604,'my-index','12',1,'content',1),
+(8,46,615,'my-index','13',1,'content',1);
 /*!40000 ALTER TABLE `m_block_positions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2961,7 +2979,7 @@ CREATE TABLE `m_block_recentlyaccesseditems` (
   KEY `m_blocrece_use_ix` (`userid`),
   KEY `m_blocrece_cou_ix` (`courseid`),
   KEY `m_blocrece_cmi_ix` (`cmid`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Most recently accessed items accessed by a user';
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Most recently accessed items accessed by a user';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2971,18 +2989,21 @@ CREATE TABLE `m_block_recentlyaccesseditems` (
 LOCK TABLES `m_block_recentlyaccesseditems` WRITE;
 /*!40000 ALTER TABLE `m_block_recentlyaccesseditems` DISABLE KEYS */;
 INSERT INTO `m_block_recentlyaccesseditems` VALUES
-(15,35,152,2,1791374042),
-(16,60,277,2,1791374465),
-(17,71,332,2,1791375878),
-(18,24,97,2,1791898846),
-(19,24,98,2,1791899626),
-(20,25,100,2,1791990060),
-(21,25,102,2,1791990069),
-(22,25,103,2,1791990127),
-(23,60,278,2,1791992464),
 (24,25,103,3,1792067281),
 (25,51,229,12,1792161632),
-(26,78,365,11,1792249309);
+(26,78,365,11,1792848822),
+(33,48,460,2,1792502222),
+(34,48,461,2,1792502234),
+(35,48,462,2,1792502266),
+(36,48,463,2,1792502314),
+(37,48,464,2,1792502370),
+(38,24,95,10,1792744361),
+(39,83,454,2,1792779259),
+(40,83,455,2,1792779361),
+(41,48,218,2,1792779396),
+(42,48,217,2,1792779607),
+(43,81,442,11,1792846486),
+(44,48,215,11,1792849400);
 /*!40000 ALTER TABLE `m_block_recentlyaccesseditems` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -3184,7 +3205,7 @@ CREATE TABLE `m_cache_flags` (
   PRIMARY KEY (`id`),
   KEY `m_cachflag_fla_ix` (`flagtype`),
   KEY `m_cachflag_nam_ix` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Cache of time-sensitive flags';
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Cache of time-sensitive flags';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3193,6 +3214,17 @@ CREATE TABLE `m_cache_flags` (
 
 LOCK TABLES `m_cache_flags` WRITE;
 /*!40000 ALTER TABLE `m_cache_flags` DISABLE KEYS */;
+INSERT INTO `m_cache_flags` VALUES
+(44,'userpreferenceschanged','2',1792863361,'1',1792892161),
+(45,'userpreferenceschanged','12',1792853530,'1',1792882330),
+(46,'userpreferenceschanged','10',1792744361,'1',1792773161),
+(47,'accesslib/dirtyusers','10',1792864176,'1',1792892976),
+(48,'userpreferenceschanged','11',1792863631,'1',1792892431),
+(49,'userpreferenceschanged','13',1792860004,'1',1792888804),
+(50,'accesslib/dirtyusers','11',1792864284,'1',1792893084),
+(51,'accesslib/dirtyusers','4',1792862732,'1',1792891532),
+(52,'accesslib/dirtyusers','7',1792862917,'1',1792891717),
+(53,'accesslib/dirtyusers','3',1792862917,'1',1792891717);
 /*!40000 ALTER TABLE `m_cache_flags` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -4868,7 +4900,7 @@ CREATE TABLE `m_config` (
   `value` longtext NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `m_conf_nam_uix` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=596 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Moodle configuration variables';
+) ENGINE=InnoDB AUTO_INCREMENT=597 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Moodle configuration variables';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -4901,9 +4933,9 @@ INSERT INTO `m_config` VALUES
 (22,'mnet_all_hosts_id','2'),
 (23,'siteguest','1'),
 (24,'siteadmins','2'),
-(25,'themerev','1792492525'),
-(26,'jsrev','1792492525'),
-(27,'templaterev','1792492525'),
+(25,'themerev','1792866051'),
+(26,'jsrev','1792866051'),
+(27,'templaterev','1792866051'),
 (28,'gdversion','2'),
 (29,'licenses','unknown,allrightsreserved,public,cc-4.0,cc-nc-4.0,cc-nd-4.0,cc-nc-nd-4.0,cc-nc-sa-4.0,cc-sa-4.0'),
 (30,'sitedefaultlicense','unknown'),
@@ -5042,7 +5074,7 @@ INSERT INTO `m_config` VALUES
 (165,'autolangusercreation','0'),
 (166,'langmenu','0'),
 (167,'langlist','fr'),
-(168,'langrev','1792492525'),
+(168,'langrev','1792866051'),
 (169,'langcache','1'),
 (170,'langstringcache','1'),
 (171,'locale','fr_FR.utf8'),
@@ -5326,10 +5358,10 @@ INSERT INTO `m_config` VALUES
 (450,'profilinglifetime','1440'),
 (451,'profilingimportprefix','(I)'),
 (452,'release','5.0.10 (Build: 20260914)'),
-(453,'localcachedirpurged','1792492525'),
-(454,'scheduledtaskreset','1792492525'),
+(453,'localcachedirpurged','1792866051'),
+(454,'scheduledtaskreset','1792866051'),
 (455,'paygw_plugins_sortorder','paypal'),
-(456,'allversionshash','73bbc5ac32da6acdcd08693109cd4f6e353e2a77'),
+(456,'allversionshash','1a78aba0a58d58dbef0555868f0b964566131e0b'),
 (457,'allcomponenthash','08d10aee770e937e410ff9d3587bd84a0dda6bca'),
 (458,'registrationpending','1'),
 (460,'branch','500'),
@@ -9654,7 +9686,7 @@ INSERT INTO `m_config_plugins` VALUES
 (2193,'customcert','protection_print','0'),
 (2194,'customcert','protection_modify','0'),
 (2195,'customcert','protection_copy','0'),
-(2196,'theme_pactdigital','version','2023100901'),
+(2196,'theme_pactdigital','version','2026102201'),
 (2197,'local_pactdigital','version','2026101501'),
 (2198,'mod_attendance','version','2025122104'),
 (2200,'auth_db','field_map_profile_field_niveau_instruction',''),
@@ -9718,7 +9750,7 @@ INSERT INTO `m_config_plugins` VALUES
 (2258,'attendance','emailuser','1'),
 (2259,'attendance','emailsubject','Avertissement de présence'),
 (2260,'attendance','emailcontent','Bonjour %userfirstname%,\nVotre assiduité à %coursename% %attendancename% a chuté en dessous de %warningpercent% et est actuellement de %percent% - nous espérons que vous êtes ok !\n\nPour tirer le meilleur parti de ce cours, vous devez améliorer votre assiduité. N’hésitez pas à nous contacter si vous avez besoin d’aide.'),
-(2261,'theme_pactdigital','themerev','1792482233'),
+(2261,'theme_pactdigital','themerev','1792747128'),
 (2262,'local_pactdigital','disabled','0'),
 (2263,'tool_brickfield','bfregstatus','0'),
 (2264,'tool_brickfield','bfregvalidationchecktime','1791990843'),
@@ -9792,7 +9824,7 @@ CREATE TABLE `m_context` (
   UNIQUE KEY `m_cont_conins_uix` (`contextlevel`,`instanceid`),
   KEY `m_cont_ins_ix` (`instanceid`),
   KEY `m_cont_pat_ix` (`path`)
-) ENGINE=InnoDB AUTO_INCREMENT=639 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='one of these must be set';
+) ENGINE=InnoDB AUTO_INCREMENT=644 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='one of these must be set';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -10377,7 +10409,12 @@ INSERT INTO `m_context` VALUES
 (635,70,468,'/1/35/119/120/635',5,0),
 (636,70,469,'/1/35/119/120/636',5,0),
 (637,70,470,'/1/35/119/120/637',5,0),
-(638,70,471,'/1/35/119/120/638',5,0);
+(638,70,471,'/1/35/119/120/638',5,0),
+(639,80,42,'/1/615/639',3,0),
+(640,80,43,'/1/615/640',3,0),
+(641,80,44,'/1/615/641',3,0),
+(642,80,45,'/1/615/642',3,0),
+(643,80,46,'/1/615/643',3,0);
 /*!40000 ALTER TABLE `m_context` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -10467,67 +10504,67 @@ CREATE TABLE `m_course` (
 LOCK TABLES `m_course` WRITE;
 /*!40000 ALTER TABLE `m_course` DISABLE KEYS */;
 INSERT INTO `m_course` VALUES
-(1,0,1,'PACTDIGITAL-BF','PACTDIGITAL-BF','','<p>Plateforme <strong>PACTDIGITAL-BF</strong> dédiée au développement des compétences numériques. Elle propose des parcours de formation adaptés aux différents niveaux et domaines de compétences numériques.</p>',0,'site',1,3,0,0,0,0,0,0,0,1,1,NULL,0,0,0,'fr','','',1790074979,1791212435,0,0,0,1792492525,NULL,1,NULL,NULL),
-(24,13,60003,'Bronze','Bronze_en_utilisation_des_services_public','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790929467,1791284055,0,1,0,1792492525,NULL,1,1,NULL),
-(25,13,60002,'Diamant','Diamant_en_utilisation_des_services_public','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790929531,1791283971,0,1,0,1792492525,NULL,1,1,NULL),
-(26,13,60001,'Or','Or_en_utilisation_des_services_public','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790929551,1791283881,0,1,0,1792492525,NULL,1,1,NULL),
-(27,14,70003,'Bronze','Bronze_en_résolution_de_problèmes','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790929755,1791282351,0,1,0,1792492525,NULL,1,1,NULL),
-(28,14,70002,'Diamant ','Diamant _en_résolution_de_problèmes','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,0,0,0,'fr','','',1790929958,1790930102,0,1,0,1792492525,NULL,1,1,NULL),
-(29,14,70001,'Or','Or_ en_résolution_de_problèmes','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790930159,1791284137,0,1,0,1792492525,NULL,1,1,NULL),
-(30,15,80003,'Bronze','Bronze_en_organisation','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790930458,1791284287,0,1,0,1792492525,NULL,1,1,NULL),
-(31,15,80002,'Diamant','Diamant_en_organisation','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,0,0,0,'fr','','',1790930512,1790930512,0,1,0,1792492525,NULL,1,1,NULL),
-(32,15,80001,'Or','Or_en_organisation','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790930596,1791284226,0,1,0,1792492525,NULL,1,1,NULL),
-(33,16,90003,'Bronze','Bronze_en_création','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790930862,1791284438,0,1,0,1792492525,NULL,1,1,NULL),
-(34,16,90002,'Diamant','Diamant_en_création','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,0,0,0,'fr','','',1790930907,1790930907,0,1,0,1792492525,NULL,1,1,NULL),
-(35,16,90001,'Or','Or_en_création','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790930931,1791284365,0,1,0,1792492525,NULL,1,1,NULL),
-(36,17,100003,'Bronze','Bronze_en_protection','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790931039,1791282272,0,1,0,1792492525,NULL,1,1,NULL),
-(37,17,100002,'Diamant','Diamant_en_protection','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790931247,1791284545,0,1,0,1792492525,NULL,1,1,NULL),
-(38,17,100001,'Or','Or_en_protection','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790931278,1791282660,0,1,0,1792492525,NULL,1,1,NULL),
-(39,18,110003,'Bronze','Bronze_en_traitement_de_document','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790931386,1791282169,0,1,0,1792492525,NULL,1,1,NULL),
-(40,18,110002,'Diamant','Diamant_en_traitement_de_document','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,0,0,0,'fr','','',1790931409,1790931409,0,1,0,1792492525,NULL,1,1,NULL),
-(41,18,110001,'Or','Or_en_traitement_de_document','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790931426,1791284632,0,1,0,1792492525,NULL,1,1,NULL),
-(42,19,120003,'Bronze','Bronze_en_communication','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790931608,1791282030,0,1,0,1792492525,NULL,1,1,NULL),
-(43,19,120002,'Diamant','Diamant_en_communication','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790931633,1791284775,0,1,0,1792492525,NULL,1,1,NULL),
-(44,19,120001,'Or','Or_en_communication','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790931651,1791284709,0,1,0,1792492525,NULL,1,1,NULL),
-(45,20,130003,'Bronze','Bronze_en_information','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790931738,1791281934,0,1,0,1792492525,NULL,1,1,NULL),
-(46,20,130002,'Diamant','Diamant_en_information','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,0,0,0,'fr','','',1790931762,1790931762,0,1,0,1792492525,NULL,1,1,NULL),
-(47,20,130001,'Or','Or_en_information','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790931779,1791284856,0,1,0,1792492525,NULL,1,1,NULL),
-(48,21,140003,'Bronze','Bronze_en_découverte_d_informatique','','<div class=\"pact-course-summary\" style=\"font-family:\'Plus Jakarta Sans\',Segoe UI,sans-serif;line-height:1.6;\">\n    <p><strong>Domaine 1 : Découvrir l\'informatique — Pack Bronze (Niveau Base · 6 heures)</strong></p>\n    <p>À la fin de ce module, vous utiliserez seul un <strong>smartphone Android</strong>, un <strong>ordinateur Windows 11</strong> et un <strong>ordinateur Ubuntu 24.04</strong> : vous saurez les reconnaître, les démarrer et vous y repérer, ouvrir une application, écrire un texte correct, vous connecter à internet et entretenir votre matériel, jusqu\'à concevoir une fiche mémo utile à un usager.</p>\n    <ul>\n        <li><strong>Public cible :</strong> Agents publics, étudiants et entrepreneurs débutants ou peu à l\'aise avec l\'ordinateur, y compris ceux qui utilisent déjà un smartphone.</li>\n        <li><strong>Prérequis :</strong> Aucun. Savoir lire des mots simples est souhaitable ; une variante avec pictogrammes est prévue.</li>\n        <li><strong>Référence officielle :</strong> Référentiel MTDPCE / DGTD — Domaine 1, Niveau Bronze, 7 compétences (codes <code>D1-B-01</code> à <code>D1-B-07</code>).</li>\n    </ul>\n</div>',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790931904,1792492523,0,1,0,1792492555,NULL,1,1,NULL),
-(49,21,140002,'Diamant','Diamant_en_decouverte_d_informatique','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790931968,1791284997,0,1,0,1792492525,NULL,1,1,NULL),
-(50,21,140001,'Or','Or_en_decouverte_d_informatique','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790931987,1791284933,0,1,0,1792492525,NULL,1,1,NULL),
-(51,22,20003,'Bronze','Bronze_en_gouvernance_de_service_public','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790932251,1791283106,0,1,0,1792492525,NULL,1,1,NULL),
-(52,22,20002,'Diamant','Diamant_en_gouvernance_de_service_public','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790932317,1791282741,0,1,0,1792492525,NULL,1,1,NULL),
-(53,22,20001,'Or','Or_en_gouvernance_de_service_public','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790932335,1791282919,0,1,0,1792492525,NULL,1,1,NULL),
-(54,23,30003,'Bronze','Bronze_en_management_du_service_public','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790932581,1791283392,0,1,0,1792492525,NULL,1,1,NULL),
-(55,23,30002,'Diamant','Diamant_en_management_du_service_public','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790932634,1791283287,0,1,0,1792492525,NULL,1,1,NULL),
-(56,23,30001,'Or','Or_en_management_du_service_public','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790932653,1791283196,0,1,0,1792492525,NULL,1,1,NULL),
-(57,24,40003,'Bronze','Bronze_pour_assurer_le_service_public','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790932765,1791283784,0,1,0,1792492525,NULL,1,1,NULL),
-(58,24,40002,'Diamant','Diamant_pour_assurer_le_service_public','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790932798,1791283565,0,1,0,1792492525,NULL,1,1,NULL),
-(59,24,40001,'Or','Or_pour_assurer_le_service_public','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790932815,1791283491,0,1,0,1792492525,NULL,1,1,NULL),
-(60,25,190003,'Bronze','Bronze_en_biotechnologie','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790932990,1791281618,0,1,0,1792492525,NULL,1,1,NULL),
-(61,25,190002,'Diamant','Diamant_en_biotechnologie','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790933029,1791282498,0,1,0,1792492525,NULL,1,1,NULL),
-(62,25,190001,'Or','Or_en_biotechnologie','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790933051,1791287387,0,1,0,1792492525,NULL,1,1,NULL),
-(63,26,200003,'Bronze','Bronze_en_technologie_quantique','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790933129,1791281374,0,1,0,1792492525,NULL,1,1,NULL),
-(64,26,200002,'Diamant','Diamant_en_technologie_quantique','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,0,0,0,'fr','','',1790933149,1790933149,0,1,0,1792492525,NULL,1,1,NULL),
-(65,26,200001,'Or','Or_en_technologie_quantique','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790933167,1791287479,0,1,0,1792492525,NULL,1,1,NULL),
-(66,27,210003,'Bronze','Bronze_en_IoT','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790933258,1791281252,0,1,0,1792492525,NULL,1,1,NULL),
-(67,27,210002,'Diamant','Diamant_en_IoT','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,0,0,0,'fr','','',1790933311,1790933311,0,1,0,1792492525,NULL,1,1,NULL),
-(68,27,210001,'Or','Or_en_IoT','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790933329,1791287560,0,1,0,1792492525,NULL,1,1,NULL),
-(69,28,220003,'Bronze','Bronze_en_réalité_virtuelle','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790933450,1791281145,0,1,0,1792492525,NULL,1,1,NULL),
-(70,28,220002,'Diamant','Diamant_en_réalité_virtuelle','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790933471,1791282581,0,1,0,1792492525,NULL,1,1,NULL),
-(71,28,220001,'Or','Or_en_réalité_virtuelle','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790933487,1791287641,0,1,0,1792492525,NULL,1,1,NULL),
-(72,29,230003,'Bronze','Bronze_en_blockchain','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790933600,1791280954,0,1,0,1792492525,NULL,1,1,NULL),
-(73,29,230002,'Diamant','Diamant_en_blockchain','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,0,0,0,'fr','','',1790933622,1790933622,0,1,0,1792492525,NULL,1,1,NULL),
-(74,29,230001,'Or','Or_en_blockchain','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790933640,1791287817,0,1,0,1792492525,NULL,1,1,NULL),
-(75,30,240003,'Bronze','Bronze_en_IA','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790933716,1791279527,0,1,0,1792492525,NULL,1,1,NULL),
-(76,30,240002,'Diamant','Diamant_en_IA','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,0,0,0,'fr','','',1790933738,1790933738,0,1,0,1792492525,NULL,1,1,NULL),
-(77,30,240001,'Or','Or_en_IA','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790933755,1791287906,0,1,0,1792492525,NULL,1,1,NULL),
-(78,31,160003,'Bronze','Bronze_en_vente','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790933869,1791281755,0,1,0,1792492525,NULL,1,1,NULL),
-(79,31,160002,'Diamant','Diamant_en_vente','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790933907,1791285133,0,1,0,1792492525,NULL,1,1,NULL),
-(80,31,160001,'Or','Or_en_vente','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790933921,1791285076,0,1,0,1792492525,NULL,1,1,NULL),
-(81,32,170003,'Former avec le numérique — Bronze','Bronze_en_formation_numerique','','<p>Initiation aux outils numériques d\'animation pédagogique : vidéoprojection, smartphone, communication de groupe et activités interactives de base.</p>',1,'topics',1,1,1792152360,0,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1792150764,1792152410,0,1,0,1792492525,NULL,1,1,NULL),
-(82,32,170002,'Former avec le numérique — Argent','Argent_en_formation_numerique','','<p>Conception de supports numériques d\'apprentissage : fiches mémo visuelles, activités interactives H5P et évaluation formative en ligne.</p>',1,'topics',1,1,1792152300,0,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1792150764,1792152361,0,1,0,1792492525,NULL,1,1,NULL),
-(83,32,170001,'Former avec le numérique — Or','Or_en_formation_numerique','','<p>Scénarisation de formations hybrides, animation de classes virtuelles et accompagnement/tutorat à distance des apprenants.</p>',1,'topics',1,1,1792152180,0,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1792150764,1792152262,0,1,0,1792492525,NULL,1,1,NULL);
+(1,0,1,'PACTDIGITAL-BF','PACTDIGITAL-BF','','<p>Plateforme <strong>PACTDIGITAL-BF</strong> dédiée au développement des compétences numériques. Elle propose des parcours de formation adaptés aux différents niveaux et domaines de compétences numériques.</p>',0,'site',1,3,0,0,0,0,0,0,0,1,1,NULL,0,0,0,'fr','','',1790074979,1791212435,0,0,0,1792866051,NULL,1,NULL,NULL),
+(24,13,60003,'Bronze','Bronze_en_utilisation_des_services_public','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790929467,1791284055,0,1,0,1792866051,NULL,1,1,NULL),
+(25,13,60002,'Argent','Argent_en_utilisation_des_services_public','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790929531,1791283971,0,1,0,1792866051,NULL,1,1,NULL),
+(26,13,60001,'Or','Or_en_utilisation_des_services_public','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790929551,1791283881,0,1,0,1792866051,NULL,1,1,NULL),
+(27,14,70003,'Bronze','Bronze_en_résolution_de_problèmes','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790929755,1791282351,0,1,0,1792866051,NULL,1,1,NULL),
+(28,14,70002,'Argent','Argent _en_résolution_de_problèmes','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,0,0,0,'fr','','',1790929958,1790930102,0,1,0,1792866051,NULL,1,1,NULL),
+(29,14,70001,'Or','Or_ en_résolution_de_problèmes','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790930159,1791284137,0,1,0,1792866051,NULL,1,1,NULL),
+(30,15,80003,'Bronze','Bronze_en_organisation','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790930458,1791284287,0,1,0,1792866051,NULL,1,1,NULL),
+(31,15,80002,'Argent','Argent_en_organisation','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,0,0,0,'fr','','',1790930512,1790930512,0,1,0,1792866051,NULL,1,1,NULL),
+(32,15,80001,'Or','Or_en_organisation','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790930596,1791284226,0,1,0,1792866051,NULL,1,1,NULL),
+(33,16,90003,'Bronze','Bronze_en_création','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790930862,1791284438,0,1,0,1792866051,NULL,1,1,NULL),
+(34,16,90002,'Argent','Argent_en_création','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,0,0,0,'fr','','',1790930907,1790930907,0,1,0,1792866051,NULL,1,1,NULL),
+(35,16,90001,'Or','Or_en_création','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790930931,1791284365,0,1,0,1792866051,NULL,1,1,NULL),
+(36,17,100003,'Bronze','Bronze_en_protection','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790931039,1791282272,0,1,0,1792866051,NULL,1,1,NULL),
+(37,17,100002,'Argent','Argent_en_protection','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790931247,1791284545,0,1,0,1792866051,NULL,1,1,NULL),
+(38,17,100001,'Or','Or_en_protection','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790931278,1791282660,0,1,0,1792866051,NULL,1,1,NULL),
+(39,18,110003,'Bronze','Bronze_en_traitement_de_document','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790931386,1791282169,0,1,0,1792866051,NULL,1,1,NULL),
+(40,18,110002,'Argent','Argent_en_traitement_de_document','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,0,0,0,'fr','','',1790931409,1790931409,0,1,0,1792866051,NULL,1,1,NULL),
+(41,18,110001,'Or','Or_en_traitement_de_document','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790931426,1791284632,0,1,0,1792866051,NULL,1,1,NULL),
+(42,19,120003,'Bronze','Bronze_en_communication','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790931608,1791282030,0,1,0,1792866051,NULL,1,1,NULL),
+(43,19,120002,'Argent','Argent_en_communication','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790931633,1791284775,0,1,0,1792866051,NULL,1,1,NULL),
+(44,19,120001,'Or','Or_en_communication','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790931651,1791284709,0,1,0,1792866051,NULL,1,1,NULL),
+(45,20,130003,'Bronze','Bronze_en_information','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790931738,1791281934,0,1,0,1792866051,NULL,1,1,NULL),
+(46,20,130002,'Argent','Argent_en_information','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,0,0,0,'fr','','',1790931762,1790931762,0,1,0,1792866051,NULL,1,1,NULL),
+(47,20,130001,'Or','Or_en_information','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790931779,1791284856,0,1,0,1792866051,NULL,1,1,NULL),
+(48,21,140003,'Bronze','Bronze_en_découverte_d_informatique','','<div class=\"pact-course-summary\" style=\"font-family:\'Plus Jakarta Sans\',Segoe UI,sans-serif;line-height:1.6;\">\n    <p><strong>Domaine 1 : Découvrir l\'informatique — Pack Bronze (Niveau Base · 6 heures)</strong></p>\n    <p>À la fin de ce module, vous utiliserez seul un <strong>smartphone Android</strong>, un <strong>ordinateur Windows 11</strong> et un <strong>ordinateur Ubuntu 24.04</strong> : vous saurez les reconnaître, les démarrer et vous y repérer, ouvrir une application, écrire un texte correct, vous connecter à internet et entretenir votre matériel, jusqu\'à concevoir une fiche mémo utile à un usager.</p>\n    <ul>\n        <li><strong>Public cible :</strong> Agents publics, étudiants et entrepreneurs débutants ou peu à l\'aise avec l\'ordinateur, y compris ceux qui utilisent déjà un smartphone.</li>\n        <li><strong>Prérequis :</strong> Aucun. Savoir lire des mots simples est souhaitable ; une variante avec pictogrammes est prévue.</li>\n        <li><strong>Référence officielle :</strong> Référentiel MTDPCE / DGTD — Domaine 1, Niveau Bronze, 7 compétences (codes <code>D1-B-01</code> à <code>D1-B-07</code>).</li>\n    </ul>\n</div>',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790931904,1792492523,0,1,0,1792866051,NULL,1,1,NULL),
+(49,21,140002,'Argent','Argent_en_decouverte_d_informatique','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790931968,1791284997,0,1,0,1792866051,NULL,1,1,NULL),
+(50,21,140001,'Or','Or_en_decouverte_d_informatique','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790931987,1791284933,0,1,0,1792866051,NULL,1,1,NULL),
+(51,22,20003,'Bronze','Bronze_en_gouvernance_de_service_public','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790932251,1791283106,0,1,0,1792866051,NULL,1,1,NULL),
+(52,22,20002,'Argent','Argent_en_gouvernance_de_service_public','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790932317,1791282741,0,1,0,1792866051,NULL,1,1,NULL),
+(53,22,20001,'Or','Or_en_gouvernance_de_service_public','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790932335,1791282919,0,1,0,1792866051,NULL,1,1,NULL),
+(54,23,30003,'Bronze','Bronze_en_management_du_service_public','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790932581,1791283392,0,1,0,1792866051,NULL,1,1,NULL),
+(55,23,30002,'Argent','Argent_en_management_du_service_public','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790932634,1791283287,0,1,0,1792866051,NULL,1,1,NULL),
+(56,23,30001,'Or','Or_en_management_du_service_public','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790932653,1791283196,0,1,0,1792866051,NULL,1,1,NULL),
+(57,24,40003,'Bronze','Bronze_pour_assurer_le_service_public','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790932765,1791283784,0,1,0,1792866051,NULL,1,1,NULL),
+(58,24,40002,'Argent','Argent_pour_assurer_le_service_public','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790932798,1791283565,0,1,0,1792866051,NULL,1,1,NULL),
+(59,24,40001,'Or','Or_pour_assurer_le_service_public','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790932815,1791283491,0,1,0,1792866051,NULL,1,1,NULL),
+(60,25,190003,'Bronze','Bronze_en_biotechnologie','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790932990,1791281618,0,1,0,1792866051,NULL,1,1,NULL),
+(61,25,190002,'Argent','Argent_en_biotechnologie','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790933029,1791282498,0,1,0,1792866051,NULL,1,1,NULL),
+(62,25,190001,'Or','Or_en_biotechnologie','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790933051,1791287387,0,1,0,1792866051,NULL,1,1,NULL),
+(63,26,200003,'Bronze','Bronze_en_technologie_quantique','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790933129,1791281374,0,1,0,1792866051,NULL,1,1,NULL),
+(64,26,200002,'Argent','Argent_en_technologie_quantique','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,0,0,0,'fr','','',1790933149,1790933149,0,1,0,1792866051,NULL,1,1,NULL),
+(65,26,200001,'Or','Or_en_technologie_quantique','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790933167,1791287479,0,1,0,1792866051,NULL,1,1,NULL),
+(66,27,210003,'Bronze','Bronze_en_IoT','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790933258,1791281252,0,1,0,1792866051,NULL,1,1,NULL),
+(67,27,210002,'Argent','Argent_en_IoT','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,0,0,0,'fr','','',1790933311,1790933311,0,1,0,1792866051,NULL,1,1,NULL),
+(68,27,210001,'Or','Or_en_IoT','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790933329,1791287560,0,1,0,1792866051,NULL,1,1,NULL),
+(69,28,220003,'Bronze','Bronze_en_réalité_virtuelle','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790933450,1791281145,0,1,0,1792866051,NULL,1,1,NULL),
+(70,28,220002,'Argent','Argent_en_réalité_virtuelle','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790933471,1791282581,0,1,0,1792866051,NULL,1,1,NULL),
+(71,28,220001,'Or','Or_en_réalité_virtuelle','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790933487,1791287641,0,1,0,1792866051,NULL,1,1,NULL),
+(72,29,230003,'Bronze','Bronze_en_blockchain','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790933600,1791280954,0,1,0,1792866051,NULL,1,1,NULL),
+(73,29,230002,'Argent','Argent_en_blockchain','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,0,0,0,'fr','','',1790933622,1790933622,0,1,0,1792866051,NULL,1,1,NULL),
+(74,29,230001,'Or','Or_en_blockchain','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790933640,1791287817,0,1,0,1792866051,NULL,1,1,NULL),
+(75,30,240003,'Bronze','Bronze_en_IA','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790933716,1791279527,0,1,0,1792866051,NULL,1,1,NULL),
+(76,30,240002,'Argent','Argent_en_IA','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,0,0,0,'fr','','',1790933738,1790933738,0,1,0,1792866051,NULL,1,1,NULL),
+(77,30,240001,'Or','Or_en_IA','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790933755,1791287906,0,1,0,1792866051,NULL,1,1,NULL),
+(78,31,160003,'Bronze','Bronze_en_vente','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790933869,1791281755,0,1,0,1792866051,NULL,1,1,NULL),
+(79,31,160002,'Argent','Argent_en_vente','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790933907,1791285133,0,1,0,1792866051,NULL,1,1,NULL),
+(80,31,160001,'Or','Or_en_vente','','',1,'topics',1,5,1790985600,1822521600,0,0,0,0,0,1,1,NULL,1,1,0,'fr','','',1790933921,1791285076,0,1,0,1792866051,NULL,1,1,NULL),
+(81,32,170003,'Bronze','Bronze_en_formation_numerique','','<p>Initiation aux outils numériques d\'animation pédagogique : vidéoprojection, smartphone, communication de groupe et activités interactives de base.</p>',1,'topics',1,1,1792152360,0,0,0,0,0,0,1,1,NULL,1,0,0,'fr','','',1792150764,1792152410,0,1,0,1792866051,NULL,1,1,NULL),
+(82,32,170002,'Argent','Argent_en_formation_numerique','','<p>Conception de supports numériques d\'apprentissage : fiches mémo visuelles, activités interactives H5P et évaluation formative en ligne.</p>',1,'topics',1,1,1792152300,0,0,0,0,0,0,1,1,NULL,0,0,0,'fr','','',1792150764,1792152361,0,1,0,1792866051,NULL,1,1,NULL),
+(83,32,170001,'Or','Or_en_formation_numerique','','<p>Scénarisation de formations hybrides, animation de classes virtuelles et accompagnement/tutorat à distance des apprenants.</p>',1,'topics',1,1,1792152180,0,0,0,0,0,0,1,1,NULL,0,0,0,'fr','','',1792150764,1792152262,0,1,0,1792866051,NULL,1,1,NULL);
 /*!40000 ALTER TABLE `m_course` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -10762,8 +10799,7 @@ INSERT INTO `m_course_completions` VALUES
 (4,3,48,1792068503,0,NULL,0),
 (5,11,51,1792160517,0,NULL,0),
 (6,3,75,1791193506,0,NULL,0),
-(7,11,78,1792160517,0,NULL,0),
-(8,11,81,1792160516,0,NULL,0);
+(8,11,81,1792160516,0,1792843746,0);
 /*!40000 ALTER TABLE `m_course_completions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -11485,7 +11521,7 @@ CREATE TABLE `m_course_modules_completion` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `m_courmoducomp_usecou_uix` (`userid`,`coursemoduleid`),
   KEY `m_courmoducomp_cou_ix` (`coursemoduleid`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Stores the completion state (completed or not completed, etc';
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Stores the completion state (completed or not completed, etc';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -11496,7 +11532,16 @@ LOCK TABLES `m_course_modules_completion` WRITE;
 /*!40000 ALTER TABLE `m_course_modules_completion` DISABLE KEYS */;
 INSERT INTO `m_course_modules_completion` VALUES
 (1,83,2,0,NULL,0),
-(2,84,2,1,NULL,1790960729);
+(2,84,2,1,NULL,1790960729),
+(3,457,2,1,NULL,1792499279),
+(4,458,2,1,NULL,1792499317),
+(5,459,2,1,NULL,1792499329),
+(6,460,2,1,NULL,1792502222),
+(7,461,2,1,NULL,1792502234),
+(8,462,2,1,NULL,1792502266),
+(9,463,2,1,NULL,1792502305),
+(10,464,2,1,NULL,1792502370),
+(11,215,11,3,NULL,1792849183);
 /*!40000 ALTER TABLE `m_course_modules_completion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -11515,7 +11560,7 @@ CREATE TABLE `m_course_modules_viewed` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `m_courmoduview_usecou_uix` (`userid`,`coursemoduleid`),
   KEY `m_courmoduview_cou_ix` (`coursemoduleid`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Tracks the completion viewed (viewed with cmid/userid and ot';
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Tracks the completion viewed (viewed with cmid/userid and ot';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -11526,7 +11571,15 @@ LOCK TABLES `m_course_modules_viewed` WRITE;
 /*!40000 ALTER TABLE `m_course_modules_viewed` DISABLE KEYS */;
 INSERT INTO `m_course_modules_viewed` VALUES
 (1,83,2,1790943763),
-(2,84,2,1790960729);
+(2,84,2,1790960729),
+(3,457,2,1792499279),
+(4,458,2,1792499317),
+(5,459,2,1792499329),
+(6,460,2,1792502222),
+(7,461,2,1792502234),
+(8,462,2,1792502266),
+(9,463,2,1792502305),
+(10,464,2,1792502370);
 /*!40000 ALTER TABLE `m_course_modules_viewed` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -12144,9 +12197,9 @@ INSERT INTO `m_customcert` VALUES
 (58,78,59,'Attestation de réussite','<p>Téléchargez votre attestation certifiée (avec QR Code).</p>',1,0,1,NULL,0,0,NULL,'',NULL,1791289643,1791289643),
 (59,79,60,'Attestation de réussite','<p>Téléchargez votre attestation certifiée (avec QR Code).</p>',1,0,1,NULL,0,0,NULL,'',NULL,1791289643,1791289643),
 (60,80,61,'Attestation de réussite','<p>Téléchargez votre attestation certifiée (avec QR Code).</p>',1,0,1,NULL,0,0,NULL,'',NULL,1791289643,1791289643),
-(61,81,59,'Attestation de réussite','<p>Téléchargez votre attestation certifiée (avec QR Code).</p>',1,0,1,NULL,0,0,NULL,'',NULL,1792154050,1792154050),
-(62,82,59,'Attestation de réussite','<p>Téléchargez votre attestation certifiée (avec QR Code).</p>',1,0,1,NULL,0,0,NULL,'',NULL,1792154050,1792154050),
-(63,83,59,'Attestation de réussite','<p>Téléchargez votre attestation certifiée (avec QR Code).</p>',1,0,1,NULL,0,0,NULL,'',NULL,1792154050,1792154050);
+(61,81,62,'Attestation de réussite','<p>Téléchargez votre attestation certifiée (avec QR Code).</p>',1,0,1,NULL,0,0,NULL,'',NULL,1792154050,1792154050),
+(62,82,63,'Attestation de réussite','<p>Téléchargez votre attestation certifiée (avec QR Code).</p>',1,0,1,NULL,0,0,NULL,'',NULL,1792154050,1792154050),
+(63,83,64,'Attestation de réussite','<p>Téléchargez votre attestation certifiée (avec QR Code).</p>',1,0,1,NULL,0,0,NULL,'',NULL,1792154050,1792154050);
 /*!40000 ALTER TABLE `m_customcert` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -12176,7 +12229,7 @@ CREATE TABLE `m_customcert_elements` (
   `timemodified` bigint(10) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   KEY `m_custelem_pag_ix` (`pageid`)
-) ENGINE=InnoDB AUTO_INCREMENT=18912 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Stores the elements for a given page';
+) ENGINE=InnoDB AUTO_INCREMENT=18990 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Stores the elements for a given page';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -13717,7 +13770,85 @@ INSERT INTO `m_customcert_elements` VALUES
 (18908,61,'niveau','text','Niveau :','helvetica',12,'#000000',135,145,200,1,'C',23,1791375786,1791375786),
 (18909,61,'en foi de quoi','text','En foi de quoi, la présente Attestation de participation lui est délivrée pour servir et valoir ce que de droit.','helvetica',11,'#757575',148,153,200,1,'C',24,1791375786,1791375786),
 (18910,61,'fait a Ouaga','text','Fait à Ouagadougou, le','helvetica',11,'#000000',130,160,200,1,'C',25,1791375786,1791375786),
-(18911,61,'De','text','D E','helveticab',16,'#D32F2F',128,62,200,1,'C',26,1791375786,1791375786);
+(18911,61,'De','text','D E','helveticab',16,'#D32F2F',128,62,200,1,'C',26,1791375786,1791375786),
+(18912,62,'Bordure Tricolore PACTDIGITAL','bgimage','{\"fileid\":920,\"contextid\":1,\"component\":\"mod_customcert\",\"filearea\":\"image\",\"itemid\":0,\"filepath\":\"\\/\",\"filename\":\"border_pactdigital.png\",\"width\":297,\"height\":210}','',0,'',0,0,297,0,'L',1,1792845399,1792845399),
+(18913,62,'Watermark','image','{\"fileid\":923,\"contextid\":1,\"component\":\"mod_customcert\",\"filearea\":\"image\",\"itemid\":0,\"filepath\":\"\\/\",\"filename\":\"watermark_armoiries.jpg\",\"width\":150,\"height\":0}','',0,'',73,24,150,1,'C',2,1792845399,1792845399),
+(18914,62,'MTDPCE','text','Ministère de la Transition Digitale, de Postes et des Communication Electroniques du Burkina Faso(MTDPCE-BF)','helveticab',14,'#145B37',148,25,200,1,'C',3,1792845399,1792845399),
+(18915,62,'ATTESTATION','text','ATTESTATION','helveticab',42,'#145B37',148,45,250,1,'C',4,1792845399,1792845399),
+(18916,62,'REUSSITE','text','R É U S S I T E','helveticab',16,'#D32F2F',155,62,200,1,'C',5,1792845399,1792845399),
+(18917,62,'Intro','text','MTDPCE-BF','timesbi',15,'#757575',130,82,200,1,'C',6,1792845399,1792845399),
+(18918,62,'Nom','studentname','','timesbi',38,'#000000',148,93,200,1,'C',7,1792845399,1792845399),
+(18919,62,'Ligne Nom','text','____________________________________________________','helvetica',10,'#000000',148,107,200,1,'C',8,1792845399,1792845399),
+(18920,62,'A suivi','text','a suivi avec succès et validé la formation','timesi',14,'#757575',148,118,200,1,'C',9,1792845399,1792845399),
+(18921,62,'Cours','coursename','2','helveticab',14,'#b57a3e',151,145,200,1,'C',10,1792845399,1792845399),
+(18922,62,'Catégorie','categoryname','','helveticab',24,'#145B37',148,130,250,1,'C',11,1792845399,1792845399),
+(18923,62,'Date','date','{\"dateitem\":\"-1\",\"dateformat\":\"strftimedate\"}','helvetica',11,'#000000',165,160,200,1,'C',12,1792845399,1792845399),
+(18924,62,'Ligne Sig Gauche','text','_________________________','helvetica',10,'#757575',50,172,80,1,'C',13,1792845399,1792845399),
+(18925,62,'Resp Form','text','Le Responsable de la formation','helveticab',9,'#000000',50,178,80,1,'C',14,1792845399,1792845399),
+(18926,62,'Nom Sig Gauche','text','Nom et signature','helvetica',7,'#757575',50,183,80,1,'C',15,1792845399,1792845399),
+(18927,62,'Ligne Sig Droite','text','_________________________','helvetica',10,'#757575',247,172,80,1,'C',16,1792845399,1792845399),
+(18928,62,'Coord Prog','text','Le Coordonnateur du programme','helveticab',9,'#000000',247,178,80,1,'C',17,1792845399,1792845399),
+(18929,62,'Nom Sig Droite','text','Nom et signature','helvetica',7,'#757575',247,183,80,1,'C',18,1792845399,1792845399),
+(18930,62,'QR Code','qrcode','{\"width\":22,\"height\":22}',NULL,NULL,NULL,136,170,22,NULL,'L',19,1792845399,1792845399),
+(18931,62,'Logo Ministère','image','{\"width\":30,\"height\":0,\"alphachannel\":1,\"contextid\":\"1\",\"filearea\":\"image\",\"itemid\":\"0\",\"filepath\":\"\\/\",\"filename\":\"Capture d\\u2019e\\u0301cran 2026-10-06 a\\u0300 16.09.14.png\"}',NULL,NULL,NULL,20,15,30,NULL,'L',20,1792845399,1792845399),
+(18932,62,'Logo Pacte Digital','image','{\"width\":30,\"height\":0,\"alphachannel\":1,\"contextid\":\"1\",\"filearea\":\"image\",\"itemid\":\"0\",\"filepath\":\"\\/\",\"filename\":\"WhatsApp Image 2026-10-06 at 4.16.24 PM.jpeg\"}',NULL,NULL,NULL,243,15,30,NULL,'L',21,1792845399,1792845399),
+(18933,62,'atteste que','text','atteste que','timesi',14,'#757575',160,82,200,1,'C',22,1792845399,1792845399),
+(18934,62,'niveau','text','Niveau :','helvetica',12,'#000000',135,145,200,1,'C',23,1792845399,1792845399),
+(18935,62,'en foi de quoi','text','En foi de quoi, la présente Attestation de participation lui est délivrée pour servir et valoir ce que de droit.','helvetica',11,'#757575',148,153,200,1,'C',24,1792845399,1792845399),
+(18936,62,'fait a Ouaga','text','Fait à Ouagadougou, le','helvetica',11,'#000000',130,160,200,1,'C',25,1792845399,1792845399),
+(18937,62,'De','text','D E','helveticab',16,'#D32F2F',128,62,200,1,'C',26,1792845399,1792845399),
+(18938,63,'Bordure Tricolore PACTDIGITAL','bgimage','{\"fileid\":920,\"contextid\":1,\"component\":\"mod_customcert\",\"filearea\":\"image\",\"itemid\":0,\"filepath\":\"\\/\",\"filename\":\"border_pactdigital.png\",\"width\":297,\"height\":210}','',0,'',0,0,297,0,'L',1,1792845399,1792845399),
+(18939,63,'Watermark','image','{\"fileid\":923,\"contextid\":1,\"component\":\"mod_customcert\",\"filearea\":\"image\",\"itemid\":0,\"filepath\":\"\\/\",\"filename\":\"watermark_armoiries.jpg\",\"width\":150,\"height\":0}','',0,'',73,24,150,1,'C',2,1792845399,1792845399),
+(18940,63,'MTDPCE','text','Ministère de la Transition Digitale, de Postes et des Communication Electroniques du Burkina Faso(MTDPCE-BF)','helveticab',14,'#145B37',148,25,200,1,'C',3,1792845399,1792845399),
+(18941,63,'ATTESTATION','text','ATTESTATION','helveticab',42,'#145B37',148,45,250,1,'C',4,1792845399,1792845399),
+(18942,63,'REUSSITE','text','R É U S S I T E','helveticab',16,'#D32F2F',155,62,200,1,'C',5,1792845399,1792845399),
+(18943,63,'Intro','text','MTDPCE-BF','timesbi',15,'#757575',130,82,200,1,'C',6,1792845399,1792845399),
+(18944,63,'Nom','studentname','','timesbi',38,'#000000',148,93,200,1,'C',7,1792845399,1792845399),
+(18945,63,'Ligne Nom','text','____________________________________________________','helvetica',10,'#000000',148,107,200,1,'C',8,1792845399,1792845399),
+(18946,63,'A suivi','text','a suivi avec succès et validé la formation','timesi',14,'#757575',148,118,200,1,'C',9,1792845399,1792845399),
+(18947,63,'Cours','coursename','2','helveticab',14,'#b57a3e',151,145,200,1,'C',10,1792845399,1792845399),
+(18948,63,'Catégorie','categoryname','','helveticab',24,'#145B37',148,130,250,1,'C',11,1792845399,1792845399),
+(18949,63,'Date','date','{\"dateitem\":\"-1\",\"dateformat\":\"strftimedate\"}','helvetica',11,'#000000',165,160,200,1,'C',12,1792845399,1792845399),
+(18950,63,'Ligne Sig Gauche','text','_________________________','helvetica',10,'#757575',50,172,80,1,'C',13,1792845399,1792845399),
+(18951,63,'Resp Form','text','Le Responsable de la formation','helveticab',9,'#000000',50,178,80,1,'C',14,1792845399,1792845399),
+(18952,63,'Nom Sig Gauche','text','Nom et signature','helvetica',7,'#757575',50,183,80,1,'C',15,1792845399,1792845399),
+(18953,63,'Ligne Sig Droite','text','_________________________','helvetica',10,'#757575',247,172,80,1,'C',16,1792845399,1792845399),
+(18954,63,'Coord Prog','text','Le Coordonnateur du programme','helveticab',9,'#000000',247,178,80,1,'C',17,1792845399,1792845399),
+(18955,63,'Nom Sig Droite','text','Nom et signature','helvetica',7,'#757575',247,183,80,1,'C',18,1792845399,1792845399),
+(18956,63,'QR Code','qrcode','{\"width\":22,\"height\":22}',NULL,NULL,NULL,136,170,22,NULL,'L',19,1792845399,1792845399),
+(18957,63,'Logo Ministère','image','{\"width\":30,\"height\":0,\"alphachannel\":1,\"contextid\":\"1\",\"filearea\":\"image\",\"itemid\":\"0\",\"filepath\":\"\\/\",\"filename\":\"Capture d\\u2019e\\u0301cran 2026-10-06 a\\u0300 16.09.14.png\"}',NULL,NULL,NULL,20,15,30,NULL,'L',20,1792845399,1792845399),
+(18958,63,'Logo Pacte Digital','image','{\"width\":30,\"height\":0,\"alphachannel\":1,\"contextid\":\"1\",\"filearea\":\"image\",\"itemid\":\"0\",\"filepath\":\"\\/\",\"filename\":\"WhatsApp Image 2026-10-06 at 4.16.24 PM.jpeg\"}',NULL,NULL,NULL,243,15,30,NULL,'L',21,1792845399,1792845399),
+(18959,63,'atteste que','text','atteste que','timesi',14,'#757575',160,82,200,1,'C',22,1792845399,1792845399),
+(18960,63,'niveau','text','Niveau :','helvetica',12,'#000000',135,145,200,1,'C',23,1792845399,1792845399),
+(18961,63,'en foi de quoi','text','En foi de quoi, la présente Attestation de participation lui est délivrée pour servir et valoir ce que de droit.','helvetica',11,'#757575',148,153,200,1,'C',24,1792845399,1792845399),
+(18962,63,'fait a Ouaga','text','Fait à Ouagadougou, le','helvetica',11,'#000000',130,160,200,1,'C',25,1792845399,1792845399),
+(18963,63,'De','text','D E','helveticab',16,'#D32F2F',128,62,200,1,'C',26,1792845399,1792845399),
+(18964,64,'Bordure Tricolore PACTDIGITAL','bgimage','{\"fileid\":920,\"contextid\":1,\"component\":\"mod_customcert\",\"filearea\":\"image\",\"itemid\":0,\"filepath\":\"\\/\",\"filename\":\"border_pactdigital.png\",\"width\":297,\"height\":210}','',0,'',0,0,297,0,'L',1,1792845399,1792845399),
+(18965,64,'Watermark','image','{\"fileid\":923,\"contextid\":1,\"component\":\"mod_customcert\",\"filearea\":\"image\",\"itemid\":0,\"filepath\":\"\\/\",\"filename\":\"watermark_armoiries.jpg\",\"width\":150,\"height\":0}','',0,'',73,24,150,1,'C',2,1792845399,1792845399),
+(18966,64,'MTDPCE','text','Ministère de la Transition Digitale, de Postes et des Communication Electroniques du Burkina Faso(MTDPCE-BF)','helveticab',14,'#145B37',148,25,200,1,'C',3,1792845399,1792845399),
+(18967,64,'ATTESTATION','text','ATTESTATION','helveticab',42,'#145B37',148,45,250,1,'C',4,1792845399,1792845399),
+(18968,64,'REUSSITE','text','R É U S S I T E','helveticab',16,'#D32F2F',155,62,200,1,'C',5,1792845399,1792845399),
+(18969,64,'Intro','text','MTDPCE-BF','timesbi',15,'#757575',130,82,200,1,'C',6,1792845399,1792845399),
+(18970,64,'Nom','studentname','','timesbi',38,'#000000',148,93,200,1,'C',7,1792845399,1792845399),
+(18971,64,'Ligne Nom','text','____________________________________________________','helvetica',10,'#000000',148,107,200,1,'C',8,1792845399,1792845399),
+(18972,64,'A suivi','text','a suivi avec succès et validé la formation','timesi',14,'#757575',148,118,200,1,'C',9,1792845399,1792845399),
+(18973,64,'Cours','coursename','2','helveticab',14,'#b57a3e',151,145,200,1,'C',10,1792845399,1792845399),
+(18974,64,'Catégorie','categoryname','','helveticab',24,'#145B37',148,130,250,1,'C',11,1792845399,1792845399),
+(18975,64,'Date','date','{\"dateitem\":\"-1\",\"dateformat\":\"strftimedate\"}','helvetica',11,'#000000',165,160,200,1,'C',12,1792845399,1792845399),
+(18976,64,'Ligne Sig Gauche','text','_________________________','helvetica',10,'#757575',50,172,80,1,'C',13,1792845399,1792845399),
+(18977,64,'Resp Form','text','Le Responsable de la formation','helveticab',9,'#000000',50,178,80,1,'C',14,1792845399,1792845399),
+(18978,64,'Nom Sig Gauche','text','Nom et signature','helvetica',7,'#757575',50,183,80,1,'C',15,1792845399,1792845399),
+(18979,64,'Ligne Sig Droite','text','_________________________','helvetica',10,'#757575',247,172,80,1,'C',16,1792845399,1792845399),
+(18980,64,'Coord Prog','text','Le Coordonnateur du programme','helveticab',9,'#000000',247,178,80,1,'C',17,1792845399,1792845399),
+(18981,64,'Nom Sig Droite','text','Nom et signature','helvetica',7,'#757575',247,183,80,1,'C',18,1792845399,1792845399),
+(18982,64,'QR Code','qrcode','{\"width\":22,\"height\":22}',NULL,NULL,NULL,136,170,22,NULL,'L',19,1792845399,1792845399),
+(18983,64,'Logo Ministère','image','{\"width\":30,\"height\":0,\"alphachannel\":1,\"contextid\":\"1\",\"filearea\":\"image\",\"itemid\":\"0\",\"filepath\":\"\\/\",\"filename\":\"Capture d\\u2019e\\u0301cran 2026-10-06 a\\u0300 16.09.14.png\"}',NULL,NULL,NULL,20,15,30,NULL,'L',20,1792845399,1792845399),
+(18984,64,'Logo Pacte Digital','image','{\"width\":30,\"height\":0,\"alphachannel\":1,\"contextid\":\"1\",\"filearea\":\"image\",\"itemid\":\"0\",\"filepath\":\"\\/\",\"filename\":\"WhatsApp Image 2026-10-06 at 4.16.24 PM.jpeg\"}',NULL,NULL,NULL,243,15,30,NULL,'L',21,1792845399,1792845399),
+(18985,64,'atteste que','text','atteste que','timesi',14,'#757575',160,82,200,1,'C',22,1792845399,1792845399),
+(18986,64,'niveau','text','Niveau :','helvetica',12,'#000000',135,145,200,1,'C',23,1792845399,1792845399),
+(18987,64,'en foi de quoi','text','En foi de quoi, la présente Attestation de participation lui est délivrée pour servir et valoir ce que de droit.','helvetica',11,'#757575',148,153,200,1,'C',24,1792845399,1792845399),
+(18988,64,'fait a Ouaga','text','Fait à Ouagadougou, le','helvetica',11,'#000000',130,160,200,1,'C',25,1792845399,1792845399),
+(18989,64,'De','text','D E','helveticab',16,'#D32F2F',128,62,200,1,'C',26,1792845399,1792845399);
 /*!40000 ALTER TABLE `m_customcert_elements` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -13740,7 +13871,7 @@ CREATE TABLE `m_customcert_issues` (
   KEY `m_custissu_cod_ix` (`code`),
   KEY `m_custissu_use_ix` (`userid`),
   KEY `m_custissu_cus_ix` (`customcertid`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Stores each issue of a customcert';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Stores each issue of a customcert';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -13752,7 +13883,8 @@ LOCK TABLES `m_customcert_issues` WRITE;
 INSERT INTO `m_customcert_issues` VALUES
 (1,2,1,'IWHZ4Smehu',0,1790960729),
 (2,2,55,'V1xKMuBoHU',0,1791290357),
-(3,2,6,'n6zIa1wmhH',0,1791835523);
+(3,2,6,'n6zIa1wmhH',0,1791835523),
+(4,11,61,'AWA85BF001',0,1792843746);
 /*!40000 ALTER TABLE `m_customcert_issues` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -13775,7 +13907,7 @@ CREATE TABLE `m_customcert_pages` (
   `timemodified` bigint(10) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   KEY `m_custpage_tem_ix` (`templateid`)
-) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Stores each page of a custom cert';
+) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Stores each page of a custom cert';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -13843,7 +13975,10 @@ INSERT INTO `m_customcert_pages` VALUES
 (58,58,297,210,0,0,1,1791289643,1791289643),
 (59,59,297,210,0,0,1,1791289643,1791289643),
 (60,60,297,210,0,0,1,1791289643,1791289643),
-(61,61,297,210,0,0,1,1791289643,1791289643);
+(61,61,297,210,0,0,1,1791289643,1791289643),
+(62,62,297,210,0,0,1,1792845399,1792845399),
+(63,63,297,210,0,0,1,1792845399,1792845399),
+(64,64,297,210,0,0,1,1792845399,1792845399);
 /*!40000 ALTER TABLE `m_customcert_pages` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -13862,7 +13997,7 @@ CREATE TABLE `m_customcert_templates` (
   `timemodified` bigint(10) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   KEY `m_custtemp_con_ix` (`contextid`)
-) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Stores each customcert template';
+) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Stores each customcert template';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -13928,9 +14063,12 @@ INSERT INTO `m_customcert_templates` VALUES
 (56,'Attestation de réussite',486,1791289643,1791370658),
 (57,'Attestation de réussite',491,1791289643,1791289643),
 (58,'Attestation de réussite',496,1791289643,1791302064),
-(59,'Attestation de réussite',501,1791289643,1791289643),
+(59,'Attestation de réussite',501,1791289643,1792779270),
 (60,'Attestation de réussite',506,1791289643,1791289643),
-(61,'Attestation de réussite',511,1791289643,1791289643);
+(61,'Attestation de réussite',511,1791289643,1791289643),
+(62,'Attestation de réussite',588,1792845399,1792845399),
+(63,'Attestation de réussite',594,1792845399,1792845399),
+(64,'Attestation de réussite',600,1792845399,1792845399);
 /*!40000 ALTER TABLE `m_customcert_templates` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -15050,7 +15188,7 @@ CREATE TABLE `m_event` (
   KEY `m_even_modinseve_ix` (`modulename`,`instance`,`eventtype`),
   KEY `m_even_cat_ix` (`categoryid`),
   KEY `m_even_sub_ix` (`subscriptionid`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='For everything with a time associated to it';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='For everything with a time associated to it';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -15062,7 +15200,8 @@ LOCK TABLES `m_event` WRITE;
 INSERT INTO `m_event` VALUES
 (1,'Fiche de présence numérique (Groupe Session-01_Ouaga_Kadiogo)','',1,0,24,55,2,0,NULL,'attendance',1,0,'attendance',1791849600,0,NULL,1,'',1,1791899693,NULL,NULL,NULL),
 (2,'Fiche de présence numérique (Groupe Session-01_Ouaga_Kadiogo)','',1,0,75,1,2,0,NULL,'attendance',52,0,'attendance',1791849600,0,NULL,1,'',1,1791900222,NULL,NULL,NULL),
-(3,'Fiche de présence numérique (Groupe Session-02_Ouaga_Kadiogo)','',1,0,75,2,2,0,NULL,'attendance',52,0,'attendance',1791849600,0,NULL,1,'',1,1791900259,NULL,NULL,NULL);
+(3,'Fiche de présence numérique (Groupe Session-02_Ouaga_Kadiogo)','',1,0,75,2,2,0,NULL,'attendance',52,0,'attendance',1791849600,0,NULL,1,'',1,1791900259,NULL,NULL,NULL),
+(4,'Fiche de présence numérique','',1,0,81,0,12,0,NULL,'attendance',58,0,'attendance',1792800000,0,NULL,1,'',1,1792856957,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `m_event` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -16570,7 +16709,7 @@ CREATE TABLE `m_favourite` (
   UNIQUE KEY `m_favo_comiteiteconuse_uix` (`component`,`itemtype`,`itemid`,`contextid`,`userid`),
   KEY `m_favo_con_ix` (`contextid`),
   KEY `m_favo_use_ix` (`userid`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Stores the relationship between an arbitrary item (itemtype,';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Stores the relationship between an arbitrary item (itemtype,';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -16581,7 +16720,9 @@ LOCK TABLES `m_favourite` WRITE;
 /*!40000 ALTER TABLE `m_favourite` DISABLE KEYS */;
 INSERT INTO `m_favourite` VALUES
 (1,'core_message','message_conversations',1,5,2,NULL,1790865332,1790865332),
-(2,'core_message','message_conversations',98,29,3,NULL,1791561861,1791561861);
+(2,'core_message','message_conversations',98,29,3,NULL,1791561861,1791561861),
+(3,'core_message','message_conversations',99,603,11,NULL,1792851213,1792851213),
+(4,'core_message','message_conversations',100,615,13,NULL,1792863285,1792863285);
 /*!40000 ALTER TABLE `m_favourite` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -16985,7 +17126,7 @@ CREATE TABLE `m_files` (
   KEY `m_file_con2_ix` (`contextid`),
   KEY `m_file_use_ix` (`userid`),
   KEY `m_file_ref_ix` (`referencefileid`)
-) ENGINE=InnoDB AUTO_INCREMENT=6779 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='description of files, content is stored in sha1 file pool';
+) ENGINE=InnoDB AUTO_INCREMENT=6785 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='description of files, content is stored in sha1 file pool';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -22585,7 +22726,13 @@ INSERT INTO `m_files` VALUES
 (6775,'1bea94713585f2ae4417a905b149763566e71dcf','b9fa96759fc8a3b43b1fa6b1ee743e1ab2b0cd59',637,'mod_resource','content',0,'/','Guide du formateur_D1_Module Bronze.docx',2,217707,'application/vnd.openxmlformats-officedocument.wordprocessingml.document',0,NULL,NULL,NULL,1792492525,1792492525,1,NULL),
 (6776,'da39a3ee5e6b4b0d3255bfef95601890afd80709','dd4c5ea1a7192498c06a50704c5258320d13386e',637,'mod_resource','content',0,'/','.',2,0,NULL,0,NULL,NULL,NULL,1792492525,1792492525,0,NULL),
 (6777,'3015a50cda5773c6f2dfbe022b035556903412f5','2e83b55fc899ca6241e0d33e7bf661cb885b0475',638,'mod_resource','content',0,'/','Evaluation des apprenants_D1_Module Bronze.docx',2,209423,'application/vnd.openxmlformats-officedocument.wordprocessingml.document',0,NULL,NULL,NULL,1792492525,1792492525,1,NULL),
-(6778,'da39a3ee5e6b4b0d3255bfef95601890afd80709','dc4603e9218c38636484faeadbf478b418835816',638,'mod_resource','content',0,'/','.',2,0,NULL,0,NULL,NULL,NULL,1792492525,1792492525,0,NULL);
+(6778,'da39a3ee5e6b4b0d3255bfef95601890afd80709','dc4603e9218c38636484faeadbf478b418835816',638,'mod_resource','content',0,'/','.',2,0,NULL,0,NULL,NULL,NULL,1792492525,1792492525,0,NULL),
+(6779,'9638cebbe886204f9b17b052bde8912741a1cc4b','105bcd222ae7c1ac87db1e34d66ce43cd879fe26',5,'user','draft',147571651,'/','image17.jpg',2,48331,'image/jpeg',0,'O:8:\"stdClass\":2:{s:6:\"source\";N;s:8:\"original\";s:216:\"YTo2OntzOjk6ImNvbnRleHRpZCI7aTo2MzA7czo5OiJjb21wb25lbnQiO3M6ODoibW9kX3BhZ2UiO3M6NjoiaXRlbWlkIjtpOjA7czo4OiJmaWxlYXJlYSI7czo3OiJjb250ZW50IjtzOjg6ImZpbGVwYXRoIjtzOjE6Ii8iO3M6ODoiZmlsZW5hbWUiO3M6MTE6ImltYWdlMTcuanBnIjt9\";}',NULL,NULL,1792492524,1792492524,0,NULL),
+(6780,'da39a3ee5e6b4b0d3255bfef95601890afd80709','81953060b2ce4220a05038ed2d58f8fc29ff7245',5,'user','draft',147571651,'/','.',2,0,NULL,0,NULL,NULL,NULL,1792502311,1792502311,0,NULL),
+(6781,'18f8996b0050e297ebfb800656f51a276e474fc1','8bb785a3e3ef1ddf3847c308227c8cd8660ed0f5',5,'user','draft',147571651,'/','image30.png',2,154487,'image/png',0,'O:8:\"stdClass\":2:{s:6:\"source\";N;s:8:\"original\";s:216:\"YTo2OntzOjk6ImNvbnRleHRpZCI7aTo2MzA7czo5OiJjb21wb25lbnQiO3M6ODoibW9kX3BhZ2UiO3M6NjoiaXRlbWlkIjtpOjA7czo4OiJmaWxlYXJlYSI7czo3OiJjb250ZW50IjtzOjg6ImZpbGVwYXRoIjtzOjE6Ii8iO3M6ODoiZmlsZW5hbWUiO3M6MTE6ImltYWdlMzAucG5nIjt9\";}',NULL,NULL,1792492524,1792492524,0,NULL),
+(6782,'0fb4071ed9e5ad4b26969154d2fbb8ee20ed1ba4','25699872135210d285a4f316e991eb0e89a026a0',5,'user','draft',147571651,'/','image31.png',2,151155,'image/png',0,'O:8:\"stdClass\":2:{s:6:\"source\";N;s:8:\"original\";s:216:\"YTo2OntzOjk6ImNvbnRleHRpZCI7aTo2MzA7czo5OiJjb21wb25lbnQiO3M6ODoibW9kX3BhZ2UiO3M6NjoiaXRlbWlkIjtpOjA7czo4OiJmaWxlYXJlYSI7czo3OiJjb250ZW50IjtzOjg6ImZpbGVwYXRoIjtzOjE6Ii8iO3M6ODoiZmlsZW5hbWUiO3M6MTE6ImltYWdlMzEucG5nIjt9\";}',NULL,NULL,1792492524,1792492524,0,NULL),
+(6783,'c98eb1763a73891b6d4a5e357a1d81d0018c7b9f','1c46ab26e59993f165b4cef5a198162e2a7f567d',5,'user','draft',147571651,'/','image32.png',2,141810,'image/png',0,'O:8:\"stdClass\":2:{s:6:\"source\";N;s:8:\"original\";s:216:\"YTo2OntzOjk6ImNvbnRleHRpZCI7aTo2MzA7czo5OiJjb21wb25lbnQiO3M6ODoibW9kX3BhZ2UiO3M6NjoiaXRlbWlkIjtpOjA7czo4OiJmaWxlYXJlYSI7czo3OiJjb250ZW50IjtzOjg6ImZpbGVwYXRoIjtzOjE6Ii8iO3M6ODoiZmlsZW5hbWUiO3M6MTE6ImltYWdlMzIucG5nIjt9\";}',NULL,NULL,1792492524,1792492524,0,NULL),
+(6784,'497a51024e2d1ee7d3ed0a08d17ae8a876b56967','f08962f5b225de6137d4cde71275895c4b0f766a',5,'user','draft',147571651,'/','image33.png',2,47285,'image/png',0,'O:8:\"stdClass\":2:{s:6:\"source\";N;s:8:\"original\";s:216:\"YTo2OntzOjk6ImNvbnRleHRpZCI7aTo2MzA7czo5OiJjb21wb25lbnQiO3M6ODoibW9kX3BhZ2UiO3M6NjoiaXRlbWlkIjtpOjA7czo4OiJmaWxlYXJlYSI7czo3OiJjb250ZW50IjtzOjg6ImZpbGVwYXRoIjtzOjE6Ii8iO3M6ODoiZmlsZW5hbWUiO3M6MTE6ImltYWdlMzMucG5nIjt9\";}',NULL,NULL,1792492524,1792492524,0,NULL);
 /*!40000 ALTER TABLE `m_files` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -22972,7 +23119,7 @@ CREATE TABLE `m_forum_discussions` (
   KEY `m_forudisc_cou_ix` (`course`),
   KEY `m_forudisc_for_ix` (`forum`),
   KEY `m_forudisc_use2_ix` (`usermodified`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Forums are composed of discussions';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Forums are composed of discussions';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -23050,7 +23197,7 @@ CREATE TABLE `m_forum_posts` (
   KEY `m_forupost_pri_ix` (`privatereplyto`),
   KEY `m_forupost_dis_ix` (`discussion`),
   KEY `m_forupost_par_ix` (`parent`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='All posts are stored in this table';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='All posts are stored in this table';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -23408,7 +23555,7 @@ CREATE TABLE `m_grade_categories` (
   PRIMARY KEY (`id`),
   KEY `m_gradcate_cou_ix` (`courseid`),
   KEY `m_gradcate_par_ix` (`parent`)
-) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='This table keeps information about categories, used for grou';
+) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='This table keeps information about categories, used for grou';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -23475,7 +23622,10 @@ INSERT INTO `m_grade_categories` VALUES
 (77,77,NULL,1,'/77/','?',13,0,0,1,0,1791289643,1791289643,0),
 (78,78,NULL,1,'/78/','?',13,0,0,1,0,1791289643,1791289643,0),
 (79,79,NULL,1,'/79/','?',13,0,0,1,0,1791289643,1791289643,0),
-(80,80,NULL,1,'/80/','?',13,0,0,1,0,1791289643,1791289643,0);
+(80,80,NULL,1,'/80/','?',13,0,0,1,0,1791289643,1791289643,0),
+(81,81,NULL,1,'/81/','?',13,0,0,1,0,1792853791,1792853791,0),
+(82,82,NULL,1,'/82/','?',13,0,0,1,0,1792854432,1792854432,0),
+(83,83,NULL,1,'/83/','?',13,0,0,1,0,1792854432,1792854432,0);
 /*!40000 ALTER TABLE `m_grade_categories` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -23512,7 +23662,7 @@ CREATE TABLE `m_grade_categories_history` (
   KEY `m_gradcatehist_cou_ix` (`courseid`),
   KEY `m_gradcatehist_par_ix` (`parent`),
   KEY `m_gradcatehist_log_ix` (`loggeduser`)
-) ENGINE=InnoDB AUTO_INCREMENT=183 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='History of grade_categories';
+) ENGINE=InnoDB AUTO_INCREMENT=189 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='History of grade_categories';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -23703,7 +23853,13 @@ INSERT INTO `m_grade_categories_history` VALUES
 (179,1,79,'system',1791289643,0,79,NULL,0,NULL,'?',13,0,0,1,0,0,0),
 (180,2,79,'system',1791289643,0,79,NULL,1,'/79/','?',13,0,0,1,0,0,0),
 (181,1,80,'system',1791289643,0,80,NULL,0,NULL,'?',13,0,0,1,0,0,0),
-(182,2,80,'system',1791289643,0,80,NULL,1,'/80/','?',13,0,0,1,0,0,0);
+(182,2,80,'system',1791289643,0,80,NULL,1,'/80/','?',13,0,0,1,0,0,0),
+(183,1,81,'system',1792853791,12,81,NULL,0,NULL,'?',13,0,0,1,0,0,0),
+(184,2,81,'system',1792853791,12,81,NULL,1,'/81/','?',13,0,0,1,0,0,0),
+(185,1,82,'system',1792854432,0,82,NULL,0,NULL,'?',13,0,0,1,0,0,0),
+(186,2,82,'system',1792854432,0,82,NULL,1,'/82/','?',13,0,0,1,0,0,0),
+(187,1,83,'system',1792854432,0,83,NULL,0,NULL,'?',13,0,0,1,0,0,0),
+(188,2,83,'system',1792854432,0,83,NULL,1,'/83/','?',13,0,0,1,0,0,0);
 /*!40000 ALTER TABLE `m_grade_categories_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -23746,7 +23902,7 @@ CREATE TABLE `m_grade_grades` (
   KEY `m_gradgrad_use_ix` (`userid`),
   KEY `m_gradgrad_raw_ix` (`rawscaleid`),
   KEY `m_gradgrad_use2_ix` (`usermodified`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='grade_grades  This table keeps individual grades for each us';
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='grade_grades  This table keeps individual grades for each us';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -23755,6 +23911,19 @@ CREATE TABLE `m_grade_grades` (
 
 LOCK TABLES `m_grade_grades` WRITE;
 /*!40000 ALTER TABLE `m_grade_grades` DISABLE KEYS */;
+INSERT INTO `m_grade_grades` VALUES
+(1,78,2,NULL,21.00000,0.00000,NULL,2,NULL,0,0,0,0,0,0,NULL,2,NULL,2,NULL,NULL,'novalue',0.00000,0.00000),
+(2,77,2,NULL,100.00000,0.00000,NULL,NULL,NULL,0,0,0,0,0,0,NULL,2,NULL,2,NULL,NULL,'unknown',NULL,0.00000),
+(3,165,2,NULL,100.00000,0.00000,NULL,NULL,NULL,0,0,0,0,0,0,NULL,2,NULL,2,NULL,NULL,'novalue',0.00000,0.00000),
+(4,78,11,6.00000,21.00000,0.00000,NULL,11,6.00000,0,0,0,0,0,0,NULL,2,NULL,2,1792849358,1792849358,'used',1.00000,0.00000),
+(5,77,11,NULL,21.00000,0.00000,NULL,NULL,6.00000,0,0,0,0,0,0,NULL,2,NULL,2,NULL,1792849183,'unknown',NULL,0.00000),
+(6,165,11,NULL,100.00000,0.00000,NULL,NULL,NULL,0,0,0,0,0,0,NULL,2,NULL,2,NULL,NULL,'novalue',0.00000,0.00000),
+(7,204,11,85.00000,100.00000,0.00000,NULL,0,85.00000,0,0,0,0,0,0,NULL,2,NULL,2,1792843746,1792855167,'used',1.00000,0.00000),
+(8,201,11,NULL,100.00000,0.00000,NULL,NULL,85.00000,0,0,0,0,0,0,NULL,2,NULL,2,NULL,1792855167,'unknown',NULL,0.00000),
+(10,205,10,NULL,100.00000,0.00000,NULL,12,NULL,0,0,0,0,0,0,NULL,2,NULL,2,NULL,NULL,'novalue',0.00000,0.00000),
+(11,205,11,NULL,100.00000,0.00000,NULL,12,NULL,0,0,0,0,0,0,NULL,2,NULL,2,NULL,NULL,'novalue',0.00000,0.00000),
+(12,201,10,NULL,100.00000,0.00000,NULL,NULL,NULL,0,0,0,0,0,0,NULL,2,NULL,2,NULL,NULL,'unknown',NULL,0.00000),
+(13,204,10,NULL,100.00000,0.00000,NULL,NULL,NULL,0,0,0,0,0,0,NULL,2,NULL,2,NULL,NULL,'novalue',0.00000,0.00000);
 /*!40000 ALTER TABLE `m_grade_grades` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -23800,7 +23969,7 @@ CREATE TABLE `m_grade_grades_history` (
   KEY `m_gradgradhist_raw_ix` (`rawscaleid`),
   KEY `m_gradgradhist_use2_ix` (`usermodified`),
   KEY `m_gradgradhist_log_ix` (`loggeduser`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='History table';
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='History table';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -23809,6 +23978,23 @@ CREATE TABLE `m_grade_grades_history` (
 
 LOCK TABLES `m_grade_grades_history` WRITE;
 /*!40000 ALTER TABLE `m_grade_grades_history` DISABLE KEYS */;
+INSERT INTO `m_grade_grades_history` VALUES
+(1,1,1,'mod/quiz',1792500113,2,78,2,NULL,21.00000,0.00000,NULL,2,NULL,0,0,0,0,0,0,NULL,2,NULL,2),
+(2,1,2,'system',1792500113,2,77,2,NULL,100.00000,0.00000,NULL,NULL,NULL,0,0,0,0,0,0,NULL,2,NULL,2),
+(3,1,3,'system',1792500113,2,165,2,NULL,100.00000,0.00000,NULL,NULL,NULL,0,0,0,0,0,0,NULL,2,NULL,2),
+(4,1,4,'mod/quiz',1792849183,11,78,11,6.00000,21.00000,0.00000,NULL,11,6.00000,0,0,0,0,0,0,NULL,2,NULL,2),
+(5,1,5,'system',1792849183,11,77,11,NULL,100.00000,0.00000,NULL,NULL,NULL,0,0,0,0,0,0,NULL,2,NULL,2),
+(6,1,6,'system',1792849183,11,165,11,NULL,100.00000,0.00000,NULL,NULL,NULL,0,0,0,0,0,0,NULL,2,NULL,2),
+(7,2,5,'aggregation',1792849183,11,77,11,NULL,21.00000,0.00000,NULL,NULL,6.00000,0,0,0,0,0,0,NULL,2,NULL,2),
+(8,2,4,'mod/quiz',1792849358,11,78,11,6.00000,21.00000,0.00000,NULL,11,6.00000,0,0,0,0,0,0,NULL,2,NULL,2),
+(9,1,7,'mod/quiz',1792855167,0,204,11,85.00000,100.00000,0.00000,NULL,0,85.00000,0,0,0,0,0,0,NULL,2,NULL,2),
+(10,1,8,'system',1792855167,0,201,11,NULL,100.00000,0.00000,NULL,NULL,NULL,0,0,0,0,0,0,NULL,2,NULL,2),
+(11,1,9,'system',1792855167,0,198,11,NULL,100.00000,0.00000,NULL,NULL,NULL,0,0,0,0,0,0,NULL,2,NULL,2),
+(12,2,8,'aggregation',1792855167,0,201,11,NULL,100.00000,0.00000,NULL,NULL,85.00000,0,0,0,0,0,0,NULL,2,NULL,2),
+(13,1,10,'mod/attendance',1792857117,12,205,10,NULL,100.00000,0.00000,NULL,12,NULL,0,0,0,0,0,0,NULL,2,NULL,2),
+(14,1,11,'mod/attendance',1792857117,12,205,11,NULL,100.00000,0.00000,NULL,12,NULL,0,0,0,0,0,0,NULL,2,NULL,2),
+(15,1,12,'system',1792859251,12,201,10,NULL,100.00000,0.00000,NULL,NULL,NULL,0,0,0,0,0,0,NULL,2,NULL,2),
+(16,1,13,'system',1792859251,12,204,10,NULL,100.00000,0.00000,NULL,NULL,NULL,0,0,0,0,0,0,NULL,2,NULL,2);
 /*!40000 ALTER TABLE `m_grade_grades_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -23921,7 +24107,7 @@ CREATE TABLE `m_grade_items` (
   KEY `m_graditem_cat_ix` (`categoryid`),
   KEY `m_graditem_sca_ix` (`scaleid`),
   KEY `m_graditem_out_ix` (`outcomeid`)
-) ENGINE=InnoDB AUTO_INCREMENT=201 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='This table keeps information about gradeable items (ie colum';
+) ENGINE=InnoDB AUTO_INCREMENT=206 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='This table keeps information about gradeable items (ie colum';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -23983,8 +24169,8 @@ INSERT INTO `m_grade_items` VALUES
 (74,46,48,'Examen final','mod','quiz',50,0,NULL,NULL,NULL,1,100.00000,0.00000,NULL,NULL,0.00000,1.00000,0.00000,0.00000,0.50000,2,0,NULL,1,0,0,0,0,1791289642,1791291924),
 (75,47,NULL,NULL,'course',NULL,49,NULL,NULL,NULL,NULL,1,200.00000,0.00000,NULL,NULL,0.00000,1.00000,0.00000,0.00000,0.00000,1,0,NULL,0,0,0,0,0,1791289642,1791291924),
 (76,47,49,'Examen final','mod','quiz',52,0,NULL,NULL,NULL,1,100.00000,0.00000,NULL,NULL,0.00000,1.00000,0.00000,0.00000,0.50000,2,0,NULL,1,0,0,0,0,1791289642,1791291924),
-(77,48,NULL,NULL,'course',NULL,50,NULL,NULL,NULL,NULL,1,200.00000,0.00000,NULL,NULL,0.00000,1.00000,0.00000,0.00000,0.00000,1,0,NULL,0,0,0,0,0,1791289642,1791291924),
-(78,48,50,'Examen final','mod','quiz',54,0,NULL,NULL,NULL,1,21.00000,0.00000,NULL,NULL,14.70000,1.00000,0.00000,0.00000,0.50000,2,0,NULL,0,0,0,0,0,1791289642,1792492523),
+(77,48,NULL,NULL,'course',NULL,50,NULL,NULL,NULL,NULL,1,121.00000,0.00000,NULL,NULL,0.00000,1.00000,0.00000,0.00000,0.00000,1,0,NULL,0,0,0,0,0,1791289642,1792500113),
+(78,48,50,'Examen final','mod','quiz',54,0,NULL,NULL,NULL,1,21.00000,0.00000,NULL,NULL,14.70000,1.00000,0.00000,0.00000,0.17355,2,0,NULL,0,0,0,0,0,1791289642,1792500113),
 (79,49,NULL,NULL,'course',NULL,51,NULL,NULL,NULL,NULL,1,200.00000,0.00000,NULL,NULL,0.00000,1.00000,0.00000,0.00000,0.00000,1,0,NULL,0,0,0,0,0,1791289642,1791291924),
 (80,49,51,'Examen final','mod','quiz',56,0,NULL,NULL,NULL,1,100.00000,0.00000,NULL,NULL,0.00000,1.00000,0.00000,0.00000,0.50000,2,0,NULL,1,0,0,0,0,1791289642,1791291924),
 (81,50,NULL,NULL,'course',NULL,52,NULL,NULL,NULL,NULL,1,200.00000,0.00000,NULL,NULL,0.00000,1.00000,0.00000,0.00000,0.00000,1,0,NULL,0,0,0,0,0,1791289642,1791291924),
@@ -24071,7 +24257,7 @@ INSERT INTO `m_grade_items` VALUES
 (162,45,47,'Fiche de présence numérique','mod','attendance',22,0,NULL,NULL,NULL,1,100.00000,0.00000,NULL,NULL,0.00000,1.00000,0.00000,0.00000,0.50000,3,0,NULL,0,0,0,0,0,1791291924,1791291924),
 (163,46,48,'Fiche de présence numérique','mod','attendance',23,0,NULL,NULL,NULL,1,100.00000,0.00000,NULL,NULL,0.00000,1.00000,0.00000,0.00000,0.50000,3,0,NULL,0,0,0,0,0,1791291924,1791291924),
 (164,47,49,'Fiche de présence numérique','mod','attendance',24,0,NULL,NULL,NULL,1,100.00000,0.00000,NULL,NULL,0.00000,1.00000,0.00000,0.00000,0.50000,3,0,NULL,0,0,0,0,0,1791291924,1791291924),
-(165,48,50,'Fiche de présence numérique','mod','attendance',25,0,NULL,NULL,NULL,1,100.00000,0.00000,NULL,NULL,0.00000,1.00000,0.00000,0.00000,0.50000,3,0,NULL,0,0,0,0,0,1791291924,1791291924),
+(165,48,50,'Fiche de présence numérique','mod','attendance',25,0,NULL,NULL,NULL,1,100.00000,0.00000,NULL,NULL,0.00000,1.00000,0.00000,0.00000,0.82645,3,0,NULL,0,0,0,0,0,1791291924,1792500113),
 (166,49,51,'Fiche de présence numérique','mod','attendance',26,0,NULL,NULL,NULL,1,100.00000,0.00000,NULL,NULL,0.00000,1.00000,0.00000,0.00000,0.50000,3,0,NULL,0,0,0,0,0,1791291924,1791291924),
 (167,50,52,'Fiche de présence numérique','mod','attendance',27,0,NULL,NULL,NULL,1,100.00000,0.00000,NULL,NULL,0.00000,1.00000,0.00000,0.00000,0.50000,3,0,NULL,0,0,0,0,0,1791291924,1791291924),
 (168,51,25,'Fiche de présence numérique','mod','attendance',28,0,NULL,NULL,NULL,1,100.00000,0.00000,NULL,NULL,0.00000,1.00000,0.00000,0.00000,0.47619,4,0,NULL,0,0,0,0,0,1791291924,1791291924),
@@ -24104,9 +24290,13 @@ INSERT INTO `m_grade_items` VALUES
 (195,78,78,'Fiche de présence numérique','mod','attendance',55,0,NULL,NULL,NULL,1,100.00000,0.00000,NULL,NULL,0.00000,1.00000,0.00000,0.00000,0.50000,3,0,NULL,0,0,0,0,0,1791291924,1791291924),
 (196,79,79,'Fiche de présence numérique','mod','attendance',56,0,NULL,NULL,NULL,1,100.00000,0.00000,NULL,NULL,0.00000,1.00000,0.00000,0.00000,0.50000,3,0,NULL,0,0,0,0,0,1791291924,1791291924),
 (197,80,80,'Fiche de présence numérique','mod','attendance',57,0,NULL,NULL,NULL,1,100.00000,0.00000,NULL,NULL,0.00000,1.00000,0.00000,0.00000,0.50000,3,0,NULL,0,0,0,0,0,1791291924,1791291924),
-(198,81,NULL,'Examen final','mod','quiz',120,NULL,NULL,NULL,NULL,1,100.00000,0.00000,NULL,NULL,70.00000,1.00000,0.00000,0.00000,0.00000,0,0,NULL,0,0,0,0,0,1792154050,1792154050),
-(199,82,NULL,'Examen final','mod','quiz',122,NULL,NULL,NULL,NULL,1,100.00000,0.00000,NULL,NULL,70.00000,1.00000,0.00000,0.00000,0.00000,0,0,NULL,0,0,0,0,0,1792154050,1792154050),
-(200,83,NULL,'Examen final','mod','quiz',124,NULL,NULL,NULL,NULL,1,100.00000,0.00000,NULL,NULL,70.00000,1.00000,0.00000,0.00000,0.00000,0,0,NULL,0,0,0,0,0,1792154050,1792154050);
+(199,82,82,'Examen final','mod','quiz',122,NULL,NULL,NULL,NULL,1,100.00000,0.00000,NULL,NULL,70.00000,1.00000,0.00000,0.00000,1.00000,0,0,NULL,0,0,0,1,0,1792154050,1792854446),
+(200,83,83,'Examen final','mod','quiz',124,NULL,NULL,NULL,NULL,1,100.00000,0.00000,NULL,NULL,70.00000,1.00000,0.00000,0.00000,1.00000,0,0,NULL,0,0,0,1,0,1792154050,1792854446),
+(201,81,NULL,NULL,'course',NULL,81,NULL,NULL,NULL,NULL,1,200.00000,0.00000,NULL,NULL,0.00000,1.00000,0.00000,0.00000,0.00000,1,0,NULL,0,0,0,0,0,1792853791,1792855167),
+(202,82,NULL,NULL,'course',NULL,82,NULL,NULL,NULL,NULL,1,100.00000,0.00000,NULL,NULL,0.00000,1.00000,0.00000,0.00000,0.00000,1,0,NULL,0,0,0,1,0,1792854432,1792854432),
+(203,83,NULL,NULL,'course',NULL,83,NULL,NULL,NULL,NULL,1,100.00000,0.00000,NULL,NULL,0.00000,1.00000,0.00000,0.00000,0.00000,1,0,NULL,0,0,0,1,0,1792854432,1792854432),
+(204,81,81,'Examen final','mod','quiz',120,0,NULL,NULL,NULL,1,100.00000,0.00000,NULL,NULL,70.00000,1.00000,0.00000,0.00000,0.50000,2,0,NULL,0,0,0,0,0,1792855167,1792855167),
+(205,81,81,NULL,'mod','attendance',58,0,NULL,NULL,NULL,1,100.00000,0.00000,NULL,NULL,0.00000,1.00000,0.00000,0.00000,0.50000,3,0,NULL,0,0,0,0,0,1792857117,1792859251);
 /*!40000 ALTER TABLE `m_grade_items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -24161,7 +24351,7 @@ CREATE TABLE `m_grade_items_history` (
   KEY `m_graditemhist_sca_ix` (`scaleid`),
   KEY `m_graditemhist_out_ix` (`outcomeid`),
   KEY `m_graditemhist_log_ix` (`loggeduser`)
-) ENGINE=InnoDB AUTO_INCREMENT=576 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='History of grade_items';
+) ENGINE=InnoDB AUTO_INCREMENT=591 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='History of grade_items';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -24745,7 +24935,22 @@ INSERT INTO `m_grade_items_history` VALUES
 (572,1,197,NULL,1791291924,0,80,80,'Fiche de présence numérique','mod','attendance',57,0,NULL,NULL,NULL,1,100.00000,0.00000,NULL,NULL,0.00000,1.00000,0.00000,0.00000,0.00000,3,0,0,0,1,0,NULL,0),
 (573,2,140,NULL,1791291924,0,80,80,'Examen final','mod','quiz',118,0,NULL,NULL,NULL,1,100.00000,0.00000,NULL,NULL,0.00000,1.00000,0.00000,0.00000,0.50000,2,1,0,0,1,0,NULL,0),
 (574,2,197,NULL,1791291924,0,80,80,'Fiche de présence numérique','mod','attendance',57,0,NULL,NULL,NULL,1,100.00000,0.00000,NULL,NULL,0.00000,1.00000,0.00000,0.00000,0.50000,3,0,0,0,1,0,NULL,0),
-(575,2,139,'aggregation',1791291924,0,80,NULL,NULL,'course',NULL,80,NULL,NULL,NULL,NULL,1,200.00000,0.00000,NULL,NULL,0.00000,1.00000,0.00000,0.00000,0.00000,1,0,0,0,1,0,NULL,0);
+(575,2,139,'aggregation',1791291924,0,80,NULL,NULL,'course',NULL,80,NULL,NULL,NULL,NULL,1,200.00000,0.00000,NULL,NULL,0.00000,1.00000,0.00000,0.00000,0.00000,1,0,0,0,1,0,NULL,0),
+(576,2,78,NULL,1792500113,2,48,50,'Examen final','mod','quiz',54,0,NULL,NULL,NULL,1,21.00000,0.00000,NULL,NULL,14.70000,1.00000,0.00000,0.00000,0.17355,2,0,0,0,1,0,NULL,0),
+(577,2,165,NULL,1792500113,2,48,50,'Fiche de présence numérique','mod','attendance',25,0,NULL,NULL,NULL,1,100.00000,0.00000,NULL,NULL,0.00000,1.00000,0.00000,0.00000,0.82645,3,0,0,0,1,0,NULL,0),
+(578,2,77,'aggregation',1792500113,2,48,NULL,NULL,'course',NULL,50,NULL,NULL,NULL,NULL,1,121.00000,0.00000,NULL,NULL,0.00000,1.00000,0.00000,0.00000,0.00000,1,0,0,0,1,0,NULL,0),
+(579,1,201,'system',1792853791,12,81,NULL,NULL,'course',NULL,81,NULL,NULL,NULL,NULL,1,100.00000,0.00000,NULL,NULL,0.00000,1.00000,0.00000,0.00000,0.00000,1,0,0,0,1,0,NULL,0),
+(580,1,202,'system',1792854432,0,82,NULL,NULL,'course',NULL,82,NULL,NULL,NULL,NULL,1,100.00000,0.00000,NULL,NULL,0.00000,1.00000,0.00000,0.00000,0.00000,1,0,0,0,1,0,NULL,0),
+(581,1,203,'system',1792854432,0,83,NULL,NULL,'course',NULL,83,NULL,NULL,NULL,NULL,1,100.00000,0.00000,NULL,NULL,0.00000,1.00000,0.00000,0.00000,0.00000,1,0,0,0,1,0,NULL,0),
+(582,2,198,NULL,1792854446,0,81,81,'Examen final','mod','quiz',120,NULL,NULL,NULL,NULL,1,100.00000,0.00000,NULL,NULL,70.00000,1.00000,0.00000,0.00000,1.00000,0,0,0,0,1,0,NULL,0),
+(583,2,199,NULL,1792854446,0,82,82,'Examen final','mod','quiz',122,NULL,NULL,NULL,NULL,1,100.00000,0.00000,NULL,NULL,70.00000,1.00000,0.00000,0.00000,1.00000,0,0,0,0,1,0,NULL,0),
+(584,2,200,NULL,1792854446,0,83,83,'Examen final','mod','quiz',124,NULL,NULL,NULL,NULL,1,100.00000,0.00000,NULL,NULL,70.00000,1.00000,0.00000,0.00000,1.00000,0,0,0,0,1,0,NULL,0),
+(585,1,204,NULL,1792855167,0,81,81,'Examen final','mod','quiz',120,0,NULL,NULL,NULL,1,100.00000,0.00000,NULL,NULL,0.00000,1.00000,0.00000,0.00000,0.00000,2,1,0,0,1,0,NULL,0),
+(586,2,198,NULL,1792855167,0,81,81,'Examen final','mod','quiz',120,NULL,NULL,NULL,NULL,1,100.00000,0.00000,NULL,NULL,70.00000,1.00000,0.00000,0.00000,0.50000,0,0,0,0,1,0,NULL,0),
+(587,2,204,NULL,1792855167,0,81,81,'Examen final','mod','quiz',120,0,NULL,NULL,NULL,1,100.00000,0.00000,NULL,NULL,0.00000,1.00000,0.00000,0.00000,0.50000,2,1,0,0,1,0,NULL,0),
+(588,2,201,'aggregation',1792855167,0,81,NULL,NULL,'course',NULL,81,NULL,NULL,NULL,NULL,1,200.00000,0.00000,NULL,NULL,0.00000,1.00000,0.00000,0.00000,0.00000,1,0,0,0,1,0,NULL,0),
+(589,1,205,NULL,1792857117,12,81,81,NULL,'mod','attendance',58,0,NULL,NULL,NULL,1,100.00000,0.00000,NULL,NULL,0.00000,1.00000,0.00000,0.00000,0.00000,3,0,0,0,1,0,NULL,0),
+(590,2,205,NULL,1792859251,12,81,81,NULL,'mod','attendance',58,0,NULL,NULL,NULL,1,100.00000,0.00000,NULL,NULL,0.00000,1.00000,0.00000,0.00000,0.50000,3,0,0,0,1,0,NULL,0);
 /*!40000 ALTER TABLE `m_grade_items_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -25292,7 +25497,7 @@ CREATE TABLE `m_groups` (
   PRIMARY KEY (`id`),
   KEY `m_grou_idn_ix` (`idnumber`),
   KEY `m_grou_cou_ix` (`courseid`)
-) ENGINE=InnoDB AUTO_INCREMENT=97 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Each record represents a group.';
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Each record represents a group.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -25397,7 +25602,10 @@ INSERT INTO `m_groups` VALUES
 (93,74,'','Session-01_Ouaga_Kadiogo','',1,'',0,0,1,1791287776,1791287776),
 (94,74,'','Session-02_Ouaga_Kadiogo','',1,'',0,0,1,1791287791,1791287805),
 (95,77,'','Session-01_Ouaga_Kadiogo','',1,'',0,0,1,1791287869,1791287869),
-(96,77,'','Session-02_Ouaga_Kadiogo','',1,'',0,0,1,1791287885,1791287890);
+(96,77,'','Session-02_Ouaga_Kadiogo','',1,'',0,0,1,1791287885,1791287890),
+(97,81,'','Session-01_Ouagadougou (Centre)','Cohorte de la région du Centre (Ouagadougou - Kadiogo)',0,NULL,0,0,1,1792862731,1792862917),
+(98,81,'','Session-02_Bobo-Dioulasso (Hauts-Bassins)','Cohorte des Hauts-Bassins (Bobo-Dioulasso - Houet)',0,NULL,0,0,1,1792862731,1792862917),
+(99,81,'','Session-03_Koudougou (Centre-Ouest)','Cohorte du Centre-Ouest (Koudougou - Boulkiemdé)',0,NULL,0,0,1,1792862731,1792862917);
 /*!40000 ALTER TABLE `m_groups` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -25419,7 +25627,7 @@ CREATE TABLE `m_groups_members` (
   UNIQUE KEY `m_groumemb_usegro_uix` (`userid`,`groupid`),
   KEY `m_groumemb_gro_ix` (`groupid`),
   KEY `m_groumemb_use_ix` (`userid`)
-) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Link a user to a group.';
+) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Link a user to a group.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -25494,7 +25702,15 @@ INSERT INTO `m_groups_members` VALUES
 (63,94,2,1791287805,'',0),
 (64,96,2,1791287890,'',0),
 (65,56,3,1791991542,'',0),
-(66,11,3,1791992271,'',0);
+(66,11,3,1791992271,'',0),
+(67,97,12,1792862731,'',0),
+(68,98,12,1792862731,'',0),
+(69,99,12,1792862731,'',0),
+(70,97,11,1792862731,'',0),
+(71,98,10,1792862731,'',0),
+(72,97,7,1792862917,'',0),
+(73,98,4,1792862917,'',0),
+(74,99,3,1792862917,'',0);
 /*!40000 ALTER TABLE `m_groups_members` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -27077,7 +27293,7 @@ CREATE TABLE `m_logstore_standard_log` (
   KEY `m_logsstanlog_cou_ix` (`courseid`),
   KEY `m_logsstanlog_rea_ix` (`realuserid`),
   KEY `m_logsstanlog_rel_ix` (`relateduserid`)
-) ENGINE=InnoDB AUTO_INCREMENT=6095 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Standard log table';
+) ENGINE=InnoDB AUTO_INCREMENT=6602 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Standard log table';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -33181,7 +33397,514 @@ INSERT INTO `m_logstore_standard_log` VALUES
 (6091,'\\core\\event\\notification_sent','core','sent','notification','notifications',22,'c',0,1,10,0,0,0,11,0,'{\"courseid\":\"1\"}',1792482242,'cli',NULL,NULL),
 (6092,'\\core\\event\\notification_sent','core','sent','notification','notifications',23,'c',0,1,10,0,0,0,12,0,'{\"courseid\":\"1\"}',1792482242,'cli',NULL,NULL),
 (6093,'\\core\\event\\notification_sent','core','sent','notification','notifications',24,'c',0,1,10,0,0,0,13,0,'{\"courseid\":\"1\"}',1792482242,'cli',NULL,NULL),
-(6094,'\\core\\event\\notification_sent','core','sent','notification','notifications',25,'c',0,1,10,0,0,0,11,0,'{\"courseid\":\"1\"}',1792482242,'cli',NULL,NULL);
+(6094,'\\core\\event\\notification_sent','core','sent','notification','notifications',25,'c',0,1,10,0,0,0,11,0,'{\"courseid\":\"1\"}',1792482242,'cli',NULL,NULL),
+(6095,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792498721,'web','172.20.0.1',NULL),
+(6096,'\\core\\event\\user_loggedin','core','loggedin','user','user',2,'r',0,1,10,0,2,0,NULL,0,'{\"username\":\"pactdigital\",\"extrauserinfo\":[]}',1792498921,'web','172.20.0.1',NULL),
+(6097,'\\core\\event\\mycourses_viewed','core','viewed','mycourses',NULL,NULL,'r',0,1,10,0,2,0,NULL,0,'null',1792499023,'web','172.20.0.1',NULL),
+(6098,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,120,50,48,2,48,NULL,0,'null',1792499055,'web','172.20.0.1',NULL),
+(6099,'\\mod_quiz\\event\\course_module_viewed','mod_quiz','viewed','course_module','quiz',53,'r',2,348,70,214,2,48,NULL,0,'null',1792499063,'web','172.20.0.1',NULL),
+(6100,'\\mod_quiz\\event\\attempt_preview_started','mod_quiz','started','attempt_preview','quiz_attempts',1,'c',1,348,70,214,2,48,2,0,'{\"quizid\":\"53\"}',1792499076,'web','172.20.0.1',NULL),
+(6101,'\\mod_quiz\\event\\attempt_viewed','mod_quiz','viewed','attempt','quiz_attempts',1,'r',2,348,70,214,2,48,2,0,'{\"quizid\":\"53\",\"page\":\"0\"}',1792499076,'web','172.20.0.1',NULL),
+(6102,'\\mod_page\\event\\course_module_viewed','mod_page','viewed','course_module','page',1,'r',2,624,70,457,2,48,NULL,0,'null',1792499279,'web','172.20.0.1',NULL),
+(6103,'\\core\\event\\course_module_completion_updated','core','updated','course_module_completion','course_modules_completion',3,'u',2,624,70,457,2,48,2,0,'{\"relateduserid\":\"2\",\"overrideby\":null,\"completionstate\":0}',1792499279,'web','172.20.0.1',NULL),
+(6104,'\\core\\event\\course_module_completion_updated','core','updated','course_module_completion','course_modules_completion',3,'u',2,624,70,457,2,48,2,0,'{\"relateduserid\":\"2\",\"overrideby\":null,\"completionstate\":1}',1792499279,'web','172.20.0.1',NULL),
+(6105,'\\mod_page\\event\\course_module_viewed','mod_page','viewed','course_module','page',2,'r',2,625,70,458,2,48,NULL,0,'null',1792499317,'web','172.20.0.1',NULL),
+(6106,'\\core\\event\\course_module_completion_updated','core','updated','course_module_completion','course_modules_completion',4,'u',2,625,70,458,2,48,2,0,'{\"relateduserid\":\"2\",\"overrideby\":null,\"completionstate\":0}',1792499317,'web','172.20.0.1',NULL),
+(6107,'\\core\\event\\course_module_completion_updated','core','updated','course_module_completion','course_modules_completion',4,'u',2,625,70,458,2,48,2,0,'{\"relateduserid\":\"2\",\"overrideby\":null,\"completionstate\":1}',1792499317,'web','172.20.0.1',NULL),
+(6108,'\\mod_page\\event\\course_module_viewed','mod_page','viewed','course_module','page',3,'r',2,626,70,459,2,48,NULL,0,'null',1792499329,'web','172.20.0.1',NULL),
+(6109,'\\core\\event\\course_module_completion_updated','core','updated','course_module_completion','course_modules_completion',5,'u',2,626,70,459,2,48,2,0,'{\"relateduserid\":\"2\",\"overrideby\":null,\"completionstate\":0}',1792499329,'web','172.20.0.1',NULL),
+(6110,'\\core\\event\\course_module_completion_updated','core','updated','course_module_completion','course_modules_completion',5,'u',2,626,70,459,2,48,2,0,'{\"relateduserid\":\"2\",\"overrideby\":null,\"completionstate\":1}',1792499329,'web','172.20.0.1',NULL),
+(6111,'\\mod_quiz\\event\\course_module_viewed','mod_quiz','viewed','course_module','quiz',125,'r',2,636,70,469,2,48,NULL,0,'null',1792499552,'web','172.20.0.1',NULL),
+(6112,'\\mod_quiz\\event\\attempt_preview_started','mod_quiz','started','attempt_preview','quiz_attempts',2,'c',1,636,70,469,2,48,2,0,'{\"quizid\":\"125\"}',1792499691,'web','172.20.0.1',NULL),
+(6113,'\\mod_quiz\\event\\attempt_viewed','mod_quiz','viewed','attempt','quiz_attempts',2,'r',2,636,70,469,2,48,2,0,'{\"quizid\":\"125\",\"page\":\"0\"}',1792499691,'web','172.20.0.1',NULL),
+(6114,'\\mod_quiz\\event\\attempt_updated','mod_quiz','updated','attempt','quiz_attempts',2,'u',2,636,70,469,2,48,2,0,'{\"quizid\":\"125\",\"page\":\"0\"}',1792499737,'web','172.20.0.1',NULL),
+(6115,'\\mod_quiz\\event\\attempt_viewed','mod_quiz','viewed','attempt','quiz_attempts',2,'r',2,636,70,469,2,48,2,0,'{\"quizid\":\"125\",\"page\":\"0\"}',1792499737,'web','172.20.0.1',NULL),
+(6116,'\\mod_quiz\\event\\attempt_updated','mod_quiz','updated','attempt','quiz_attempts',2,'u',2,636,70,469,2,48,2,0,'{\"quizid\":\"125\",\"page\":\"1\"}',1792499770,'web','172.20.0.1',NULL),
+(6117,'\\mod_quiz\\event\\attempt_viewed','mod_quiz','viewed','attempt','quiz_attempts',2,'r',2,636,70,469,2,48,2,0,'{\"quizid\":\"125\",\"page\":\"1\"}',1792499770,'web','172.20.0.1',NULL),
+(6118,'\\mod_quiz\\event\\attempt_updated','mod_quiz','updated','attempt','quiz_attempts',2,'u',2,636,70,469,2,48,2,0,'{\"quizid\":\"125\",\"page\":\"2\"}',1792499785,'web','172.20.0.1',NULL),
+(6119,'\\mod_quiz\\event\\attempt_viewed','mod_quiz','viewed','attempt','quiz_attempts',2,'r',2,636,70,469,2,48,2,0,'{\"quizid\":\"125\",\"page\":\"2\"}',1792499785,'web','172.20.0.1',NULL),
+(6120,'\\mod_quiz\\event\\attempt_updated','mod_quiz','updated','attempt','quiz_attempts',2,'u',2,636,70,469,2,48,2,0,'{\"quizid\":\"125\",\"page\":\"3\"}',1792499797,'web','172.20.0.1',NULL),
+(6121,'\\mod_quiz\\event\\attempt_viewed','mod_quiz','viewed','attempt','quiz_attempts',2,'r',2,636,70,469,2,48,2,0,'{\"quizid\":\"125\",\"page\":\"3\"}',1792499797,'web','172.20.0.1',NULL),
+(6122,'\\mod_quiz\\event\\attempt_updated','mod_quiz','updated','attempt','quiz_attempts',2,'u',2,636,70,469,2,48,2,0,'{\"quizid\":\"125\",\"page\":\"4\"}',1792499808,'web','172.20.0.1',NULL),
+(6123,'\\mod_quiz\\event\\attempt_viewed','mod_quiz','viewed','attempt','quiz_attempts',2,'r',2,636,70,469,2,48,2,0,'{\"quizid\":\"125\",\"page\":\"4\"}',1792499808,'web','172.20.0.1',NULL),
+(6124,'\\mod_quiz\\event\\attempt_updated','mod_quiz','updated','attempt','quiz_attempts',2,'u',2,636,70,469,2,48,2,0,'{\"quizid\":\"125\",\"page\":\"5\"}',1792499815,'web','172.20.0.1',NULL),
+(6125,'\\mod_quiz\\event\\attempt_summary_viewed','mod_quiz','viewed','attempt_summary','quiz_attempts',2,'r',2,636,70,469,2,48,2,0,'{\"quizid\":\"125\"}',1792499815,'web','172.20.0.1',NULL),
+(6126,'\\mod_quiz\\event\\attempt_reviewed','mod_quiz','reviewed','attempt','quiz_attempts',2,'r',2,636,70,469,2,48,2,0,'{\"quizid\":\"125\"}',1792499864,'web','172.20.0.1',NULL),
+(6127,'\\mod_quiz\\event\\course_module_viewed','mod_quiz','viewed','course_module','quiz',54,'r',2,349,70,215,2,48,NULL,0,'null',1792499893,'web','172.20.0.1',NULL),
+(6128,'\\mod_quiz\\event\\attempt_preview_started','mod_quiz','started','attempt_preview','quiz_attempts',3,'c',1,349,70,215,2,48,2,0,'{\"quizid\":\"54\"}',1792499926,'web','172.20.0.1',NULL),
+(6129,'\\mod_quiz\\event\\attempt_viewed','mod_quiz','viewed','attempt','quiz_attempts',3,'r',2,349,70,215,2,48,2,0,'{\"quizid\":\"54\",\"page\":\"0\"}',1792499926,'web','172.20.0.1',NULL),
+(6130,'\\mod_quiz\\event\\attempt_updated','mod_quiz','updated','attempt','quiz_attempts',3,'u',2,349,70,215,2,48,2,0,'{\"quizid\":\"54\",\"page\":\"0\"}',1792499953,'web','172.20.0.1',NULL),
+(6131,'\\mod_quiz\\event\\attempt_viewed','mod_quiz','viewed','attempt','quiz_attempts',3,'r',2,349,70,215,2,48,2,0,'{\"quizid\":\"54\",\"page\":\"0\"}',1792499953,'web','172.20.0.1',NULL),
+(6132,'\\mod_quiz\\event\\attempt_updated','mod_quiz','updated','attempt','quiz_attempts',3,'u',2,349,70,215,2,48,2,0,'{\"quizid\":\"54\",\"page\":\"1\"}',1792499966,'web','172.20.0.1',NULL),
+(6133,'\\mod_quiz\\event\\attempt_viewed','mod_quiz','viewed','attempt','quiz_attempts',3,'r',2,349,70,215,2,48,2,0,'{\"quizid\":\"54\",\"page\":\"1\"}',1792499966,'web','172.20.0.1',NULL),
+(6134,'\\mod_quiz\\event\\attempt_updated','mod_quiz','updated','attempt','quiz_attempts',3,'u',2,349,70,215,2,48,2,0,'{\"quizid\":\"54\",\"page\":\"2\"}',1792499982,'web','172.20.0.1',NULL),
+(6135,'\\mod_quiz\\event\\attempt_viewed','mod_quiz','viewed','attempt','quiz_attempts',3,'r',2,349,70,215,2,48,2,0,'{\"quizid\":\"54\",\"page\":\"2\"}',1792499982,'web','172.20.0.1',NULL),
+(6136,'\\mod_quiz\\event\\attempt_updated','mod_quiz','updated','attempt','quiz_attempts',3,'u',2,349,70,215,2,48,2,0,'{\"quizid\":\"54\",\"page\":\"3\"}',1792499996,'web','172.20.0.1',NULL),
+(6137,'\\mod_quiz\\event\\attempt_viewed','mod_quiz','viewed','attempt','quiz_attempts',3,'r',2,349,70,215,2,48,2,0,'{\"quizid\":\"54\",\"page\":\"3\"}',1792499996,'web','172.20.0.1',NULL),
+(6138,'\\mod_quiz\\event\\attempt_updated','mod_quiz','updated','attempt','quiz_attempts',3,'u',2,349,70,215,2,48,2,0,'{\"quizid\":\"54\",\"page\":\"4\"}',1792500008,'web','172.20.0.1',NULL),
+(6139,'\\mod_quiz\\event\\attempt_viewed','mod_quiz','viewed','attempt','quiz_attempts',3,'r',2,349,70,215,2,48,2,0,'{\"quizid\":\"54\",\"page\":\"4\"}',1792500008,'web','172.20.0.1',NULL),
+(6140,'\\mod_quiz\\event\\attempt_updated','mod_quiz','updated','attempt','quiz_attempts',3,'u',2,349,70,215,2,48,2,0,'{\"quizid\":\"54\",\"page\":\"5\"}',1792500017,'web','172.20.0.1',NULL),
+(6141,'\\mod_quiz\\event\\attempt_viewed','mod_quiz','viewed','attempt','quiz_attempts',3,'r',2,349,70,215,2,48,2,0,'{\"quizid\":\"54\",\"page\":\"5\"}',1792500017,'web','172.20.0.1',NULL),
+(6142,'\\mod_quiz\\event\\attempt_updated','mod_quiz','updated','attempt','quiz_attempts',3,'u',2,349,70,215,2,48,2,0,'{\"quizid\":\"54\",\"page\":\"6\"}',1792500027,'web','172.20.0.1',NULL),
+(6143,'\\mod_quiz\\event\\attempt_summary_viewed','mod_quiz','viewed','attempt_summary','quiz_attempts',3,'r',2,349,70,215,2,48,2,0,'{\"quizid\":\"54\"}',1792500027,'web','172.20.0.1',NULL),
+(6144,'\\mod_quiz\\event\\attempt_reviewed','mod_quiz','reviewed','attempt','quiz_attempts',3,'r',2,349,70,215,2,48,2,0,'{\"quizid\":\"54\"}',1792500041,'web','172.20.0.1',NULL),
+(6145,'\\mod_quiz\\event\\course_module_viewed','mod_quiz','viewed','course_module','quiz',54,'r',2,349,70,215,2,48,NULL,0,'null',1792500074,'web','172.20.0.1',NULL),
+(6146,'\\core\\event\\grade_item_updated','core','updated','grade_item','grade_items',78,'u',0,120,50,48,2,48,NULL,0,'{\"itemname\":\"Examen final\",\"itemtype\":\"mod\",\"itemmodule\":\"quiz\"}',1792500113,'web','172.20.0.1',NULL),
+(6147,'\\core\\event\\grade_item_updated','core','updated','grade_item','grade_items',165,'u',0,120,50,48,2,48,NULL,0,'{\"itemname\":\"Fiche de pr\\u00e9sence num\\u00e9rique\",\"itemtype\":\"mod\",\"itemmodule\":\"attendance\"}',1792500113,'web','172.20.0.1',NULL),
+(6148,'\\core\\event\\grade_item_updated','core','updated','grade_item','grade_items',77,'u',0,120,50,48,2,48,NULL,0,'{\"itemname\":null,\"itemtype\":\"course\",\"itemmodule\":null}',1792500113,'web','172.20.0.1',NULL),
+(6149,'\\mod_quiz\\event\\attempt_preview_started','mod_quiz','started','attempt_preview','quiz_attempts',4,'c',1,349,70,215,2,48,2,0,'{\"quizid\":\"54\"}',1792500113,'web','172.20.0.1',NULL),
+(6150,'\\mod_quiz\\event\\attempt_viewed','mod_quiz','viewed','attempt','quiz_attempts',4,'r',2,349,70,215,2,48,2,0,'{\"quizid\":\"54\",\"page\":\"0\"}',1792500113,'web','172.20.0.1',NULL),
+(6151,'\\mod_quiz\\event\\attempt_updated','mod_quiz','updated','attempt','quiz_attempts',4,'u',2,349,70,215,2,48,2,0,'{\"quizid\":\"54\",\"page\":\"0\"}',1792500122,'web','172.20.0.1',NULL),
+(6152,'\\mod_quiz\\event\\attempt_viewed','mod_quiz','viewed','attempt','quiz_attempts',4,'r',2,349,70,215,2,48,2,0,'{\"quizid\":\"54\",\"page\":\"0\"}',1792500122,'web','172.20.0.1',NULL),
+(6153,'\\mod_quiz\\event\\attempt_updated','mod_quiz','updated','attempt','quiz_attempts',4,'u',2,349,70,215,2,48,2,0,'{\"quizid\":\"54\",\"page\":\"1\"}',1792500133,'web','172.20.0.1',NULL),
+(6154,'\\mod_quiz\\event\\attempt_viewed','mod_quiz','viewed','attempt','quiz_attempts',4,'r',2,349,70,215,2,48,2,0,'{\"quizid\":\"54\",\"page\":\"1\"}',1792500133,'web','172.20.0.1',NULL),
+(6155,'\\mod_quiz\\event\\attempt_updated','mod_quiz','updated','attempt','quiz_attempts',4,'u',2,349,70,215,2,48,2,0,'{\"quizid\":\"54\",\"page\":\"2\"}',1792500144,'web','172.20.0.1',NULL),
+(6156,'\\mod_quiz\\event\\attempt_viewed','mod_quiz','viewed','attempt','quiz_attempts',4,'r',2,349,70,215,2,48,2,0,'{\"quizid\":\"54\",\"page\":\"2\"}',1792500144,'web','172.20.0.1',NULL),
+(6157,'\\mod_quiz\\event\\attempt_updated','mod_quiz','updated','attempt','quiz_attempts',4,'u',2,349,70,215,2,48,2,0,'{\"quizid\":\"54\",\"page\":\"3\"}',1792500153,'web','172.20.0.1',NULL),
+(6158,'\\mod_quiz\\event\\attempt_viewed','mod_quiz','viewed','attempt','quiz_attempts',4,'r',2,349,70,215,2,48,2,0,'{\"quizid\":\"54\",\"page\":\"3\"}',1792500153,'web','172.20.0.1',NULL),
+(6159,'\\mod_quiz\\event\\attempt_updated','mod_quiz','updated','attempt','quiz_attempts',4,'u',2,349,70,215,2,48,2,0,'{\"quizid\":\"54\",\"page\":\"4\"}',1792500163,'web','172.20.0.1',NULL),
+(6160,'\\mod_quiz\\event\\attempt_viewed','mod_quiz','viewed','attempt','quiz_attempts',4,'r',2,349,70,215,2,48,2,0,'{\"quizid\":\"54\",\"page\":\"4\"}',1792500163,'web','172.20.0.1',NULL),
+(6161,'\\mod_quiz\\event\\attempt_updated','mod_quiz','updated','attempt','quiz_attempts',4,'u',2,349,70,215,2,48,2,0,'{\"quizid\":\"54\",\"page\":\"5\"}',1792500171,'web','172.20.0.1',NULL),
+(6162,'\\mod_quiz\\event\\attempt_viewed','mod_quiz','viewed','attempt','quiz_attempts',4,'r',2,349,70,215,2,48,2,0,'{\"quizid\":\"54\",\"page\":\"5\"}',1792500171,'web','172.20.0.1',NULL),
+(6163,'\\mod_quiz\\event\\attempt_updated','mod_quiz','updated','attempt','quiz_attempts',4,'u',2,349,70,215,2,48,2,0,'{\"quizid\":\"54\",\"page\":\"6\"}',1792500180,'web','172.20.0.1',NULL),
+(6164,'\\mod_quiz\\event\\attempt_summary_viewed','mod_quiz','viewed','attempt_summary','quiz_attempts',4,'r',2,349,70,215,2,48,2,0,'{\"quizid\":\"54\"}',1792500180,'web','172.20.0.1',NULL),
+(6165,'\\mod_quiz\\event\\attempt_reviewed','mod_quiz','reviewed','attempt','quiz_attempts',4,'r',2,349,70,215,2,48,2,0,'{\"quizid\":\"54\"}',1792500192,'web','172.20.0.1',NULL),
+(6166,'\\mod_quiz\\event\\course_module_viewed','mod_quiz','viewed','course_module','quiz',54,'r',2,349,70,215,2,48,NULL,0,'null',1792500225,'web','172.20.0.1',NULL),
+(6167,'\\core\\event\\user_loggedin','core','loggedin','user','user',12,'r',0,1,10,0,12,0,NULL,0,'{\"username\":\"formateur\",\"extrauserinfo\":[]}',1792501666,'web','172.20.0.1',NULL),
+(6168,'\\mod_quiz\\event\\attempt_reviewed','mod_quiz','reviewed','attempt','quiz_attempts',4,'r',2,349,70,215,2,48,2,0,'{\"quizid\":\"54\"}',1792501939,'web','172.20.0.1',NULL),
+(6169,'\\core\\event\\dashboard_viewed','core','viewed','dashboard',NULL,NULL,'r',0,5,30,2,2,0,2,0,'null',1792501948,'web','172.20.0.1',NULL),
+(6170,'\\core\\event\\dashboard_viewed','core','viewed','dashboard',NULL,NULL,'r',0,604,30,12,12,0,12,0,'null',1792502076,'web','172.20.0.1',NULL),
+(6171,'\\core\\event\\user_loggedout','core','loggedout','user','user',12,'r',0,1,10,0,12,0,NULL,0,'{\"sessionid\":\"c500580d44cdc4dcb6ebcdd36e8efa59\"}',1792502085,'web','172.20.0.1',NULL),
+(6172,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792502085,'web','172.20.0.1',NULL),
+(6173,'\\core\\event\\mycourses_viewed','core','viewed','mycourses',NULL,NULL,'r',0,1,10,0,2,0,NULL,0,'null',1792502107,'web','172.20.0.1',NULL),
+(6174,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,120,50,48,2,48,NULL,0,'null',1792502111,'web','172.20.0.1',NULL),
+(6175,'\\mod_quiz\\event\\course_module_viewed','mod_quiz','viewed','course_module','quiz',53,'r',2,348,70,214,2,48,NULL,0,'null',1792502115,'web','172.20.0.1',NULL),
+(6176,'\\mod_quiz\\event\\attempt_viewed','mod_quiz','viewed','attempt','quiz_attempts',1,'r',2,348,70,214,2,48,2,0,'{\"quizid\":\"53\",\"page\":\"0\"}',1792502119,'web','172.20.0.1',NULL),
+(6177,'\\mod_page\\event\\course_module_viewed','mod_page','viewed','course_module','page',1,'r',2,624,70,457,2,48,NULL,0,'null',1792502148,'web','172.20.0.1',NULL),
+(6178,'\\mod_page\\event\\course_module_viewed','mod_page','viewed','course_module','page',1,'r',2,624,70,457,2,48,NULL,0,'null',1792502148,'web','172.20.0.1',NULL),
+(6179,'\\mod_page\\event\\course_module_viewed','mod_page','viewed','course_module','page',2,'r',2,625,70,458,2,48,NULL,0,'null',1792502167,'web','172.20.0.1',NULL),
+(6180,'\\mod_page\\event\\course_module_viewed','mod_page','viewed','course_module','page',3,'r',2,626,70,459,2,48,NULL,0,'null',1792502195,'web','172.20.0.1',NULL),
+(6181,'\\mod_page\\event\\course_module_viewed','mod_page','viewed','course_module','page',4,'r',2,627,70,460,2,48,NULL,0,'null',1792502222,'web','172.20.0.1',NULL),
+(6182,'\\core\\event\\course_module_completion_updated','core','updated','course_module_completion','course_modules_completion',6,'u',2,627,70,460,2,48,2,0,'{\"relateduserid\":\"2\",\"overrideby\":null,\"completionstate\":0}',1792502222,'web','172.20.0.1',NULL),
+(6183,'\\core\\event\\course_module_completion_updated','core','updated','course_module_completion','course_modules_completion',6,'u',2,627,70,460,2,48,2,0,'{\"relateduserid\":\"2\",\"overrideby\":null,\"completionstate\":1}',1792502222,'web','172.20.0.1',NULL),
+(6184,'\\mod_page\\event\\course_module_viewed','mod_page','viewed','course_module','page',5,'r',2,628,70,461,2,48,NULL,0,'null',1792502234,'web','172.20.0.1',NULL),
+(6185,'\\core\\event\\course_module_completion_updated','core','updated','course_module_completion','course_modules_completion',7,'u',2,628,70,461,2,48,2,0,'{\"relateduserid\":\"2\",\"overrideby\":null,\"completionstate\":0}',1792502234,'web','172.20.0.1',NULL),
+(6186,'\\core\\event\\course_module_completion_updated','core','updated','course_module_completion','course_modules_completion',7,'u',2,628,70,461,2,48,2,0,'{\"relateduserid\":\"2\",\"overrideby\":null,\"completionstate\":1}',1792502234,'web','172.20.0.1',NULL),
+(6187,'\\mod_page\\event\\course_module_viewed','mod_page','viewed','course_module','page',6,'r',2,629,70,462,2,48,NULL,0,'null',1792502266,'web','172.20.0.1',NULL),
+(6188,'\\core\\event\\course_module_completion_updated','core','updated','course_module_completion','course_modules_completion',8,'u',2,629,70,462,2,48,2,0,'{\"relateduserid\":\"2\",\"overrideby\":null,\"completionstate\":0}',1792502266,'web','172.20.0.1',NULL),
+(6189,'\\core\\event\\course_module_completion_updated','core','updated','course_module_completion','course_modules_completion',8,'u',2,629,70,462,2,48,2,0,'{\"relateduserid\":\"2\",\"overrideby\":null,\"completionstate\":1}',1792502266,'web','172.20.0.1',NULL),
+(6190,'\\mod_page\\event\\course_module_viewed','mod_page','viewed','course_module','page',7,'r',2,630,70,463,2,48,NULL,0,'null',1792502305,'web','172.20.0.1',NULL),
+(6191,'\\core\\event\\course_module_completion_updated','core','updated','course_module_completion','course_modules_completion',9,'u',2,630,70,463,2,48,2,0,'{\"relateduserid\":\"2\",\"overrideby\":null,\"completionstate\":0}',1792502305,'web','172.20.0.1',NULL),
+(6192,'\\core\\event\\course_module_completion_updated','core','updated','course_module_completion','course_modules_completion',9,'u',2,630,70,463,2,48,2,0,'{\"relateduserid\":\"2\",\"overrideby\":null,\"completionstate\":1}',1792502305,'web','172.20.0.1',NULL),
+(6193,'\\mod_page\\event\\course_module_viewed','mod_page','viewed','course_module','page',7,'r',2,630,70,463,2,48,NULL,0,'null',1792502314,'web','172.20.0.1',NULL),
+(6194,'\\mod_page\\event\\course_module_viewed','mod_page','viewed','course_module','page',8,'r',2,631,70,464,2,48,NULL,0,'null',1792502370,'web','172.20.0.1',NULL),
+(6195,'\\core\\event\\course_module_completion_updated','core','updated','course_module_completion','course_modules_completion',10,'u',2,631,70,464,2,48,2,0,'{\"relateduserid\":\"2\",\"overrideby\":null,\"completionstate\":0}',1792502370,'web','172.20.0.1',NULL),
+(6196,'\\core\\event\\course_module_completion_updated','core','updated','course_module_completion','course_modules_completion',10,'u',2,631,70,464,2,48,2,0,'{\"relateduserid\":\"2\",\"overrideby\":null,\"completionstate\":1}',1792502370,'web','172.20.0.1',NULL),
+(6197,'\\core\\event\\user_loggedout','core','loggedout','user','user',2,'r',0,1,10,0,2,0,NULL,0,'{\"sessionid\":\"e7e702e69d626291452ab8845957a648\"}',1792524581,'web','172.20.0.1',NULL),
+(6198,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792524581,'web','172.20.0.1',NULL),
+(6199,'\\core\\event\\user_loggedin','core','loggedin','user','user',12,'r',0,1,10,0,12,0,NULL,0,'{\"username\":\"formateur\",\"extrauserinfo\":[]}',1792524625,'web','172.20.0.1',NULL),
+(6200,'\\core\\event\\dashboard_viewed','core','viewed','dashboard',NULL,NULL,'r',0,604,30,12,12,0,12,0,'null',1792524625,'web','172.20.0.1',NULL),
+(6201,'\\core\\event\\user_loggedin','core','loggedin','user','user',12,'r',0,1,10,0,12,0,NULL,0,'{\"username\":\"formateur\",\"extrauserinfo\":[]}',1792524757,'web','172.20.0.1',NULL),
+(6202,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,579,50,81,12,81,NULL,0,'null',1792524853,'web','172.20.0.1',NULL),
+(6203,'\\core\\event\\user_loggedout','core','loggedout','user','user',12,'r',0,1,10,0,12,0,NULL,0,'{\"sessionid\":\"5347f46b1307e0c8d7df7c8439d1cbd6\"}',1792524893,'web','172.20.0.1',NULL),
+(6204,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792524893,'web','172.20.0.1',NULL),
+(6205,'\\core\\event\\user_loggedin','core','loggedin','user','user',2,'r',0,1,10,0,2,0,NULL,0,'{\"username\":\"pactdigital\",\"extrauserinfo\":[]}',1792524949,'web','172.20.0.1',NULL),
+(6206,'\\core\\event\\dashboard_viewed','core','viewed','dashboard',NULL,NULL,'r',0,5,30,2,2,0,2,0,'null',1792524961,'web','172.20.0.1',NULL),
+(6207,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792579237,'web','172.20.0.1',NULL),
+(6208,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792603221,'web','172.20.0.1',NULL),
+(6209,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792677351,'web','172.20.0.1',NULL),
+(6210,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792677372,'web','172.20.0.1',NULL),
+(6211,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792677376,'web','172.20.0.1',NULL),
+(6212,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792743028,'web','172.20.0.1',NULL),
+(6213,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792743273,'web','172.20.0.1',NULL),
+(6214,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792743438,'web','172.20.0.1',NULL),
+(6215,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792743453,'web','172.20.0.1',NULL),
+(6216,'\\core\\event\\user_loggedin','core','loggedin','user','user',10,'r',0,1,10,0,10,0,NULL,0,'{\"username\":\"kiz\",\"extrauserinfo\":[]}',1792743768,'web','172.20.0.1',NULL),
+(6217,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,10,1,NULL,0,'null',1792744046,'web','172.20.0.1',NULL),
+(6218,'\\core\\event\\dashboard_viewed','core','viewed','dashboard',NULL,NULL,'r',0,572,30,10,10,0,10,0,'null',1792744072,'web','172.20.0.1',NULL),
+(6219,'\\core\\event\\dashboard_viewed','core','viewed','dashboard',NULL,NULL,'r',0,572,30,10,10,0,10,0,'null',1792744079,'web','172.20.0.1',NULL),
+(6220,'\\core\\event\\user_loggedout','core','loggedout','user','user',10,'r',0,1,10,0,10,0,NULL,0,'{\"sessionid\":\"ff77ebd9dfd3db8e8c5f3c38b6b8f808\"}',1792744130,'web','172.20.0.1',NULL),
+(6221,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792744130,'web','172.20.0.1',NULL),
+(6222,'\\core\\event\\user_loggedin','core','loggedin','user','user',10,'r',0,1,10,0,10,0,NULL,0,'{\"username\":\"kiz\",\"extrauserinfo\":[]}',1792744220,'web','172.20.0.1',NULL),
+(6223,'\\core\\event\\dashboard_viewed','core','viewed','dashboard',NULL,NULL,'r',0,572,30,10,10,0,10,0,'null',1792744237,'web','172.20.0.1',NULL),
+(6224,'\\core\\event\\user_enrolment_created','core','created','user_enrolment','user_enrolments',99,'c',0,83,50,24,10,24,10,0,'{\"enrol\":\"manual\"}',1792744283,'web','172.20.0.1',NULL),
+(6225,'\\core\\event\\notification_sent','core','sent','notification','notifications',26,'c',0,1,10,0,2,0,10,0,'{\"courseid\":\"24\"}',1792744283,'web','172.20.0.1',NULL),
+(6226,'\\core\\event\\role_assigned','core','assigned','role','role',5,'c',0,83,50,24,10,24,10,0,'{\"id\":102,\"component\":\"\",\"itemid\":0}',1792744283,'web','172.20.0.1',NULL),
+(6227,'\\core\\event\\user_enrolment_created','core','created','user_enrolment','user_enrolments',10,'c',0,83,50,24,10,24,10,0,'{\"enrol\":\"manual\"}',1792744283,'web','172.20.0.1',NULL),
+(6228,'\\mod_quiz\\event\\course_module_viewed','mod_quiz','viewed','course_module','quiz',6,'r',2,229,70,95,10,24,NULL,0,'null',1792744361,'web','172.20.0.1',NULL),
+(6229,'\\core\\event\\dashboard_viewed','core','viewed','dashboard',NULL,NULL,'r',0,572,30,10,10,0,10,0,'null',1792744370,'web','172.20.0.1',NULL),
+(6230,'\\core\\event\\user_loggedout','core','loggedout','user','user',10,'r',0,1,10,0,10,0,NULL,0,'{\"sessionid\":\"ce16f40d6a155db66d7bf80c2b81ab03\"}',1792745276,'web','172.20.0.1',NULL),
+(6231,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792745276,'web','172.20.0.1',NULL),
+(6232,'\\core\\event\\user_loggedin','core','loggedin','user','user',2,'r',0,1,10,0,2,0,NULL,0,'{\"username\":\"pactdigital\",\"extrauserinfo\":[]}',1792745290,'web','172.20.0.1',NULL),
+(6233,'\\core\\event\\dashboard_viewed','core','viewed','dashboard',NULL,NULL,'r',0,5,30,2,2,0,2,0,'null',1792745324,'web','172.20.0.1',NULL),
+(6234,'\\core\\event\\mycourses_viewed','core','viewed','mycourses',NULL,NULL,'r',0,1,10,0,2,0,NULL,0,'null',1792745539,'web','172.20.0.1',NULL),
+(6235,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,581,50,83,2,83,NULL,0,'null',1792745548,'web','172.20.0.1',NULL),
+(6236,'\\core\\event\\user_list_viewed','core','viewed','user_list','course',83,'r',0,581,50,83,2,83,NULL,0,'{\"courseshortname\":\"Or_en_formation_numerique\",\"coursefullname\":\"Former avec le num\\u00e9rique \\u2014 Or\"}',1792745551,'web','172.20.0.1',NULL),
+(6237,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,581,50,83,2,83,NULL,0,'null',1792745724,'web','172.20.0.1',NULL),
+(6238,'\\core\\event\\user_loggedout','core','loggedout','user','user',2,'r',0,1,10,0,2,0,NULL,0,'{\"sessionid\":\"be26fe3a4fd9ad76906f029c5d24e909\"}',1792745843,'web','172.20.0.1',NULL),
+(6239,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792745843,'web','172.20.0.1',NULL),
+(6240,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792745888,'web','172.20.0.1',NULL),
+(6241,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792745945,'web','172.20.0.1',NULL),
+(6242,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792745980,'web','172.20.0.1',NULL),
+(6243,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792745988,'web','172.20.0.1',NULL),
+(6244,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792746027,'web','172.20.0.1',NULL),
+(6245,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792746042,'web','172.20.0.1',NULL),
+(6246,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792746050,'web','172.20.0.1',NULL),
+(6247,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792746058,'web','172.20.0.1',NULL),
+(6248,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792746628,'web','172.20.0.1',NULL),
+(6249,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792747167,'web','172.20.0.1',NULL),
+(6250,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792747211,'web','172.20.0.1',NULL),
+(6251,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792747553,'web','172.20.0.1',NULL),
+(6252,'\\core\\event\\user_loggedin','core','loggedin','user','user',2,'r',0,1,10,0,2,0,NULL,0,'{\"username\":\"pactdigital\",\"extrauserinfo\":[]}',1792747573,'web','172.20.0.1',NULL),
+(6253,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,581,50,83,2,83,NULL,0,'null',1792747573,'web','172.20.0.1',NULL),
+(6254,'\\core\\event\\dashboard_viewed','core','viewed','dashboard',NULL,NULL,'r',0,5,30,2,2,0,2,0,'null',1792747586,'web','172.20.0.1',NULL),
+(6255,'\\core\\event\\mycourses_viewed','core','viewed','mycourses',NULL,NULL,'r',0,1,10,0,2,0,NULL,0,'null',1792747606,'web','172.20.0.1',NULL),
+(6256,'\\core\\event\\dashboard_viewed','core','viewed','dashboard',NULL,NULL,'r',0,5,30,2,2,0,2,0,'null',1792747607,'web','172.20.0.1',NULL),
+(6257,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792777852,'web','172.20.0.1',NULL),
+(6258,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792777923,'web','172.20.0.1',NULL),
+(6259,'\\core\\event\\user_loggedin','core','loggedin','user','user',11,'r',0,1,10,0,11,0,NULL,0,'{\"username\":\"apprenant\",\"extrauserinfo\":[]}',1792778331,'web','172.20.0.1',NULL),
+(6260,'\\core\\event\\dashboard_viewed','core','viewed','dashboard',NULL,NULL,'r',0,603,30,11,11,0,11,0,'null',1792778331,'web','172.20.0.1',NULL),
+(6261,'\\core\\event\\user_loggedin','core','loggedin','user','user',11,'r',0,1,10,0,11,0,NULL,0,'{\"username\":\"apprenant\",\"extrauserinfo\":[]}',1792778665,'web','172.20.0.1',NULL),
+(6262,'\\core\\event\\user_loggedin','core','loggedin','user','user',11,'r',0,1,10,0,11,0,NULL,0,'{\"username\":\"apprenant\",\"extrauserinfo\":[]}',1792778716,'web','172.20.0.1',NULL),
+(6263,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792779029,'web','172.20.0.1',NULL),
+(6264,'\\core\\event\\mycourses_viewed','core','viewed','mycourses',NULL,NULL,'r',0,1,10,0,2,0,NULL,0,'null',1792779250,'web','172.20.0.1',NULL),
+(6265,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,581,50,83,2,83,NULL,0,'null',1792779254,'web','172.20.0.1',NULL),
+(6266,'\\mod_customcert\\event\\course_module_viewed','mod_customcert','viewed','course_module','customcert',63,'r',2,600,70,454,2,83,NULL,0,'null',1792779259,'web','172.20.0.1',NULL),
+(6267,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,581,50,83,2,83,NULL,0,'null',1792779329,'web','172.20.0.1',NULL),
+(6268,'\\mod_folder\\event\\course_module_viewed','mod_folder','viewed','course_module','folder',60,'r',2,601,70,455,2,83,NULL,0,'null',1792779361,'web','172.20.0.1',NULL),
+(6269,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,120,50,48,2,48,NULL,0,'null',1792779382,'web','172.20.0.1',NULL),
+(6270,'\\mod_folder\\event\\course_module_viewed','mod_folder','viewed','course_module','folder',25,'r',2,352,70,218,2,48,NULL,0,'null',1792779396,'web','172.20.0.1',NULL),
+(6271,'\\mod_customcert\\event\\course_module_viewed','mod_customcert','viewed','course_module','customcert',28,'r',2,351,70,217,2,48,NULL,0,'null',1792779607,'web','172.20.0.1',NULL),
+(6272,'\\core\\event\\user_loggedout','core','loggedout','user','user',2,'r',0,1,10,0,2,0,NULL,0,'{\"sessionid\":\"318244abee12e3ec5f0698160bb27bdb\"}',1792781153,'web','172.20.0.1',NULL),
+(6273,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792781153,'web','172.20.0.1',NULL),
+(6274,'\\core\\event\\user_loggedin','core','loggedin','user','user',13,'r',0,1,10,0,13,0,NULL,0,'{\"username\":\"gestionnaire\",\"extrauserinfo\":[]}',1792781193,'web','172.20.0.1',NULL),
+(6275,'\\core\\event\\dashboard_viewed','core','viewed','dashboard',NULL,NULL,'r',0,615,30,13,13,0,13,0,'null',1792781194,'web','172.20.0.1',NULL),
+(6276,'\\core\\event\\mycourses_viewed','core','viewed','mycourses',NULL,NULL,'r',0,1,10,0,13,0,NULL,0,'null',1792781292,'web','172.20.0.1',NULL),
+(6277,'\\core\\event\\course_category_viewed','core','viewed','course_category','course_categories',10,'r',0,36,40,10,13,0,NULL,0,'null',1792781371,'web','172.20.0.1',NULL),
+(6278,'\\core\\event\\course_category_viewed','core','viewed','course_category','course_categories',23,'r',0,127,40,23,13,0,NULL,0,'null',1792781440,'web','172.20.0.1',NULL),
+(6279,'\\core\\event\\user_profile_viewed','core','viewed','user_profile','user',2,'r',0,5,30,2,13,0,2,0,'null',1792781445,'web','172.20.0.1',NULL),
+(6280,'\\core\\event\\dashboard_viewed','core','viewed','dashboard',NULL,NULL,'r',0,615,30,13,13,0,13,0,'null',1792781802,'web','172.20.0.1',NULL),
+(6281,'\\core\\event\\user_loggedout','core','loggedout','user','user',13,'r',0,1,10,0,13,0,NULL,0,'{\"sessionid\":\"e88d734fc592f775d66a68a30d836b79\"}',1792781817,'web','172.20.0.1',NULL),
+(6282,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792781817,'web','172.20.0.1',NULL),
+(6283,'\\core\\event\\user_loggedin','core','loggedin','user','user',2,'r',0,1,10,0,2,0,NULL,0,'{\"username\":\"pactdigital\",\"extrauserinfo\":[]}',1792781859,'web','172.20.0.1',NULL),
+(6284,'\\core\\event\\dashboard_viewed','core','viewed','dashboard',NULL,NULL,'r',0,5,30,2,2,0,2,0,'null',1792781859,'web','172.20.0.1',NULL),
+(6285,'\\core\\event\\user_loggedout','core','loggedout','user','user',2,'r',0,1,10,0,2,0,NULL,0,'{\"sessionid\":\"bb7fccf04e3ec3ed5723207ad58f76f4\"}',1792782457,'web','172.20.0.1',NULL),
+(6286,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792782457,'web','172.20.0.1',NULL),
+(6287,'\\core\\event\\user_loggedin','core','loggedin','user','user',13,'r',0,1,10,0,13,0,NULL,0,'{\"username\":\"gestionnaire\",\"extrauserinfo\":[]}',1792782482,'web','172.20.0.1',NULL),
+(6288,'\\core\\event\\dashboard_viewed','core','viewed','dashboard',NULL,NULL,'r',0,615,30,13,13,0,13,0,'null',1792782483,'web','172.20.0.1',NULL),
+(6289,'\\core\\event\\mycourses_viewed','core','viewed','mycourses',NULL,NULL,'r',0,1,10,0,13,0,NULL,0,'null',1792782539,'web','172.20.0.1',NULL),
+(6290,'\\core\\event\\mycourses_viewed','core','viewed','mycourses',NULL,NULL,'r',0,1,10,0,13,0,NULL,0,'null',1792782547,'web','172.20.0.1',NULL),
+(6291,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792840168,'web','172.20.0.1',NULL),
+(6292,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792840650,'web','172.20.0.1',NULL),
+(6293,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792840673,'web','172.20.0.1',NULL),
+(6294,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792840756,'web','172.20.0.1',NULL),
+(6295,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792840831,'web','172.20.0.1',NULL),
+(6296,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792841182,'web','172.20.0.1',NULL),
+(6297,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792841202,'web','172.20.0.1',NULL),
+(6298,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792841356,'web','172.20.0.1',NULL),
+(6299,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792841362,'web','172.20.0.1',NULL),
+(6300,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792841428,'web','172.20.0.1',NULL),
+(6301,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792841448,'web','172.20.0.1',NULL),
+(6302,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792841461,'web','172.20.0.1',NULL),
+(6303,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792841471,'web','172.20.0.1',NULL),
+(6304,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792841539,'web','172.20.0.1',NULL),
+(6305,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792841546,'web','172.20.0.1',NULL),
+(6306,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792841717,'web','172.20.0.1',NULL),
+(6307,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792841832,'web','172.20.0.1',NULL),
+(6308,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792841849,'web','172.20.0.1',NULL),
+(6309,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792841869,'web','172.20.0.1',NULL),
+(6310,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792841891,'web','172.20.0.1',NULL),
+(6311,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792841908,'web','172.20.0.1',NULL),
+(6312,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792842084,'web','172.20.0.1',NULL),
+(6313,'\\core\\event\\user_loggedin','core','loggedin','user','user',12,'r',0,1,10,0,12,0,NULL,0,'{\"username\":\"formateur\",\"extrauserinfo\":[]}',1792842803,'web','172.20.0.1',NULL),
+(6314,'\\core\\event\\dashboard_viewed','core','viewed','dashboard',NULL,NULL,'r',0,604,30,12,12,0,12,0,'null',1792842803,'web','172.20.0.1',NULL),
+(6315,'\\core\\event\\user_loggedout','core','loggedout','user','user',12,'r',0,1,10,0,12,0,NULL,0,'{\"sessionid\":\"24bacb12b0c525bb123c1e62c869c6b0\"}',1792842826,'web','172.20.0.1',NULL),
+(6316,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792842826,'web','172.20.0.1',NULL),
+(6317,'\\core\\event\\user_loggedin','core','loggedin','user','user',11,'r',0,1,10,0,11,0,NULL,0,'{\"username\":\"apprenant\",\"extrauserinfo\":[]}',1792842862,'web','172.20.0.1',NULL),
+(6318,'\\core\\event\\dashboard_viewed','core','viewed','dashboard',NULL,NULL,'r',0,603,30,11,11,0,11,0,'null',1792842863,'web','172.20.0.1',NULL),
+(6319,'\\core\\event\\dashboard_viewed','core','viewed','dashboard',NULL,NULL,'r',0,603,30,11,11,0,11,0,'null',1792843026,'web','172.20.0.1',NULL),
+(6320,'\\core\\event\\dashboard_viewed','core','viewed','dashboard',NULL,NULL,'r',0,603,30,11,11,0,11,0,'null',1792843059,'web','172.20.0.1',NULL),
+(6321,'\\core\\event\\dashboard_viewed','core','viewed','dashboard',NULL,NULL,'r',0,603,30,11,11,0,11,0,'null',1792843064,'web','172.20.0.1',NULL),
+(6322,'\\core\\event\\dashboard_viewed','core','viewed','dashboard',NULL,NULL,'r',0,603,30,11,11,0,11,0,'null',1792844240,'web','172.20.0.1',NULL),
+(6323,'\\core\\event\\mycourses_viewed','core','viewed','mycourses',NULL,NULL,'r',0,1,10,0,11,0,NULL,0,'null',1792844254,'web','172.20.0.1',NULL),
+(6324,'\\core\\event\\dashboard_viewed','core','viewed','dashboard',NULL,NULL,'r',0,603,30,11,11,0,11,0,'null',1792844257,'web','172.20.0.1',NULL),
+(6325,'\\core\\event\\dashboard_viewed','core','viewed','dashboard',NULL,NULL,'r',0,603,30,11,11,0,11,0,'null',1792844678,'web','172.20.0.1',NULL),
+(6326,'\\mod_customcert\\event\\course_module_viewed','mod_customcert','viewed','course_module','customcert',61,'r',2,588,70,442,11,81,NULL,0,'null',1792845086,'web','172.20.0.1',NULL),
+(6327,'\\mod_customcert\\event\\course_module_viewed','mod_customcert','viewed','course_module','customcert',61,'r',2,588,70,442,11,81,NULL,0,'null',1792845140,'web','172.20.0.1',NULL),
+(6328,'\\mod_customcert\\event\\template_created','mod_customcert','created','template','customcert_templates',62,'c',0,588,70,442,0,81,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6329,'\\mod_customcert\\event\\page_created','mod_customcert','created','page','customcert_pages',62,'c',0,588,70,442,0,81,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6330,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18912,'c',0,588,70,442,0,81,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6331,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18913,'c',0,588,70,442,0,81,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6332,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18914,'c',0,588,70,442,0,81,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6333,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18915,'c',0,588,70,442,0,81,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6334,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18916,'c',0,588,70,442,0,81,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6335,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18917,'c',0,588,70,442,0,81,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6336,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18918,'c',0,588,70,442,0,81,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6337,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18919,'c',0,588,70,442,0,81,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6338,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18920,'c',0,588,70,442,0,81,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6339,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18921,'c',0,588,70,442,0,81,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6340,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18922,'c',0,588,70,442,0,81,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6341,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18923,'c',0,588,70,442,0,81,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6342,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18924,'c',0,588,70,442,0,81,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6343,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18925,'c',0,588,70,442,0,81,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6344,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18926,'c',0,588,70,442,0,81,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6345,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18927,'c',0,588,70,442,0,81,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6346,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18928,'c',0,588,70,442,0,81,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6347,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18929,'c',0,588,70,442,0,81,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6348,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18930,'c',0,588,70,442,0,81,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6349,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18931,'c',0,588,70,442,0,81,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6350,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18932,'c',0,588,70,442,0,81,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6351,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18933,'c',0,588,70,442,0,81,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6352,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18934,'c',0,588,70,442,0,81,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6353,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18935,'c',0,588,70,442,0,81,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6354,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18936,'c',0,588,70,442,0,81,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6355,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18937,'c',0,588,70,442,0,81,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6356,'\\mod_customcert\\event\\template_updated','mod_customcert','updated','template','customcert_templates',62,'u',0,588,70,442,0,81,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6357,'\\mod_customcert\\event\\template_created','mod_customcert','created','template','customcert_templates',63,'c',0,594,70,448,0,82,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6358,'\\mod_customcert\\event\\page_created','mod_customcert','created','page','customcert_pages',63,'c',0,594,70,448,0,82,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6359,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18938,'c',0,594,70,448,0,82,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6360,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18939,'c',0,594,70,448,0,82,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6361,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18940,'c',0,594,70,448,0,82,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6362,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18941,'c',0,594,70,448,0,82,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6363,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18942,'c',0,594,70,448,0,82,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6364,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18943,'c',0,594,70,448,0,82,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6365,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18944,'c',0,594,70,448,0,82,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6366,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18945,'c',0,594,70,448,0,82,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6367,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18946,'c',0,594,70,448,0,82,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6368,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18947,'c',0,594,70,448,0,82,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6369,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18948,'c',0,594,70,448,0,82,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6370,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18949,'c',0,594,70,448,0,82,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6371,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18950,'c',0,594,70,448,0,82,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6372,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18951,'c',0,594,70,448,0,82,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6373,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18952,'c',0,594,70,448,0,82,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6374,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18953,'c',0,594,70,448,0,82,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6375,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18954,'c',0,594,70,448,0,82,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6376,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18955,'c',0,594,70,448,0,82,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6377,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18956,'c',0,594,70,448,0,82,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6378,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18957,'c',0,594,70,448,0,82,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6379,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18958,'c',0,594,70,448,0,82,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6380,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18959,'c',0,594,70,448,0,82,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6381,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18960,'c',0,594,70,448,0,82,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6382,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18961,'c',0,594,70,448,0,82,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6383,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18962,'c',0,594,70,448,0,82,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6384,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18963,'c',0,594,70,448,0,82,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6385,'\\mod_customcert\\event\\template_updated','mod_customcert','updated','template','customcert_templates',63,'u',0,594,70,448,0,82,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6386,'\\mod_customcert\\event\\template_created','mod_customcert','created','template','customcert_templates',64,'c',0,600,70,454,0,83,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6387,'\\mod_customcert\\event\\page_created','mod_customcert','created','page','customcert_pages',64,'c',0,600,70,454,0,83,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6388,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18964,'c',0,600,70,454,0,83,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6389,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18965,'c',0,600,70,454,0,83,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6390,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18966,'c',0,600,70,454,0,83,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6391,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18967,'c',0,600,70,454,0,83,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6392,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18968,'c',0,600,70,454,0,83,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6393,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18969,'c',0,600,70,454,0,83,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6394,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18970,'c',0,600,70,454,0,83,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6395,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18971,'c',0,600,70,454,0,83,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6396,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18972,'c',0,600,70,454,0,83,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6397,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18973,'c',0,600,70,454,0,83,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6398,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18974,'c',0,600,70,454,0,83,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6399,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18975,'c',0,600,70,454,0,83,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6400,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18976,'c',0,600,70,454,0,83,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6401,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18977,'c',0,600,70,454,0,83,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6402,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18978,'c',0,600,70,454,0,83,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6403,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18979,'c',0,600,70,454,0,83,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6404,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18980,'c',0,600,70,454,0,83,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6405,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18981,'c',0,600,70,454,0,83,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6406,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18982,'c',0,600,70,454,0,83,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6407,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18983,'c',0,600,70,454,0,83,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6408,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18984,'c',0,600,70,454,0,83,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6409,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18985,'c',0,600,70,454,0,83,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6410,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18986,'c',0,600,70,454,0,83,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6411,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18987,'c',0,600,70,454,0,83,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6412,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18988,'c',0,600,70,454,0,83,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6413,'\\mod_customcert\\event\\element_created','mod_customcert','created','element','customcert_elements',18989,'c',0,600,70,454,0,83,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6414,'\\mod_customcert\\event\\template_updated','mod_customcert','updated','template','customcert_templates',64,'u',0,600,70,454,0,83,NULL,0,'null',1792845399,'cli',NULL,NULL),
+(6415,'\\mod_customcert\\event\\course_module_viewed','mod_customcert','viewed','course_module','customcert',61,'r',2,588,70,442,11,81,NULL,0,'null',1792845579,'web','172.20.0.1',NULL),
+(6416,'\\mod_customcert\\event\\course_module_viewed','mod_customcert','viewed','course_module','customcert',61,'r',2,588,70,442,11,81,NULL,0,'null',1792846486,'web','172.20.0.1',NULL),
+(6417,'\\mod_quiz\\event\\course_module_viewed','mod_quiz','viewed','course_module','quiz',114,'r',2,499,70,365,11,78,NULL,0,'null',1792848822,'web','172.20.0.1',NULL),
+(6418,'\\core\\event\\user_enrolment_created','core','created','user_enrolment','user_enrolments',100,'c',0,120,50,48,11,48,11,0,'{\"enrol\":\"manual\"}',1792848975,'web','172.20.0.1',NULL),
+(6419,'\\core\\event\\notification_sent','core','sent','notification','notifications',27,'c',0,1,10,0,2,0,11,0,'{\"courseid\":\"48\"}',1792848976,'web','172.20.0.1',NULL),
+(6420,'\\core\\event\\role_assigned','core','assigned','role','role',5,'c',0,120,50,48,11,48,11,0,'{\"id\":103,\"component\":\"\",\"itemid\":0}',1792848976,'web','172.20.0.1',NULL),
+(6421,'\\core\\event\\user_enrolment_created','core','created','user_enrolment','user_enrolments',11,'c',0,120,50,48,11,48,11,0,'{\"enrol\":\"manual\"}',1792848976,'web','172.20.0.1',NULL),
+(6422,'\\core\\event\\mycourses_viewed','core','viewed','mycourses',NULL,NULL,'r',0,1,10,0,11,0,NULL,0,'null',1792849019,'web','172.20.0.1',NULL),
+(6423,'\\core\\event\\dashboard_viewed','core','viewed','dashboard',NULL,NULL,'r',0,603,30,11,11,0,11,0,'null',1792849025,'web','172.20.0.1',NULL),
+(6424,'\\core\\event\\mycourses_viewed','core','viewed','mycourses',NULL,NULL,'r',0,1,10,0,11,0,NULL,0,'null',1792849039,'web','172.20.0.1',NULL),
+(6425,'\\mod_quiz\\event\\course_module_viewed','mod_quiz','viewed','course_module','quiz',54,'r',2,349,70,215,11,48,NULL,0,'null',1792849052,'web','172.20.0.1',NULL),
+(6426,'\\mod_quiz\\event\\attempt_started','mod_quiz','started','attempt','quiz_attempts',7,'c',2,349,70,215,11,48,11,0,'null',1792849088,'web','172.20.0.1',NULL),
+(6427,'\\mod_quiz\\event\\attempt_viewed','mod_quiz','viewed','attempt','quiz_attempts',7,'r',2,349,70,215,11,48,11,0,'{\"quizid\":\"54\",\"page\":\"0\"}',1792849088,'web','172.20.0.1',NULL),
+(6428,'\\mod_quiz\\event\\attempt_updated','mod_quiz','updated','attempt','quiz_attempts',7,'u',2,349,70,215,11,48,11,0,'{\"quizid\":\"54\",\"page\":\"0\"}',1792849102,'web','172.20.0.1',NULL),
+(6429,'\\mod_quiz\\event\\attempt_viewed','mod_quiz','viewed','attempt','quiz_attempts',7,'r',2,349,70,215,11,48,11,0,'{\"quizid\":\"54\",\"page\":\"0\"}',1792849102,'web','172.20.0.1',NULL),
+(6430,'\\mod_quiz\\event\\attempt_updated','mod_quiz','updated','attempt','quiz_attempts',7,'u',2,349,70,215,11,48,11,0,'{\"quizid\":\"54\",\"page\":\"1\"}',1792849110,'web','172.20.0.1',NULL),
+(6431,'\\mod_quiz\\event\\attempt_viewed','mod_quiz','viewed','attempt','quiz_attempts',7,'r',2,349,70,215,11,48,11,0,'{\"quizid\":\"54\",\"page\":\"1\"}',1792849110,'web','172.20.0.1',NULL),
+(6432,'\\mod_quiz\\event\\attempt_updated','mod_quiz','updated','attempt','quiz_attempts',7,'u',2,349,70,215,11,48,11,0,'{\"quizid\":\"54\",\"page\":\"2\"}',1792849118,'web','172.20.0.1',NULL),
+(6433,'\\mod_quiz\\event\\attempt_viewed','mod_quiz','viewed','attempt','quiz_attempts',7,'r',2,349,70,215,11,48,11,0,'{\"quizid\":\"54\",\"page\":\"2\"}',1792849118,'web','172.20.0.1',NULL),
+(6434,'\\mod_quiz\\event\\attempt_updated','mod_quiz','updated','attempt','quiz_attempts',7,'u',2,349,70,215,11,48,11,0,'{\"quizid\":\"54\",\"page\":\"3\"}',1792849129,'web','172.20.0.1',NULL),
+(6435,'\\mod_quiz\\event\\attempt_viewed','mod_quiz','viewed','attempt','quiz_attempts',7,'r',2,349,70,215,11,48,11,0,'{\"quizid\":\"54\",\"page\":\"3\"}',1792849129,'web','172.20.0.1',NULL),
+(6436,'\\mod_quiz\\event\\attempt_updated','mod_quiz','updated','attempt','quiz_attempts',7,'u',2,349,70,215,11,48,11,0,'{\"quizid\":\"54\",\"page\":\"4\"}',1792849138,'web','172.20.0.1',NULL),
+(6437,'\\mod_quiz\\event\\attempt_viewed','mod_quiz','viewed','attempt','quiz_attempts',7,'r',2,349,70,215,11,48,11,0,'{\"quizid\":\"54\",\"page\":\"4\"}',1792849138,'web','172.20.0.1',NULL),
+(6438,'\\mod_quiz\\event\\attempt_updated','mod_quiz','updated','attempt','quiz_attempts',7,'u',2,349,70,215,11,48,11,0,'{\"quizid\":\"54\",\"page\":\"5\"}',1792849149,'web','172.20.0.1',NULL),
+(6439,'\\mod_quiz\\event\\attempt_viewed','mod_quiz','viewed','attempt','quiz_attempts',7,'r',2,349,70,215,11,48,11,0,'{\"quizid\":\"54\",\"page\":\"5\"}',1792849149,'web','172.20.0.1',NULL),
+(6440,'\\mod_quiz\\event\\attempt_updated','mod_quiz','updated','attempt','quiz_attempts',7,'u',2,349,70,215,11,48,11,0,'{\"quizid\":\"54\",\"page\":\"6\"}',1792849158,'web','172.20.0.1',NULL),
+(6441,'\\mod_quiz\\event\\attempt_summary_viewed','mod_quiz','viewed','attempt_summary','quiz_attempts',7,'r',2,349,70,215,11,48,11,0,'{\"quizid\":\"54\"}',1792849158,'web','172.20.0.1',NULL),
+(6442,'\\mod_quiz\\event\\attempt_viewed','mod_quiz','viewed','attempt','quiz_attempts',7,'r',2,349,70,215,11,48,11,0,'{\"quizid\":\"54\",\"page\":\"6\"}',1792849164,'web','172.20.0.1',NULL),
+(6443,'\\mod_quiz\\event\\attempt_updated','mod_quiz','updated','attempt','quiz_attempts',7,'u',2,349,70,215,11,48,11,0,'{\"quizid\":\"54\",\"page\":\"6\"}',1792849170,'web','172.20.0.1',NULL),
+(6444,'\\mod_quiz\\event\\attempt_summary_viewed','mod_quiz','viewed','attempt_summary','quiz_attempts',7,'r',2,349,70,215,11,48,11,0,'{\"quizid\":\"54\"}',1792849170,'web','172.20.0.1',NULL),
+(6445,'\\mod_quiz\\event\\attempt_submitted','mod_quiz','submitted','attempt','quiz_attempts',7,'u',2,349,70,215,11,48,11,0,'{\"submitterid\":\"11\",\"quizid\":\"54\",\"studentisonline\":true}',1792849183,'web','172.20.0.1',NULL),
+(6446,'\\core\\event\\course_module_completion_updated','core','updated','course_module_completion','course_modules_completion',11,'u',2,349,70,215,11,48,11,0,'{\"relateduserid\":\"11\",\"overrideby\":null,\"completionstate\":3}',1792849183,'web','172.20.0.1',NULL),
+(6447,'\\core\\event\\user_graded','core','graded','user','grade_grades',4,'u',1,120,50,48,11,48,11,0,'{\"itemid\":\"78\",\"overridden\":false,\"finalgrade\":\"6.00000\"}',1792849183,'web','172.20.0.1',NULL),
+(6448,'\\core\\event\\user_graded','core','graded','user','grade_grades',5,'u',1,120,50,48,-1,48,11,0,'{\"itemid\":\"77\",\"overridden\":false,\"finalgrade\":6}',1792849183,'web','172.20.0.1',NULL),
+(6449,'\\mod_quiz\\event\\attempt_graded','mod_quiz','graded','attempt','quiz_attempts',7,'u',2,349,70,215,11,48,11,0,'{\"submitterid\":\"11\",\"quizid\":\"54\",\"studentisonline\":false}',1792849183,'web','172.20.0.1',NULL),
+(6450,'\\mod_quiz\\event\\attempt_reviewed','mod_quiz','reviewed','attempt','quiz_attempts',7,'r',2,349,70,215,11,48,11,0,'{\"quizid\":\"54\"}',1792849183,'web','172.20.0.1',NULL),
+(6451,'\\mod_quiz\\event\\course_module_viewed','mod_quiz','viewed','course_module','quiz',54,'r',2,349,70,215,11,48,NULL,0,'null',1792849204,'web','172.20.0.1',NULL),
+(6452,'\\mod_quiz\\event\\attempt_started','mod_quiz','started','attempt','quiz_attempts',8,'c',2,349,70,215,11,48,11,0,'null',1792849273,'web','172.20.0.1',NULL),
+(6453,'\\mod_quiz\\event\\attempt_viewed','mod_quiz','viewed','attempt','quiz_attempts',8,'r',2,349,70,215,11,48,11,0,'{\"quizid\":\"54\",\"page\":\"0\"}',1792849273,'web','172.20.0.1',NULL),
+(6454,'\\mod_quiz\\event\\attempt_updated','mod_quiz','updated','attempt','quiz_attempts',8,'u',2,349,70,215,11,48,11,0,'{\"quizid\":\"54\",\"page\":\"0\"}',1792849283,'web','172.20.0.1',NULL),
+(6455,'\\mod_quiz\\event\\attempt_viewed','mod_quiz','viewed','attempt','quiz_attempts',8,'r',2,349,70,215,11,48,11,0,'{\"quizid\":\"54\",\"page\":\"0\"}',1792849283,'web','172.20.0.1',NULL),
+(6456,'\\mod_quiz\\event\\attempt_updated','mod_quiz','updated','attempt','quiz_attempts',8,'u',2,349,70,215,11,48,11,0,'{\"quizid\":\"54\",\"page\":\"1\"}',1792849290,'web','172.20.0.1',NULL),
+(6457,'\\mod_quiz\\event\\attempt_viewed','mod_quiz','viewed','attempt','quiz_attempts',8,'r',2,349,70,215,11,48,11,0,'{\"quizid\":\"54\",\"page\":\"1\"}',1792849290,'web','172.20.0.1',NULL),
+(6458,'\\mod_quiz\\event\\attempt_updated','mod_quiz','updated','attempt','quiz_attempts',8,'u',2,349,70,215,11,48,11,0,'{\"quizid\":\"54\",\"page\":\"2\"}',1792849299,'web','172.20.0.1',NULL),
+(6459,'\\mod_quiz\\event\\attempt_viewed','mod_quiz','viewed','attempt','quiz_attempts',8,'r',2,349,70,215,11,48,11,0,'{\"quizid\":\"54\",\"page\":\"2\"}',1792849299,'web','172.20.0.1',NULL),
+(6460,'\\mod_quiz\\event\\attempt_updated','mod_quiz','updated','attempt','quiz_attempts',8,'u',2,349,70,215,11,48,11,0,'{\"quizid\":\"54\",\"page\":\"3\"}',1792849308,'web','172.20.0.1',NULL),
+(6461,'\\mod_quiz\\event\\attempt_viewed','mod_quiz','viewed','attempt','quiz_attempts',8,'r',2,349,70,215,11,48,11,0,'{\"quizid\":\"54\",\"page\":\"3\"}',1792849308,'web','172.20.0.1',NULL),
+(6462,'\\mod_quiz\\event\\attempt_updated','mod_quiz','updated','attempt','quiz_attempts',8,'u',2,349,70,215,11,48,11,0,'{\"quizid\":\"54\",\"page\":\"4\"}',1792849318,'web','172.20.0.1',NULL),
+(6463,'\\mod_quiz\\event\\attempt_viewed','mod_quiz','viewed','attempt','quiz_attempts',8,'r',2,349,70,215,11,48,11,0,'{\"quizid\":\"54\",\"page\":\"4\"}',1792849318,'web','172.20.0.1',NULL),
+(6464,'\\mod_quiz\\event\\attempt_updated','mod_quiz','updated','attempt','quiz_attempts',8,'u',2,349,70,215,11,48,11,0,'{\"quizid\":\"54\",\"page\":\"5\"}',1792849328,'web','172.20.0.1',NULL),
+(6465,'\\mod_quiz\\event\\attempt_viewed','mod_quiz','viewed','attempt','quiz_attempts',8,'r',2,349,70,215,11,48,11,0,'{\"quizid\":\"54\",\"page\":\"5\"}',1792849328,'web','172.20.0.1',NULL),
+(6466,'\\mod_quiz\\event\\attempt_updated','mod_quiz','updated','attempt','quiz_attempts',8,'u',2,349,70,215,11,48,11,0,'{\"quizid\":\"54\",\"page\":\"6\"}',1792849343,'web','172.20.0.1',NULL),
+(6467,'\\mod_quiz\\event\\attempt_summary_viewed','mod_quiz','viewed','attempt_summary','quiz_attempts',8,'r',2,349,70,215,11,48,11,0,'{\"quizid\":\"54\"}',1792849343,'web','172.20.0.1',NULL),
+(6468,'\\mod_quiz\\event\\attempt_submitted','mod_quiz','submitted','attempt','quiz_attempts',8,'u',2,349,70,215,11,48,11,0,'{\"submitterid\":\"11\",\"quizid\":\"54\",\"studentisonline\":true}',1792849358,'web','172.20.0.1',NULL),
+(6469,'\\mod_quiz\\event\\attempt_graded','mod_quiz','graded','attempt','quiz_attempts',8,'u',2,349,70,215,11,48,11,0,'{\"submitterid\":\"11\",\"quizid\":\"54\",\"studentisonline\":false}',1792849358,'web','172.20.0.1',NULL),
+(6470,'\\mod_quiz\\event\\attempt_reviewed','mod_quiz','reviewed','attempt','quiz_attempts',8,'r',2,349,70,215,11,48,11,0,'{\"quizid\":\"54\"}',1792849358,'web','172.20.0.1',NULL),
+(6471,'\\mod_quiz\\event\\course_module_viewed','mod_quiz','viewed','course_module','quiz',54,'r',2,349,70,215,11,48,NULL,0,'null',1792849377,'web','172.20.0.1',NULL),
+(6472,'\\mod_quiz\\event\\course_module_viewed','mod_quiz','viewed','course_module','quiz',54,'r',2,349,70,215,11,48,NULL,0,'null',1792849400,'web','172.20.0.1',NULL),
+(6473,'\\core\\event\\dashboard_viewed','core','viewed','dashboard',NULL,NULL,'r',0,603,30,11,11,0,11,0,'null',1792849484,'web','172.20.0.1',NULL),
+(6474,'\\core\\event\\dashboard_viewed','core','viewed','dashboard',NULL,NULL,'r',0,603,30,11,11,0,11,0,'null',1792849542,'web','172.20.0.1',NULL),
+(6475,'\\core\\event\\dashboard_viewed','core','viewed','dashboard',NULL,NULL,'r',0,603,30,11,11,0,11,0,'null',1792850149,'web','172.20.0.1',NULL),
+(6476,'\\core\\event\\notification_viewed','core','viewed','notification','notifications',27,'u',0,603,30,11,11,0,2,0,'null',1792851180,'web','172.20.0.1',NULL),
+(6477,'\\core\\event\\notification_viewed','core','viewed','notification','notifications',25,'u',0,603,30,11,11,0,0,0,'null',1792851185,'web','172.20.0.1',NULL),
+(6478,'\\core\\event\\user_loggedout','core','loggedout','user','user',11,'r',0,1,10,0,11,0,NULL,0,'{\"sessionid\":\"ef75c76bebf2e17f7710d35f2199a8d6\"}',1792851374,'web','172.20.0.1',NULL),
+(6479,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792851374,'web','172.20.0.1',NULL),
+(6480,'\\core\\event\\user_loggedin','core','loggedin','user','user',12,'r',0,1,10,0,12,0,NULL,0,'{\"username\":\"formateur\",\"extrauserinfo\":[]}',1792851424,'web','172.20.0.1',NULL),
+(6481,'\\core\\event\\dashboard_viewed','core','viewed','dashboard',NULL,NULL,'r',0,604,30,12,12,0,12,0,'null',1792851424,'web','172.20.0.1',NULL),
+(6482,'\\core\\event\\dashboard_viewed','core','viewed','dashboard',NULL,NULL,'r',0,604,30,12,12,0,12,0,'null',1792851502,'web','172.20.0.1',NULL),
+(6483,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,12,1,NULL,0,'null',1792851514,'web','172.20.0.1',NULL),
+(6484,'\\mod_quiz\\event\\report_viewed','mod_quiz','viewed','report',NULL,NULL,'r',1,586,70,440,12,81,NULL,0,'{\"quizid\":\"120\",\"reportname\":\"overview\"}',1792852330,'web','172.20.0.1',NULL),
+(6485,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,160,50,78,12,78,NULL,0,'null',1792853439,'web','172.20.0.1',NULL),
+(6486,'\\core\\event\\user_list_viewed','core','viewed','user_list','course',78,'r',0,160,50,78,12,78,NULL,0,'{\"courseshortname\":\"Bronze_en_vente\",\"coursefullname\":\"Bronze\"}',1792853496,'web','172.20.0.1',NULL),
+(6487,'\\tool_usertours\\event\\tour_started','tool_usertours','started','tour','tool_usertours_tours',1,'r',2,160,50,78,12,78,NULL,0,'{\"pageurl\":\"http:\\/\\/localhost:8080\\/grade\\/report\\/grader\\/index.php?id=78\"}',1792853518,'web','172.20.0.1',NULL),
+(6488,'\\tool_usertours\\event\\tour_ended','tool_usertours','ended','tour','tool_usertours_tours',1,'c',2,160,50,78,12,78,NULL,0,'{\"pageurl\":\"http:\\/\\/localhost:8080\\/grade\\/report\\/grader\\/index.php?id=78\",\"stepid\":1,\"stepindex\":0}',1792853530,'web','172.20.0.1',NULL),
+(6489,'\\core\\event\\course_overview_viewed','core','viewed','course_overview',NULL,NULL,'r',2,160,50,78,12,78,NULL,0,'null',1792853543,'web','172.20.0.1',NULL),
+(6490,'\\mod_feedback\\event\\course_module_instance_list_viewed','mod_feedback','viewed','course_module_instance_list',NULL,NULL,'r',0,160,50,78,12,78,NULL,0,'null',1792853554,'web','172.20.0.1',NULL),
+(6491,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,160,50,78,12,78,NULL,0,'null',1792853572,'web','172.20.0.1',NULL),
+(6492,'\\core\\event\\user_list_viewed','core','viewed','user_list','course',78,'r',0,160,50,78,12,78,NULL,0,'{\"courseshortname\":\"Bronze_en_vente\",\"coursefullname\":\"Bronze\"}',1792853575,'web','172.20.0.1',NULL),
+(6493,'\\core\\event\\dashboard_viewed','core','viewed','dashboard',NULL,NULL,'r',0,604,30,12,12,0,12,0,'null',1792853681,'web','172.20.0.1',NULL),
+(6494,'\\core\\event\\mycourses_viewed','core','viewed','mycourses',NULL,NULL,'r',0,1,10,0,12,0,NULL,0,'null',1792853683,'web','172.20.0.1',NULL),
+(6495,'\\core\\event\\dashboard_viewed','core','viewed','dashboard',NULL,NULL,'r',0,604,30,12,12,0,12,0,'null',1792853686,'web','172.20.0.1',NULL),
+(6496,'\\core\\event\\mycourses_viewed','core','viewed','mycourses',NULL,NULL,'r',0,1,10,0,12,0,NULL,0,'null',1792853688,'web','172.20.0.1',NULL),
+(6497,'\\core\\event\\dashboard_viewed','core','viewed','dashboard',NULL,NULL,'r',0,604,30,12,12,0,12,0,'null',1792853693,'web','172.20.0.1',NULL),
+(6498,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,12,1,NULL,0,'null',1792853722,'web','172.20.0.1',NULL),
+(6499,'\\core\\event\\user_list_viewed','core','viewed','user_list','course',81,'r',0,579,50,81,12,81,NULL,0,'{\"courseshortname\":\"Bronze_en_formation_numerique\",\"coursefullname\":\"Bronze\"}',1792853741,'web','172.20.0.1',NULL),
+(6500,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,579,50,81,12,81,NULL,0,'null',1792853756,'web','172.20.0.1',NULL),
+(6501,'\\core\\event\\user_list_viewed','core','viewed','user_list','course',81,'r',0,579,50,81,12,81,NULL,0,'{\"courseshortname\":\"Bronze_en_formation_numerique\",\"coursefullname\":\"Bronze\"}',1792853759,'web','172.20.0.1',NULL),
+(6502,'\\core\\event\\grade_item_created','core','created','grade_item','grade_items',201,'c',0,579,50,81,12,81,NULL,0,'{\"itemname\":null,\"itemtype\":\"course\",\"itemmodule\":null}',1792853791,'web','172.20.0.1',NULL),
+(6503,'\\core\\event\\user_list_viewed','core','viewed','user_list','course',81,'r',0,579,50,81,12,81,NULL,0,'{\"courseshortname\":\"Bronze_en_formation_numerique\",\"coursefullname\":\"Bronze\"}',1792853836,'web','172.20.0.1',NULL),
+(6504,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,579,50,81,12,81,NULL,0,'null',1792853839,'web','172.20.0.1',NULL),
+(6505,'\\core\\event\\course_overview_viewed','core','viewed','course_overview',NULL,NULL,'r',2,579,50,81,12,81,NULL,0,'null',1792853843,'web','172.20.0.1',NULL),
+(6506,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,579,50,81,12,81,NULL,0,'null',1792853846,'web','172.20.0.1',NULL),
+(6507,'\\core\\event\\user_list_viewed','core','viewed','user_list','course',81,'r',0,579,50,81,12,81,NULL,0,'{\"courseshortname\":\"Bronze_en_formation_numerique\",\"coursefullname\":\"Bronze\"}',1792853848,'web','172.20.0.1',NULL),
+(6508,'\\core\\event\\course_overview_viewed','core','viewed','course_overview',NULL,NULL,'r',2,579,50,81,12,81,NULL,0,'null',1792853852,'web','172.20.0.1',NULL),
+(6509,'\\core\\event\\user_list_viewed','core','viewed','user_list','course',81,'r',0,579,50,81,12,81,NULL,0,'{\"courseshortname\":\"Bronze_en_formation_numerique\",\"coursefullname\":\"Bronze\"}',1792853894,'web','172.20.0.1',NULL),
+(6510,'\\core\\event\\grade_item_created','core','created','grade_item','grade_items',202,'c',0,580,50,82,0,82,NULL,0,'{\"itemname\":null,\"itemtype\":\"course\",\"itemmodule\":null}',1792854432,'cli',NULL,NULL),
+(6511,'\\core\\event\\grade_item_created','core','created','grade_item','grade_items',203,'c',0,581,50,83,0,83,NULL,0,'{\"itemname\":null,\"itemtype\":\"course\",\"itemmodule\":null}',1792854432,'cli',NULL,NULL),
+(6512,'\\core\\event\\grade_item_updated','core','updated','grade_item','grade_items',198,'u',0,579,50,81,0,81,NULL,0,'{\"itemname\":\"Examen final\",\"itemtype\":\"mod\",\"itemmodule\":\"quiz\"}',1792854446,'cli',NULL,NULL),
+(6513,'\\core\\event\\grade_item_updated','core','updated','grade_item','grade_items',199,'u',0,580,50,82,0,82,NULL,0,'{\"itemname\":\"Examen final\",\"itemtype\":\"mod\",\"itemmodule\":\"quiz\"}',1792854446,'cli',NULL,NULL),
+(6514,'\\core\\event\\grade_item_updated','core','updated','grade_item','grade_items',200,'u',0,581,50,83,0,83,NULL,0,'{\"itemname\":\"Examen final\",\"itemtype\":\"mod\",\"itemmodule\":\"quiz\"}',1792854446,'cli',NULL,NULL),
+(6515,'\\gradereport_grader\\event\\grade_report_viewed','gradereport_grader','viewed','grade_report',NULL,NULL,'r',1,579,50,81,12,81,NULL,0,'null',1792854699,'web','172.20.0.1',NULL),
+(6516,'\\core\\event\\user_list_viewed','core','viewed','user_list','course',81,'r',0,579,50,81,12,81,NULL,0,'{\"courseshortname\":\"Bronze_en_formation_numerique\",\"coursefullname\":\"Bronze\"}',1792854735,'web','172.20.0.1',NULL),
+(6517,'\\core\\event\\user_enrolment_created','core','created','user_enrolment','user_enrolments',101,'c',0,579,50,81,12,81,10,0,'{\"enrol\":\"manual\"}',1792854775,'web','172.20.0.1',NULL),
+(6518,'\\core\\event\\notification_sent','core','sent','notification','notifications',28,'c',0,1,10,0,2,0,10,0,'{\"courseid\":\"81\"}',1792854776,'web','172.20.0.1',NULL),
+(6519,'\\core\\event\\role_assigned','core','assigned','role','role',5,'c',0,579,50,81,12,81,10,0,'{\"id\":104,\"component\":\"\",\"itemid\":0}',1792854776,'web','172.20.0.1',NULL),
+(6520,'\\gradereport_grader\\event\\grade_report_viewed','gradereport_grader','viewed','grade_report',NULL,NULL,'r',1,579,50,81,12,81,NULL,0,'null',1792854913,'web','172.20.0.1',NULL),
+(6521,'\\core\\event\\user_list_viewed','core','viewed','user_list','course',81,'r',0,579,50,81,12,81,NULL,0,'{\"courseshortname\":\"Bronze_en_formation_numerique\",\"coursefullname\":\"Bronze\"}',1792854925,'web','172.20.0.1',NULL),
+(6522,'\\core\\event\\user_list_viewed','core','viewed','user_list','course',81,'r',0,579,50,81,12,81,NULL,0,'{\"courseshortname\":\"Bronze_en_formation_numerique\",\"coursefullname\":\"Bronze\"}',1792854960,'web','172.20.0.1',NULL),
+(6523,'\\gradereport_grader\\event\\grade_report_viewed','gradereport_grader','viewed','grade_report',NULL,NULL,'r',1,579,50,81,12,81,NULL,0,'null',1792854968,'web','172.20.0.1',NULL),
+(6524,'\\core\\event\\user_list_viewed','core','viewed','user_list','course',81,'r',0,579,50,81,12,81,NULL,0,'{\"courseshortname\":\"Bronze_en_formation_numerique\",\"coursefullname\":\"Bronze\"}',1792855025,'web','172.20.0.1',NULL),
+(6525,'\\core\\event\\grade_item_created','core','created','grade_item','grade_items',204,'c',0,579,50,81,0,81,NULL,0,'{\"itemname\":\"Examen final\",\"itemtype\":\"mod\",\"itemmodule\":\"quiz\"}',1792855167,'cli',NULL,NULL),
+(6526,'\\core\\event\\user_graded','core','graded','user','grade_grades',7,'u',1,579,50,81,0,81,11,0,'{\"itemid\":\"204\",\"overridden\":false,\"finalgrade\":\"85.00000\"}',1792855167,'cli',NULL,NULL),
+(6527,'\\core\\event\\grade_item_updated','core','updated','grade_item','grade_items',198,'u',0,579,50,81,0,81,NULL,0,'{\"itemname\":\"Examen final\",\"itemtype\":\"mod\",\"itemmodule\":\"quiz\"}',1792855167,'cli',NULL,NULL),
+(6528,'\\core\\event\\grade_item_updated','core','updated','grade_item','grade_items',204,'u',0,579,50,81,0,81,NULL,0,'{\"itemname\":\"Examen final\",\"itemtype\":\"mod\",\"itemmodule\":\"quiz\"}',1792855167,'cli',NULL,NULL),
+(6529,'\\core\\event\\grade_item_updated','core','updated','grade_item','grade_items',201,'u',0,579,50,81,0,81,NULL,0,'{\"itemname\":null,\"itemtype\":\"course\",\"itemmodule\":null}',1792855167,'cli',NULL,NULL),
+(6530,'\\core\\event\\user_graded','core','graded','user','grade_grades',8,'u',1,579,50,81,-1,81,11,0,'{\"itemid\":\"201\",\"overridden\":false,\"finalgrade\":85}',1792855167,'cli',NULL,NULL),
+(6531,'\\core\\event\\user_list_viewed','core','viewed','user_list','course',81,'r',0,579,50,81,12,81,NULL,0,'{\"courseshortname\":\"Bronze_en_formation_numerique\",\"coursefullname\":\"Bronze\"}',1792855713,'web','172.20.0.1',NULL),
+(6532,'\\gradereport_grader\\event\\grade_report_viewed','gradereport_grader','viewed','grade_report',NULL,NULL,'r',1,579,50,81,12,81,NULL,0,'null',1792855717,'web','172.20.0.1',NULL),
+(6533,'\\core\\event\\course_overview_viewed','core','viewed','course_overview',NULL,NULL,'r',2,579,50,81,12,81,NULL,0,'null',1792855740,'web','172.20.0.1',NULL),
+(6534,'\\gradereport_grader\\event\\grade_report_viewed','gradereport_grader','viewed','grade_report',NULL,NULL,'r',1,579,50,81,12,81,NULL,0,'null',1792855756,'web','172.20.0.1',NULL),
+(6535,'\\core\\event\\user_list_viewed','core','viewed','user_list','course',81,'r',0,579,50,81,12,81,NULL,0,'{\"courseshortname\":\"Bronze_en_formation_numerique\",\"coursefullname\":\"Bronze\"}',1792856689,'web','172.20.0.1',NULL),
+(6536,'\\core\\event\\user_list_viewed','core','viewed','user_list','course',81,'r',0,579,50,81,12,81,NULL,0,'{\"courseshortname\":\"Bronze_en_formation_numerique\",\"coursefullname\":\"Bronze\"}',1792856758,'web','172.20.0.1',NULL),
+(6537,'\\core\\event\\user_list_viewed','core','viewed','user_list','course',81,'r',0,579,50,81,12,81,NULL,0,'{\"courseshortname\":\"Bronze_en_formation_numerique\",\"coursefullname\":\"Bronze\"}',1792856792,'web','172.20.0.1',NULL),
+(6538,'\\core\\event\\calendar_event_created','core','created','calendar_event','event',4,'c',0,579,50,81,12,81,NULL,0,'{\"repeatid\":0,\"timestart\":1792800000,\"name\":\"Fiche de pr\\u00e9sence num\\u00e9rique\"}',1792856957,'web','172.20.0.1',NULL),
+(6539,'\\mod_attendance\\event\\session_added','mod_attendance','added','session','attendance_sessions',58,'c',1,590,70,444,12,81,NULL,0,'{\"info\":\"24.10.26 (sam.) 00:00\",\"sessionid\":4}',1792856957,'web','172.20.0.1',NULL),
+(6540,'\\mod_attendance\\event\\session_report_viewed','mod_attendance','viewed','session_report',NULL,NULL,'r',1,590,70,444,12,81,11,0,'{\"studentid\":11,\"view\":5,\"curdate\":1792857035,\"startdate\":0,\"enddate\":0}',1792857035,'web','172.20.0.1',NULL),
+(6541,'\\mod_attendance\\event\\session_report_viewed','mod_attendance','viewed','session_report',NULL,NULL,'r',1,590,70,444,12,81,11,0,'{\"studentid\":11,\"mode\":2,\"view\":5,\"curdate\":1792857046,\"startdate\":0,\"enddate\":0}',1792857046,'web','172.20.0.1',NULL),
+(6542,'\\mod_attendance\\event\\session_report_viewed','mod_attendance','viewed','session_report',NULL,NULL,'r',1,590,70,444,12,81,11,0,'{\"studentid\":11,\"mode\":1,\"view\":5,\"curdate\":1792857049,\"startdate\":0,\"enddate\":0}',1792857049,'web','172.20.0.1',NULL),
+(6543,'\\mod_attendance\\event\\session_report_viewed','mod_attendance','viewed','session_report',NULL,NULL,'r',1,590,70,444,12,81,11,0,'{\"studentid\":11,\"view\":5,\"curdate\":1792857053,\"startdate\":0,\"enddate\":0}',1792857053,'web','172.20.0.1',NULL),
+(6544,'\\core\\event\\grade_item_created','core','created','grade_item','grade_items',205,'c',0,579,50,81,12,81,NULL,0,'{\"itemname\":null,\"itemtype\":\"mod\",\"itemmodule\":\"attendance\"}',1792857117,'web','172.20.0.1',NULL),
+(6545,'\\mod_attendance\\event\\attendance_taken','mod_attendance','taken','attendance','attendance_log',58,'u',1,590,70,444,12,81,NULL,0,'{\"sessionid\":4,\"grouptype\":0}',1792857117,'web','172.20.0.1',NULL),
+(6546,'\\mod_attendance\\event\\attendance_taken','mod_attendance','taken','attendance','attendance_log',58,'u',1,590,70,444,12,81,NULL,0,'{\"sessionid\":4,\"grouptype\":0}',1792857174,'web','172.20.0.1',NULL),
+(6547,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,12,1,NULL,0,'null',1792859146,'web','172.20.0.1',NULL),
+(6548,'\\core\\event\\course_overview_viewed','core','viewed','course_overview',NULL,NULL,'r',2,579,50,81,12,81,NULL,0,'null',1792859245,'web','172.20.0.1',NULL),
+(6549,'\\core\\event\\grade_item_updated','core','updated','grade_item','grade_items',205,'u',0,579,50,81,12,81,NULL,0,'{\"itemname\":null,\"itemtype\":\"mod\",\"itemmodule\":\"attendance\"}',1792859251,'web','172.20.0.1',NULL),
+(6550,'\\gradereport_grader\\event\\grade_report_viewed','gradereport_grader','viewed','grade_report',NULL,NULL,'r',1,579,50,81,12,81,NULL,0,'null',1792859252,'web','172.20.0.1',NULL),
+(6551,'\\core\\event\\user_list_viewed','core','viewed','user_list','course',81,'r',0,579,50,81,12,81,NULL,0,'{\"courseshortname\":\"Bronze_en_formation_numerique\",\"coursefullname\":\"Bronze\"}',1792859257,'web','172.20.0.1',NULL),
+(6552,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,579,50,81,12,81,NULL,0,'null',1792859261,'web','172.20.0.1',NULL),
+(6553,'\\core\\event\\dashboard_viewed','core','viewed','dashboard',NULL,NULL,'r',0,604,30,12,12,0,12,0,'null',1792859278,'web','172.20.0.1',NULL),
+(6554,'\\core\\event\\user_loggedout','core','loggedout','user','user',12,'r',0,1,10,0,12,0,NULL,0,'{\"sessionid\":\"9ece2ba25e8dba28662ad892604e3062\"}',1792859966,'web','172.20.0.1',NULL),
+(6555,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792859966,'web','172.20.0.1',NULL),
+(6556,'\\core\\event\\user_loggedin','core','loggedin','user','user',13,'r',0,1,10,0,13,0,NULL,0,'{\"username\":\"gestionnaire\",\"extrauserinfo\":[]}',1792860004,'web','172.20.0.1',NULL),
+(6557,'\\core\\event\\dashboard_viewed','core','viewed','dashboard',NULL,NULL,'r',0,615,30,13,13,0,13,0,'null',1792860005,'web','172.20.0.1',NULL),
+(6558,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,13,1,NULL,0,'null',1792860207,'web','172.20.0.1',NULL),
+(6559,'\\core\\event\\group_created','core','created','group','groups',97,'c',0,579,50,81,0,81,NULL,0,'null',1792862731,'cli',NULL,NULL),
+(6560,'\\core\\event\\group_created','core','created','group','groups',98,'c',0,579,50,81,0,81,NULL,0,'null',1792862731,'cli',NULL,NULL),
+(6561,'\\core\\event\\group_created','core','created','group','groups',99,'c',0,579,50,81,0,81,NULL,0,'null',1792862731,'cli',NULL,NULL),
+(6562,'\\core\\event\\group_member_added','core','added','group_member','groups',97,'c',0,579,50,81,0,81,12,0,'{\"component\":\"\",\"itemid\":0}',1792862731,'cli',NULL,NULL),
+(6563,'\\core\\event\\group_member_added','core','added','group_member','groups',98,'c',0,579,50,81,0,81,12,0,'{\"component\":\"\",\"itemid\":0}',1792862731,'cli',NULL,NULL),
+(6564,'\\core\\event\\group_member_added','core','added','group_member','groups',99,'c',0,579,50,81,0,81,12,0,'{\"component\":\"\",\"itemid\":0}',1792862731,'cli',NULL,NULL),
+(6565,'\\core\\event\\group_member_added','core','added','group_member','groups',97,'c',0,579,50,81,0,81,11,0,'{\"component\":\"\",\"itemid\":0}',1792862731,'cli',NULL,NULL),
+(6566,'\\core\\event\\group_member_added','core','added','group_member','groups',98,'c',0,579,50,81,0,81,10,0,'{\"component\":\"\",\"itemid\":0}',1792862731,'cli',NULL,NULL),
+(6567,'\\core\\event\\user_enrolment_created','core','created','user_enrolment','user_enrolments',102,'c',0,579,50,81,0,81,4,0,'{\"enrol\":\"manual\"}',1792862731,'cli',NULL,NULL),
+(6568,'\\core\\event\\notification_sent','core','sent','notification','notifications',29,'c',0,1,10,0,2,0,4,0,'{\"courseid\":\"81\"}',1792862732,'cli',NULL,NULL),
+(6569,'\\core\\event\\role_assigned','core','assigned','role','role',5,'c',0,579,50,81,0,81,4,0,'{\"id\":105,\"component\":\"\",\"itemid\":0}',1792862732,'cli',NULL,NULL),
+(6570,'\\core\\event\\user_enrolment_created','core','created','user_enrolment','user_enrolments',103,'c',0,579,50,81,0,81,7,0,'{\"enrol\":\"manual\"}',1792862916,'cli',NULL,NULL),
+(6571,'\\core\\event\\notification_sent','core','sent','notification','notifications',30,'c',0,1,10,0,2,0,7,0,'{\"courseid\":\"81\"}',1792862917,'cli',NULL,NULL),
+(6572,'\\core\\event\\role_assigned','core','assigned','role','role',5,'c',0,579,50,81,0,81,7,0,'{\"id\":106,\"component\":\"\",\"itemid\":0}',1792862917,'cli',NULL,NULL),
+(6573,'\\core\\event\\group_member_added','core','added','group_member','groups',97,'c',0,579,50,81,0,81,7,0,'{\"component\":\"\",\"itemid\":0}',1792862917,'cli',NULL,NULL),
+(6574,'\\core\\event\\group_member_added','core','added','group_member','groups',98,'c',0,579,50,81,0,81,4,0,'{\"component\":\"\",\"itemid\":0}',1792862917,'cli',NULL,NULL),
+(6575,'\\core\\event\\user_enrolment_created','core','created','user_enrolment','user_enrolments',104,'c',0,579,50,81,0,81,3,0,'{\"enrol\":\"manual\"}',1792862917,'cli',NULL,NULL),
+(6576,'\\core\\event\\notification_sent','core','sent','notification','notifications',31,'c',0,1,10,0,2,0,3,0,'{\"courseid\":\"81\"}',1792862917,'cli',NULL,NULL),
+(6577,'\\core\\event\\role_assigned','core','assigned','role','role',5,'c',0,579,50,81,0,81,3,0,'{\"id\":107,\"component\":\"\",\"itemid\":0}',1792862917,'cli',NULL,NULL),
+(6578,'\\core\\event\\group_member_added','core','added','group_member','groups',99,'c',0,579,50,81,0,81,3,0,'{\"component\":\"\",\"itemid\":0}',1792862917,'cli',NULL,NULL),
+(6579,'\\core\\event\\mycourses_viewed','core','viewed','mycourses',NULL,NULL,'r',0,1,10,0,13,0,NULL,0,'null',1792863148,'web','172.20.0.1',NULL),
+(6580,'\\core\\event\\dashboard_viewed','core','viewed','dashboard',NULL,NULL,'r',0,615,30,13,13,0,13,0,'null',1792863152,'web','172.20.0.1',NULL),
+(6581,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,13,1,NULL,0,'null',1792863156,'web','172.20.0.1',NULL),
+(6582,'\\core\\event\\user_loggedout','core','loggedout','user','user',13,'r',0,1,10,0,13,0,NULL,0,'{\"sessionid\":\"81b84be80585aba5d6fffeaf8dc534e4\"}',1792863347,'web','172.20.0.1',NULL),
+(6583,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792863347,'web','172.20.0.1',NULL),
+(6584,'\\core\\event\\user_loggedin','core','loggedin','user','user',2,'r',0,1,10,0,2,0,NULL,0,'{\"username\":\"pactdigital\",\"extrauserinfo\":[]}',1792863361,'web','172.20.0.1',NULL),
+(6585,'\\core\\event\\dashboard_viewed','core','viewed','dashboard',NULL,NULL,'r',0,5,30,2,2,0,2,0,'null',1792863362,'web','172.20.0.1',NULL),
+(6586,'\\core\\event\\mycourses_viewed','core','viewed','mycourses',NULL,NULL,'r',0,1,10,0,2,0,NULL,0,'null',1792863482,'web','172.20.0.1',NULL),
+(6587,'\\core\\event\\user_loggedout','core','loggedout','user','user',2,'r',0,1,10,0,2,0,NULL,0,'{\"sessionid\":\"27c52932c1440d10fe9856d9e56a498f\"}',1792863595,'web','172.20.0.1',NULL),
+(6588,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792863595,'web','172.20.0.1',NULL),
+(6589,'\\core\\event\\user_loggedin','core','loggedin','user','user',11,'r',0,1,10,0,11,0,NULL,0,'{\"username\":\"apprenant\",\"extrauserinfo\":[]}',1792863631,'web','172.20.0.1',NULL),
+(6590,'\\core\\event\\dashboard_viewed','core','viewed','dashboard',NULL,NULL,'r',0,603,30,11,11,0,11,0,'null',1792863631,'web','172.20.0.1',NULL),
+(6591,'\\core\\event\\user_enrolment_created','core','created','user_enrolment','user_enrolments',105,'c',0,580,50,82,10,82,10,0,'{\"enrol\":\"manual\"}',1792864176,'cli',NULL,NULL),
+(6592,'\\core\\event\\notification_sent','core','sent','notification','notifications',32,'c',0,1,10,0,2,0,10,0,'{\"courseid\":\"82\"}',1792864176,'cli',NULL,NULL),
+(6593,'\\core\\event\\role_assigned','core','assigned','role','role',5,'c',0,580,50,82,10,82,10,0,'{\"id\":108,\"component\":\"\",\"itemid\":0}',1792864176,'cli',NULL,NULL),
+(6594,'\\core\\event\\user_enrolment_created','core','created','user_enrolment','user_enrolments',10,'c',0,580,50,82,10,82,10,0,'{\"enrol\":\"manual\"}',1792864176,'cli',NULL,NULL),
+(6595,'\\core\\event\\user_enrolment_created','core','created','user_enrolment','user_enrolments',106,'c',0,102,50,35,11,35,11,0,'{\"enrol\":\"manual\"}',1792864284,'web','172.20.0.1',NULL),
+(6596,'\\core\\event\\notification_sent','core','sent','notification','notifications',33,'c',0,1,10,0,2,0,11,0,'{\"courseid\":\"35\"}',1792864284,'web','172.20.0.1',NULL),
+(6597,'\\core\\event\\role_assigned','core','assigned','role','role',5,'c',0,102,50,35,11,35,11,0,'{\"id\":109,\"component\":\"\",\"itemid\":0}',1792864284,'web','172.20.0.1',NULL),
+(6598,'\\core\\event\\user_enrolment_created','core','created','user_enrolment','user_enrolments',11,'c',0,102,50,35,11,35,11,0,'{\"enrol\":\"manual\"}',1792864284,'web','172.20.0.1',NULL),
+(6599,'\\core\\event\\mycourses_viewed','core','viewed','mycourses',NULL,NULL,'r',0,1,10,0,11,0,NULL,0,'null',1792864419,'web','172.20.0.1',NULL),
+(6600,'\\core\\event\\user_loggedout','core','loggedout','user','user',11,'r',0,1,10,0,11,0,NULL,0,'{\"sessionid\":\"ef0839e17fc535ad1b738b24b3d2ed80\"}',1792864434,'web','172.20.0.1',NULL),
+(6601,'\\core\\event\\course_viewed','core','viewed','course',NULL,NULL,'r',2,2,50,1,0,1,NULL,0,'null',1792864434,'web','172.20.0.1',NULL);
 /*!40000 ALTER TABLE `m_logstore_standard_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -33708,7 +34431,7 @@ CREATE TABLE `m_message_conversation_members` (
   PRIMARY KEY (`id`),
   KEY `m_messconvmemb_con_ix` (`conversationid`),
   KEY `m_messconvmemb_use_ix` (`userid`)
-) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Stores all members in a conversations';
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Stores all members in a conversations';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -33786,7 +34509,9 @@ INSERT INTO `m_message_conversation_members` VALUES
 (66,97,3,1791360378),
 (67,98,3,1791561861),
 (68,56,3,1791991542),
-(69,11,3,1791992271);
+(69,11,3,1791992271),
+(70,99,11,1792851213),
+(71,100,13,1792863285);
 /*!40000 ALTER TABLE `m_message_conversation_members` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -33814,7 +34539,7 @@ CREATE TABLE `m_message_conversations` (
   KEY `m_messconv_con_ix` (`convhash`),
   KEY `m_messconv_comiteitecon_ix` (`component`,`itemtype`,`itemid`,`contextid`),
   KEY `m_messconv_con2_ix` (`contextid`)
-) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Stores all message conversations';
+) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Stores all message conversations';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -33921,7 +34646,9 @@ INSERT INTO `m_message_conversations` VALUES
 (95,2,'Session-01_Ouaga_Kadiogo',NULL,'core_group','groups',95,158,1,1791287869,1791287869),
 (96,2,'Session-02_Ouaga_Kadiogo',NULL,'core_group','groups',96,158,1,1791287885,1791287885),
 (97,1,NULL,'287da0651bbe7af557b588ce0c9aeaa9a39487a6',NULL,NULL,NULL,NULL,1,1791360378,1791360378),
-(98,3,NULL,'77de68daecd823babbb58edb1c8e14d7106e83bb',NULL,NULL,NULL,NULL,1,1791561861,1791561861);
+(98,3,NULL,'77de68daecd823babbb58edb1c8e14d7106e83bb',NULL,NULL,NULL,NULL,1,1791561861,1791561861),
+(99,3,NULL,'17ba0791499db908433b80f37c5fbc89b870084b',NULL,NULL,NULL,NULL,1,1792851213,1792851213),
+(100,3,NULL,'bd307a3ec329e10a2cff8fb87480823da114f8f4',NULL,NULL,NULL,NULL,1,1792863285,1792863285);
 /*!40000 ALTER TABLE `m_message_conversations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -33991,7 +34718,7 @@ CREATE TABLE `m_message_popup_notifications` (
   `notificationid` bigint(10) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `m_messpopunoti_not_ix` (`notificationid`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='List of notifications to display in the message output popup';
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='List of notifications to display in the message output popup';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -34022,7 +34749,15 @@ INSERT INTO `m_message_popup_notifications` VALUES
 (21,22),
 (22,23),
 (23,24),
-(24,25);
+(24,25),
+(25,26),
+(26,27),
+(27,28),
+(28,29),
+(29,30),
+(30,31),
+(31,32),
+(32,33);
 /*!40000 ALTER TABLE `m_message_popup_notifications` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -34795,7 +35530,7 @@ CREATE TABLE `m_my_pages` (
   `sortorder` mediumint(6) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   KEY `m_mypage_usepri_ix` (`userid`,`private`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Extra user pages for the My Moodle system';
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Extra user pages for the My Moodle system';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -34816,7 +35551,8 @@ INSERT INTO `m_my_pages` VALUES
 (9,7,'__default',1,0),
 (10,10,'__default',1,0),
 (11,11,'__default',1,0),
-(12,12,'__default',1,0);
+(12,12,'__default',1,0),
+(13,13,'__default',1,0);
 /*!40000 ALTER TABLE `m_my_pages` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -34848,7 +35584,7 @@ CREATE TABLE `m_notifications` (
   KEY `m_noti_tim_ix` (`timecreated`),
   KEY `m_noti_tim2_ix` (`timeread`),
   KEY `m_noti_use2_ix` (`useridto`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Stores all notifications';
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Stores all notifications';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -34880,7 +35616,15 @@ INSERT INTO `m_notifications` VALUES
 (22,-10,11,'New sign in to your PACTDIGITAL-BF account','Hi Awa Ouédraogo,\n\nYour PACTDIGITAL-BF account was just signed in to from a new device.\n\n	* Your account: apprenant awa.apprenant@pactdigital.bf\n	* Friday, 16 October 2026, 2:28 PM\n	* Device: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)\nAppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36\n	* IP: 172.20.0.1\n\nIf this was you, then you don\'t need to do anything.\n\nIf you don\'t recognise this activity, please change your password [1].\n\n\nLinks:\n------\n[1] http://localhost:8080/login/change_password.php\n',1,'<p>Hi Awa Ouédraogo,</p>\n<p>Your PACTDIGITAL-BF account was just signed in to from a new device.</p>\n<ul>\n<li>Your account: apprenant awa.apprenant@pactdigital.bf</li>\n<li>Friday, 16 October 2026, 2:28 PM</li>\n<li>Device:  Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36</li>\n<li>IP: 172.20.0.1</li>\n</ul>\n<p>If this was you, then you don\'t need to do anything.</p>\n<p>If you don\'t recognise this activity, please <a href=\"http://localhost:8080/login/change_password.php\">change your password</a>.</p>','Your apprenant account was just signed in to from a new device.','moodle','newlogin',NULL,NULL,NULL,1792482242,'{\"notificationiconurl\":\"http:\\/\\/localhost:8080\\/theme\\/image.php\\/pactdigital\\/core\\/1792251628\\/u\\/f1\",\"courseid\":\"1\"}'),
 (23,-10,12,'New sign in to your PACTDIGITAL-BF account','Hi Moussa Traoré,\n\nYour PACTDIGITAL-BF account was just signed in to from a new device.\n\n	* Your account: formateur moussa.formateur@pactdigital.bf\n	* Friday, 16 October 2026, 2:36 PM\n	* Device: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)\nAppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36\n	* IP: 172.20.0.1\n\nIf this was you, then you don\'t need to do anything.\n\nIf you don\'t recognise this activity, please change your password [1].\n\n\nLinks:\n------\n[1] http://localhost:8080/login/change_password.php\n',1,'<p>Hi Moussa Traoré,</p>\n<p>Your PACTDIGITAL-BF account was just signed in to from a new device.</p>\n<ul>\n<li>Your account: formateur moussa.formateur@pactdigital.bf</li>\n<li>Friday, 16 October 2026, 2:36 PM</li>\n<li>Device:  Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36</li>\n<li>IP: 172.20.0.1</li>\n</ul>\n<p>If this was you, then you don\'t need to do anything.</p>\n<p>If you don\'t recognise this activity, please <a href=\"http://localhost:8080/login/change_password.php\">change your password</a>.</p>','Your formateur account was just signed in to from a new device.','moodle','newlogin',NULL,NULL,NULL,1792482242,'{\"notificationiconurl\":\"http:\\/\\/localhost:8080\\/theme\\/image.php\\/pactdigital\\/core\\/1792251628\\/u\\/f1\",\"courseid\":\"1\"}'),
 (24,-10,13,'New sign in to your PACTDIGITAL-BF account','Hi Fatou Kaboré,\n\nYour PACTDIGITAL-BF account was just signed in to from a new device.\n\n	* Your account: gestionnaire fatou.pedagogie@pactdigital.bf\n	* Friday, 16 October 2026, 2:49 PM\n	* Device: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)\nAppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36\n	* IP: 172.20.0.1\n\nIf this was you, then you don\'t need to do anything.\n\nIf you don\'t recognise this activity, please change your password [1].\n\n\nLinks:\n------\n[1] http://localhost:8080/login/change_password.php\n',1,'<p>Hi Fatou Kaboré,</p>\n<p>Your PACTDIGITAL-BF account was just signed in to from a new device.</p>\n<ul>\n<li>Your account: gestionnaire fatou.pedagogie@pactdigital.bf</li>\n<li>Friday, 16 October 2026, 2:49 PM</li>\n<li>Device:  Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36</li>\n<li>IP: 172.20.0.1</li>\n</ul>\n<p>If this was you, then you don\'t need to do anything.</p>\n<p>If you don\'t recognise this activity, please <a href=\"http://localhost:8080/login/change_password.php\">change your password</a>.</p>','Your gestionnaire account was just signed in to from a new device.','moodle','newlogin',NULL,NULL,NULL,1792482242,'{\"notificationiconurl\":\"http:\\/\\/localhost:8080\\/theme\\/image.php\\/pactdigital\\/core\\/1792251628\\/u\\/f1\",\"courseid\":\"1\"}'),
-(25,-10,11,'New sign in to your PACTDIGITAL-BF account','Hi Awa Ouédraogo,\n\nYour PACTDIGITAL-BF account was just signed in to from a new device.\n\n	* Your account: apprenant awa.apprenant@pactdigital.bf\n	* Saturday, 17 October 2026, 2:59 PM\n	* Device: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)\nAppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36\n	* IP: 172.20.0.1\n\nIf this was you, then you don\'t need to do anything.\n\nIf you don\'t recognise this activity, please change your password [1].\n\n\nLinks:\n------\n[1] http://localhost:8080/login/change_password.php\n',1,'<p>Hi Awa Ouédraogo,</p>\n<p>Your PACTDIGITAL-BF account was just signed in to from a new device.</p>\n<ul>\n<li>Your account: apprenant awa.apprenant@pactdigital.bf</li>\n<li>Saturday, 17 October 2026, 2:59 PM</li>\n<li>Device:  Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36</li>\n<li>IP: 172.20.0.1</li>\n</ul>\n<p>If this was you, then you don\'t need to do anything.</p>\n<p>If you don\'t recognise this activity, please <a href=\"http://localhost:8080/login/change_password.php\">change your password</a>.</p>','Your apprenant account was just signed in to from a new device.','moodle','newlogin',NULL,NULL,NULL,1792482242,'{\"notificationiconurl\":\"http:\\/\\/localhost:8080\\/theme\\/image.php\\/pactdigital\\/core\\/1792251628\\/u\\/f1\",\"courseid\":\"1\"}');
+(25,-10,11,'New sign in to your PACTDIGITAL-BF account','Hi Awa Ouédraogo,\n\nYour PACTDIGITAL-BF account was just signed in to from a new device.\n\n	* Your account: apprenant awa.apprenant@pactdigital.bf\n	* Saturday, 17 October 2026, 2:59 PM\n	* Device: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)\nAppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36\n	* IP: 172.20.0.1\n\nIf this was you, then you don\'t need to do anything.\n\nIf you don\'t recognise this activity, please change your password [1].\n\n\nLinks:\n------\n[1] http://localhost:8080/login/change_password.php\n',1,'<p>Hi Awa Ouédraogo,</p>\n<p>Your PACTDIGITAL-BF account was just signed in to from a new device.</p>\n<ul>\n<li>Your account: apprenant awa.apprenant@pactdigital.bf</li>\n<li>Saturday, 17 October 2026, 2:59 PM</li>\n<li>Device:  Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36</li>\n<li>IP: 172.20.0.1</li>\n</ul>\n<p>If this was you, then you don\'t need to do anything.</p>\n<p>If you don\'t recognise this activity, please <a href=\"http://localhost:8080/login/change_password.php\">change your password</a>.</p>','Your apprenant account was just signed in to from a new device.','moodle','newlogin',NULL,NULL,1792851185,1792482242,'{\"notificationiconurl\":\"http:\\/\\/localhost:8080\\/theme\\/image.php\\/pactdigital\\/core\\/1792251628\\/u\\/f1\",\"courseid\":\"1\"}'),
+(26,2,10,'Bienvenue sur Bronze','Bonjour Kizito, vous êtes inscrit au cours Bronze',4,'Bonjour Kizito, vous êtes inscrit au cours Bronze',NULL,'moodle','enrolcoursewelcomemessage','http://localhost:8080/user/view.php?id=10&amp;course=24','Bronze',NULL,1792744283,NULL),
+(27,2,11,'Bienvenue sur Bronze','Bonjour Awa, vous êtes inscrit au cours Bronze',4,'Bonjour Awa, vous êtes inscrit au cours Bronze',NULL,'moodle','enrolcoursewelcomemessage','http://localhost:8080/user/view.php?id=11&amp;course=48','Bronze',1792851180,1792848976,NULL),
+(28,2,10,'Bienvenue sur Bronze','Bonjour Kizito, vous êtes inscrit au cours Bronze',4,'Bonjour Kizito, vous êtes inscrit au cours Bronze',NULL,'moodle','enrolcoursewelcomemessage','http://localhost:8080/user/view.php?id=10&amp;course=81','Bronze',NULL,1792854776,NULL),
+(29,2,4,'Bienvenue sur Bronze','Bonjour Bethsaleel, vous êtes inscrit au cours Bronze',4,'Bonjour Bethsaleel, vous êtes inscrit au cours Bronze',NULL,'moodle','enrolcoursewelcomemessage','http://localhost:8080/user/view.php?id=4&amp;course=81','Bronze',NULL,1792862732,NULL),
+(30,2,7,'Bienvenue sur Bronze','Bonjour Zwama, vous êtes inscrit au cours Bronze',4,'Bonjour Zwama, vous êtes inscrit au cours Bronze',NULL,'moodle','enrolcoursewelcomemessage','http://localhost:8080/user/view.php?id=7&amp;course=81','Bronze',NULL,1792862917,NULL),
+(31,2,3,'Bienvenue sur Bronze','Bonjour Ivan, vous êtes inscrit au cours Bronze',4,'Bonjour Ivan, vous êtes inscrit au cours Bronze',NULL,'moodle','enrolcoursewelcomemessage','http://localhost:8080/user/view.php?id=3&amp;course=81','Bronze',NULL,1792862917,NULL),
+(32,2,10,'Bienvenue sur Argent','Bonjour Kizito, vous êtes inscrit au cours Argent',4,'Bonjour Kizito, vous êtes inscrit au cours Argent',NULL,'moodle','enrolcoursewelcomemessage','http://localhost:8080/user/view.php?id=10&amp;course=82','Argent',NULL,1792864176,NULL),
+(33,2,11,'Bienvenue sur Or','Bonjour Awa, vous êtes inscrit au cours Or',4,'Bonjour Awa, vous êtes inscrit au cours Or',NULL,'moodle','enrolcoursewelcomemessage','http://localhost:8080/user/view.php?id=11&amp;course=35','Or',NULL,1792864284,NULL);
 /*!40000 ALTER TABLE `m_notifications` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -36296,7 +37040,7 @@ CREATE TABLE `m_question_attempt_step_data` (
   `value` longtext DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `m_quesattestepdata_att_ix` (`attemptstepid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Each question_attempt_step has an associative array of the d';
+) ENGINE=InnoDB AUTO_INCREMENT=317 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Each question_attempt_step has an associative array of the d';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36305,6 +37049,260 @@ CREATE TABLE `m_question_attempt_step_data` (
 
 LOCK TABLES `m_question_attempt_step_data` WRITE;
 /*!40000 ALTER TABLE `m_question_attempt_step_data` DISABLE KEYS */;
+INSERT INTO `m_question_attempt_step_data` VALUES
+(1,1,'_order','4,3,1,2'),
+(2,2,'_order','7,8,6,5'),
+(3,3,'_order','9,10,12,11'),
+(4,4,'_order','15,14,13'),
+(5,5,'_order','19,18,16,17'),
+(6,6,'_order','20,21'),
+(7,7,'_order','23,22,24'),
+(8,8,'_order','25,26'),
+(9,9,'_order','28,29,27'),
+(10,10,'_order','31,33,30,32'),
+(11,11,'_order','34,37,36,35'),
+(12,12,'_order','38,40,39'),
+(13,13,'_order','43,44,41,42'),
+(14,14,'_order','46,47,48,45'),
+(15,15,'_order','49,51,50'),
+(16,16,'_order','52,54,53'),
+(17,17,'_order','57,55,58,56'),
+(18,18,'_order','61,60,62,59'),
+(19,19,'_order','63,66,65,64'),
+(20,20,'_order','67,68,69'),
+(21,21,'_order','70,72,73,71'),
+(22,22,'_order','75,74'),
+(23,23,'_order','76,77,78'),
+(24,24,'_order','80,79'),
+(25,25,'_order','82,81,83'),
+(26,26,'_order','85,84,86,87'),
+(27,27,'_order','89,88,91,90'),
+(28,28,'_order','93,92,94'),
+(29,29,'_order','95,96,97,98'),
+(30,30,'_order','102,99,101,100'),
+(31,31,'_order','105,103,104'),
+(32,32,'_order','106,108,107'),
+(33,33,'answer','2'),
+(34,34,'answer','1'),
+(35,35,'answer','1'),
+(36,36,'answer','1'),
+(37,37,'answer','2'),
+(38,38,'answer','0'),
+(39,39,'answer','1'),
+(40,40,'answer','1'),
+(41,41,'answer','0'),
+(42,42,'answer','0'),
+(43,43,'answer','0'),
+(44,44,'answer','1'),
+(45,45,'answer','0'),
+(46,46,'answer','2'),
+(47,47,'answer','1'),
+(48,48,'answer','1'),
+(49,49,'-finish','1'),
+(50,50,'-finish','1'),
+(51,51,'-finish','1'),
+(52,52,'-finish','1'),
+(53,53,'-finish','1'),
+(54,54,'-finish','1'),
+(55,55,'-finish','1'),
+(56,56,'-finish','1'),
+(57,57,'-finish','1'),
+(58,58,'-finish','1'),
+(59,59,'-finish','1'),
+(60,60,'-finish','1'),
+(61,61,'-finish','1'),
+(62,62,'-finish','1'),
+(63,63,'-finish','1'),
+(64,64,'-finish','1'),
+(128,128,'_order','110,109,112,111'),
+(129,129,'_order','116,114,113,115'),
+(130,130,'_order','119,118,120,117'),
+(131,131,'_order','124,121,122,123'),
+(132,132,'_order','126,128,127,125'),
+(133,133,'_order','129,130,131,132'),
+(134,134,'_order','134,135,136,133'),
+(135,135,'_order','137,139,138,140'),
+(136,136,'_order','144,142,141,143'),
+(137,137,'_order','147,145,148,146'),
+(138,138,'_order','150,152,151,149'),
+(139,139,'_order','154,155,156,153'),
+(140,140,'_order','158,160,159,157'),
+(141,141,'_order','162,161,164,163'),
+(142,142,'_order','167,166,165,168'),
+(143,143,'_order','172,171,169,170'),
+(144,144,'_order','173,176,175,174'),
+(145,145,'_order','177,179,178,180'),
+(146,146,'_order','181,183,184,182'),
+(147,147,'_order','188,187,186,185'),
+(148,148,'_order','192,189,190,191'),
+(149,149,'answer','1'),
+(150,150,'answer','1'),
+(151,151,'answer','3'),
+(152,152,'answer','1'),
+(153,153,'answer','3'),
+(154,154,'answer','0'),
+(155,155,'answer','0'),
+(156,156,'answer','2'),
+(157,157,'answer','2'),
+(158,158,'answer','2'),
+(159,159,'answer','2'),
+(160,160,'answer','1'),
+(161,161,'answer','0'),
+(162,162,'answer','3'),
+(163,163,'answer','1'),
+(164,164,'answer','2'),
+(165,165,'answer','1'),
+(166,166,'answer','2'),
+(167,167,'answer','0'),
+(168,168,'answer','0'),
+(169,169,'answer','1'),
+(170,170,'-finish','1'),
+(171,171,'-finish','1'),
+(172,172,'-finish','1'),
+(173,173,'-finish','1'),
+(174,174,'-finish','1'),
+(175,175,'-finish','1'),
+(176,176,'-finish','1'),
+(177,177,'-finish','1'),
+(178,178,'-finish','1'),
+(179,179,'-finish','1'),
+(180,180,'-finish','1'),
+(181,181,'-finish','1'),
+(182,182,'-finish','1'),
+(183,183,'-finish','1'),
+(184,184,'-finish','1'),
+(185,185,'-finish','1'),
+(186,186,'-finish','1'),
+(187,187,'-finish','1'),
+(188,188,'-finish','1'),
+(189,189,'-finish','1'),
+(190,190,'-finish','1'),
+(191,191,'_order','109,112,110,111'),
+(192,192,'_order','115,114,116,113'),
+(193,193,'_order','118,120,117,119'),
+(194,194,'_order','122,123,121,124'),
+(195,195,'_order','128,127,126,125'),
+(196,196,'_order','129,130,131,132'),
+(197,197,'_order','136,133,134,135'),
+(198,198,'_order','139,137,140,138'),
+(199,199,'_order','141,143,144,142'),
+(200,200,'_order','145,147,146,148'),
+(201,201,'_order','150,151,149,152'),
+(202,202,'_order','153,154,156,155'),
+(203,203,'_order','158,157,160,159'),
+(204,204,'_order','163,161,164,162'),
+(205,205,'_order','168,166,165,167'),
+(206,206,'_order','171,172,170,169'),
+(207,207,'_order','176,174,173,175'),
+(208,208,'_order','180,179,178,177'),
+(209,209,'_order','181,183,182,184'),
+(210,210,'_order','185,186,187,188'),
+(211,211,'_order','191,190,192,189'),
+(212,212,'answer','0'),
+(213,213,'answer','1'),
+(214,214,'answer','2'),
+(215,215,'answer','2'),
+(216,216,'answer','0'),
+(217,217,'answer','0'),
+(218,218,'answer','3'),
+(219,219,'answer','2'),
+(220,220,'answer','0'),
+(221,221,'answer','1'),
+(222,222,'answer','0'),
+(223,223,'answer','1'),
+(224,224,'answer','2'),
+(225,225,'answer','2'),
+(226,226,'answer','0'),
+(227,227,'answer','1'),
+(228,228,'answer','2'),
+(229,229,'answer','0'),
+(230,230,'answer','1'),
+(231,231,'answer','0'),
+(232,232,'answer','0'),
+(233,233,'-finish','1'),
+(234,234,'-finish','1'),
+(235,235,'-finish','1'),
+(236,236,'-finish','1'),
+(237,237,'-finish','1'),
+(238,238,'-finish','1'),
+(239,239,'-finish','1'),
+(240,240,'-finish','1'),
+(241,241,'-finish','1'),
+(242,242,'-finish','1'),
+(243,243,'-finish','1'),
+(244,244,'-finish','1'),
+(245,245,'-finish','1'),
+(246,246,'-finish','1'),
+(247,247,'-finish','1'),
+(248,248,'-finish','1'),
+(249,249,'-finish','1'),
+(250,250,'-finish','1'),
+(251,251,'-finish','1'),
+(252,252,'-finish','1'),
+(253,253,'-finish','1'),
+(254,254,'_order','109,112,111,110'),
+(255,255,'_order','113,115,114,116'),
+(256,256,'_order','118,117,119,120'),
+(257,257,'_order','124,121,123,122'),
+(258,258,'_order','126,128,125,127'),
+(259,259,'_order','132,130,131,129'),
+(260,260,'_order','133,135,134,136'),
+(261,261,'_order','140,138,139,137'),
+(262,262,'_order','141,142,143,144'),
+(263,263,'_order','146,148,147,145'),
+(264,264,'_order','151,149,152,150'),
+(265,265,'_order','153,156,154,155'),
+(266,266,'_order','159,157,158,160'),
+(267,267,'_order','163,162,161,164'),
+(268,268,'_order','168,166,165,167'),
+(269,269,'_order','169,172,170,171'),
+(270,270,'_order','173,174,176,175'),
+(271,271,'_order','179,177,178,180'),
+(272,272,'_order','183,181,182,184'),
+(273,273,'_order','188,186,187,185'),
+(274,274,'_order','191,190,189,192'),
+(275,275,'answer','0'),
+(276,276,'answer','3'),
+(277,277,'answer','1'),
+(278,278,'answer','2'),
+(279,279,'answer','0'),
+(280,280,'answer','1'),
+(281,281,'answer','2'),
+(282,282,'answer','1'),
+(283,283,'answer','2'),
+(284,284,'answer','3'),
+(285,285,'answer','2'),
+(286,286,'answer','2'),
+(287,287,'answer','0'),
+(288,288,'answer','0'),
+(289,289,'answer','1'),
+(290,290,'answer','3'),
+(291,291,'answer','3'),
+(292,292,'answer','2'),
+(293,293,'answer','2'),
+(294,294,'answer','1'),
+(295,295,'answer','1'),
+(296,296,'-finish','1'),
+(297,297,'-finish','1'),
+(298,298,'-finish','1'),
+(299,299,'-finish','1'),
+(300,300,'-finish','1'),
+(301,301,'-finish','1'),
+(302,302,'-finish','1'),
+(303,303,'-finish','1'),
+(304,304,'-finish','1'),
+(305,305,'-finish','1'),
+(306,306,'-finish','1'),
+(307,307,'-finish','1'),
+(308,308,'-finish','1'),
+(309,309,'-finish','1'),
+(310,310,'-finish','1'),
+(311,311,'-finish','1'),
+(312,312,'-finish','1'),
+(313,313,'-finish','1'),
+(314,314,'-finish','1'),
+(315,315,'-finish','1'),
+(316,316,'-finish','1');
 /*!40000 ALTER TABLE `m_question_attempt_step_data` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -36327,7 +37325,7 @@ CREATE TABLE `m_question_attempt_steps` (
   UNIQUE KEY `m_quesattestep_queseq_uix` (`questionattemptid`,`sequencenumber`),
   KEY `m_quesattestep_que_ix` (`questionattemptid`),
   KEY `m_quesattestep_use_ix` (`userid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Stores one step in in a question attempt. As well as the dat';
+) ENGINE=InnoDB AUTO_INCREMENT=317 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Stores one step in in a question attempt. As well as the dat';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36336,6 +37334,260 @@ CREATE TABLE `m_question_attempt_steps` (
 
 LOCK TABLES `m_question_attempt_steps` WRITE;
 /*!40000 ALTER TABLE `m_question_attempt_steps` DISABLE KEYS */;
+INSERT INTO `m_question_attempt_steps` VALUES
+(1,1,0,'todo',NULL,1792499076,2),
+(2,2,0,'todo',NULL,1792499076,2),
+(3,3,0,'todo',NULL,1792499076,2),
+(4,4,0,'todo',NULL,-1,2),
+(5,5,0,'todo',NULL,-1,2),
+(6,6,0,'todo',NULL,-1,2),
+(7,7,0,'todo',NULL,-1,2),
+(8,8,0,'todo',NULL,-1,2),
+(9,9,0,'todo',NULL,-1,2),
+(10,10,0,'todo',NULL,-1,2),
+(11,11,0,'todo',NULL,-1,2),
+(12,12,0,'todo',NULL,-1,2),
+(13,13,0,'todo',NULL,-1,2),
+(14,14,0,'todo',NULL,-1,2),
+(15,15,0,'todo',NULL,-1,2),
+(16,16,0,'todo',NULL,-1,2),
+(17,17,0,'todo',NULL,1792499691,2),
+(18,18,0,'todo',NULL,1792499691,2),
+(19,19,0,'todo',NULL,1792499691,2),
+(20,20,0,'todo',NULL,1792499738,2),
+(21,21,0,'todo',NULL,1792499738,2),
+(22,22,0,'todo',NULL,1792499738,2),
+(23,23,0,'todo',NULL,1792499770,2),
+(24,24,0,'todo',NULL,1792499770,2),
+(25,25,0,'todo',NULL,1792499770,2),
+(26,26,0,'todo',NULL,1792499785,2),
+(27,27,0,'todo',NULL,1792499785,2),
+(28,28,0,'todo',NULL,1792499785,2),
+(29,29,0,'todo',NULL,1792499797,2),
+(30,30,0,'todo',NULL,1792499797,2),
+(31,31,0,'todo',NULL,1792499797,2),
+(32,32,0,'todo',NULL,1792499808,2),
+(33,17,1,'complete',NULL,1792499737,2),
+(34,18,1,'complete',NULL,1792499737,2),
+(35,19,1,'complete',NULL,1792499737,2),
+(36,20,1,'complete',NULL,1792499770,2),
+(37,21,1,'complete',NULL,1792499770,2),
+(38,22,1,'complete',NULL,1792499770,2),
+(39,23,1,'complete',NULL,1792499785,2),
+(40,24,1,'complete',NULL,1792499785,2),
+(41,25,1,'complete',NULL,1792499785,2),
+(42,26,1,'complete',NULL,1792499797,2),
+(43,27,1,'complete',NULL,1792499797,2),
+(44,28,1,'complete',NULL,1792499797,2),
+(45,29,1,'complete',NULL,1792499808,2),
+(46,30,1,'complete',NULL,1792499808,2),
+(47,31,1,'complete',NULL,1792499808,2),
+(48,32,1,'complete',NULL,1792499815,2),
+(49,17,2,'gradedwrong',0.0000000,1792499864,2),
+(50,18,2,'gradedwrong',0.0000000,1792499864,2),
+(51,19,2,'gradedwrong',0.0000000,1792499864,2),
+(52,20,2,'gradedwrong',0.0000000,1792499864,2),
+(53,21,2,'gradedwrong',0.0000000,1792499864,2),
+(54,22,2,'gradedright',1.0000000,1792499864,2),
+(55,23,2,'gradedright',1.0000000,1792499864,2),
+(56,24,2,'gradedwrong',0.0000000,1792499864,2),
+(57,25,2,'gradedright',1.0000000,1792499864,2),
+(58,26,2,'gradedright',1.0000000,1792499864,2),
+(59,27,2,'gradedwrong',0.0000000,1792499864,2),
+(60,28,2,'gradedwrong',0.0000000,1792499864,2),
+(61,29,2,'gradedwrong',0.0000000,1792499864,2),
+(62,30,2,'gradedright',1.0000000,1792499864,2),
+(63,31,2,'gradedwrong',0.0000000,1792499864,2),
+(64,32,2,'gradedwrong',0.0000000,1792499864,2),
+(128,54,0,'todo',NULL,1792500113,2),
+(129,55,0,'todo',NULL,1792500113,2),
+(130,56,0,'todo',NULL,1792500113,2),
+(131,57,0,'todo',NULL,1792500122,2),
+(132,58,0,'todo',NULL,1792500122,2),
+(133,59,0,'todo',NULL,1792500122,2),
+(134,60,0,'todo',NULL,1792500133,2),
+(135,61,0,'todo',NULL,1792500133,2),
+(136,62,0,'todo',NULL,1792500133,2),
+(137,63,0,'todo',NULL,1792500144,2),
+(138,64,0,'todo',NULL,1792500144,2),
+(139,65,0,'todo',NULL,1792500144,2),
+(140,66,0,'todo',NULL,1792500153,2),
+(141,67,0,'todo',NULL,1792500153,2),
+(142,68,0,'todo',NULL,1792500153,2),
+(143,69,0,'todo',NULL,1792500163,2),
+(144,70,0,'todo',NULL,1792500163,2),
+(145,71,0,'todo',NULL,1792500163,2),
+(146,72,0,'todo',NULL,1792500171,2),
+(147,73,0,'todo',NULL,1792500171,2),
+(148,74,0,'todo',NULL,1792500171,2),
+(149,54,1,'complete',NULL,1792500122,2),
+(150,55,1,'complete',NULL,1792500122,2),
+(151,56,1,'complete',NULL,1792500122,2),
+(152,57,1,'complete',NULL,1792500133,2),
+(153,58,1,'complete',NULL,1792500133,2),
+(154,59,1,'complete',NULL,1792500133,2),
+(155,60,1,'complete',NULL,1792500144,2),
+(156,61,1,'complete',NULL,1792500144,2),
+(157,62,1,'complete',NULL,1792500144,2),
+(158,63,1,'complete',NULL,1792500153,2),
+(159,64,1,'complete',NULL,1792500153,2),
+(160,65,1,'complete',NULL,1792500153,2),
+(161,66,1,'complete',NULL,1792500163,2),
+(162,67,1,'complete',NULL,1792500163,2),
+(163,68,1,'complete',NULL,1792500163,2),
+(164,69,1,'complete',NULL,1792500171,2),
+(165,70,1,'complete',NULL,1792500171,2),
+(166,71,1,'complete',NULL,1792500171,2),
+(167,72,1,'complete',NULL,1792500180,2),
+(168,73,1,'complete',NULL,1792500180,2),
+(169,74,1,'complete',NULL,1792500180,2),
+(170,54,2,'gradedwrong',0.0000000,1792500192,2),
+(171,55,2,'gradedwrong',0.0000000,1792500192,2),
+(172,56,2,'gradedwrong',0.0000000,1792500192,2),
+(173,57,2,'gradedwrong',0.0000000,1792500192,2),
+(174,58,2,'gradedwrong',0.0000000,1792500192,2),
+(175,59,2,'gradedwrong',0.0000000,1792500192,2),
+(176,60,2,'gradedwrong',0.0000000,1792500192,2),
+(177,61,2,'gradedwrong',0.0000000,1792500192,2),
+(178,62,2,'gradedwrong',0.0000000,1792500192,2),
+(179,63,2,'gradedright',1.0000000,1792500192,2),
+(180,64,2,'gradedwrong',0.0000000,1792500192,2),
+(181,65,2,'gradedwrong',0.0000000,1792500192,2),
+(182,66,2,'gradedwrong',0.0000000,1792500192,2),
+(183,67,2,'gradedwrong',0.0000000,1792500192,2),
+(184,68,2,'gradedright',1.0000000,1792500192,2),
+(185,69,2,'gradedright',1.0000000,1792500192,2),
+(186,70,2,'gradedwrong',0.0000000,1792500192,2),
+(187,71,2,'gradedwrong',0.0000000,1792500192,2),
+(188,72,2,'gradedwrong',0.0000000,1792500192,2),
+(189,73,2,'gradedwrong',0.0000000,1792500192,2),
+(190,74,2,'gradedwrong',0.0000000,1792500192,2),
+(191,75,0,'todo',NULL,1792849088,11),
+(192,76,0,'todo',NULL,1792849088,11),
+(193,77,0,'todo',NULL,1792849088,11),
+(194,78,0,'todo',NULL,1792849102,11),
+(195,79,0,'todo',NULL,1792849102,11),
+(196,80,0,'todo',NULL,1792849102,11),
+(197,81,0,'todo',NULL,1792849110,11),
+(198,82,0,'todo',NULL,1792849110,11),
+(199,83,0,'todo',NULL,1792849110,11),
+(200,84,0,'todo',NULL,1792849118,11),
+(201,85,0,'todo',NULL,1792849118,11),
+(202,86,0,'todo',NULL,1792849118,11),
+(203,87,0,'todo',NULL,1792849129,11),
+(204,88,0,'todo',NULL,1792849129,11),
+(205,89,0,'todo',NULL,1792849129,11),
+(206,90,0,'todo',NULL,1792849138,11),
+(207,91,0,'todo',NULL,1792849138,11),
+(208,92,0,'todo',NULL,1792849138,11),
+(209,93,0,'todo',NULL,1792849149,11),
+(210,94,0,'todo',NULL,1792849149,11),
+(211,95,0,'todo',NULL,1792849149,11),
+(212,75,1,'complete',NULL,1792849102,11),
+(213,76,1,'complete',NULL,1792849102,11),
+(214,77,1,'complete',NULL,1792849102,11),
+(215,78,1,'complete',NULL,1792849110,11),
+(216,79,1,'complete',NULL,1792849110,11),
+(217,80,1,'complete',NULL,1792849110,11),
+(218,81,1,'complete',NULL,1792849118,11),
+(219,82,1,'complete',NULL,1792849118,11),
+(220,83,1,'complete',NULL,1792849118,11),
+(221,84,1,'complete',NULL,1792849129,11),
+(222,85,1,'complete',NULL,1792849129,11),
+(223,86,1,'complete',NULL,1792849129,11),
+(224,87,1,'complete',NULL,1792849138,11),
+(225,88,1,'complete',NULL,1792849138,11),
+(226,89,1,'complete',NULL,1792849138,11),
+(227,90,1,'complete',NULL,1792849149,11),
+(228,91,1,'complete',NULL,1792849149,11),
+(229,92,1,'complete',NULL,1792849149,11),
+(230,93,1,'complete',NULL,1792849158,11),
+(231,94,1,'complete',NULL,1792849158,11),
+(232,95,1,'complete',NULL,1792849158,11),
+(233,75,2,'gradedwrong',0.0000000,1792849183,11),
+(234,76,2,'gradedwrong',0.0000000,1792849183,11),
+(235,77,2,'gradedwrong',0.0000000,1792849183,11),
+(236,78,2,'gradedwrong',0.0000000,1792849183,11),
+(237,79,2,'gradedright',1.0000000,1792849183,11),
+(238,80,2,'gradedwrong',0.0000000,1792849183,11),
+(239,81,2,'gradedwrong',0.0000000,1792849183,11),
+(240,82,2,'gradedwrong',0.0000000,1792849183,11),
+(241,83,2,'gradedwrong',0.0000000,1792849183,11),
+(242,84,2,'gradedwrong',0.0000000,1792849183,11),
+(243,85,2,'gradedright',1.0000000,1792849183,11),
+(244,86,2,'gradedwrong',0.0000000,1792849183,11),
+(245,87,2,'gradedwrong',0.0000000,1792849183,11),
+(246,88,2,'gradedright',1.0000000,1792849183,11),
+(247,89,2,'gradedwrong',0.0000000,1792849183,11),
+(248,90,2,'gradedwrong',0.0000000,1792849183,11),
+(249,91,2,'gradedwrong',0.0000000,1792849183,11),
+(250,92,2,'gradedright',1.0000000,1792849183,11),
+(251,93,2,'gradedwrong',0.0000000,1792849183,11),
+(252,94,2,'gradedright',1.0000000,1792849183,11),
+(253,95,2,'gradedright',1.0000000,1792849183,11),
+(254,96,0,'todo',NULL,1792849273,11),
+(255,97,0,'todo',NULL,1792849273,11),
+(256,98,0,'todo',NULL,1792849273,11),
+(257,99,0,'todo',NULL,1792849283,11),
+(258,100,0,'todo',NULL,1792849283,11),
+(259,101,0,'todo',NULL,1792849283,11),
+(260,102,0,'todo',NULL,1792849290,11),
+(261,103,0,'todo',NULL,1792849290,11),
+(262,104,0,'todo',NULL,1792849290,11),
+(263,105,0,'todo',NULL,1792849299,11),
+(264,106,0,'todo',NULL,1792849299,11),
+(265,107,0,'todo',NULL,1792849299,11),
+(266,108,0,'todo',NULL,1792849308,11),
+(267,109,0,'todo',NULL,1792849308,11),
+(268,110,0,'todo',NULL,1792849308,11),
+(269,111,0,'todo',NULL,1792849318,11),
+(270,112,0,'todo',NULL,1792849318,11),
+(271,113,0,'todo',NULL,1792849318,11),
+(272,114,0,'todo',NULL,1792849328,11),
+(273,115,0,'todo',NULL,1792849328,11),
+(274,116,0,'todo',NULL,1792849328,11),
+(275,96,1,'complete',NULL,1792849283,11),
+(276,97,1,'complete',NULL,1792849283,11),
+(277,98,1,'complete',NULL,1792849283,11),
+(278,99,1,'complete',NULL,1792849290,11),
+(279,100,1,'complete',NULL,1792849290,11),
+(280,101,1,'complete',NULL,1792849290,11),
+(281,102,1,'complete',NULL,1792849299,11),
+(282,103,1,'complete',NULL,1792849299,11),
+(283,104,1,'complete',NULL,1792849299,11),
+(284,105,1,'complete',NULL,1792849308,11),
+(285,106,1,'complete',NULL,1792849308,11),
+(286,107,1,'complete',NULL,1792849308,11),
+(287,108,1,'complete',NULL,1792849318,11),
+(288,109,1,'complete',NULL,1792849318,11),
+(289,110,1,'complete',NULL,1792849318,11),
+(290,111,1,'complete',NULL,1792849327,11),
+(291,112,1,'complete',NULL,1792849327,11),
+(292,113,1,'complete',NULL,1792849327,11),
+(293,114,1,'complete',NULL,1792849343,11),
+(294,115,1,'complete',NULL,1792849343,11),
+(295,116,1,'complete',NULL,1792849343,11),
+(296,96,2,'gradedwrong',0.0000000,1792849358,11),
+(297,97,2,'gradedwrong',0.0000000,1792849358,11),
+(298,98,2,'gradedwrong',0.0000000,1792849358,11),
+(299,99,2,'gradedwrong',0.0000000,1792849358,11),
+(300,100,2,'gradedwrong',0.0000000,1792849358,11),
+(301,101,2,'gradedwrong',0.0000000,1792849358,11),
+(302,102,2,'gradedwrong',0.0000000,1792849358,11),
+(303,103,2,'gradedwrong',0.0000000,1792849358,11),
+(304,104,2,'gradedwrong',0.0000000,1792849358,11),
+(305,105,2,'gradedwrong',0.0000000,1792849358,11),
+(306,106,2,'gradedwrong',0.0000000,1792849358,11),
+(307,107,2,'gradedwrong',0.0000000,1792849358,11),
+(308,108,2,'gradedright',1.0000000,1792849358,11),
+(309,109,2,'gradedwrong',0.0000000,1792849358,11),
+(310,110,2,'gradedright',1.0000000,1792849358,11),
+(311,111,2,'gradedwrong',0.0000000,1792849358,11),
+(312,112,2,'gradedright',1.0000000,1792849358,11),
+(313,113,2,'gradedwrong',0.0000000,1792849358,11),
+(314,114,2,'gradedright',1.0000000,1792849358,11),
+(315,115,2,'gradedwrong',0.0000000,1792849358,11),
+(316,116,2,'gradedwrong',0.0000000,1792849358,11);
 /*!40000 ALTER TABLE `m_question_attempt_steps` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -36366,7 +37618,7 @@ CREATE TABLE `m_question_attempts` (
   KEY `m_quesatte_beh_ix` (`behaviour`),
   KEY `m_quesatte_que_ix` (`questionid`),
   KEY `m_quesatte_que2_ix` (`questionusageid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Each row here corresponds to an attempt at one question, as ';
+) ENGINE=InnoDB AUTO_INCREMENT=117 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Each row here corresponds to an attempt at one question, as ';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36375,6 +37627,102 @@ CREATE TABLE `m_question_attempts` (
 
 LOCK TABLES `m_question_attempts` WRITE;
 /*!40000 ALTER TABLE `m_question_attempts` DISABLE KEYS */;
+INSERT INTO `m_question_attempts` VALUES
+(1,1,1,'deferredfeedback',1,1,1.0000000,0.0000000,1.0000000,0,'[COMPÉTENCE 1 — IDENTIFIER LES APPAREILS NUMÉRIQUES]\n\nLequel de ces noms N\'EST PAS un système d\'exploitation ?\n: Ubuntu\n; Windows\n; Android\n; WhatsApp\n','WhatsApp\n',NULL,1792499076),
+(2,1,2,'deferredfeedback',2,1,1.0000000,0.0000000,1.0000000,0,'[COMPÉTENCE 2 — DÉMARRER ET ÉTEINDRE UN APPAREIL]\n\nSous WINDOWS 11, quel est le bon chemin pour éteindre l\'ordinateur ?\n: Débrancher la prise\n; Fermer toutes les fenêtres\n; Appuyer sur le bouton du PC\n; Démarrer, Marche/Arrêt, Arrêter\n','Démarrer, Marche/Arrêt, Arrêter\n',NULL,1792499076),
+(3,1,3,'deferredfeedback',3,1,1.0000000,0.0000000,1.0000000,0,'[COMPÉTENCE 2 — DÉMARRER ET ÉTEINDRE UN APPAREIL]\n\nSous UBUNTU 24.04, où trouve-t-on le bouton d\'extinction ?\n: Dans le dock, à gauche\n; Dans le menu système, en haut à droite\n; Sur l\'horloge\n; Dans le menu Démarrer\n','Dans le menu système, en haut à droite\n',NULL,1792499076),
+(4,1,4,'deferredfeedback',4,1,1.0000000,0.0000000,1.0000000,0,'[COMPÉTENCE 3 — NAVIGUER DANS L\'INTERFACE DE BASE]\n\nMariam voit une BARRE D\'ICÔNES À GAUCHE de l\'écran et une HORLOGE EN HAUT. Sur quel système est-elle ?\n: Ubuntu 24.04\n; Windows 11\n; Android\n','Ubuntu 24.04\n',NULL,1792499076),
+(5,1,5,'deferredfeedback',5,1,1.0000000,0.0000000,1.0000000,0,'[COMPÉTENCE 4 — LOCALISER ET OUVRIR UNE APPLICATION]\n\nSous UBUNTU 24.04, quelle touche ouvre la vue d\'ensemble pour chercher une application ?\n: Suppr\n; Super\n; Entrée\n; Verr. Maj\n','Super\n',NULL,1792499076),
+(6,1,6,'deferredfeedback',6,1,1.0000000,0.0000000,1.0000000,0,'[COMPÉTENCE 5 — SAISIR DU TEXTE]\n\nVrai ou faux : la touche SUPPR efface le caractère situé À GAUCHE du curseur.\n: Vrai (elle efface à gauche du curseur)\n; Faux (Suppr efface à droite du curseur ; c\'est Retour arrière qui efface à gauche)\n','Faux (Suppr efface à droite du curseur ; c\'est Retour arrière qui efface à gauche)\n',NULL,1792499076),
+(7,1,7,'deferredfeedback',7,1,1.0000000,0.0000000,1.0000000,0,'[COMPÉTENCE 6 — CONNECTER UN APPAREIL À INTERNET]\n\nLe téléphone de Boureima montre un PETIT AVION en haut de l\'écran, et il n\'a plus internet. Pourquoi ?\n: Le mode avion coupe les connexions sans fil\n; Son forfait est épuisé\n; Sa batterie est pleine\n','Le mode avion coupe les connexions sans fil\n',NULL,1792499076),
+(8,1,8,'deferredfeedback',8,1,1.0000000,0.0000000,1.0000000,0,'[COMPÉTENCE 7 — ENTRETENIR SON APPAREIL]\n\nVrai ou faux : le chargeur sans marque d\'un voisin convient toujours pour recharger son téléphone.\n: Vrai (tous les chargeurs se valent tant que le téléphone charge)\n; Faux (un chargeur sans marque peut faire chauffer ou abîmer le téléphone)\n','Faux (un chargeur sans marque peut faire chauffer ou abîmer le téléphone)\n',NULL,1792499076),
+(9,1,9,'deferredfeedback',9,1,1.0000000,0.0000000,1.0000000,0,'[COMPÉTENCE 1 — IDENTIFIER LES APPAREILS NUMÉRIQUES]\n\nCoupure de courant à la mairie : quel appareil s\'éteint net, faute de batterie intégrée ?\n: L\'ordinateur de bureau\n; Le smartphone Android\n; L\'ordinateur portable\n','L\'ordinateur de bureau\n',NULL,1792499076),
+(10,1,10,'deferredfeedback',10,1,1.0000000,0.0000000,1.0000000,0,'[COMPÉTENCE 2 — DÉMARRER ET ÉTEINDRE UN APPAREIL]\n\nAwa quitte son poste CINQ MINUTES, son courrier reste ouvert sur Windows 11. Quel est le bon geste ?\n: Verrouiller avec Windows + L\n; Laisser le poste tel quel sans verrouiller\n; Éteindre par Démarrer, Marche/Arrêt\n; Débrancher l\'unité centrale\n','Verrouiller avec Windows + L\n',NULL,1792499076),
+(11,1,11,'deferredfeedback',11,1,1.0000000,0.0000000,1.0000000,0,'[COMPÉTENCE 3 — NAVIGUER DANS L\'INTERFACE DE BASE]\n\nSous WINDOWS 11, plusieurs fenêtres cachent le bureau. Quel raccourci l\'affiche d\'un coup ?\n: Windows + D\n; Alt + F4\n; Alt + Tab\n; Windows + L\n','Windows + D\n',NULL,1792499076),
+(12,1,12,'deferredfeedback',12,1,1.0000000,0.0000000,1.0000000,0,'[COMPÉTENCE 4 — LOCALISER ET OUVRIR UNE APPLICATION]\n\nIssouf ne voit plus sa calculatrice sur l\'écran d\'accueil de son téléphone Android. Que concluez-vous ?\n: Elle a été supprimée du téléphone\n; Le téléphone doit être redémarré\n; Elle est dans le tiroir d\'applications\n','Elle est dans le tiroir d\'applications\n',NULL,1792499076),
+(13,1,13,'deferredfeedback',13,1,1.0000000,0.0000000,1.0000000,0,'[COMPÉTENCE 5 — SAISIR DU TEXTE]\n\nSous Ubuntu, Mariam doit écrire « FÊTE » au clavier. Comment obtient-elle le Ê ?\n: Maj maintenue, puis e\n; Verr. Maj, puis e\n; Appui long sur la touche e\n; Touche ^, puis la touche e\n','Touche ^, puis la touche e\n',NULL,1792499076),
+(14,1,14,'deferredfeedback',14,1,1.0000000,0.0000000,1.0000000,0,'[COMPÉTENCE 5 — SAISIR DU TEXTE]\n\nBoureima relit son message. Lequel respecte les règles de majuscule et de ponctuation ?\n: « merci, Madame. »\n; « Merci, Madame. »\n; « Merci,Madame. »\n; « Merci , Madame. »\n','« Merci, Madame. »\n',NULL,1792499076),
+(15,1,15,'deferredfeedback',15,1,1.0000000,0.0000000,1.0000000,0,'[COMPÉTENCE 6 — CONNECTER UN APPAREIL À INTERNET]\n\nLe PC d\'Awa n\'a pas internet, mais un téléphone se connecte au même Wi-Fi de la mairie. D\'où vient le souci ?\n: De la box de la mairie\n; De l\'opérateur internet\n; Du PC d\'Awa\n','Du PC d\'Awa\n',NULL,1792499076),
+(16,1,16,'deferredfeedback',16,1,1.0000000,0.0000000,1.0000000,0,'[COMPÉTENCE 7 — ENTRETENIR SON APPAREIL]\n\nLa mairie veut que le PC de bureau tienne assez longtemps, pendant une coupure de courant, pour enregistrer le travail et éteindre proprement. Que choisir ?\n: Un parasurtenseur\n; Une multiprise simple\n; Un onduleur\n','Un onduleur\n',NULL,1792499076),
+(17,2,1,'deferredfeedback',17,1,1.0000000,0.0000000,1.0000000,0,'[COMPÉTENCE 1 — IDENTIFIER LES APPAREILS NUMÉRIQUES]\n\nLequel de ces noms N\'EST PAS un système d\'exploitation ?\n: Windows\n; Android\n; Ubuntu\n; WhatsApp\n','WhatsApp\n','Ubuntu\n',1792499864),
+(18,2,2,'deferredfeedback',18,1,1.0000000,0.0000000,1.0000000,0,'[COMPÉTENCE 2 — DÉMARRER ET ÉTEINDRE UN APPAREIL]\n\nSous WINDOWS 11, quel est le bon chemin pour éteindre l\'ordinateur ?\n: Débrancher la prise\n; Appuyer sur le bouton du PC\n; Fermer toutes les fenêtres\n; Démarrer, Marche/Arrêt, Arrêter\n','Démarrer, Marche/Arrêt, Arrêter\n','Appuyer sur le bouton du PC\n',1792499864),
+(19,2,3,'deferredfeedback',19,1,1.0000000,0.0000000,1.0000000,0,'[COMPÉTENCE 2 — DÉMARRER ET ÉTEINDRE UN APPAREIL]\n\nSous UBUNTU 24.04, où trouve-t-on le bouton d\'extinction ?\n: Dans le dock, à gauche\n; Sur l\'horloge\n; Dans le menu Démarrer\n; Dans le menu système, en haut à droite\n','Dans le menu système, en haut à droite\n','Sur l\'horloge\n',1792499864),
+(20,2,4,'deferredfeedback',20,1,1.0000000,0.0000000,1.0000000,0,'[COMPÉTENCE 3 — NAVIGUER DANS L\'INTERFACE DE BASE]\n\nMariam voit une BARRE D\'ICÔNES À GAUCHE de l\'écran et une HORLOGE EN HAUT. Sur quel système est-elle ?\n: Android\n; Windows 11\n; Ubuntu 24.04\n','Ubuntu 24.04\n','Windows 11\n',1792499864),
+(21,2,5,'deferredfeedback',21,1,1.0000000,0.0000000,1.0000000,0,'[COMPÉTENCE 4 — LOCALISER ET OUVRIR UNE APPLICATION]\n\nSous UBUNTU 24.04, quelle touche ouvre la vue d\'ensemble pour chercher une application ?\n: Entrée\n; Super\n; Suppr\n; Verr. Maj\n','Super\n','Suppr\n',1792499864),
+(22,2,6,'deferredfeedback',22,1,1.0000000,0.0000000,1.0000000,0,'[COMPÉTENCE 5 — SAISIR DU TEXTE]\n\nVrai ou faux : la touche SUPPR efface le caractère situé À GAUCHE du curseur.\n: Faux (Suppr efface à droite du curseur ; c\'est Retour arrière qui efface à gauche)\n; Vrai (elle efface à gauche du curseur)\n','Faux (Suppr efface à droite du curseur ; c\'est Retour arrière qui efface à gauche)\n','Faux (Suppr efface à droite du curseur ; c\'est Retour arrière qui efface à gauche)\n',1792499864),
+(23,2,7,'deferredfeedback',23,1,1.0000000,0.0000000,1.0000000,0,'[COMPÉTENCE 6 — CONNECTER UN APPAREIL À INTERNET]\n\nLe téléphone de Boureima montre un PETIT AVION en haut de l\'écran, et il n\'a plus internet. Pourquoi ?\n: Son forfait est épuisé\n; Le mode avion coupe les connexions sans fil\n; Sa batterie est pleine\n','Le mode avion coupe les connexions sans fil\n','Le mode avion coupe les connexions sans fil\n',1792499864),
+(24,2,8,'deferredfeedback',24,1,1.0000000,0.0000000,1.0000000,0,'[COMPÉTENCE 7 — ENTRETENIR SON APPAREIL]\n\nVrai ou faux : le chargeur sans marque d\'un voisin convient toujours pour recharger son téléphone.\n: Faux (un chargeur sans marque peut faire chauffer ou abîmer le téléphone)\n; Vrai (tous les chargeurs se valent tant que le téléphone charge)\n','Faux (un chargeur sans marque peut faire chauffer ou abîmer le téléphone)\n','Vrai (tous les chargeurs se valent tant que le téléphone charge)\n',1792499864),
+(25,2,9,'deferredfeedback',25,1,1.0000000,0.0000000,1.0000000,0,'[COMPÉTENCE 1 — IDENTIFIER LES APPAREILS NUMÉRIQUES]\n\nCoupure de courant à la mairie : quel appareil s\'éteint net, faute de batterie intégrée ?\n: L\'ordinateur de bureau\n; L\'ordinateur portable\n; Le smartphone Android\n','L\'ordinateur de bureau\n','L\'ordinateur de bureau\n',1792499864),
+(26,2,10,'deferredfeedback',26,1,1.0000000,0.0000000,1.0000000,0,'[COMPÉTENCE 2 — DÉMARRER ET ÉTEINDRE UN APPAREIL]\n\nAwa quitte son poste CINQ MINUTES, son courrier reste ouvert sur Windows 11. Quel est le bon geste ?\n: Verrouiller avec Windows + L\n; Éteindre par Démarrer, Marche/Arrêt\n; Débrancher l\'unité centrale\n; Laisser le poste tel quel sans verrouiller\n','Verrouiller avec Windows + L\n','Verrouiller avec Windows + L\n',1792499864),
+(27,2,11,'deferredfeedback',27,1,1.0000000,0.0000000,1.0000000,0,'[COMPÉTENCE 3 — NAVIGUER DANS L\'INTERFACE DE BASE]\n\nSous WINDOWS 11, plusieurs fenêtres cachent le bureau. Quel raccourci l\'affiche d\'un coup ?\n: Windows + L\n; Windows + D\n; Alt + F4\n; Alt + Tab\n','Windows + D\n','Windows + L\n',1792499864),
+(28,2,12,'deferredfeedback',28,1,1.0000000,0.0000000,1.0000000,0,'[COMPÉTENCE 4 — LOCALISER ET OUVRIR UNE APPLICATION]\n\nIssouf ne voit plus sa calculatrice sur l\'écran d\'accueil de son téléphone Android. Que concluez-vous ?\n: Elle est dans le tiroir d\'applications\n; Elle a été supprimée du téléphone\n; Le téléphone doit être redémarré\n','Elle est dans le tiroir d\'applications\n','Elle a été supprimée du téléphone\n',1792499864),
+(29,2,13,'deferredfeedback',29,1,1.0000000,0.0000000,1.0000000,0,'[COMPÉTENCE 5 — SAISIR DU TEXTE]\n\nSous Ubuntu, Mariam doit écrire « FÊTE » au clavier. Comment obtient-elle le Ê ?\n: Appui long sur la touche e\n; Touche ^, puis la touche e\n; Maj maintenue, puis e\n; Verr. Maj, puis e\n','Touche ^, puis la touche e\n','Appui long sur la touche e\n',1792499864),
+(30,2,14,'deferredfeedback',30,1,1.0000000,0.0000000,1.0000000,0,'[COMPÉTENCE 5 — SAISIR DU TEXTE]\n\nBoureima relit son message. Lequel respecte les règles de majuscule et de ponctuation ?\n: « Merci,Madame. »\n; « Merci , Madame. »\n; « Merci, Madame. »\n; « merci, Madame. »\n','« Merci, Madame. »\n','« Merci, Madame. »\n',1792499864),
+(31,2,15,'deferredfeedback',31,1,1.0000000,0.0000000,1.0000000,0,'[COMPÉTENCE 6 — CONNECTER UN APPAREIL À INTERNET]\n\nLe PC d\'Awa n\'a pas internet, mais un téléphone se connecte au même Wi-Fi de la mairie. D\'où vient le souci ?\n: De l\'opérateur internet\n; De la box de la mairie\n; Du PC d\'Awa\n','Du PC d\'Awa\n','De la box de la mairie\n',1792499864),
+(32,2,16,'deferredfeedback',32,1,1.0000000,0.0000000,1.0000000,0,'[COMPÉTENCE 7 — ENTRETENIR SON APPAREIL]\n\nLa mairie veut que le PC de bureau tienne assez longtemps, pendant une coupure de courant, pour enregistrer le travail et éteindre proprement. Que choisir ?\n: Un parasurtenseur\n; Une multiprise simple\n; Un onduleur\n','Un onduleur\n','Une multiprise simple\n',1792499864),
+(54,4,1,'deferredfeedback',33,1,1.0000000,0.0000000,1.0000000,0,'[C1 : IDENTIFIER LES APPAREILS NUMÉRIQUES — QUESTION 1/21]\n\nQuel est le rôle du système d\'exploitation d\'un appareil ?\n: Envoyer des messages, comme WhatsApp\n; Protéger l\'appareil contre les coupures de courant\n; Indiquer la marque du fabricant de l\'appareil\n; Faire le lien entre l\'utilisateur et le matériel, et faire fonctionner les applications\n','Faire le lien entre l\'utilisateur et le matériel, et faire fonctionner les applications\n','Protéger l\'appareil contre les coupures de courant\n',1792500192),
+(55,4,2,'deferredfeedback',34,1,1.0000000,0.0000000,1.0000000,0,'[C1 : IDENTIFIER LES APPAREILS NUMÉRIQUES — QUESTION 2/21]\n\nÀ la mairie, un poste se compose d\'un écran, d\'un clavier, d\'une souris et d\'un boîtier, reliés par des câbles et sans batterie. De quel appareil s\'agit-il ?\n: Une box Wi-Fi\n; Un ordinateur portable\n; Un ordinateur de bureau\n; Un smartphone\n','Un ordinateur de bureau\n','Un ordinateur portable\n',1792500192),
+(56,4,3,'deferredfeedback',35,1,1.0000000,0.0000000,1.0000000,0,'[C1 : IDENTIFIER LES APPAREILS NUMÉRIQUES — QUESTION 3/21]\n\nIssouf affirme : « Mon téléphone est un Tecno, donc son système s\'appelle Tecno. » Que lui répondez-vous ?\n: Son système est Windows, comme sur l\'ordinateur de la mairie\n; Son système est WhatsApp, l\'application qu\'il utilise le plus\n; Tecno est la marque ; le système qui fait marcher son téléphone est Android\n; Il a raison : la marque et le système portent toujours le même nom\n','Tecno est la marque ; le système qui fait marcher son téléphone est Android\n','Il a raison : la marque et le système portent toujours le même nom\n',1792500192),
+(57,4,4,'deferredfeedback',36,1,1.0000000,0.0000000,1.0000000,0,'[C2 : DÉMARRER ET ÉTEINDRE UN APPAREIL — QUESTION 4/21]\n\nSur un ordinateur Ubuntu 24.04, quel raccourci verrouille l\'écran sans éteindre l\'ordinateur ?\n: Super + Tab\n; Alt + F4\n; Super + L\n; Windows + D\n','Super + L\n','Alt + F4\n',1792500192),
+(58,4,5,'deferredfeedback',37,1,1.0000000,0.0000000,1.0000000,0,'[C2 : DÉMARRER ET ÉTEINDRE UN APPAREIL — QUESTION 5/21]\n\nVous venez d\'appuyer sur le bouton de l\'unité centrale. Après 20 secondes, l\'écran est toujours noir. Que faites-vous ?\n: Vous débranchez puis rebranchez l\'ordinateur\n; Vous patientez, car un PC met en général 30 secondes à 2 minutes à démarrer\n; Vous gardez le bouton appuyé pour forcer l\'arrêt\n; Vous rappuyez sur le bouton de l\'unité centrale\n','Vous patientez, car un PC met en général 30 secondes à 2 minutes à démarrer\n','Vous rappuyez sur le bouton de l\'unité centrale\n',1792500192),
+(59,4,6,'deferredfeedback',38,1,1.0000000,0.0000000,1.0000000,0,'[C2 : DÉMARRER ET ÉTEINDRE UN APPAREIL — QUESTION 6/21]\n\nEn fin de journée, la batterie du portable d\'Awa est faible et le courant est coupé. Elle a fini son courrier. Quel est le meilleur choix ?\n: Mettre le portable en veille pour reprendre plus vite demain\n; Verrouiller avec Windows + L et partir\n; Enregistrer le courrier, puis éteindre par Démarrer, Marche/Arrêt, Arrêter\n; Rabattre l\'écran sans rien enregistrer\n','Enregistrer le courrier, puis éteindre par Démarrer, Marche/Arrêt, Arrêter\n','Mettre le portable en veille pour reprendre plus vite demain\n',1792500192),
+(60,4,7,'deferredfeedback',39,1,1.0000000,0.0000000,1.0000000,0,'[C3 : NAVIGUER DANS L\'INTERFACE DE BASE — QUESTION 7/21]\n\nSur l\'écran d\'accueil d\'un téléphone Android, que trouve-t-on dans la barre d\'état, tout en haut ?\n: Les boutons Retour, Accueil et Récents\n; La liste de toutes les applications\n; Les applications favorites\n; L\'heure, le réseau et la batterie\n','L\'heure, le réseau et la batterie\n','Les boutons Retour, Accueil et Récents\n',1792500192),
+(61,4,8,'deferredfeedback',40,1,1.0000000,0.0000000,1.0000000,0,'[C3 : NAVIGUER DANS L\'INTERFACE DE BASE — QUESTION 8/21]\n\nSous Windows 11, Awa a deux fenêtres ouvertes et veut passer de l\'une à l\'autre au clavier. Comment fait-elle ?\n: Elle appuie sur Alt, le relâche, puis appuie sur Tab\n; Elle garde Alt appuyé et tape Tab jusqu\'à la fenêtre voulue\n; Elle appuie sur Windows + L\n; Elle appuie sur Alt + F4\n','Elle garde Alt appuyé et tape Tab jusqu\'à la fenêtre voulue\n','Elle appuie sur Windows + L\n',1792500192),
+(62,4,9,'deferredfeedback',41,1,1.0000000,0.0000000,1.0000000,0,'[C3 : NAVIGUER DANS L\'INTERFACE DE BASE — QUESTION 9/21]\n\nMariam double-clique sur une icône du PC Ubuntu, mais l\'application ne s\'ouvre pas : l\'icône est seulement sélectionnée. Quelle est la cause la plus probable ?\n: Ubuntu n\'accepte pas le double-clic\n; Ses deux appuis sont trop lents et comptent comme deux clics simples\n; La souris est en panne\n; Elle a appuyé sur le bouton droit de la souris\n','Ses deux appuis sont trop lents et comptent comme deux clics simples\n','La souris est en panne\n',1792500192),
+(63,4,10,'deferredfeedback',42,1,1.0000000,0.0000000,1.0000000,0,'[C4 : LOCALISER ET OUVRIR UNE APPLICATION — QUESTION 10/21]\n\nSous Ubuntu 24.04, à quoi sert le bouton à neuf points placé en bas du dock ?\n: À changer de fenêtre\n; À éteindre l\'ordinateur\n; À afficher la liste complète des applications\n; À ouvrir le menu système\n','À afficher la liste complète des applications\n','À afficher la liste complète des applications\n',1792500192),
+(64,4,11,'deferredfeedback',43,1,1.0000000,0.0000000,1.0000000,0,'[C4 : LOCALISER ET OUVRIR UNE APPLICATION — QUESTION 11/21]\n\nSous Windows 11, Awa clique sur le logo Windows pour chercher le Bloc-notes. Que fait-elle ensuite ?\n: Elle tape « Bloc-notes » sans cliquer ailleurs, puis clique sur le résultat\n; Elle appuie sur Windows + D\n; Elle double-clique sur le logo Windows\n; Elle clique au milieu de l\'écran, puis tape « Bloc-notes »\n','Elle tape « Bloc-notes » sans cliquer ailleurs, puis clique sur le résultat\n','Elle double-clique sur le logo Windows\n',1792500192),
+(65,4,12,'deferredfeedback',44,1,1.0000000,0.0000000,1.0000000,0,'[C4 : LOCALISER ET OUVRIR UNE APPLICATION — QUESTION 12/21]\n\nAu cyber, Mariam utilise chaque jour l\'Éditeur de texte sous Ubuntu 24.04 et veut le garder à portée de clic. Quelle solution choisissez-vous pour elle ?\n: L\'épingler à Démarrer\n; Le glisser sur l\'écran d\'accueil\n; L\'ouvrir par le menu système\n; L\'ajouter aux favoris du dock\n','L\'ajouter aux favoris du dock\n','Le glisser sur l\'écran d\'accueil\n',1792500192),
+(66,4,13,'deferredfeedback',45,1,1.0000000,0.0000000,1.0000000,0,'[C5 : SAISIR DU TEXTE — QUESTION 13/21]\n\nQue se passe-t-il quand la touche VERR. MAJ est activée sur un clavier d\'ordinateur ?\n: Les accents ne s\'affichent plus\n; La dictée vocale se lance\n; Tout s\'écrit en capitales et un voyant s\'allume\n; Le clavier efface le caractère à droite du curseur\n','Tout s\'écrit en capitales et un voyant s\'allume\n','Les accents ne s\'affichent plus\n',1792500192),
+(67,4,14,'deferredfeedback',46,1,1.0000000,0.0000000,1.0000000,0,'[C5 : SAISIR DU TEXTE — QUESTION 14/21]\n\nDans le Bloc-notes, Awa doit taper le chiffre 2. Sur son clavier AZERTY, cette touche porte aussi le É. Comment obtient-elle le 2 ?\n: En tapant ^, puis la touche é\n; Par un appui long sur la touche é\n; En maintenant Maj et en appuyant sur la touche é\n; En appuyant deux fois de suite sur la touche é\n','En maintenant Maj et en appuyant sur la touche é\n','En appuyant deux fois de suite sur la touche é\n',1792500192),
+(68,4,15,'deferredfeedback',47,1,1.0000000,0.0000000,1.0000000,0,'[C5 : SAISIR DU TEXTE — QUESTION 15/21]\n\nIssouf relit la note qu\'il vient de taper sur son téléphone : « livraison prête jeudu ». Quelles corrections faut-il faire ?\n: Seulement un point final\n; Une majuscule à « Livraison », « jeudi » au lieu de « jeudu » et un point final\n; Aucune, le clavier du téléphone corrige tout seul\n; Réécrire toute la phrase en capitales\n','Une majuscule à « Livraison », « jeudi » au lieu de « jeudu » et un point final\n','Une majuscule à « Livraison », « jeudi » au lieu de « jeudu » et un point final\n',1792500192),
+(69,4,16,'deferredfeedback',48,1,1.0000000,0.0000000,1.0000000,0,'[C6 : CONNECTER UN APPAREIL À INTERNET — QUESTION 16/21]\n\nDans la liste des Wi-Fi, que signale un petit verrou à côté du nom d\'un réseau ?\n: Le mode avion est activé\n; Le réseau utilise le forfait du téléphone\n; Le réseau est protégé : il faut un mot de passe\n; Le réseau est en panne\n','Le réseau est protégé : il faut un mot de passe\n','Le réseau est protégé : il faut un mot de passe\n',1792500192),
+(70,4,17,'deferredfeedback',49,1,1.0000000,0.0000000,1.0000000,0,'[C6 : CONNECTER UN APPAREIL À INTERNET — QUESTION 17/21]\n\nSous Windows 11, Awa veut connecter le PC au Wi-Fi de la mairie. Quel chemin suit-elle ?\n: Menu système en haut à droite, Wi-Fi, nom du réseau, Se connecter\n; Balayer du haut vers le bas, toucher Internet, nom du réseau\n; Icône Réseau en bas à droite, Gérer les connexions Wi-Fi, nom du réseau, Connecter, mot de passe, Suivant\n; Démarrer, Marche/Arrêt, puis Connecter\n','Icône Réseau en bas à droite, Gérer les connexions Wi-Fi, nom du réseau, Connecter, mot de passe, Suivant\n','Balayer du haut vers le bas, toucher Internet, nom du réseau\n',1792500192),
+(71,4,18,'deferredfeedback',50,1,1.0000000,0.0000000,1.0000000,0,'[C6 : CONNECTER UN APPAREIL À INTERNET — QUESTION 18/21]\n\nLe mot de passe du Wi-Fi de la salle est refusé deux fois sur le téléphone d\'Issouf, alors qu\'il l\'a recopié du tableau. Que vérifie-t-il d\'abord ?\n: S\'il doit acheter un nouveau forfait\n; S\'il faut changer de téléphone\n; Si la box de la salle doit être redémarrée\n; S\'il a bien respecté les majuscules et les minuscules du mot de passe\n','S\'il a bien respecté les majuscules et les minuscules du mot de passe\n','Si la box de la salle doit être redémarrée\n',1792500192),
+(72,4,19,'deferredfeedback',51,1,1.0000000,0.0000000,1.0000000,0,'[C7 : ENTRETENIR SON APPAREIL — QUESTION 19/21]\n\nQuelle plage de température Samsung conseille-t-il pour ses téléphones, d\'après le module ?\n: De 10 à 50 °C\n; De 20 à 45 °C\n; De 0 à 80 °C\n; De 0 à 35 °C\n','De 0 à 35 °C\n','De 10 à 50 °C\n',1792500192),
+(73,4,20,'deferredfeedback',52,1,1.0000000,0.0000000,1.0000000,0,'[C7 : ENTRETENIR SON APPAREIL — QUESTION 20/21]\n\nUn lundi matin, en période d\'harmattan, Awa nettoie le clavier de la mairie. Quelle méthode applique-t-elle ?\n: Elle sèche le clavier au sèche-cheveux après l\'avoir rincé\n; Elle gratte entre les touches avec un cure-dent, ordinateur allumé\n; Elle verse un peu d\'eau savonneuse entre les touches\n; Elle éteint et débranche, retourne le clavier et tapote, puis passe un chiffon microfibre sec ou à peine humide\n','Elle éteint et débranche, retourne le clavier et tapote, puis passe un chiffon microfibre sec ou à peine humide\n','Elle sèche le clavier au sèche-cheveux après l\'avoir rincé\n',1792500192),
+(74,4,21,'deferredfeedback',53,1,1.0000000,0.0000000,1.0000000,0,'[C7 : ENTRETENIR SON APPAREIL — QUESTION 21/21]\n\nAprès une matinée au champ, le téléphone de Boureima est brûlant et sa batterie est faible. Que lui conseillez-vous ?\n: Le charger dans la voiture fermée, à l\'abri de la poussière\n; Le charger tout de suite avec le chargeur sans marque du voisin\n; Le charger tout de suite au soleil, pour gagner du temps\n; Le laisser refroidir à l\'ombre, puis le charger avec le chargeur de la marque dans un endroit aéré\n','Le laisser refroidir à l\'ombre, puis le charger avec le chargeur de la marque dans un endroit aéré\n','Le charger tout de suite avec le chargeur sans marque du voisin\n',1792500192),
+(75,7,1,'deferredfeedback',33,1,1.0000000,0.0000000,1.0000000,0,'[C1 : IDENTIFIER LES APPAREILS NUMÉRIQUES — QUESTION 1/21]\n\nQuel est le rôle du système d\'exploitation d\'un appareil ?\n: Protéger l\'appareil contre les coupures de courant\n; Indiquer la marque du fabricant de l\'appareil\n; Envoyer des messages, comme WhatsApp\n; Faire le lien entre l\'utilisateur et le matériel, et faire fonctionner les applications\n','Faire le lien entre l\'utilisateur et le matériel, et faire fonctionner les applications\n','Protéger l\'appareil contre les coupures de courant\n',1792849183),
+(76,7,2,'deferredfeedback',34,1,1.0000000,0.0000000,1.0000000,0,'[C1 : IDENTIFIER LES APPAREILS NUMÉRIQUES — QUESTION 2/21]\n\nÀ la mairie, un poste se compose d\'un écran, d\'un clavier, d\'une souris et d\'un boîtier, reliés par des câbles et sans batterie. De quel appareil s\'agit-il ?\n: Un smartphone\n; Un ordinateur portable\n; Une box Wi-Fi\n; Un ordinateur de bureau\n','Un ordinateur de bureau\n','Un ordinateur portable\n',1792849183),
+(77,7,3,'deferredfeedback',35,1,1.0000000,0.0000000,1.0000000,0,'[C1 : IDENTIFIER LES APPAREILS NUMÉRIQUES — QUESTION 3/21]\n\nIssouf affirme : « Mon téléphone est un Tecno, donc son système s\'appelle Tecno. » Que lui répondez-vous ?\n: Son système est WhatsApp, l\'application qu\'il utilise le plus\n; Tecno est la marque ; le système qui fait marcher son téléphone est Android\n; Il a raison : la marque et le système portent toujours le même nom\n; Son système est Windows, comme sur l\'ordinateur de la mairie\n','Tecno est la marque ; le système qui fait marcher son téléphone est Android\n','Il a raison : la marque et le système portent toujours le même nom\n',1792849183),
+(78,7,4,'deferredfeedback',36,1,1.0000000,0.0000000,1.0000000,0,'[C2 : DÉMARRER ET ÉTEINDRE UN APPAREIL — QUESTION 4/21]\n\nSur un ordinateur Ubuntu 24.04, quel raccourci verrouille l\'écran sans éteindre l\'ordinateur ?\n: Super + L\n; Windows + D\n; Alt + F4\n; Super + Tab\n','Super + L\n','Alt + F4\n',1792849183),
+(79,7,5,'deferredfeedback',37,1,1.0000000,0.0000000,1.0000000,0,'[C2 : DÉMARRER ET ÉTEINDRE UN APPAREIL — QUESTION 5/21]\n\nVous venez d\'appuyer sur le bouton de l\'unité centrale. Après 20 secondes, l\'écran est toujours noir. Que faites-vous ?\n: Vous patientez, car un PC met en général 30 secondes à 2 minutes à démarrer\n; Vous gardez le bouton appuyé pour forcer l\'arrêt\n; Vous débranchez puis rebranchez l\'ordinateur\n; Vous rappuyez sur le bouton de l\'unité centrale\n','Vous patientez, car un PC met en général 30 secondes à 2 minutes à démarrer\n','Vous patientez, car un PC met en général 30 secondes à 2 minutes à démarrer\n',1792849183),
+(80,7,6,'deferredfeedback',38,1,1.0000000,0.0000000,1.0000000,0,'[C2 : DÉMARRER ET ÉTEINDRE UN APPAREIL — QUESTION 6/21]\n\nEn fin de journée, la batterie du portable d\'Awa est faible et le courant est coupé. Elle a fini son courrier. Quel est le meilleur choix ?\n: Mettre le portable en veille pour reprendre plus vite demain\n; Verrouiller avec Windows + L et partir\n; Enregistrer le courrier, puis éteindre par Démarrer, Marche/Arrêt, Arrêter\n; Rabattre l\'écran sans rien enregistrer\n','Enregistrer le courrier, puis éteindre par Démarrer, Marche/Arrêt, Arrêter\n','Mettre le portable en veille pour reprendre plus vite demain\n',1792849183),
+(81,7,7,'deferredfeedback',39,1,1.0000000,0.0000000,1.0000000,0,'[C3 : NAVIGUER DANS L\'INTERFACE DE BASE — QUESTION 7/21]\n\nSur l\'écran d\'accueil d\'un téléphone Android, que trouve-t-on dans la barre d\'état, tout en haut ?\n: Les applications favorites\n; L\'heure, le réseau et la batterie\n; Les boutons Retour, Accueil et Récents\n; La liste de toutes les applications\n','L\'heure, le réseau et la batterie\n','La liste de toutes les applications\n',1792849183),
+(82,7,8,'deferredfeedback',40,1,1.0000000,0.0000000,1.0000000,0,'[C3 : NAVIGUER DANS L\'INTERFACE DE BASE — QUESTION 8/21]\n\nSous Windows 11, Awa a deux fenêtres ouvertes et veut passer de l\'une à l\'autre au clavier. Comment fait-elle ?\n: Elle garde Alt appuyé et tape Tab jusqu\'à la fenêtre voulue\n; Elle appuie sur Alt, le relâche, puis appuie sur Tab\n; Elle appuie sur Alt + F4\n; Elle appuie sur Windows + L\n','Elle garde Alt appuyé et tape Tab jusqu\'à la fenêtre voulue\n','Elle appuie sur Alt + F4\n',1792849183),
+(83,7,9,'deferredfeedback',41,1,1.0000000,0.0000000,1.0000000,0,'[C3 : NAVIGUER DANS L\'INTERFACE DE BASE — QUESTION 9/21]\n\nMariam double-clique sur une icône du PC Ubuntu, mais l\'application ne s\'ouvre pas : l\'icône est seulement sélectionnée. Quelle est la cause la plus probable ?\n: La souris est en panne\n; Elle a appuyé sur le bouton droit de la souris\n; Ubuntu n\'accepte pas le double-clic\n; Ses deux appuis sont trop lents et comptent comme deux clics simples\n','Ses deux appuis sont trop lents et comptent comme deux clics simples\n','La souris est en panne\n',1792849183),
+(84,7,10,'deferredfeedback',42,1,1.0000000,0.0000000,1.0000000,0,'[C4 : LOCALISER ET OUVRIR UNE APPLICATION — QUESTION 10/21]\n\nSous Ubuntu 24.04, à quoi sert le bouton à neuf points placé en bas du dock ?\n: À éteindre l\'ordinateur\n; À changer de fenêtre\n; À ouvrir le menu système\n; À afficher la liste complète des applications\n','À afficher la liste complète des applications\n','À changer de fenêtre\n',1792849183),
+(85,7,11,'deferredfeedback',43,1,1.0000000,0.0000000,1.0000000,0,'[C4 : LOCALISER ET OUVRIR UNE APPLICATION — QUESTION 11/21]\n\nSous Windows 11, Awa clique sur le logo Windows pour chercher le Bloc-notes. Que fait-elle ensuite ?\n: Elle tape « Bloc-notes » sans cliquer ailleurs, puis clique sur le résultat\n; Elle double-clique sur le logo Windows\n; Elle clique au milieu de l\'écran, puis tape « Bloc-notes »\n; Elle appuie sur Windows + D\n','Elle tape « Bloc-notes » sans cliquer ailleurs, puis clique sur le résultat\n','Elle tape « Bloc-notes » sans cliquer ailleurs, puis clique sur le résultat\n',1792849183),
+(86,7,12,'deferredfeedback',44,1,1.0000000,0.0000000,1.0000000,0,'[C4 : LOCALISER ET OUVRIR UNE APPLICATION — QUESTION 12/21]\n\nAu cyber, Mariam utilise chaque jour l\'Éditeur de texte sous Ubuntu 24.04 et veut le garder à portée de clic. Quelle solution choisissez-vous pour elle ?\n: L\'ajouter aux favoris du dock\n; L\'épingler à Démarrer\n; L\'ouvrir par le menu système\n; Le glisser sur l\'écran d\'accueil\n','L\'ajouter aux favoris du dock\n','L\'épingler à Démarrer\n',1792849183),
+(87,7,13,'deferredfeedback',45,1,1.0000000,0.0000000,1.0000000,0,'[C5 : SAISIR DU TEXTE — QUESTION 13/21]\n\nQue se passe-t-il quand la touche VERR. MAJ est activée sur un clavier d\'ordinateur ?\n: Les accents ne s\'affichent plus\n; Le clavier efface le caractère à droite du curseur\n; La dictée vocale se lance\n; Tout s\'écrit en capitales et un voyant s\'allume\n','Tout s\'écrit en capitales et un voyant s\'allume\n','La dictée vocale se lance\n',1792849183),
+(88,7,14,'deferredfeedback',46,1,1.0000000,0.0000000,1.0000000,0,'[C5 : SAISIR DU TEXTE — QUESTION 14/21]\n\nDans le Bloc-notes, Awa doit taper le chiffre 2. Sur son clavier AZERTY, cette touche porte aussi le É. Comment obtient-elle le 2 ?\n: En appuyant deux fois de suite sur la touche é\n; Par un appui long sur la touche é\n; En maintenant Maj et en appuyant sur la touche é\n; En tapant ^, puis la touche é\n','En maintenant Maj et en appuyant sur la touche é\n','En maintenant Maj et en appuyant sur la touche é\n',1792849183),
+(89,7,15,'deferredfeedback',47,1,1.0000000,0.0000000,1.0000000,0,'[C5 : SAISIR DU TEXTE — QUESTION 15/21]\n\nIssouf relit la note qu\'il vient de taper sur son téléphone : « livraison prête jeudu ». Quelles corrections faut-il faire ?\n: Réécrire toute la phrase en capitales\n; Une majuscule à « Livraison », « jeudi » au lieu de « jeudu » et un point final\n; Aucune, le clavier du téléphone corrige tout seul\n; Seulement un point final\n','Une majuscule à « Livraison », « jeudi » au lieu de « jeudu » et un point final\n','Réécrire toute la phrase en capitales\n',1792849183),
+(90,7,16,'deferredfeedback',48,1,1.0000000,0.0000000,1.0000000,0,'[C6 : CONNECTER UN APPAREIL À INTERNET — QUESTION 16/21]\n\nDans la liste des Wi-Fi, que signale un petit verrou à côté du nom d\'un réseau ?\n: Le réseau utilise le forfait du téléphone\n; Le mode avion est activé\n; Le réseau est en panne\n; Le réseau est protégé : il faut un mot de passe\n','Le réseau est protégé : il faut un mot de passe\n','Le mode avion est activé\n',1792849183),
+(91,7,17,'deferredfeedback',49,1,1.0000000,0.0000000,1.0000000,0,'[C6 : CONNECTER UN APPAREIL À INTERNET — QUESTION 17/21]\n\nSous Windows 11, Awa veut connecter le PC au Wi-Fi de la mairie. Quel chemin suit-elle ?\n: Balayer du haut vers le bas, toucher Internet, nom du réseau\n; Démarrer, Marche/Arrêt, puis Connecter\n; Menu système en haut à droite, Wi-Fi, nom du réseau, Se connecter\n; Icône Réseau en bas à droite, Gérer les connexions Wi-Fi, nom du réseau, Connecter, mot de passe, Suivant\n','Icône Réseau en bas à droite, Gérer les connexions Wi-Fi, nom du réseau, Connecter, mot de passe, Suivant\n','Menu système en haut à droite, Wi-Fi, nom du réseau, Se connecter\n',1792849183),
+(92,7,18,'deferredfeedback',50,1,1.0000000,0.0000000,1.0000000,0,'[C6 : CONNECTER UN APPAREIL À INTERNET — QUESTION 18/21]\n\nLe mot de passe du Wi-Fi de la salle est refusé deux fois sur le téléphone d\'Issouf, alors qu\'il l\'a recopié du tableau. Que vérifie-t-il d\'abord ?\n: S\'il a bien respecté les majuscules et les minuscules du mot de passe\n; S\'il faut changer de téléphone\n; Si la box de la salle doit être redémarrée\n; S\'il doit acheter un nouveau forfait\n','S\'il a bien respecté les majuscules et les minuscules du mot de passe\n','S\'il a bien respecté les majuscules et les minuscules du mot de passe\n',1792849183),
+(93,7,19,'deferredfeedback',51,1,1.0000000,0.0000000,1.0000000,0,'[C7 : ENTRETENIR SON APPAREIL — QUESTION 19/21]\n\nQuelle plage de température Samsung conseille-t-il pour ses téléphones, d\'après le module ?\n: De 10 à 50 °C\n; De 20 à 45 °C\n; De 0 à 35 °C\n; De 0 à 80 °C\n','De 0 à 35 °C\n','De 20 à 45 °C\n',1792849183),
+(94,7,20,'deferredfeedback',52,1,1.0000000,0.0000000,1.0000000,0,'[C7 : ENTRETENIR SON APPAREIL — QUESTION 20/21]\n\nUn lundi matin, en période d\'harmattan, Awa nettoie le clavier de la mairie. Quelle méthode applique-t-elle ?\n: Elle éteint et débranche, retourne le clavier et tapote, puis passe un chiffon microfibre sec ou à peine humide\n; Elle verse un peu d\'eau savonneuse entre les touches\n; Elle gratte entre les touches avec un cure-dent, ordinateur allumé\n; Elle sèche le clavier au sèche-cheveux après l\'avoir rincé\n','Elle éteint et débranche, retourne le clavier et tapote, puis passe un chiffon microfibre sec ou à peine humide\n','Elle éteint et débranche, retourne le clavier et tapote, puis passe un chiffon microfibre sec ou à peine humide\n',1792849183),
+(95,7,21,'deferredfeedback',53,1,1.0000000,0.0000000,1.0000000,0,'[C7 : ENTRETENIR SON APPAREIL — QUESTION 21/21]\n\nAprès une matinée au champ, le téléphone de Boureima est brûlant et sa batterie est faible. Que lui conseillez-vous ?\n: Le laisser refroidir à l\'ombre, puis le charger avec le chargeur de la marque dans un endroit aéré\n; Le charger tout de suite au soleil, pour gagner du temps\n; Le charger dans la voiture fermée, à l\'abri de la poussière\n; Le charger tout de suite avec le chargeur sans marque du voisin\n','Le laisser refroidir à l\'ombre, puis le charger avec le chargeur de la marque dans un endroit aéré\n','Le laisser refroidir à l\'ombre, puis le charger avec le chargeur de la marque dans un endroit aéré\n',1792849183),
+(96,8,1,'deferredfeedback',33,1,1.0000000,0.0000000,1.0000000,0,'[C1 : IDENTIFIER LES APPAREILS NUMÉRIQUES — QUESTION 1/21]\n\nQuel est le rôle du système d\'exploitation d\'un appareil ?\n: Protéger l\'appareil contre les coupures de courant\n; Indiquer la marque du fabricant de l\'appareil\n; Faire le lien entre l\'utilisateur et le matériel, et faire fonctionner les applications\n; Envoyer des messages, comme WhatsApp\n','Faire le lien entre l\'utilisateur et le matériel, et faire fonctionner les applications\n','Protéger l\'appareil contre les coupures de courant\n',1792849358),
+(97,8,2,'deferredfeedback',34,1,1.0000000,0.0000000,1.0000000,0,'[C1 : IDENTIFIER LES APPAREILS NUMÉRIQUES — QUESTION 2/21]\n\nÀ la mairie, un poste se compose d\'un écran, d\'un clavier, d\'une souris et d\'un boîtier, reliés par des câbles et sans batterie. De quel appareil s\'agit-il ?\n: Un ordinateur de bureau\n; Un smartphone\n; Un ordinateur portable\n; Une box Wi-Fi\n','Un ordinateur de bureau\n','Une box Wi-Fi\n',1792849358),
+(98,8,3,'deferredfeedback',35,1,1.0000000,0.0000000,1.0000000,0,'[C1 : IDENTIFIER LES APPAREILS NUMÉRIQUES — QUESTION 3/21]\n\nIssouf affirme : « Mon téléphone est un Tecno, donc son système s\'appelle Tecno. » Que lui répondez-vous ?\n: Son système est WhatsApp, l\'application qu\'il utilise le plus\n; Il a raison : la marque et le système portent toujours le même nom\n; Son système est Windows, comme sur l\'ordinateur de la mairie\n; Tecno est la marque ; le système qui fait marcher son téléphone est Android\n','Tecno est la marque ; le système qui fait marcher son téléphone est Android\n','Il a raison : la marque et le système portent toujours le même nom\n',1792849358),
+(99,8,4,'deferredfeedback',36,1,1.0000000,0.0000000,1.0000000,0,'[C2 : DÉMARRER ET ÉTEINDRE UN APPAREIL — QUESTION 4/21]\n\nSur un ordinateur Ubuntu 24.04, quel raccourci verrouille l\'écran sans éteindre l\'ordinateur ?\n: Super + Tab\n; Alt + F4\n; Windows + D\n; Super + L\n','Super + L\n','Windows + D\n',1792849358),
+(100,8,5,'deferredfeedback',37,1,1.0000000,0.0000000,1.0000000,0,'[C2 : DÉMARRER ET ÉTEINDRE UN APPAREIL — QUESTION 5/21]\n\nVous venez d\'appuyer sur le bouton de l\'unité centrale. Après 20 secondes, l\'écran est toujours noir. Que faites-vous ?\n: Vous débranchez puis rebranchez l\'ordinateur\n; Vous patientez, car un PC met en général 30 secondes à 2 minutes à démarrer\n; Vous rappuyez sur le bouton de l\'unité centrale\n; Vous gardez le bouton appuyé pour forcer l\'arrêt\n','Vous patientez, car un PC met en général 30 secondes à 2 minutes à démarrer\n','Vous débranchez puis rebranchez l\'ordinateur\n',1792849358),
+(101,8,6,'deferredfeedback',38,1,1.0000000,0.0000000,1.0000000,0,'[C2 : DÉMARRER ET ÉTEINDRE UN APPAREIL — QUESTION 6/21]\n\nEn fin de journée, la batterie du portable d\'Awa est faible et le courant est coupé. Elle a fini son courrier. Quel est le meilleur choix ?\n: Rabattre l\'écran sans rien enregistrer\n; Verrouiller avec Windows + L et partir\n; Enregistrer le courrier, puis éteindre par Démarrer, Marche/Arrêt, Arrêter\n; Mettre le portable en veille pour reprendre plus vite demain\n','Enregistrer le courrier, puis éteindre par Démarrer, Marche/Arrêt, Arrêter\n','Verrouiller avec Windows + L et partir\n',1792849358),
+(102,8,7,'deferredfeedback',39,1,1.0000000,0.0000000,1.0000000,0,'[C3 : NAVIGUER DANS L\'INTERFACE DE BASE — QUESTION 7/21]\n\nSur l\'écran d\'accueil d\'un téléphone Android, que trouve-t-on dans la barre d\'état, tout en haut ?\n: L\'heure, le réseau et la batterie\n; La liste de toutes les applications\n; Les boutons Retour, Accueil et Récents\n; Les applications favorites\n','L\'heure, le réseau et la batterie\n','Les boutons Retour, Accueil et Récents\n',1792849358),
+(103,8,8,'deferredfeedback',40,1,1.0000000,0.0000000,1.0000000,0,'[C3 : NAVIGUER DANS L\'INTERFACE DE BASE — QUESTION 8/21]\n\nSous Windows 11, Awa a deux fenêtres ouvertes et veut passer de l\'une à l\'autre au clavier. Comment fait-elle ?\n: Elle appuie sur Alt + F4\n; Elle appuie sur Windows + L\n; Elle garde Alt appuyé et tape Tab jusqu\'à la fenêtre voulue\n; Elle appuie sur Alt, le relâche, puis appuie sur Tab\n','Elle garde Alt appuyé et tape Tab jusqu\'à la fenêtre voulue\n','Elle appuie sur Windows + L\n',1792849358),
+(104,8,9,'deferredfeedback',41,1,1.0000000,0.0000000,1.0000000,0,'[C3 : NAVIGUER DANS L\'INTERFACE DE BASE — QUESTION 9/21]\n\nMariam double-clique sur une icône du PC Ubuntu, mais l\'application ne s\'ouvre pas : l\'icône est seulement sélectionnée. Quelle est la cause la plus probable ?\n: La souris est en panne\n; Ses deux appuis sont trop lents et comptent comme deux clics simples\n; Elle a appuyé sur le bouton droit de la souris\n; Ubuntu n\'accepte pas le double-clic\n','Ses deux appuis sont trop lents et comptent comme deux clics simples\n','Elle a appuyé sur le bouton droit de la souris\n',1792849358),
+(105,8,10,'deferredfeedback',42,1,1.0000000,0.0000000,1.0000000,0,'[C4 : LOCALISER ET OUVRIR UNE APPLICATION — QUESTION 10/21]\n\nSous Ubuntu 24.04, à quoi sert le bouton à neuf points placé en bas du dock ?\n: À ouvrir le menu système\n; À afficher la liste complète des applications\n; À changer de fenêtre\n; À éteindre l\'ordinateur\n','À afficher la liste complète des applications\n','À éteindre l\'ordinateur\n',1792849358),
+(106,8,11,'deferredfeedback',43,1,1.0000000,0.0000000,1.0000000,0,'[C4 : LOCALISER ET OUVRIR UNE APPLICATION — QUESTION 11/21]\n\nSous Windows 11, Awa clique sur le logo Windows pour chercher le Bloc-notes. Que fait-elle ensuite ?\n: Elle double-clique sur le logo Windows\n; Elle clique au milieu de l\'écran, puis tape « Bloc-notes »\n; Elle appuie sur Windows + D\n; Elle tape « Bloc-notes » sans cliquer ailleurs, puis clique sur le résultat\n','Elle tape « Bloc-notes » sans cliquer ailleurs, puis clique sur le résultat\n','Elle appuie sur Windows + D\n',1792849358),
+(107,8,12,'deferredfeedback',44,1,1.0000000,0.0000000,1.0000000,0,'[C4 : LOCALISER ET OUVRIR UNE APPLICATION — QUESTION 12/21]\n\nAu cyber, Mariam utilise chaque jour l\'Éditeur de texte sous Ubuntu 24.04 et veut le garder à portée de clic. Quelle solution choisissez-vous pour elle ?\n: L\'ajouter aux favoris du dock\n; L\'ouvrir par le menu système\n; L\'épingler à Démarrer\n; Le glisser sur l\'écran d\'accueil\n','L\'ajouter aux favoris du dock\n','L\'épingler à Démarrer\n',1792849358),
+(108,8,13,'deferredfeedback',45,1,1.0000000,0.0000000,1.0000000,0,'[C5 : SAISIR DU TEXTE — QUESTION 13/21]\n\nQue se passe-t-il quand la touche VERR. MAJ est activée sur un clavier d\'ordinateur ?\n: Tout s\'écrit en capitales et un voyant s\'allume\n; Le clavier efface le caractère à droite du curseur\n; Les accents ne s\'affichent plus\n; La dictée vocale se lance\n','Tout s\'écrit en capitales et un voyant s\'allume\n','Tout s\'écrit en capitales et un voyant s\'allume\n',1792849358),
+(109,8,14,'deferredfeedback',46,1,1.0000000,0.0000000,1.0000000,0,'[C5 : SAISIR DU TEXTE — QUESTION 14/21]\n\nDans le Bloc-notes, Awa doit taper le chiffre 2. Sur son clavier AZERTY, cette touche porte aussi le É. Comment obtient-elle le 2 ?\n: En appuyant deux fois de suite sur la touche é\n; En tapant ^, puis la touche é\n; Par un appui long sur la touche é\n; En maintenant Maj et en appuyant sur la touche é\n','En maintenant Maj et en appuyant sur la touche é\n','En appuyant deux fois de suite sur la touche é\n',1792849358),
+(110,8,15,'deferredfeedback',47,1,1.0000000,0.0000000,1.0000000,0,'[C5 : SAISIR DU TEXTE — QUESTION 15/21]\n\nIssouf relit la note qu\'il vient de taper sur son téléphone : « livraison prête jeudu ». Quelles corrections faut-il faire ?\n: Réécrire toute la phrase en capitales\n; Une majuscule à « Livraison », « jeudi » au lieu de « jeudu » et un point final\n; Aucune, le clavier du téléphone corrige tout seul\n; Seulement un point final\n','Une majuscule à « Livraison », « jeudi » au lieu de « jeudu » et un point final\n','Une majuscule à « Livraison », « jeudi » au lieu de « jeudu » et un point final\n',1792849358),
+(111,8,16,'deferredfeedback',48,1,1.0000000,0.0000000,1.0000000,0,'[C6 : CONNECTER UN APPAREIL À INTERNET — QUESTION 16/21]\n\nDans la liste des Wi-Fi, que signale un petit verrou à côté du nom d\'un réseau ?\n: Le réseau est protégé : il faut un mot de passe\n; Le mode avion est activé\n; Le réseau est en panne\n; Le réseau utilise le forfait du téléphone\n','Le réseau est protégé : il faut un mot de passe\n','Le réseau utilise le forfait du téléphone\n',1792849358),
+(112,8,17,'deferredfeedback',49,1,1.0000000,0.0000000,1.0000000,0,'[C6 : CONNECTER UN APPAREIL À INTERNET — QUESTION 17/21]\n\nSous Windows 11, Awa veut connecter le PC au Wi-Fi de la mairie. Quel chemin suit-elle ?\n: Menu système en haut à droite, Wi-Fi, nom du réseau, Se connecter\n; Démarrer, Marche/Arrêt, puis Connecter\n; Balayer du haut vers le bas, toucher Internet, nom du réseau\n; Icône Réseau en bas à droite, Gérer les connexions Wi-Fi, nom du réseau, Connecter, mot de passe, Suivant\n','Icône Réseau en bas à droite, Gérer les connexions Wi-Fi, nom du réseau, Connecter, mot de passe, Suivant\n','Icône Réseau en bas à droite, Gérer les connexions Wi-Fi, nom du réseau, Connecter, mot de passe, Suivant\n',1792849358),
+(113,8,18,'deferredfeedback',50,1,1.0000000,0.0000000,1.0000000,0,'[C6 : CONNECTER UN APPAREIL À INTERNET — QUESTION 18/21]\n\nLe mot de passe du Wi-Fi de la salle est refusé deux fois sur le téléphone d\'Issouf, alors qu\'il l\'a recopié du tableau. Que vérifie-t-il d\'abord ?\n: S\'il faut changer de téléphone\n; S\'il doit acheter un nouveau forfait\n; Si la box de la salle doit être redémarrée\n; S\'il a bien respecté les majuscules et les minuscules du mot de passe\n','S\'il a bien respecté les majuscules et les minuscules du mot de passe\n','Si la box de la salle doit être redémarrée\n',1792849358),
+(114,8,19,'deferredfeedback',51,1,1.0000000,0.0000000,1.0000000,0,'[C7 : ENTRETENIR SON APPAREIL — QUESTION 19/21]\n\nQuelle plage de température Samsung conseille-t-il pour ses téléphones, d\'après le module ?\n: De 20 à 45 °C\n; De 10 à 50 °C\n; De 0 à 35 °C\n; De 0 à 80 °C\n','De 0 à 35 °C\n','De 0 à 35 °C\n',1792849358),
+(115,8,20,'deferredfeedback',52,1,1.0000000,0.0000000,1.0000000,0,'[C7 : ENTRETENIR SON APPAREIL — QUESTION 20/21]\n\nUn lundi matin, en période d\'harmattan, Awa nettoie le clavier de la mairie. Quelle méthode applique-t-elle ?\n: Elle sèche le clavier au sèche-cheveux après l\'avoir rincé\n; Elle verse un peu d\'eau savonneuse entre les touches\n; Elle gratte entre les touches avec un cure-dent, ordinateur allumé\n; Elle éteint et débranche, retourne le clavier et tapote, puis passe un chiffon microfibre sec ou à peine humide\n','Elle éteint et débranche, retourne le clavier et tapote, puis passe un chiffon microfibre sec ou à peine humide\n','Elle verse un peu d\'eau savonneuse entre les touches\n',1792849358),
+(116,8,21,'deferredfeedback',53,1,1.0000000,0.0000000,1.0000000,0,'[C7 : ENTRETENIR SON APPAREIL — QUESTION 21/21]\n\nAprès une matinée au champ, le téléphone de Boureima est brûlant et sa batterie est faible. Que lui conseillez-vous ?\n: Le laisser refroidir à l\'ombre, puis le charger avec le chargeur de la marque dans un endroit aéré\n; Le charger tout de suite au soleil, pour gagner du temps\n; Le charger tout de suite avec le chargeur sans marque du voisin\n; Le charger dans la voiture fermée, à l\'abri de la poussière\n','Le laisser refroidir à l\'ombre, puis le charger avec le chargeur de la marque dans un endroit aéré\n','Le charger tout de suite au soleil, pour gagner du temps\n',1792849358);
 /*!40000 ALTER TABLE `m_question_attempts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -37105,7 +38453,7 @@ CREATE TABLE `m_question_usages` (
   `preferredbehaviour` varchar(32) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   KEY `m_quesusag_con_ix` (`contextid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='This table''s main purpose it to assign a unique id to each a';
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='This table''s main purpose it to assign a unique id to each a';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37114,6 +38462,14 @@ CREATE TABLE `m_question_usages` (
 
 LOCK TABLES `m_question_usages` WRITE;
 /*!40000 ALTER TABLE `m_question_usages` DISABLE KEYS */;
+INSERT INTO `m_question_usages` VALUES
+(1,348,'mod_quiz','deferredfeedback'),
+(2,636,'mod_quiz','deferredfeedback'),
+(4,349,'mod_quiz','deferredfeedback'),
+(5,1,'mod_quiz','deferredfeedback'),
+(6,1,'mod_quiz','deferredfeedback'),
+(7,349,'mod_quiz','deferredfeedback'),
+(8,349,'mod_quiz','deferredfeedback');
 /*!40000 ALTER TABLE `m_question_usages` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -37417,7 +38773,7 @@ CREATE TABLE `m_quiz_attempts` (
   KEY `m_quizatte_statim_ix` (`state`,`timecheckstate`),
   KEY `m_quizatte_qui_ix` (`quiz`),
   KEY `m_quizatte_use_ix` (`userid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Stores users attempts at quizzes.';
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Stores users attempts at quizzes.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37426,6 +38782,13 @@ CREATE TABLE `m_quiz_attempts` (
 
 LOCK TABLES `m_quiz_attempts` WRITE;
 /*!40000 ALTER TABLE `m_quiz_attempts` DISABLE KEYS */;
+INSERT INTO `m_quiz_attempts` VALUES
+(1,53,2,1,1,'1,2,3,0,4,5,6,0,7,8,9,0,10,11,12,0,13,14,15,0,16,0',0,1,'inprogress',1792499076,0,1792499076,0,NULL,NULL,NULL),
+(2,125,2,1,2,'1,2,3,0,4,5,6,0,7,8,9,0,10,11,12,0,13,14,15,0,16,0',5,1,'finished',1792499691,1792499864,1792499864,0,NULL,5.00000,1792499864),
+(4,54,2,1,4,'1,2,3,0,4,5,6,0,7,8,9,0,10,11,12,0,13,14,15,0,16,17,18,0,19,20,21,0',6,1,'finished',1792500113,1792500192,1792500192,0,NULL,3.00000,1792500192),
+(5,120,11,1,5,'1,0',0,0,'finished',1792841346,1792843746,1792843746,0,NULL,85.00000,1792843746),
+(7,54,11,1,7,'1,2,3,0,4,5,6,0,7,8,9,0,10,11,12,0,13,14,15,0,16,17,18,0,19,20,21,0',6,0,'finished',1792849088,1792849183,1792849183,0,NULL,6.00000,1792849183),
+(8,54,11,2,8,'1,2,3,0,4,5,6,0,7,8,9,0,10,11,12,0,13,14,15,0,16,17,18,0,19,20,21,0',6,0,'finished',1792849273,1792849358,1792849358,0,NULL,4.00000,1792849358);
 /*!40000 ALTER TABLE `m_quiz_attempts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -37502,7 +38865,7 @@ CREATE TABLE `m_quiz_grades` (
   PRIMARY KEY (`id`),
   KEY `m_quizgrad_use_ix` (`userid`),
   KEY `m_quizgrad_qui_ix` (`quiz`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Stores the overall grade for each user on the quiz, based on';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Stores the overall grade for each user on the quiz, based on';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37511,6 +38874,9 @@ CREATE TABLE `m_quiz_grades` (
 
 LOCK TABLES `m_quiz_grades` WRITE;
 /*!40000 ALTER TABLE `m_quiz_grades` DISABLE KEYS */;
+INSERT INTO `m_quiz_grades` VALUES
+(1,54,11,6.00000,1792849358),
+(2,120,11,85.00000,1792855167);
 /*!40000 ALTER TABLE `m_quiz_grades` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -38698,7 +40064,7 @@ CREATE TABLE `m_role_assignments` (
   KEY `m_roleassi_rol_ix` (`roleid`),
   KEY `m_roleassi_con_ix` (`contextid`),
   KEY `m_roleassi_use_ix` (`userid`)
-) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='assigning roles in different context';
+) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='assigning roles in different context';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38782,7 +40148,15 @@ INSERT INTO `m_role_assignments` VALUES
 (98,3,579,12,1792160517,0,'',0,0),
 (99,3,160,12,1792160517,0,'',0,0),
 (100,3,124,12,1792160517,0,'',0,0),
-(101,1,1,13,1792160517,0,'',0,0);
+(101,1,1,13,1792160517,0,'',0,0),
+(102,5,83,10,1792744283,10,'',0,0),
+(103,5,120,11,1792848976,11,'',0,0),
+(104,5,579,10,1792854776,12,'',0,0),
+(105,5,579,4,1792862732,0,'',0,0),
+(106,5,579,7,1792862917,0,'',0,0),
+(107,5,579,3,1792862917,0,'',0,0),
+(108,5,580,10,1792864176,10,'',0,0),
+(109,5,102,11,1792864284,11,'',0,0);
 /*!40000 ALTER TABLE `m_role_assignments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -40600,7 +41974,6 @@ INSERT INTO `m_role_capabilities` VALUES
 (1781,1,9,'moodle/block:view',1,1791279232,2),
 (1782,1,10,'moodle/course:manageactivities',-1000,1791289663,0),
 (1783,1,10,'moodle/course:update',-1000,1791289663,0),
-(1784,1,10,'moodle/site:accessallgroups',-1000,1791289663,0),
 (1785,1,5,'mod/attendance:view',1,1791291883,0),
 (1786,1,4,'mod/attendance:view',1,1791291883,0),
 (1787,1,9,'mod/attendance:view',1,1791291883,0),
@@ -41309,7 +42682,7 @@ CREATE TABLE `m_sessions` (
   KEY `m_sess_tim_ix` (`timecreated`),
   KEY `m_sess_tim2_ix` (`timemodified`),
   KEY `m_sess_use_ix` (`userid`)
-) ENGINE=InnoDB AUTO_INCREMENT=297 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Database based session storage - now recommended';
+) ENGINE=InnoDB AUTO_INCREMENT=375 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Database based session storage - now recommended';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41374,8 +42747,50 @@ INSERT INTO `m_sessions` VALUES
 (292,0,'e664eb4daca53f5e64a7981898c5f623',0,NULL,1792482524,1792482524,'172.20.0.1','172.20.0.1'),
 (293,0,'2b552d39f9d7a74b1ba9c2ad92542a29',0,NULL,1792482524,1792482524,'172.20.0.1','172.20.0.1'),
 (294,0,'dda8207a520dbb8775ff6899e2c44b2e',0,NULL,1792482530,1792482530,'172.20.0.1','172.20.0.1'),
-(295,0,'226fab6d84bb7dcf5f57325074a3cb71',0,NULL,1792484431,1792484580,'172.20.0.1','172.20.0.1'),
-(296,0,'786ce740419a45c40449467b930cd7f8',0,NULL,1792484435,1792484435,'172.20.0.1','172.20.0.1');
+(296,0,'786ce740419a45c40449467b930cd7f8',0,NULL,1792484435,1792484435,'172.20.0.1','172.20.0.1'),
+(303,0,'9de589821ad3d39f282c481f4b774d18',12,NULL,1792524757,1792524853,'172.20.0.1','172.20.0.1'),
+(305,0,'d4b0bf2caa69d103fe8cbe9a7a605e74',2,NULL,1792524949,1792526714,'172.20.0.1','172.20.0.1'),
+(306,0,'ecf8bb846f9346c55cdecd8e292c25d5',0,NULL,1792526528,1792526528,'172.20.0.1','172.20.0.1'),
+(307,0,'e4b67447bae1405e397f5c2a4db63ac8',0,NULL,1792579236,1792603275,'172.20.0.1','172.20.0.1'),
+(308,0,'a56b6bd3d4ff44bf7c01d8f79ee11117',0,NULL,1792677351,1792677552,'172.20.0.1','172.20.0.1'),
+(316,0,'6645f70bfbcaa2d6eeb2be06debcb81f',0,NULL,1792746628,1792746628,'172.20.0.1','172.20.0.1'),
+(317,0,'ec0197d3dd81189d6e86b6e61b7801c4',0,NULL,1792747167,1792747167,'172.20.0.1','172.20.0.1'),
+(319,0,'f86a520c151405540cebfbeff3f61deb',0,NULL,1792777852,1792777852,'172.20.0.1','172.20.0.1'),
+(320,0,'783fcc3583842cc2d2e95c79d6465179',0,NULL,1792777923,1792777924,'172.20.0.1','172.20.0.1'),
+(322,0,'ead7bbdda0fb2f9055149ed3d7c4958c',11,NULL,1792778331,1792778331,'172.20.0.1','172.20.0.1'),
+(324,0,'c3fbd3b36301f21071bf346f849d3b3c',11,NULL,1792778665,1792778665,'172.20.0.1','172.20.0.1'),
+(326,0,'f424a44b18dea978a1eb0a503555d57a',11,NULL,1792778716,1792778717,'172.20.0.1','172.20.0.1'),
+(327,0,'c54532e19919bfc7a6be5eea82987375',0,NULL,1792779029,1792779030,'172.20.0.1','172.20.0.1'),
+(328,0,'4f1e12117fb8d34e4f0c0db2f35f725c',0,NULL,1792779180,1792779195,'172.20.0.1','172.20.0.1'),
+(334,0,'15693fe15e84c4d8089a84fca1b0f2e4',13,NULL,1792782482,1792782684,'172.20.0.1','172.20.0.1'),
+(336,0,'26b7ece71eafb428a1618e8b21d93527',0,NULL,1792840650,1792840650,'172.20.0.1','172.20.0.1'),
+(337,0,'042fb786c9151c20558cb21437169a46',0,NULL,1792840673,1792840674,'172.20.0.1','172.20.0.1'),
+(338,0,'663347b9359f8eacdc9fdd36165367a0',0,NULL,1792840756,1792840757,'172.20.0.1','172.20.0.1'),
+(339,0,'9d974e7ae48cce8f325078598a7b8264',0,NULL,1792841182,1792841182,'172.20.0.1','172.20.0.1'),
+(340,0,'f01c0983722797bbc29f4e6321c5a892',0,NULL,1792841202,1792841202,'172.20.0.1','172.20.0.1'),
+(341,0,'a8666c166b79d4f9f5686a8b0d0533df',0,NULL,1792841356,1792841356,'172.20.0.1','172.20.0.1'),
+(342,0,'c93fe78d90ff73ea48d54aabce6369d3',0,NULL,1792841362,1792841362,'172.20.0.1','172.20.0.1'),
+(343,0,'f6b5db81817ba7738754fcbcf92f41bb',0,NULL,1792841428,1792841428,'172.20.0.1','172.20.0.1'),
+(344,0,'eb9823bcf11dd848d1a6d724f9f3fcd4',0,NULL,1792841448,1792841448,'172.20.0.1','172.20.0.1'),
+(345,0,'fd632a37fbbf120c7e43d5b4a5f27b95',0,NULL,1792841461,1792841461,'172.20.0.1','172.20.0.1'),
+(346,0,'3b824d03ec4962ea141680aac4783742',0,NULL,1792841471,1792841471,'172.20.0.1','172.20.0.1'),
+(347,0,'fbc17a184278d64cd081fd7311939add',0,NULL,1792841832,1792841832,'172.20.0.1','172.20.0.1'),
+(348,0,'82724cda79f9e873c44698a0d48ee205',0,NULL,1792841849,1792841849,'172.20.0.1','172.20.0.1'),
+(349,0,'a7af99cc1b8728f7a187128d7d522d39',0,NULL,1792841869,1792841869,'172.20.0.1','172.20.0.1'),
+(350,0,'ee6f7b09d20d9edcec9bd3c1d2ac7689',0,NULL,1792841891,1792841891,'172.20.0.1','172.20.0.1'),
+(351,0,'6177e9981cd99f1ddfd9fcdd3b81b18e',0,NULL,1792841908,1792841908,'172.20.0.1','172.20.0.1'),
+(355,0,'74394eac95a40ee0c1e32f609126bb37',0,NULL,1792844963,1792844963,'172.20.0.1','172.20.0.1'),
+(356,0,'b21502f28365325b7493e924c306852f',0,NULL,1792844989,1792844989,'172.20.0.1','172.20.0.1'),
+(357,0,'d9b2a8bedcf3b80c24480adeb7c66da4',0,NULL,1792845449,1792845449,'172.20.0.1','172.20.0.1'),
+(358,0,'5bbe4dee540112cf5dedf0b16dad268c',0,NULL,1792846320,1792846320,'172.20.0.1','172.20.0.1'),
+(359,0,'73fad69a8cf1277627d816cb9b5fbec7',0,NULL,1792846328,1792846328,'172.20.0.1','172.20.0.1'),
+(360,0,'b2915ed61be144c60e17c556fcdcd50e',0,NULL,1792846368,1792846368,'172.20.0.1','172.20.0.1'),
+(369,0,'89674bf3a4660844ecd029315fc7bcce',0,NULL,1792864434,1792866112,'172.20.0.1','172.20.0.1'),
+(370,0,'06027c9d6ddff6a42d168703864f348e',0,NULL,1792865069,1792865069,'172.20.0.1','172.20.0.1'),
+(371,0,'f8cc0065245e59ff6513bb3b050aacee',0,NULL,1792865074,1792865074,'172.20.0.1','172.20.0.1'),
+(372,0,'b5710fb1122f9c4463b5c9bc21f53f5c',0,NULL,1792865403,1792865403,'172.20.0.1','172.20.0.1'),
+(373,0,'ecec0536d64960100ba07dbc697d80db',0,NULL,1792865434,1792865434,'172.20.0.1','172.20.0.1'),
+(374,0,'61898758952ab06cd82f8bb99b2defd9',0,NULL,1792866061,1792866061,'172.20.0.1','172.20.0.1');
 /*!40000 ALTER TABLE `m_sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -41883,7 +43298,7 @@ CREATE TABLE `m_task_adhoc` (
   KEY `m_taskadho_tim_ix` (`timestarted`),
   KEY `m_taskadho_nexcla_ix` (`nextruntime`,`classname`),
   KEY `m_taskadho_use_ix` (`userid`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='List of adhoc tasks waiting to run.';
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='List of adhoc tasks waiting to run.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41893,7 +43308,11 @@ CREATE TABLE `m_task_adhoc` (
 LOCK TABLES `m_task_adhoc` WRITE;
 /*!40000 ALTER TABLE `m_task_adhoc` DISABLE KEYS */;
 INSERT INTO `m_task_adhoc` VALUES
-(3,'course','\\core_course\\task\\content_notification_task',1792482402,120,'{\"update\":0,\"cmid\":3,\"courseid\":\"3\",\"userfrom\":\"2\"}',NULL,1790079594,NULL,NULL,NULL,10,1792482221);
+(3,'course','\\core_course\\task\\content_notification_task',1792482402,120,'{\"update\":0,\"cmid\":3,\"courseid\":\"3\",\"userfrom\":\"2\"}',NULL,1790079594,NULL,NULL,NULL,10,1792482221),
+(13,'core','\\core\\task\\send_login_notifications',1792498920,0,'{\"ismoodleapp\":false,\"useragent\":\"Mozilla\\/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit\\/537.36 (KHTML, like Gecko) Chrome\\/155.0.0.0 Safari\\/537.36\",\"loginip\":\"172.20.0.1\",\"logintime\":1792498921}',2,1792498921,NULL,NULL,NULL,12,NULL),
+(14,'core','\\core\\task\\send_login_notifications',1792781192,0,'{\"ismoodleapp\":false,\"useragent\":\"Mozilla\\/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit\\/537.36 (KHTML, like Gecko) Chrome\\/155.0.0.0 Safari\\/537.36\",\"loginip\":\"172.20.0.1\",\"logintime\":1792781193}',13,1792781193,NULL,NULL,NULL,12,NULL),
+(15,'quiz_statistics','\\quiz_statistics\\task\\recalculate',1792852783,0,'{\"quizid\":54}',NULL,1792849183,NULL,NULL,NULL,12,NULL),
+(16,'core','\\core\\task\\send_login_notifications',1792863360,0,'{\"ismoodleapp\":false,\"useragent\":\"Mozilla\\/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit\\/537.36 (KHTML, like Gecko) Chrome\\/155.0.0.0 Safari\\/537.36\",\"loginip\":\"172.20.0.1\",\"logintime\":1792863361}',2,1792863361,NULL,NULL,NULL,12,NULL);
 /*!40000 ALTER TABLE `m_task_adhoc` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -42267,7 +43686,7 @@ CREATE TABLE `m_tiny_autosave` (
   `timemodified` bigint(10) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE KEY `m_tinyauto_eleconusepag_uix` (`elementid`,`contextid`,`userid`,`pagehash`)
-) ENGINE=InnoDB AUTO_INCREMENT=481 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='The content of the textarea saved during autosave operations';
+) ENGINE=InnoDB AUTO_INCREMENT=483 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='The content of the textarea saved during autosave operations';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42386,7 +43805,8 @@ INSERT INTO `m_tiny_autosave` VALUES
 (474,'id_sdescription',564,'1e84127c8847b4500c7760d9228bca15a5ee0d2b',2,'',810951857,'c8aa9390250508ee406af3de39d71a96',1791909117),
 (475,'id_summary_editor',83,'9dfff30e100d86421c210b90ed41f6232a8323c1',2,'',553924171,'2ef450740da695afce5a70bb0a55a94f',1791991462),
 (476,'id_description_editor',578,'9bc7f2bfc931036f18a4936a1a8f8be7ef91cc92',2,'<p>Compétences numériques pour l\'enseignement, la formation professionnelle et l\'animation pédagogique.</p>',NULL,'494f7f5e6fda3136a5a9585025849993',1792152030),
-(480,'id_description_editor',36,'7c755b7947c5764e1a342e18798fd65edbdad03c',13,'',690292492,'5b91d4bd5a5fb74df5d255a5a517a218',1792162486);
+(480,'id_description_editor',36,'7c755b7947c5764e1a342e18798fd65edbdad03c',13,'',690292492,'5b91d4bd5a5fb74df5d255a5a517a218',1792162486),
+(481,'id_description_editor',36,'d2d8fe07fac0ba9faf79808d335673ff5554f7cc',13,'',914302646,'49069d34b31a0c1aca33f6f3aa117377',1792781369);
 /*!40000 ALTER TABLE `m_tiny_autosave` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -77143,7 +78563,7 @@ CREATE TABLE `m_upgrade_log` (
   KEY `m_upgrlog_tim_ix` (`timemodified`),
   KEY `m_upgrlog_typtim_ix` (`type`,`timemodified`),
   KEY `m_upgrlog_use_ix` (`userid`)
-) ENGINE=InnoDB AUTO_INCREMENT=1314 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Upgrade logging';
+) ENGINE=InnoDB AUTO_INCREMENT=1317 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Upgrade logging';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -78465,7 +79885,10 @@ INSERT INTO `m_upgrade_log` VALUES
 (1310,0,'theme_pactdigital','2023100901','2023100901','Plugin upgraded',NULL,'',2,1792064332),
 (1311,0,'local_pactdigital','2026100700','2026101501','Starting plugin upgrade',NULL,'',2,1792069671),
 (1312,0,'local_pactdigital','2026101501','2026101501','Upgrade savepoint reached',NULL,'',2,1792069671),
-(1313,0,'local_pactdigital','2026101501','2026101501','Plugin upgraded',NULL,'',2,1792069671);
+(1313,0,'local_pactdigital','2026101501','2026101501','Plugin upgraded',NULL,'',2,1792069671),
+(1314,0,'theme_pactdigital','2023100901','2026102201','Starting plugin upgrade',NULL,'',2,1792745309),
+(1315,0,'theme_pactdigital','2026102201','2026102201','Upgrade savepoint reached',NULL,'',2,1792745309),
+(1316,0,'theme_pactdigital','2026102201','2026102201','Plugin upgraded',NULL,'',2,1792745309);
 /*!40000 ALTER TABLE `m_upgrade_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -78584,7 +80007,7 @@ LOCK TABLES `m_user` WRITE;
 /*!40000 ALTER TABLE `m_user` DISABLE KEYS */;
 INSERT INTO `m_user` VALUES
 (1,'manual',1,0,0,0,1,'guest','$6$rounds=10000$ZNWaBbDzr1Ptt5Jb$7vXjoZm1gmNLL1tiN5yJ1BxGIuXxa2xonfLj0Rgxwv0umzgL7Put4BGZHcMb.Aup/9EZyAQKX.D/DfXf2Xan2/','','Guest user',' ','root@localhost',0,'','','','','','','','fr','gregorian','','99',0,0,0,0,'','',0,'This user is a special user that allows read-only access to some courses.',1,1,0,2,1,0,0,1790074980,0,NULL,NULL,NULL,NULL,NULL,NULL),
-(2,'manual',1,0,0,0,1,'pactdigital','$6$rounds=10000$wQqtX18m0aoRPpRi$0QA70wpIqm0XXtEAgdGN8Jn1UKoFcW1BxtcSz.tF7vRkCobjIBmpSTpTL3YnxUq/Sqhxa4SKgkYPPZIg1UmD20','','Xavier','BADO','xavier.bado@orange.com',0,'','','PACTDIGITAL','Administration','Ouagadougou, Burkina Faso','Ouagadougou','BF','fr','gregorian','','Africa/Ouagadougou',1790075062,1792247770,1792151500,1792171710,'0.0.0.0','',0,'<p>Administrateur principal de la plateforme PACTDIGITAL, chargé de l’administration, de la configuration et de la gestion des utilisateurs, cours et ressources pédagogiques.</p>',1,1,0,1,1,0,0,1790957699,0,NULL,'','','','',''),
+(2,'manual',1,0,0,0,1,'pactdigital','$6$rounds=10000$wQqtX18m0aoRPpRi$0QA70wpIqm0XXtEAgdGN8Jn1UKoFcW1BxtcSz.tF7vRkCobjIBmpSTpTL3YnxUq/Sqhxa4SKgkYPPZIg1UmD20','','Xavier','BADO','xavier.bado@orange.com',0,'','','PACTDIGITAL','Administration','Ouagadougou, Burkina Faso','Ouagadougou','BF','fr','gregorian','','Africa/Ouagadougou',1790075062,1792863431,1792781859,1792863361,'172.20.0.1','',0,'<p>Administrateur principal de la plateforme PACTDIGITAL, chargé de l’administration, de la configuration et de la gestion des utilisateurs, cours et ressources pédagogiques.</p>',1,1,0,1,1,0,0,1790957699,0,NULL,'','','','',''),
 (3,'manual',1,0,0,0,1,'ivan','$6$rounds=10000$CRzvrLflxT4jI0G6$JF5QOwADNdKj9A72B1LIxZ9uQZTznrbf5U8bYHegyVMuxzXnpeUvcC5POK3kGh5JdwqthpEdapH4vDhfOBI9Q.','','Ivan','Bessin','ivan.bessin@orange.com',0,'','','','','','Ouagadougou','BF','fr','gregorian','','99',1791193630,1792068630,1792066425,1792068110,'172.20.0.1','',0,'',1,1,0,2,1,0,1790091479,1791193697,0,'','','','','',''),
 (4,'manual',1,0,0,0,1,'betsa','$6$rounds=10000$3XrPa70FRPEm6EgF$cRvEpnsOSEGoFdg2VNSeSN6TUyLAeQ/KI/678AHFjr8FOeND6y.8LUu2jyXR9ZZVJ./5L9U8vuCG6mNSfv59l0','','Bethsaleel','BADO','bethsaleel@gmail.com',0,'','','','','','','','fr','gregorian','','99',1790092898,1790094742,0,1790092898,'192.168.65.1','',0,'',1,1,0,2,1,0,1790092330,1790092330,0,'','','','','',''),
 (5,'email',0,0,1,0,1,'oussou@gmail.com.1792482177','$6$rounds=10000$L9QdfuN9RWY3O9WV$NvAvOespXaBoSVSp7DgY7J0Yny9EL/qyXx6u3BS1/Q4/q9CXcihdPng0kEFjQ51Y057DogRtqErhBmHZ2oukP1','','Ousmane','KIEMDE','be6b075f016c40ba7495402cfacb47dd',0,'','','','','','Ouagadougou','BF','fr','gregorian','','99',0,0,0,0,'','pXzTPVCzYC323qJ',0,NULL,1,1,0,2,1,0,1791212658,1792482177,0,NULL,'','','','',NULL),
@@ -78592,10 +80015,10 @@ INSERT INTO `m_user` VALUES
 (7,'manual',1,0,0,0,1,'xwama','$6$rounds=10000$P84vhdq8wQN7xF3x$BZ/M55jwkw2ScjT7YxUNZ8YzrvLVO5OtxgKYqqX9BNjz.qYZsJjPIya9tiIASg5RzY7GRucveMX6YZ9YruYlb/','','Zwama','BADO','xwama_1791214313@pactdigital.local',0,'','','','','','Ouagadougou','BF','fr','gregorian','','99',1791214313,1791215137,0,1791214313,'172.20.0.1','',0,NULL,1,1,0,2,1,0,1791214313,1791214313,0,NULL,NULL,NULL,NULL,NULL,NULL),
 (8,'manual',1,0,0,0,1,'apprenant_test','$6$rounds=10000$1W6Y3xwIlAeS.4Z.$a3DQNzxcsVwrxBUbxecltIXb.pau4GgLxMIJXC8gcj.p7wvA32M1YU56XCyyEZIQNgBN2etgpezEY98jGhixZ.','','Awa','Test','awa.test@pactdigital.local',0,'','','','','','','BF','fr','gregorian','','99',0,0,0,0,'','',0,NULL,1,1,0,2,1,0,1791562467,1791562467,0,NULL,NULL,NULL,NULL,NULL,NULL),
 (9,'email',0,0,0,0,1,'user','$6$rounds=10000$MwABm4vqrLKKdV12$ydBwqNP3udZrkalDtU9JdqeMqpLTpVyaEJXOzomhFOLSVJvTojRUXATiWjZ87D3.7fLjnYip8mezrLjkbGk8o0','','Xavier','BADO','user@gmail.com',0,'','','','','','Ouagadougou','BF','fr','gregorian','','99',0,0,0,0,'','qhwLnf5n36DXKRm',0,NULL,1,1,0,2,1,0,1792065806,1792065806,0,NULL,'','','','',NULL),
-(10,'manual',1,0,0,0,1,'kiz','$6$rounds=10000$tkYII0UPh4sKXXQK$581ZUWPBgGs8evsc3HtTcFHHIw2YBxtPr4UAlGw24t1SFU69LW4aq4/x/6Uvt2w057f1LvJErU5PwoeHo4JCr.','','Kizito','BAGRE','kiz@pactdigital.bf',0,'','','','','','Oubri','BF','fr','gregorian','','99',1792072465,1792074975,0,1792072465,'172.20.0.1','',0,NULL,1,1,0,2,1,0,1792072464,1792072567,0,NULL,'','','','',''),
-(11,'manual',1,0,0,0,1,'apprenant','$6$rounds=10000$6TplkwkpcOBOKW/1$CtiV3VphLzEjArfwxgpaiClKSaISGe3mbrRrD9.Yyt/w3l6QYaY3VS8W/Ucpb.UcfazXb/b4JNOd8Lp7Pz6ri.','','Awa','Ouédraogo','awa.apprenant@pactdigital.bf',0,'+226 70 12 34 56','','','','','Ouagadougou','BF','en','gregorian','','99',1792160932,1792251714,1792160932,1792249192,'172.20.0.1','',0,'',1,1,0,2,1,0,1792160516,1792160988,0,NULL,'','','','',''),
-(12,'manual',1,0,0,0,1,'formateur','$6$rounds=10000$ZST.HpUPZdiFrAcg$ffqYEv7ioqvyFUev7jyDDs7bYBR2usCzqMypeZU/J5lyUUJdcCJUBvlKIws2xzipMN33GgFyyL2WzApYdM3xl1','','Moussa','Traoré','moussa.formateur@pactdigital.bf',0,'+226 76 54 32 10','','','','','Bobo-Dioulasso','BF','en','gregorian','','99',1792161384,1792248939,1792161384,1792247304,'172.20.0.1','',0,'',1,1,0,2,1,0,1792160517,1792161451,0,NULL,'','','','',''),
-(13,'manual',1,0,0,0,1,'gestionnaire','$6$rounds=10000$hxJXbZXCsfq8V3UI$d5ziV4aUJgiAGQJAMwqwonux8chJmdXOFeapHixa0JEhsfy2F6MS7SrQqx4N9SqHIFVj6oLKCcZKC6TUh730.0','','Fatou','Kaboré','fatou.pedagogie@pactdigital.bf',0,'+226 78 90 12 34','','','','','Ouagadougou','BF','en','gregorian','','99',1792162152,1792247770,0,1792162152,'0.0.0.0','',0,'',1,1,0,2,1,0,1792160517,1792162183,0,NULL,'','','','','');
+(10,'manual',1,0,0,0,1,'kiz','$6$rounds=10000$tkYII0UPh4sKXXQK$581ZUWPBgGs8evsc3HtTcFHHIw2YBxtPr4UAlGw24t1SFU69LW4aq4/x/6Uvt2w057f1LvJErU5PwoeHo4JCr.','','Kizito','BAGRE','kiz@pactdigital.bf',0,'+226 76 54 32 10','+226 76 54 32 10','','','','Oubri','BF','fr','gregorian','','99',1792072465,1792744361,1792743768,1792744220,'172.20.0.1','',0,NULL,1,1,0,2,1,0,1792072464,1792072567,0,NULL,'','','','',''),
+(11,'manual',1,0,0,0,1,'apprenant','$6$rounds=10000$6TplkwkpcOBOKW/1$CtiV3VphLzEjArfwxgpaiClKSaISGe3mbrRrD9.Yyt/w3l6QYaY3VS8W/Ucpb.UcfazXb/b4JNOd8Lp7Pz6ri.','','Awa','Ouédraogo','awa.apprenant@pactdigital.bf',0,'+226 70 12 34 56','+226 70 12 34 56','','','','Ouagadougou','BF','fr','gregorian','','99',1792160932,1792864419,1792842862,1792863631,'172.20.0.1','',0,'',1,1,0,2,1,0,1792160516,1792160988,0,NULL,'','','','',''),
+(12,'manual',1,0,0,0,1,'formateur','$6$rounds=10000$ZST.HpUPZdiFrAcg$ffqYEv7ioqvyFUev7jyDDs7bYBR2usCzqMypeZU/J5lyUUJdcCJUBvlKIws2xzipMN33GgFyyL2WzApYdM3xl1','','Moussa','Traoré','moussa.formateur@pactdigital.bf',0,'+226 76 54 32 10','','','','','Bobo-Dioulasso','BF','fr','gregorian','','99',1792161384,1792859922,1792842803,1792851424,'172.20.0.1','',0,'',1,1,0,2,1,0,1792160517,1792161451,0,NULL,'','','','',''),
+(13,'manual',1,0,0,0,1,'gestionnaire','$6$rounds=10000$hxJXbZXCsfq8V3UI$d5ziV4aUJgiAGQJAMwqwonux8chJmdXOFeapHixa0JEhsfy2F6MS7SrQqx4N9SqHIFVj6oLKCcZKC6TUh730.0','','Fatou','Kaboré','fatou.pedagogie@pactdigital.bf',0,'+226 78 90 12 34','','','','','Ouagadougou','BF','fr','gregorian','','99',1792162152,1792863148,1792782482,1792860004,'172.20.0.1','',0,'',1,1,0,2,1,0,1792160517,1792162183,0,NULL,'','','','','');
 /*!40000 ALTER TABLE `m_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -78659,7 +80082,7 @@ CREATE TABLE `m_user_enrolments` (
   KEY `m_userenro_enr_ix` (`enrolid`),
   KEY `m_userenro_use_ix` (`userid`),
   KEY `m_userenro_mod_ix` (`modifierid`)
-) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Users participating in courses (aka enrolled users) - everyb';
+) ENGINE=InnoDB AUTO_INCREMENT=107 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Users participating in courses (aka enrolled users) - everyb';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -78741,7 +80164,15 @@ INSERT INTO `m_user_enrolments` VALUES
 (95,0,148,11,0,0,0,1792160517,1792160517),
 (96,0,238,12,0,0,0,1792160517,1792160517),
 (97,0,229,12,0,0,0,1792160517,1792160517),
-(98,0,148,12,0,0,0,1792160517,1792160517);
+(98,0,148,12,0,0,0,1792160517,1792160517),
+(99,0,67,10,0,0,10,1792744283,1792744283),
+(100,0,139,11,0,0,11,1792848975,1792848975),
+(101,0,238,10,1792854699,0,12,1792854775,1792854775),
+(102,0,238,4,0,0,0,1792862731,1792862731),
+(103,0,238,7,0,0,0,1792862916,1792862916),
+(104,0,238,3,0,0,0,1792862917,1792862917),
+(105,0,241,10,0,0,10,1792864176,1792864176),
+(106,0,100,11,0,0,11,1792864284,1792864284);
 /*!40000 ALTER TABLE `m_user_enrolments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -78787,7 +80218,7 @@ CREATE TABLE `m_user_info_data` (
   `dataformat` tinyint(2) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE KEY `m_userinfodata_usefie_uix` (`userid`,`fieldid`)
-) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Data for the customisable user fields';
+) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Data for the customisable user fields';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -78799,9 +80230,9 @@ LOCK TABLES `m_user_info_data` WRITE;
 INSERT INTO `m_user_info_data` VALUES
 (1,3,1,'Homme',0),
 (2,3,2,'1790812800',0),
-(3,3,3,'Bankui',0),
-(4,3,4,'Balé',0),
-(5,3,5,'Abanga',0),
+(3,3,3,'Centre-Ouest',0),
+(4,3,4,'Boulkiemdé',0),
+(5,3,5,'Koudougou',0),
 (6,2,1,'Homme',0),
 (7,2,2,'944179200',0),
 (8,2,3,'Nando',0),
@@ -78813,8 +80244,8 @@ INSERT INTO `m_user_info_data` VALUES
 (14,3,7,'1',0),
 (15,7,1,'Homme',0),
 (16,7,2,'1065225600',0),
-(17,7,3,'Bankui',0),
-(18,7,4,'Balé',0),
+(17,7,3,'Centre',0),
+(18,7,4,'Kadiogo',0),
 (19,7,5,'Ouagadougou',0),
 (20,7,6,'élève/étudiant',0),
 (21,7,7,'1',0),
@@ -78822,27 +80253,27 @@ INSERT INTO `m_user_info_data` VALUES
 (23,9,9,'',0),
 (24,9,1,'Homme',0),
 (25,9,2,'1444867200',0),
-(26,9,3,'Bankui',0),
+(26,9,3,'Boucle du Mouhoun',0),
 (27,9,4,'Balé',0),
-(28,9,5,'Abanga',0),
-(29,9,6,'élève/étudiant',0),
+(28,9,5,'Boromo',0),
+(29,9,6,'agent public',0),
 (30,9,7,'1',0),
 (31,10,2,'1792022400',0),
 (32,10,1,'Homme',0),
-(33,10,3,'Oubri',0),
-(34,10,6,'autre',0),
-(35,10,8,'Aucun',0),
+(33,10,3,'Hauts-Bassins',0),
+(34,10,6,'entrepreneur',0),
+(35,10,8,'Supérieur',0),
 (36,10,9,'',0),
-(37,10,4,'Gourma',0),
-(38,10,5,'Bama',0),
+(37,10,4,'Houet',0),
+(38,10,5,'Bobo-Dioulasso',0),
 (39,10,7,'1',0),
-(40,11,8,'Aucun',0),
+(40,11,8,'Supérieur',0),
 (41,11,9,'',0),
 (42,11,1,'Femme',0),
 (43,11,2,'1255651200',0),
-(44,11,3,'Goulmou',0),
-(45,11,4,'Bassitenga',0),
-(46,11,5,'Arbollé',0),
+(44,11,3,'Centre',0),
+(45,11,4,'Kadiogo',0),
+(46,11,5,'Ouagadougou',0),
 (47,11,6,'agent public',0),
 (48,11,7,'1',0),
 (49,12,8,'Aucun',0),
@@ -78862,7 +80293,21 @@ INSERT INTO `m_user_info_data` VALUES
 (63,13,4,'Banwa',0),
 (64,13,5,'Aribinda',0),
 (65,13,6,'entrepreneur',0),
-(66,13,7,'1',0);
+(66,13,7,'1',0),
+(67,7,8,'Secondaire',0),
+(68,4,1,'Femme',0),
+(69,4,3,'Hauts-Bassins',0),
+(70,4,4,'Houet',0),
+(71,4,5,'Bobo-Dioulasso',0),
+(72,4,6,'en recherche d’emploi',0),
+(73,4,8,'Secondaire',0),
+(74,3,8,'Supérieur',0),
+(75,8,1,'Femme',0),
+(76,8,3,'Nord',0),
+(77,8,4,'Yatenga',0),
+(78,8,5,'Ouahigouya',0),
+(79,8,6,'entrepreneur',0),
+(80,8,8,'Supérieur',0);
 /*!40000 ALTER TABLE `m_user_info_data` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -78907,7 +80352,7 @@ LOCK TABLES `m_user_info_field` WRITE;
 INSERT INTO `m_user_info_field` VALUES
 (1,'sexe','Sexe','menu','<p>Sexe de l’apprenant pour les besoins du suivi du programme.</p>',1,2,1,1,0,2,0,1,'',0,'Femme\nHomme',NULL,NULL,NULL,NULL),
 (2,'annee_naissance','Année de naissance','datetime','<p>Renseignez votre date de naissance</p>',1,2,2,1,0,2,0,1,'0',0,'1947','2026',NULL,NULL,NULL),
-(3,'region','Région','menu','<p>Sélectionnez votre Région</p>',1,2,3,1,0,2,0,1,'',0,'Bankui\nDjôrô\nGoulmou\nGuiriko\nKadiogo\nKuilsé\nLiptako\nNakambé\nNando\nNazinon\nOubri\nSirba\nSoum\nSourou\nTannounyan\nTapoa\nYaadga',NULL,NULL,NULL,NULL),
+(3,'region','Région','menu','<p>Sélectionnez votre Région</p>',1,2,3,1,0,2,0,1,'',0,'Boucle du Mouhoun\nCascades\nCentre\nCentre-Est\nCentre-Nord\nCentre-Ouest\nCentre-Sud\nEst\nHauts-Bassins\nNord\nPlateau-Central\nSahel\nSud-Ouest\nBankui\nDjôrô\nGoulmou\nGuiriko\nKadiogo\nKuilsé\nLiptako\nNakambé\nNando\nNazinon\nOubri\nSirba\nSoum\nSourou\nTannounyan\nTapoa\nYaadga',NULL,NULL,NULL,NULL),
 (4,'province','Province','menu','<p>Selectionnez votre province</p>',1,2,4,1,0,2,0,1,'',0,'Balé\nBam\nBanwa\nBassitenga\nBazèga\nBougouriba\nBoulgou\nBoulkiemdé\nComoé\nDyamongou \nGanzourgou\nGnagna\nGourma\nHouet\nIoba\nKadiogo\nKaro-Peli \nKénédougou\nKomondjari\nKompienga\nKoosin\nKoulpélogo\nKouritenga\nKourwéogo\nLéraba\nLoroum\nMouhoun\nNahouri\nNamentenga\nNayala\nNoumbiel\nOudalan\nPassoré\nPoni\nSanguié\nSandbondtenga\nSéno\nSissili\nDjelgodji\nSourou\nTapoa\nTuy\nYagha\nYatenga\nZiro\nZondoma\nZoundwéogo',NULL,NULL,NULL,NULL),
 (5,'commune','Commune','menu','<p>Sélectionnez votre commune</p>',1,2,5,1,0,2,0,1,'',0,'Abanga\nAbsouya\nAdjamé\nAribinda\nArbollé\nBabora\nBama\nBana\nBanfora\nBangassou\nBani\nBanzon\nBaraboulé\nBarani\nBarga\nBarthélemy\nBassi\nBatié\nBatia\nBéguédo\nBéguedo\nBékuy\nBéléné\nBéléni\nBembèla\nBena\nBéré\nBéréba\nBérégadougou\nBerson\nBessao\nBiba\nBiba\nBieha\nBindé\nBissiga\nBitiou\nBitou\nBoba\nBobo-Dioulasso\nBodadié\nBoala\nBobo-Dioulasso\nBogandé\nBogoya\nBokin\nBoli\nBomborokuy\nBoni\nBondokuy\nBonhouokuy\nBonnesso\nBonou\nBonyolo\nBora\nBori\nBoricoba\nBoromo\nBossobé\nBoti\nBouda\nBoudry\nBougnounou\nBouli\nBoura\nBourdolle\nBouroum\nBouroum-Bouroum\nBoussé\nBousserou\nBoussou\nBoussouma (Boulgou)\nBoussouma (Sanmatenga)\nBoussouma\nBoutourou\nBouza\nBroma\nDablo\nDafin\nDagara\nDalo\nDaman\nDandé\nDano\nDansi\nDapélogo\nDapo\nDargo\nDédougou\nDi\nDiabo\nDiapaga\nDiapangou\nDiébougou\nDiéna\nDiffa\nDiguel\nDigo\nDiky\nDima\nDimbal\nDimbokro\nDina\nDindé\nDinderesso\nDio\nDioman\nDioni\nDionkélé\nDjibo\nDjigoué\nDjigouè\nDoble\nDo\nDoba\nDédougou\nDognona\nDogo\nDolo\nDombia\nDomo\nDona\nDonsin\nDori\nDoulougou\nDoumbala\nDouna\nDouroula\nDourou\nDoussou\nFada N\'Gourma\nFara\nFaramana\nFatakou\nGassan\nGaya\nGayéri\nGbomblora\nGisan\nGogo\nGogoba\nGomblora\nGomboussougou\nGomy\nGonsé\nGorgadji\nGorom-Gorom\nGourcy\nGourcy\nGourssi\nGourya\nGuan\nGuena\nGuéguéré\nGuiba\nGuille\nGuena\nGuinglo\nHoundé\nIpelcé\nIoba\nIsang\nKababara\nKablé\nKadiogo\nKado\nKadjogo\nKadji\nKain\nKalambaogo\nKalsaka\nKama\nKampti\nKangala\nKanougou\nKantzari\nKarangasso-Vigué\nKarangasso-Sambabla\nKassoum\nKaya\nKayan\nKembara\nKéné\nKikideni\nKindi\nKingui\nKiembara\nKimbara\nKinzo\nKirsi\nKogho\nKoli\nKoloko\nKombissiri\nKombori\nKombri\nKoma\nKomou\nKondé\nKongoussi\nKoni\nKopa\nKoraba\nKordié\nKorsimoro\nKosan\nKossa\nKossodo\nKossou\nKote\nKoudougou\nKouka\nKoulani\nKoumbia\nKoundougou\nKoundri\nKourinion\nKourouma\nKourpelgo\nKoussi\nKoutougou\nKpuéré\nKpuere\nKré\nKry\nKukida\nKumbia\nKunda\nKussay\nKwan\nKy\nKyé\nKyebara\nLa-Todin\nLalgaye\nLama\nLanfièra\nLankoué\nLaye\nLébani\nLéba\nLègè\nLéna\nLéo\nLéri\nLesser\nLiba\nLobi\nLogobou\nLokosso\nLoumbila\nMalo\nMana\nManga\nMani\nMani\nMansila\nMaro\nMasa\nMatiacoali\nMidebdo\nMiga\nMoby\nMogtédo\nMoli\nMomy\nMora\nMorson\nMoudjo\nMouhoun\nMoulma\nMoundasso\nNabandji\nNahr\nNain\nNakor\nNandiala\nNangré\nNasséré\nNiankorodougou\nNiangoloko\nNiantono\nNiba\nNianko\nNiby\nNiko\nNipoundou\nNiu\nNo\nNobéré\nNogogo\nNommo\nNona\nNonga\nNouna\nNyani\nOrodara\nOuabagou\nOuangolodougou\nOuagadougou\nOuahigouya\nOuarkoye\nOuargaye\nOubri\nOuragaye\nOuri\nOurouba\nPabré\nPama\nPamu\nPana\nPanga\nPassakongo\nPella\nPéni\nPensa\nPiba\nPô\nPobé-Mengao\nPoni\nPoura\nPouni\nRamongho\nRambo\nRayagnewendé\nRéo\nRikou\nRollo\nSaba\nSabcé\nSaffi\nSaaba\nSamba\nSamorogouan\nSampa\nSanaba\nSanda\nSangha\nSankoe\nSaponé\nSaponé\nSapouy\nSassamba\nSaye\nSébba\nSéguénéga\nSéguénéga\nSénou\nSian\nSideradougou\nSilly\nSina\nSiniena\nSo\nSoaw\nSola\nSolan\nSolenzo\nSombó\nSongna\nSonon\nSoroboly\nSoro\nSoubaka\nSoudougui\nSoum\nSourgou\nSourgou\nSow\nSoaba\nTanga\nTanghin-Dassouri\nTankougounadié\nTanwalbougou\nTè\nTénado\nTenkodogo\nTibga\nTikaré\nTiolé\nTiébélé\nTitao\nTô\nToma\nTougan\nTougouri\nToussiana\nTu\nTuse\nVilly\nYaba\nYagasso\nYako\nYamba\nYargatenga\nYatenga\nYé\nYelwani\nZaba\nZambo\nZamo\nZao\nZiga\nZimbare\nZiniaré\nZitenga\nZogoré\nZonsé\nZorgho',NULL,NULL,NULL,NULL),
 (6,'statut','Statut','menu','',1,2,6,1,0,2,0,1,'',0,'élève/étudiant\n\nagent public\n\nentrepreneur\n\nagriculteur/éleveur\n\nen recherche d’emploi\n\nautre',NULL,NULL,NULL,NULL),
@@ -78933,7 +80378,7 @@ CREATE TABLE `m_user_lastaccess` (
   UNIQUE KEY `m_userlast_usecou_uix` (`userid`,`courseid`),
   KEY `m_userlast_use_ix` (`userid`),
   KEY `m_userlast_cou_ix` (`courseid`)
-) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='To keep track of course page access times, used in online pa';
+) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='To keep track of course page access times, used in online pa';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -78958,8 +80403,8 @@ INSERT INTO `m_user_lastaccess` VALUES
 (36,2,39,1791284650),
 (37,2,42,1791284799),
 (38,2,45,1791284875),
-(39,2,48,1791285014),
-(40,2,78,1791285149),
+(39,2,48,1792779607),
+(40,2,78,1792779262),
 (41,2,60,1791992459),
 (42,2,63,1791287498),
 (43,2,66,1791287581),
@@ -78999,13 +80444,17 @@ INSERT INTO `m_user_lastaccess` VALUES
 (77,3,37,1792068657),
 (78,3,48,1792068505),
 (79,10,25,1792073210),
-(80,2,83,1792152262),
+(80,2,83,1792779328),
 (81,2,82,1792152330),
 (82,2,81,1792154924),
 (83,11,51,1792161241),
 (84,12,51,1792248038),
-(85,12,81,1792248977),
-(86,11,78,1792249309);
+(85,12,81,1792859922),
+(86,11,78,1792848822),
+(87,10,24,1792744361),
+(88,11,81,1792846486),
+(89,11,48,1792849343),
+(90,12,78,1792853635);
 /*!40000 ALTER TABLE `m_user_lastaccess` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -79077,7 +80526,7 @@ CREATE TABLE `m_user_preferences` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `m_userpref_usenam_uix` (`userid`,`name`),
   KEY `m_userpref_nam_ix` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Allows modules to store arbitrary user preferences';
+) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPRESSED COMMENT='Allows modules to store arbitrary user preferences';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -79105,10 +80554,10 @@ INSERT INTO `m_user_preferences` VALUES
 (16,2,'qbank_managecategories_includesubcategories_filter_default','0'),
 (18,3,'auth_forcepasswordchange','0'),
 (19,3,'email_bounce_count','1'),
-(20,3,'email_send_count','9'),
+(20,3,'email_send_count','10'),
 (21,4,'auth_forcepasswordchange','0'),
 (22,4,'email_bounce_count','1'),
-(23,4,'email_send_count','2'),
+(23,4,'email_send_count','3'),
 (24,4,'core_message_migrate_data','1'),
 (25,4,'core_user_welcome','1790092899'),
 (26,4,'login_failed_count_since_success','0'),
@@ -79154,7 +80603,14 @@ INSERT INTO `m_user_preferences` VALUES
 (69,12,'core_user_welcome','1792161460'),
 (70,13,'core_message_migrate_data','1'),
 (71,13,'login_failed_count_since_success','0'),
-(72,11,'pact_direct_exam_114','1');
+(72,11,'pact_direct_exam_114','2'),
+(73,10,'pact_direct_exam_6','1'),
+(74,2,'coursesectionspreferences_48','{\"indexcollapsed\":[229]}'),
+(75,13,'core_user_welcome','1792781194'),
+(76,11,'pact_direct_exam_54','1'),
+(78,12,'ifirst',''),
+(79,12,'ilast',''),
+(80,12,'tool_usertours_tour_completion_time_1','1792853530');
 /*!40000 ALTER TABLE `m_user_preferences` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -79887,4 +81343,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*M!100616 SET NOTE_VERBOSITY=@OLD_NOTE_VERBOSITY */;
 
--- Dump completed on 2026-10-20 11:44:17
+-- Dump completed on 2026-10-24 18:32:23

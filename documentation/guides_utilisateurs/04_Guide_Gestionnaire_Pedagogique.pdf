@@ -1,0 +1,176 @@
+%PDF-1.4
+%âãÏÓ
+1 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+2 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Oblique /Encoding /WinAnsiEncoding >>
+endobj
+4 0 obj
+<< /Length 2625 >>
+stream
+0.039 0.329 0.588 rg 0.00 745.00 595.28 96.89 re f
+0.929 0.110 0.141 rg 0.00 740.00 198.00 5.00 re f
+0.976 0.812 0.047 rg 198.00 740.00 198.00 5.00 re f
+0.055 0.616 0.286 rg 396.00 740.00 200.00 5.00 re f
+BT /F2 15 Tf 1.000 1.000 1.000 rg 45.00 795.00 Td (BURKINA FASO) Tj ET
+BT /F3 10 Tf 0.976 0.812 0.047 rg 45.00 780.00 Td (La Patrie ou la Mort, nous Vaincrons) Tj ET
+BT /F1 7.5 Tf 0.900 0.900 0.900 rg 45.00 762.00 Td (MINISTERE DE LA TRANSITION DIGITALE, DES POSTES ET DES COMMUNICATIONS ELECTRONIQUES) Tj ET
+BT /F1 7.5 Tf 0.850 0.850 0.850 rg 45.00 752.00 Td (Direction Generale de la Transition Digitale \(DGTD\)) Tj ET
+0.055 0.616 0.286 RG 0.925 0.968 0.941 rg 45.00 690.00 180.00 20.00 re B
+BT /F2 8.5 Tf 0.055 0.616 0.286 rg 52.00 696.00 Td (GUIDE OFFICIEL DE L'UTILISATEUR) Tj ET
+BT /F2 20 Tf 0.039 0.329 0.588 rg 45.00 640.00 Td (Guide du Gestionnaire Pédagogique  -  Conception & Qualité des Parcours) Tj ET
+BT /F2 13 Tf 0.055 0.616 0.286 rg 45.00 615.00 Td (Plateforme Nationale PACTDIGITAL-BF) Tj ET
+BT /F3 11 Tf 0.400 0.380 0.360 rg 45.00 598.00 Td (Programme National de Litteratie Numerique du Burkina Faso) Tj ET
+0.880 0.860 0.840 RG 0.968 0.960 0.949 rg 45.00 460.00 505.00 115.00 re B
+0.039 0.329 0.588 rg 45.00 460.00 6.00 115.00 re f
+BT /F2 10.5 Tf 0.039 0.329 0.588 rg 65.00 550.00 Td (CADRE D'APPLICATION & PROFIL CONCERNE) Tj ET
+BT /F2 9.5 Tf 0.130 0.110 0.100 rg 65.00 532.00 Td (Profil cible : Gestionnaire pédagogique, Concepteur de formation, Responsable qualité MTDPCE) Tj ET
+BT /F1 9 Tf 0.300 0.300 0.300 rg 65.00 516.00 Td (Reference du document : 04_Guide_Gestionnaire_Pedagogique) Tj ET
+BT /F1 9 Tf 0.300 0.300 0.300 rg 65.00 500.00 Td (Conformite technique : Base sur l'analyse de l'implementation reelle \(Moodle 4.3+\)) Tj ET
+BT /F1 9 Tf 0.300 0.300 0.300 rg 65.00 484.00 Td (Charte graphique : MTDPCE v1.0 \(mai 2026\) / v2.0 \(armoiries, filet national, polices souveraines\)) Tj ET
+BT /F1 9 Tf 0.300 0.300 0.300 rg 65.00 468.00 Td (Protection des donnees : Conforme Loi N 001-2021/AN relative a la protection des donnees \(CIL\)) Tj ET
+0.880 0.860 0.840 RG 45.00 120.00 505.00 1.00 re S
+BT /F2 8.5 Tf 0.039 0.329 0.588 rg 45.00 105.00 Td (SECRETARIAT GENERAL - DIRECTION GENERALE DE LA TRANSITION DIGITALE) Tj ET
+BT /F1 8.5 Tf 0.400 0.380 0.360 rg 45.00 93.00 Td (Avenue de l'Independance, Ouagadougou, Burkina Faso) Tj ET
+BT /F1 8.5 Tf 0.400 0.380 0.360 rg 45.00 81.00 Td (Assistance Citoyenne Gratuite : Numero Vert 34 34 | support@pactdigital.bf | www.mdenp.gov.bf) Tj ET
+BT /F2 8.5 Tf 0.055 0.616 0.286 rg 45.00 69.00 Td (Version 1.0 \(Octobre 2026\) - Diffusion officielle) Tj ET
+endstream
+endobj
+5 0 obj
+<< /Type /Page /Parent 4 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 1 0 R /F2 2 0 R /F3 3 0 R >> >> /Contents 4 0 R >>
+endobj
+6 0 obj
+<< /Length 8447 >>
+stream
+0.055 0.616 0.286 rg 45.00 758.00 505.00 1.50 re f
+BT /F2 12.5 Tf 0.039 0.329 0.588 rg 45.00 763.00 Td (1. Role du Gestionnaire Pedagogique) Tj ET
+BT /F1 9 Tf 0.130 0.110 0.100 rg 45.00 744.00 Td (Le Gestionnaire Pedagogique PACTDIGITAL-BF est le garant de la qualite, de la coherence et de) Tj ET
+BT /F1 9 Tf 0.130 0.110 0.100 rg 45.00 732.00 Td (la souverainete des contenus numeriques deployes pour la Nation burkinabe. Il organise le) Tj ET
+BT /F1 9 Tf 0.130 0.110 0.100 rg 45.00 720.00 Td (catalogue des 20 domaines et controle la conformite des examens finaux.) Tj ET
+0.055 0.616 0.286 rg 45.00 693.00 505.00 1.50 re f
+BT /F2 12.5 Tf 0.039 0.329 0.588 rg 45.00 698.00 Td (2. Architecture type d'un Cours PACTDIGITAL-BF) Tj ET
+BT /F1 9 Tf 0.130 0.110 0.100 rg 45.00 679.00 Td (Chaque cours doit reproduire strictement la structure en 7 sections du cours de reference :) Tj ET
+0.039 0.329 0.588 RG 0.039 0.329 0.588 rg 45.00 650.00 75.00 18.00 re B
+BT /F2 8 Tf 1.000 1.000 1.000 rg 49.00 654.00 Td (Section) Tj ET
+0.039 0.329 0.588 RG 0.039 0.329 0.588 rg 120.00 650.00 120.00 18.00 re B
+BT /F2 8 Tf 1.000 1.000 1.000 rg 124.00 654.00 Td (Intitule) Tj ET
+0.039 0.329 0.588 RG 0.039 0.329 0.588 rg 240.00 650.00 220.00 18.00 re B
+BT /F2 8 Tf 1.000 1.000 1.000 rg 244.00 654.00 Td (Contenu obligatoire) Tj ET
+0.039 0.329 0.588 RG 0.039 0.329 0.588 rg 460.00 650.00 90.00 18.00 re B
+BT /F2 8 Tf 1.000 1.000 1.000 rg 464.00 654.00 Td (Visibilite) Tj ET
+0.880 0.860 0.840 RG 1.000 1.000 1.000 rg 45.00 634.00 75.00 15.00 re B
+BT /F1 7.5 Tf 0.150 0.150 0.150 rg 49.00 637.00 Td (Section 0) Tj ET
+0.880 0.860 0.840 RG 1.000 1.000 1.000 rg 120.00 634.00 120.00 15.00 re B
+BT /F1 7.5 Tf 0.150 0.150 0.150 rg 124.00 637.00 Td (Accueil & Cadrage) Tj ET
+0.880 0.860 0.840 RG 1.000 1.000 1.000 rg 240.00 634.00 220.00 15.00 re B
+BT /F1 7.5 Tf 0.150 0.150 0.150 rg 244.00 637.00 Td (Objectifs Bloom \(OS1-5\), forum de bienvenu) Tj ET
+0.880 0.860 0.840 RG 1.000 1.000 1.000 rg 460.00 634.00 90.00 15.00 re B
+BT /F1 7.5 Tf 0.150 0.150 0.150 rg 464.00 637.00 Td (Visible tous) Tj ET
+0.880 0.860 0.840 RG 0.988 0.984 0.976 rg 45.00 619.00 75.00 15.00 re B
+BT /F1 7.5 Tf 0.150 0.150 0.150 rg 49.00 622.00 Td (Section 1) Tj ET
+0.880 0.860 0.840 RG 0.988 0.984 0.976 rg 120.00 619.00 120.00 15.00 re B
+BT /F1 7.5 Tf 0.150 0.150 0.150 rg 124.00 622.00 Td (Pre-test) Tj ET
+0.880 0.860 0.840 RG 0.988 0.984 0.976 rg 240.00 619.00 220.00 15.00 re B
+BT /F1 7.5 Tf 0.150 0.150 0.150 rg 244.00 622.00 Td (Quiz diagnostique de positionnement) Tj ET
+0.880 0.860 0.840 RG 0.988 0.984 0.976 rg 460.00 619.00 90.00 15.00 re B
+BT /F1 7.5 Tf 0.150 0.150 0.150 rg 464.00 622.00 Td (Visible tous) Tj ET
+0.880 0.860 0.840 RG 1.000 1.000 1.000 rg 45.00 604.00 75.00 15.00 re B
+BT /F1 7.5 Tf 0.150 0.150 0.150 rg 49.00 607.00 Td (Section 2) Tj ET
+0.880 0.860 0.840 RG 1.000 1.000 1.000 rg 120.00 604.00 120.00 15.00 re B
+BT /F1 7.5 Tf 0.150 0.150 0.150 rg 124.00 607.00 Td (Sequences) Tj ET
+0.880 0.860 0.840 RG 1.000 1.000 1.000 rg 240.00 604.00 220.00 15.00 re B
+BT /F1 7.5 Tf 0.150 0.150 0.150 rg 244.00 607.00 Td (10 pages interactives, Fiches memo, quiz f) Tj ET
+0.880 0.860 0.840 RG 1.000 1.000 1.000 rg 460.00 604.00 90.00 15.00 re B
+BT /F1 7.5 Tf 0.150 0.150 0.150 rg 464.00 607.00 Td (Visible tous) Tj ET
+0.880 0.860 0.840 RG 0.988 0.984 0.976 rg 45.00 589.00 75.00 15.00 re B
+BT /F1 7.5 Tf 0.150 0.150 0.150 rg 49.00 592.00 Td (Section 3) Tj ET
+0.880 0.860 0.840 RG 0.988 0.984 0.976 rg 120.00 589.00 120.00 15.00 re B
+BT /F1 7.5 Tf 0.150 0.150 0.150 rg 124.00 592.00 Td (Examen final) Tj ET
+0.880 0.860 0.840 RG 0.988 0.984 0.976 rg 240.00 589.00 220.00 15.00 re B
+BT /F1 7.5 Tf 0.150 0.150 0.150 rg 244.00 592.00 Td (21 QCM, 30 min, 2 tentatives max, seuil 70) Tj ET
+0.880 0.860 0.840 RG 0.988 0.984 0.976 rg 460.00 589.00 90.00 15.00 re B
+BT /F1 7.5 Tf 0.150 0.150 0.150 rg 464.00 592.00 Td (Visible tous) Tj ET
+0.880 0.860 0.840 RG 1.000 1.000 1.000 rg 45.00 574.00 75.00 15.00 re B
+BT /F1 7.5 Tf 0.150 0.150 0.150 rg 49.00 577.00 Td (Section 4) Tj ET
+0.880 0.860 0.840 RG 1.000 1.000 1.000 rg 120.00 574.00 120.00 15.00 re B
+BT /F1 7.5 Tf 0.150 0.150 0.150 rg 124.00 577.00 Td (Enquete) Tj ET
+0.880 0.860 0.840 RG 1.000 1.000 1.000 rg 240.00 574.00 220.00 15.00 re B
+BT /F1 7.5 Tf 0.150 0.150 0.150 rg 244.00 577.00 Td (Module Feedback sur la qualite de session) Tj ET
+0.880 0.860 0.840 RG 1.000 1.000 1.000 rg 460.00 574.00 90.00 15.00 re B
+BT /F1 7.5 Tf 0.150 0.150 0.150 rg 464.00 577.00 Td (Conditionnee) Tj ET
+0.880 0.860 0.840 RG 0.988 0.984 0.976 rg 45.00 559.00 75.00 15.00 re B
+BT /F1 7.5 Tf 0.150 0.150 0.150 rg 49.00 562.00 Td (Section 5) Tj ET
+0.880 0.860 0.840 RG 0.988 0.984 0.976 rg 120.00 559.00 120.00 15.00 re B
+BT /F1 7.5 Tf 0.150 0.150 0.150 rg 124.00 562.00 Td (Attestation) Tj ET
+0.880 0.860 0.840 RG 0.988 0.984 0.976 rg 240.00 559.00 220.00 15.00 re B
+BT /F1 7.5 Tf 0.150 0.150 0.150 rg 244.00 562.00 Td (Certificat Customcert avec QR Code securis) Tj ET
+0.880 0.860 0.840 RG 0.988 0.984 0.976 rg 460.00 559.00 90.00 15.00 re B
+BT /F1 7.5 Tf 0.150 0.150 0.150 rg 464.00 562.00 Td (Conditionnee) Tj ET
+0.880 0.860 0.840 RG 1.000 1.000 1.000 rg 45.00 544.00 75.00 15.00 re B
+BT /F1 7.5 Tf 0.150 0.150 0.150 rg 49.00 547.00 Td (Section 6) Tj ET
+0.880 0.860 0.840 RG 1.000 1.000 1.000 rg 120.00 544.00 120.00 15.00 re B
+BT /F1 7.5 Tf 0.150 0.150 0.150 rg 124.00 547.00 Td (Espace Formateur) Tj ET
+0.880 0.860 0.840 RG 1.000 1.000 1.000 rg 240.00 544.00 220.00 15.00 re B
+BT /F1 7.5 Tf 0.150 0.150 0.150 rg 244.00 547.00 Td (Guide formateur, corriges et baremes, emar) Tj ET
+0.880 0.860 0.840 RG 1.000 1.000 1.000 rg 460.00 544.00 90.00 15.00 re B
+BT /F1 7.5 Tf 0.150 0.150 0.150 rg 464.00 547.00 Td (Cachee aux eleves) Tj ET
+0.055 0.616 0.286 rg 45.00 523.00 505.00 1.50 re f
+BT /F2 12.5 Tf 0.039 0.329 0.588 rg 45.00 528.00 Td (3. Regles de calibrage de l'Examen Final) Tj ET
+BT /F1 8.5 Tf 0.150 0.150 0.150 rg 45.00 509.00 Td (* Nombre de questions : 21 questions \(3 par competence cle du domaine\).) Tj ET
+BT /F1 8.5 Tf 0.150 0.150 0.150 rg 45.00 496.00 Td (* Duree limitee : 30 minutes chrono avec compte a rebours interactif.) Tj ET
+BT /F1 8.5 Tf 0.150 0.150 0.150 rg 45.00 483.00 Td (* Tentatives autorisees : 2 tentatives maximum \(note la plus haute retenue\).) Tj ET
+BT /F1 8.5 Tf 0.150 0.150 0.150 rg 45.00 470.00 Td (* Seuil officiel de reussite : 70% obligatoire \(soit 14.70 / 21 points dans le carnet de) Tj ET
+BT /F1 8.5 Tf 0.150 0.150 0.150 rg 57.00 459.00 Td (notes\).) Tj ET
+BT /F1 8.5 Tf 0.150 0.150 0.150 rg 45.00 446.00 Td (* Double voie : Le quiz doit porter l'intitule 'Examen final' pour permettre l'aiguillage) Tj ET
+BT /F1 8.5 Tf 0.150 0.150 0.150 rg 57.00 435.00 Td (automatique en Voie 2.) Tj ET
+0.880 0.860 0.840 RG 0.996 0.976 0.905 rg 45.00 388.00 505.00 42.00 re B
+0.690 0.470 0.000 rg 45.00 388.00 4.00 42.00 re f
+BT /F2 8.5 Tf 0.690 0.470 0.000 rg 57.00 420.00 Td ([ATTENTION] Assurance Qualite MTDPCE) Tj ET
+BT /F1 8 Tf 0.200 0.200 0.200 rg 57.00 408.00 Td (Aucun cours ne peut etre publie sans avoir ete prealablement teste avec le compte) Tj ET
+BT /F1 8 Tf 0.200 0.200 0.200 rg 57.00 397.00 Td ('apprenant' et valide par la DGTD.) Tj ET
+0.055 0.616 0.286 rg 45.00 364.00 505.00 1.50 re f
+BT /F2 12.5 Tf 0.039 0.329 0.588 rg 45.00 369.00 Td (4. Pilotage de la qualite via le Dashboard SIG) Tj ET
+BT /F1 9 Tf 0.130 0.110 0.100 rg 45.00 350.00 Td (Le gestionnaire accede a l'instrumentation nationale \(/local/pactdigital/dashboard.php\) via) Tj ET
+BT /F1 9 Tf 0.130 0.110 0.100 rg 45.00 338.00 Td (Administration du site pour surveiller le taux de reussite, l'impact pre/post-test et la) Tj ET
+BT /F1 9 Tf 0.130 0.110 0.100 rg 45.00 326.00 Td (parite hommes/femmes.) Tj ET
+0.880 0.860 0.840 RG 45.00 808.00 505.00 1.00 re S
+0.929 0.110 0.141 rg 45.00 807.00 168.00 2.00 re f
+0.976 0.812 0.047 rg 213.00 807.00 168.00 2.00 re f
+0.055 0.616 0.286 rg 381.00 807.00 169.00 2.00 re f
+BT /F2 7.5 Tf 0.039 0.329 0.588 rg 45.00 814.00 Td (BURKINA FASO - MTDPCE) Tj ET
+BT /F1 7.5 Tf 0.400 0.380 0.360 rg 220.00 814.00 Td (PACTDIGITAL-BF | 04_Guide_Gestionnaire_Pedagogique - Guide du Gestionnaire Pédagogique  -  Conception & Qualité des Parcours) Tj ET
+0.880 0.860 0.840 RG 45.00 42.00 505.00 1.00 re S
+BT /F1 7.5 Tf 0.400 0.380 0.360 rg 45.00 30.00 Td (MTDPCE, le numerique au service d'un Burkina souverain et connecte. | Assistance : 34 34) Tj ET
+BT /F2 7.5 Tf 0.039 0.329 0.588 rg 495.00 30.00 Td (Page 2 / 2) Tj ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 4 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 1 0 R /F2 2 0 R /F3 3 0 R >> >> /Contents 6 0 R >>
+endobj
+8 0 obj
+<< /Type /Pages /Kids [5 0 R 7 0 R] /Count 2 >>
+endobj
+9 0 obj
+<< /Type /Catalog /Pages 8 0 R >>
+endobj
+xref
+0 10
+0000000000 65535 f 
+0000000015 00000 n 
+0000000112 00000 n 
+0000000214 00000 n 
+0000000319 00000 n 
+0000002996 00000 n 
+0000003148 00000 n 
+0000011647 00000 n 
+0000011799 00000 n 
+0000011862 00000 n 
+trailer
+<< /Size 10 /Root 9 0 R >>
+startxref
+11911
+%%EOF

@@ -124,9 +124,15 @@ $modinfo  = get_fast_modinfo($course);
 $sections = $modinfo->get_section_info_all();
 $course_sections = [];
 $section_idx = 0;
+$is_trainer = has_capability('moodle/course:update', $context) || has_capability('moodle/grade:viewall', $context);
 
 foreach ($sections as $sec) {
     if ($sec->section === 0) continue; // Ignorer section 0 (générales)
+    
+    // Masquer les sections réservées aux formateurs ou non visibles pour l'apprenant
+    if (!$sec->uservisible || (!$is_trainer && stripos($sec->name, 'formateur') !== false)) {
+        continue;
+    }
     
     $section_name = !empty($sec->name) ? $sec->name : ('Séquence ' . $sec->section);
     $has_pdf_memo = true; // Toujours disponible via le générateur de fiches mémo
@@ -203,34 +209,36 @@ echo $OUTPUT->header();
 ?>
 
 <style>
-/* ═══ COURSE WELCOME PAGE — PACTDIGITAL-BF ════════════════════════════════ */
+/* ═══ COURSE WELCOME PAGE — CONFORME CHARTE GRAPHIQUE V2.0 (MTDPCE) ══════════ */
 :root {
-    --green: #129b40;
-    --green-dark: #0d7a32;
-    --yellow: #fad615;
-    --red: #D32F2F;
-    --blue: #1565C0;
-    --grey: #64748b;
-    --border: #e2e8f0;
-    --shadow: 0 4px 20px rgba(18,155,64,0.10);
+    --green: var(--vert-500, #00843b);
+    --green-dark: var(--vert-700, #045527);
+    --yellow: var(--or-300, #ffed00);
+    --red: var(--rouge-500, #e30613);
+    --blue: var(--bleu-500, #2a6d9b);
+    --grey: var(--texte-attenue, #635c55);
+    --border: var(--bordure, #e2ddd6);
+    --shadow: var(--ombre-sm);
 }
 
 .course-welcome-page {
     max-width: 1000px;
     margin: 0 auto;
     padding: 0 1.5rem 4rem;
-    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-family: var(--police-texte, "Inter", system-ui, sans-serif);
+    color: var(--texte, #211d1a);
 }
 
 /* ── Hero du cours ──────────────────────────────────────────────────────── */
 .course-hero {
-    background: linear-gradient(135deg, #0d7a32 0%, #129b40 60%, #1db954 100%);
-    border-radius: 20px;
+    background: linear-gradient(135deg, var(--vert-900, #032e16) 0%, var(--vert-700, #045527) 60%, var(--vert-500, #00843b) 100%);
+    border-radius: var(--rayon-lg, 12px);
     padding: 2.5rem;
     margin-bottom: 2rem;
     color: white;
     position: relative;
     overflow: hidden;
+    box-shadow: var(--ombre-md);
 }
 .course-hero::before {
     content: '';
@@ -241,13 +249,15 @@ echo $OUTPUT->header();
     border-radius: 50%;
 }
 .course-hero h1 {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     font-size: 1.7rem;
     font-weight: 800;
     margin: 0 0 0.5rem;
     position: relative; z-index: 1;
+    color: #ffffff;
 }
 .course-hero p {
-    opacity: 0.9;
+    opacity: 0.92;
     margin: 0;
     position: relative; z-index: 1;
 }
@@ -265,13 +275,13 @@ echo $OUTPUT->header();
 }
 .progress-hero-fill {
     height: 100%;
-    background: #fad615;
+    background: var(--or-300, #ffed00);
     border-radius: 5px;
     transition: width 0.8s ease;
 }
 .progress-hero-label {
     font-size: 0.85rem;
-    opacity: 0.9;
+    opacity: 0.92;
 }
 
 /* ── Deux boutons principaux ────────────────────────────────────────────── */
@@ -285,7 +295,7 @@ echo $OUTPUT->header();
 
 .action-card {
     background: white;
-    border-radius: 18px;
+    border-radius: var(--rayon-lg, 12px);
     border: 2px solid var(--border);
     padding: 2rem;
     text-align: center;
@@ -301,31 +311,32 @@ echo $OUTPUT->header();
 }
 .action-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 35px rgba(18,155,64,0.18);
+    box-shadow: var(--ombre-lg);
 }
 .action-card.primary {
     border-color: var(--green);
-    background: linear-gradient(135deg, #f0faf5, #e8f7ee);
+    background: linear-gradient(135deg, #ffffff 0%, var(--vert-50, #ecf7f0) 100%);
 }
 .action-card.primary:hover { border-color: var(--green-dark); }
-.action-card.secondary { border-color: #dbeafe; background: linear-gradient(135deg, #f0f7ff, #e8f2ff); }
-.action-card.secondary:hover { border-color: var(--blue); }
-.action-card.blocked { opacity: 0.55; cursor: not-allowed; pointer-events: none; border-color: #fca5a5; background: #fef2f2; }
+.action-card.secondary { border-color: var(--bleu-500, #2a6d9b); background: linear-gradient(135deg, #ffffff 0%, var(--bleu-50, #eef4f9) 100%); }
+.action-card.secondary:hover { border-color: var(--bleu-700, #173f5f); }
+.action-card.blocked { opacity: 0.55; cursor: not-allowed; pointer-events: none; border-color: var(--rouge-500, #e30613); background: var(--rouge-50, #fdecef); }
 
 .action-icon { font-size: 3rem; }
-.action-title { font-size: 1.15rem; font-weight: 800; color: #1a1a1a; }
+.action-title { font-family: var(--police-titre, "Archivo", system-ui, sans-serif); font-size: 1.15rem; font-weight: 800; color: var(--texte, #211d1a); }
 .action-desc { font-size: 0.84rem; color: var(--grey); line-height: 1.4; }
 .action-badge {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     padding: 0.35rem 0.9rem;
     border-radius: 20px;
     font-size: 0.75rem;
     font-weight: 700;
 }
-.badge-green { background: #dcfce7; color: #15803d; }
-.badge-blue  { background: #dbeafe; color: #1d4ed8; }
-.badge-red   { background: #fee2e2; color: #b91c1c; }
-.badge-yellow{ background: #fef3c7; color: #b45309; }
-.badge-grey  { background: #f1f5f9; color: #64748b; }
+.badge-green { background: var(--vert-50, #ecf7f0); color: var(--vert-700, #045527); }
+.badge-blue  { background: var(--bleu-50, #eef4f9); color: var(--bleu-700, #173f5f); }
+.badge-red   { background: var(--rouge-50, #fdecef); color: var(--rouge-700, #a2040e); }
+.badge-yellow{ background: var(--ocre-50, #fdf4e3); color: var(--ocre-700, #7d5500); }
+.badge-grey  { background: var(--surface-enfoncee, #f7f5f2); color: var(--grey); }
 
 /* ── Modal Règles de l'examen ───────────────────────────────────────────── */
 .exam-modal-backdrop {
@@ -337,10 +348,10 @@ echo $OUTPUT->header();
 .exam-modal-backdrop.open { display: flex; }
 .exam-modal {
     background: white;
-    border-radius: 20px;
+    border-radius: var(--rayon-lg, 12px);
     max-width: 560px;
     width: 100%;
-    box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+    box-shadow: var(--ombre-lg);
     overflow: hidden;
     animation: slideIn 0.25s ease-out;
 }
@@ -349,7 +360,7 @@ echo $OUTPUT->header();
     to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 .exam-modal-header {
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    background: linear-gradient(135deg, var(--vert-900, #032e16) 0%, var(--vert-700, #045527) 100%);
     color: white;
     padding: 1.5rem 1.8rem;
     display: flex;
@@ -357,6 +368,7 @@ echo $OUTPUT->header();
     align-items: center;
 }
 .exam-modal-header h2 {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     font-size: 1.15rem;
     font-weight: 800;
     margin: 0;
@@ -388,43 +400,44 @@ echo $OUTPUT->header();
     margin-bottom: 1.5rem;
 }
 .rule-box {
-    background: #f8fafc;
+    background: var(--surface-basse, #fcfbf9);
     border: 1px solid var(--border);
-    border-radius: 12px;
+    border-radius: var(--rayon-md, 8px);
     padding: 1rem;
     text-align: center;
 }
 .rule-icon { font-size: 1.8rem; margin-bottom: 0.3rem; }
-.rule-label { font-size: 0.72rem; text-transform: uppercase; color: var(--grey); font-weight: 600; letter-spacing: 0.04em; }
-.rule-value { font-size: 1.2rem; font-weight: 800; color: #1a1a1a; }
+.rule-label { font-family: var(--police-titre, "Archivo", system-ui, sans-serif); font-size: 0.72rem; text-transform: uppercase; color: var(--grey); font-weight: 600; letter-spacing: 0.04em; }
+.rule-value { font-family: var(--police-titre, "Archivo", system-ui, sans-serif); font-size: 1.2rem; font-weight: 800; color: var(--texte, #211d1a); }
 
 .exam-warning {
-    background: #fef3c7;
-    border: 1px solid #fcd34d;
-    border-radius: 10px;
+    background: var(--ocre-50, #fdf4e3);
+    border: 1px solid var(--ocre-500, #b07800);
+    border-radius: var(--rayon-md, 8px);
     padding: 1rem;
     margin-bottom: 1.5rem;
     display: flex;
     gap: 10px;
     align-items: flex-start;
     font-size: 0.85rem;
-    color: #92400e;
+    color: var(--ocre-700, #7d5500);
 }
 .exam-warning .icon { font-size: 1.2rem; flex-shrink: 0; }
 
 .exam-modal-footer {
     padding: 1.2rem 1.8rem;
-    background: #f8fafc;
+    background: var(--surface-enfoncee, #f7f5f2);
     border-top: 1px solid var(--border);
     display: flex;
     gap: 0.8rem;
     justify-content: flex-end;
 }
 .btn-start-exam {
-    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
+    background: var(--action, #00843b);
     color: white;
     padding: 0.75rem 1.8rem;
-    border-radius: 10px;
+    border-radius: var(--rayon-md, 8px);
     border: none;
     font-size: 0.95rem;
     font-weight: 700;
@@ -436,9 +449,9 @@ echo $OUTPUT->header();
     text-decoration: none;
 }
 .btn-start-exam:hover {
-    background: linear-gradient(135deg, #0f0f1a, #0d1428);
+    background: var(--action-survol, #026c31);
     transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+    box-shadow: var(--ombre-md);
     color: white;
 }
 .btn-cancel {
@@ -446,25 +459,26 @@ echo $OUTPUT->header();
     color: var(--grey);
     border: 1px solid var(--border);
     padding: 0.75rem 1.2rem;
-    border-radius: 10px;
+    border-radius: var(--rayon-md, 8px);
     cursor: pointer;
     font-size: 0.88rem;
 }
-.btn-cancel:hover { background: #f1f5f9; }
+.btn-cancel:hover { background: var(--surface-enfoncee, #f7f5f2); }
 
 /* ── Sections/Séquences ─────────────────────────────────────────────────── */
 .sequences-card {
     background: white;
-    border-radius: 16px;
+    border-radius: var(--rayon-lg, 12px);
     border: 1px solid var(--border);
     padding: 1.5rem;
     box-shadow: var(--shadow);
     margin-bottom: 1.5rem;
 }
 .sequences-title {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     font-size: 1rem;
     font-weight: 700;
-    color: var(--green);
+    color: var(--green-dark);
     display: flex;
     align-items: center;
     gap: 8px;
@@ -475,13 +489,14 @@ echo $OUTPUT->header();
     align-items: center;
     gap: 1rem;
     padding: 0.9rem;
-    border-radius: 10px;
+    border-radius: var(--rayon-md, 8px);
     border: 1px solid var(--border);
     margin-bottom: 0.6rem;
     transition: background 0.15s;
 }
-.sequence-item:hover { background: #f7faf8; }
+.sequence-item:hover { background: var(--surface-basse, #fcfbf9); }
 .sequence-num {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     width: 34px;
     height: 34px;
     border-radius: 50%;
@@ -492,13 +507,14 @@ echo $OUTPUT->header();
     font-weight: 800;
     flex-shrink: 0;
 }
-.seq-done   { background: #dcfce7; color: #15803d; }
-.seq-todo   { background: #f1f5f9; color: #64748b; }
+.seq-done   { background: var(--vert-50, #ecf7f0); color: var(--vert-700, #045527); }
+.seq-todo   { background: var(--surface-enfoncee, #f7f5f2); color: var(--grey); }
 .sequence-name {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     flex: 1;
     font-weight: 600;
     font-size: 0.92rem;
-    color: #1a1a1a;
+    color: var(--texte, #211d1a);
 }
 .seq-actions {
     display: flex;
@@ -507,8 +523,9 @@ echo $OUTPUT->header();
     flex-wrap: wrap;
 }
 .btn-seq {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     padding: 0.4rem 0.9rem;
-    border-radius: 8px;
+    border-radius: var(--rayon-md, 8px);
     font-size: 0.8rem;
     font-weight: 700;
     text-decoration: none;
@@ -518,12 +535,12 @@ echo $OUTPUT->header();
     transition: all 0.15s;
     white-space: nowrap;
 }
-.btn-seq-green  { background: var(--green); color: white; }
-.btn-seq-green:hover { background: var(--green-dark); color: white; }
-.btn-seq-outline{ background: white; color: var(--green); border: 1.5px solid var(--green); }
-.btn-seq-outline:hover { background: #f0faf5; color: var(--green); }
-.btn-seq-pdf    { background: #fef3c7; color: #b45309; border: 1.5px solid #fcd34d; }
-.btn-seq-pdf:hover { background: #fde68a; color: #92400e; }
+.btn-seq-green  { background: var(--action, #00843b); color: white; }
+.btn-seq-green:hover { background: var(--action-survol, #026c31); color: white; }
+.btn-seq-outline{ background: white; color: var(--green-dark); border: 1.5px solid var(--green); }
+.btn-seq-outline:hover { background: var(--vert-50, #ecf7f0); color: var(--green-dark); }
+.btn-seq-pdf    { background: var(--ocre-50, #fdf4e3); color: var(--ocre-700, #7d5500); border: 1.5px solid var(--ocre-500, #b07800); }
+.btn-seq-pdf:hover { background: #faeccd; color: var(--ocre-700, #7d5500); }
 
 /* ── Résultat précédent ──────────────────────────────────────────────────── */
 .prev-result {

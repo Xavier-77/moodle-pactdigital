@@ -98,32 +98,33 @@ echo $OUTPUT->header();
 
 <style>
 :root {
-    --pact-green: #145B37;
-    --pact-green-light: #e8f5ee;
-    --pact-yellow: #fad615;
-    --pact-red: #D32F2F;
-    --pact-dark: #1e293b;
-    --pact-grey: #64748b;
-    --pact-border: #e2e8f0;
+    --pact-green: var(--vert-700, #045527);
+    --pact-green-light: var(--vert-50, #ecf7f0);
+    --pact-yellow: var(--or-300, #ffed00);
+    --pact-red: var(--rouge-500, #e30613);
+    --pact-dark: var(--texte, #211d1a);
+    --pact-grey: var(--texte-attenue, #635c55);
+    --pact-border: var(--bordure, #e2ddd6);
 }
 
 .contact-wrapper {
     max-width: 1100px;
     margin: 0 auto 50px auto;
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-family: var(--police-texte, "Inter", system-ui, -apple-system, sans-serif);
     color: var(--pact-dark);
 }
 
 .contact-hero {
-    background: linear-gradient(135deg, #145B37 0%, #1e7a4a 100%);
-    border-radius: 16px;
+    background: linear-gradient(135deg, var(--vert-900, #032e16) 0%, var(--vert-700, #045527) 60%, var(--vert-500, #00843b) 100%);
+    border-radius: var(--rayon-lg, 12px);
     padding: 35px 30px;
     color: #fff;
     margin-bottom: 30px;
-    box-shadow: 0 4px 20px rgba(20, 91, 55, 0.15);
+    box-shadow: var(--ombre-md);
     text-align: center;
 }
 .contact-hero h1 {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     font-size: 2.1rem;
     font-weight: 800;
     margin: 0 0 10px 0;
@@ -149,12 +150,13 @@ echo $OUTPUT->header();
 
 .contact-card {
     background: #fff;
-    border-radius: 14px;
+    border-radius: var(--rayon-lg, 12px);
     border: 1px solid var(--pact-border);
     padding: 28px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+    box-shadow: var(--ombre-sm);
 }
 .contact-card h2 {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     font-size: 1.25rem;
     font-weight: 700;
     color: var(--pact-green);
@@ -177,17 +179,18 @@ echo $OUTPUT->header();
 .form-group input, .form-group select, .form-group textarea {
     width: 100%;
     padding: 10px 14px;
-    border: 1px solid var(--pact-border);
-    border-radius: 8px;
+    border: 1.5px solid var(--bordure-forte, #8e867f);
+    border-radius: var(--rayon-md, 8px);
     font-size: 0.92rem;
     box-sizing: border-box;
     font-family: inherit;
+    color: var(--pact-dark);
     transition: border-color 0.2s;
 }
 .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
     outline: none;
-    border-color: var(--pact-green);
-    box-shadow: 0 0 0 3px rgba(20, 91, 55, 0.1);
+    border-color: var(--vert-500, #00843b);
+    box-shadow: 0 0 0 3px var(--vert-50, #ecf7f0);
 }
 
 .form-row {
@@ -202,13 +205,14 @@ echo $OUTPUT->header();
 }
 
 .btn-submit-ticket {
-    background: var(--pact-green);
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
+    background: var(--action, #00843b);
     color: #fff;
     font-size: 1rem;
     font-weight: 700;
     padding: 12px 28px;
     border: none;
-    border-radius: 8px;
+    border-radius: var(--rayon-md, 8px);
     cursor: pointer;
     display: inline-flex;
     align-items: center;
@@ -218,7 +222,7 @@ echo $OUTPUT->header();
     justify-content: center;
 }
 .btn-submit-ticket:hover {
-    background: #0e4428;
+    background: var(--action-survol, #026c31);
 }
 
 /* ── Side Info Box ───────────────────────────────────────────── */
@@ -234,13 +238,14 @@ echo $OUTPUT->header();
     color: var(--pact-green);
     width: 44px;
     height: 44px;
-    border-radius: 10px;
+    border-radius: var(--rayon-md, 8px);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
 }
 .info-text strong {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     display: block;
     font-size: 0.92rem;
     color: var(--pact-dark);
@@ -254,56 +259,58 @@ echo $OUTPUT->header();
 }
 
 .num-vert-badge {
-    background: #fef3c7;
-    border: 1px solid #f59e0b;
-    border-radius: 10px;
+    background: var(--ocre-50, #fdf4e3);
+    border: 1px solid var(--ocre-500, #b07800);
+    border-radius: var(--rayon-md, 8px);
     padding: 14px 18px;
     margin-top: 24px;
     text-align: center;
 }
 .num-vert-badge .num {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     font-size: 1.8rem;
     font-weight: 800;
-    color: #b45309;
+    color: var(--ocre-700, #7d5500);
     letter-spacing: 2px;
 }
 .num-vert-badge small {
     display: block;
-    color: #92400e;
+    color: var(--ocre-700, #7d5500);
     font-size: 0.8rem;
     font-weight: 600;
 }
 
 /* ── Success Receipt ─────────────────────────────────────────── */
 .ticket-receipt {
-    background: #ecfdf5;
-    border: 2px solid #10b981;
-    border-radius: 14px;
+    background: var(--vert-50, #ecf7f0);
+    border: 2px solid var(--vert-500, #00843b);
+    border-radius: var(--rayon-lg, 12px);
     padding: 30px;
     text-align: center;
     margin-bottom: 30px;
 }
 .ticket-receipt h3 {
-    color: #065f46;
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
+    color: var(--vert-700, #045527);
     font-size: 1.4rem;
     font-weight: 800;
     margin: 0 0 10px 0;
 }
 .ticket-receipt p {
-    color: #047857;
+    color: var(--vert-700, #045527);
     font-size: 0.95rem;
     margin: 0 0 16px 0;
 }
 .ticket-code {
     display: inline-block;
     background: #fff;
-    border: 2px dashed #059669;
-    color: #065f46;
-    font-family: monospace;
+    border: 2px dashed var(--vert-500, #00843b);
+    color: var(--vert-800, #04411f);
+    font-family: var(--police-mono, monospace);
     font-size: 1.6rem;
     font-weight: 800;
     padding: 8px 24px;
-    border-radius: 8px;
+    border-radius: var(--rayon-md, 8px);
     letter-spacing: 1px;
     margin-bottom: 14px;
 }
@@ -377,10 +384,9 @@ echo $OUTPUT->header();
                                 <option value="">Sélectionnez votre région…</option>
                                 <?php
                                 $regions = [
-                                    'Boucle du Mouhoun', 'Cascades', 'Centre (Ouagadougou)',
-                                    'Centre-Est', 'Centre-Nord', 'Centre-Ouest', 'Centre-Sud',
-                                    'Est', 'Hauts-Bassins (Bobo)', 'Nord', 'Plateau-Central',
-                                    'Sahel', 'Sud-Ouest'
+                                    'Bankui', 'Djôrô', 'Goulmou', 'Guiriko', 'Kadiogo', 'Kuilsé',
+                                    'Liptako', 'Nakambé', 'Nando', 'Nazinon', 'Oubri', 'Sirba',
+                                    'Soum', 'Sourou', 'Tannounyan', 'Tapoa', 'Yaadga'
                                 ];
                                 foreach ($regions as $r):
                                 ?>

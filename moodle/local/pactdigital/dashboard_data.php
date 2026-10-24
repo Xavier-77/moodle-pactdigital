@@ -36,9 +36,19 @@ $action = optional_param('action', 'all', PARAM_ALPHA);
 // ── 1. Options des Filtres ───────────────────────────────────────────────────
 if ($action === 'filters') {
     $regions_bf = [
-        'Bankui', 'Djôrô', 'Goulmou', 'Guiriko', 'Kadiogo', 'Kuilsé',
-        'Liptako', 'Nakambé', 'Nando', 'Nazinon', 'Oubri', 'Sirba',
-        'Soum', 'Sourou', 'Tannounyan', 'Tapoa', 'Yaadga'
+        'Boucle du Mouhoun',
+        'Cascades',
+        'Centre',
+        'Centre-Est',
+        'Centre-Nord',
+        'Centre-Ouest',
+        'Centre-Sud',
+        'Est',
+        'Hauts-Bassins',
+        'Nord',
+        'Plateau-Central',
+        'Sahel',
+        'Sud-Ouest'
     ];
 
     $provinces_bf = [
@@ -125,7 +135,7 @@ $params_users = [
     'fid_sexe' => $fid_sexe,
     'fid_reg'  => $fid_region,
     'fid_prov' => $fid_province,
-    'fid_comm' => $fid_comm,
+    'fid_comm' => $fid_commune,
     'fid_stat' => $fid_stat,
     'fid_inst' => $fid_instruct,
 ];
@@ -181,21 +191,64 @@ $filtered_learners = [];
 $now = time();
 $thirty_days_ago = $now - (30 * 86400);
 
+// Mapping des appellations régionales vers les 13 régions administratives du Burkina Faso
+$region_alias = [
+    'Boucle du Mouhoun' => 'Boucle du Mouhoun',
+    'Bankui'            => 'Boucle du Mouhoun',
+    'Sourou'            => 'Boucle du Mouhoun',
+    'Cascades'          => 'Cascades',
+    'Djôrô'             => 'Cascades',
+    'Centre'            => 'Centre',
+    'Kadiogo'           => 'Centre',
+    'Centre-Est'        => 'Centre-Est',
+    'Nakambé'           => 'Centre-Est',
+    'Centre-Nord'       => 'Centre-Nord',
+    'Kuilsé'            => 'Centre-Nord',
+    'Centre-Ouest'      => 'Centre-Ouest',
+    'Nando'             => 'Centre-Ouest',
+    'Centre-Sud'        => 'Centre-Sud',
+    'Nazinon'           => 'Centre-Sud',
+    'Est'               => 'Est',
+    'Goulmou'           => 'Est',
+    'Sirba'             => 'Est',
+    'Tapoa'             => 'Est',
+    'Hauts-Bassins'     => 'Hauts-Bassins',
+    'Guiriko'           => 'Hauts-Bassins',
+    'Tuy'               => 'Hauts-Bassins',
+    'Nord'              => 'Nord',
+    'Yaadga'            => 'Nord',
+    'Plateau-Central'   => 'Plateau-Central',
+    'Oubri'             => 'Plateau-Central',
+    'Sahel'             => 'Sahel',
+    'Soum'              => 'Sahel',
+    'Liptako'           => 'Sahel',
+    'Sud-Ouest'         => 'Sud-Ouest',
+    'Tannounyan'        => 'Sud-Ouest',
+];
+
 $kpi_active_users = 0;
 $gender_counts = ['Femme' => 0, 'Homme' => 0, 'Non renseigné' => 0];
 $statut_counts = [];
 $region_counts = [];
+$region_details = [];
 $province_counts = [];
 $commune_counts = [];
 $instruction_counts = [];
 $timeline_counts = [];
-$niveaux_enrol = ['Bronze' => 0, 'Or' => 0, 'Diamant' => 0];
-$niveaux_comp = ['Bronze' => 0, 'Or' => 0, 'Diamant' => 0];
+$niveaux_enrol = ['Bronze' => 0, 'Argent' => 0, 'Or' => 0];
+$niveaux_comp = ['Bronze' => 0, 'Argent' => 0, 'Or' => 0];
 
 foreach ($all_users as $u) {
     // Filtres
     if ($filter_sexe !== '' && strcasecmp($u->sexe ?? '', $filter_sexe) !== 0) continue;
-    if ($filter_region !== '' && strcasecmp($u->region ?? '', $filter_region) !== 0) continue;
+    if ($filter_region !== '') {
+        $u_reg = trim($u->region ?? '');
+        $u_canon = $region_alias[$u_reg] ?? $u_reg;
+        $f_canon = $region_alias[$filter_region] ?? $filter_region;
+        if (strcasecmp($u_reg, $filter_region) !== 0 && strcasecmp($u_canon, $f_canon) !== 0) {
+            continue;
+        }
+    }
     if ($filter_province !== '' && strcasecmp($u->province ?? '', $filter_province) !== 0) continue;
     if ($filter_commune !== '' && strcasecmp($u->commune ?? '', $filter_commune) !== 0) continue;
     if ($filter_statut !== '' && strcasecmp($u->statut ?? '', $filter_statut) !== 0) continue;
@@ -251,6 +304,31 @@ foreach ($all_users as $u) {
     $reg = trim($u->region ?? 'Non renseignée');
     $region_counts[$reg] = ($region_counts[$reg] ?? 0) + 1;
 
+    $canon_reg = $region_alias[$reg] ?? $reg;
+    if ($canon_reg !== 'Non renseignée') {
+        if (!isset($region_details[$canon_reg])) {
+            $region_details[$canon_reg] = [
+                'name'         => $canon_reg,
+                'total_users'  => 0,
+                'female_users' => 0,
+                'enrolments'   => 0,
+                'completions'  => 0,
+                'certs'        => 0,
+                'raw_aliases'  => [],
+            ];
+        }
+        $region_details[$canon_reg]['total_users']++;
+        if (strcasecmp($sx, 'Femme') === 0 || strcasecmp($sx, 'F') === 0) {
+            $region_details[$canon_reg]['female_users']++;
+        }
+        $region_details[$canon_reg]['enrolments'] += count($user_enrols);
+        $region_details[$canon_reg]['completions'] += count($user_comps);
+        $region_details[$canon_reg]['certs'] += count($user_certs);
+        if (!in_array($reg, $region_details[$canon_reg]['raw_aliases'])) {
+            $region_details[$canon_reg]['raw_aliases'][] = $reg;
+        }
+    }
+
     $prov = trim($u->province ?? 'Non renseignée');
     $province_counts[$prov] = ($province_counts[$prov] ?? 0) + 1;
 
@@ -270,29 +348,36 @@ foreach ($all_users as $u) {
         if (stripos($ue->fullname, 'Bronze') !== false) {
             $niveaux_enrol['Bronze']++;
             if (!empty($ue->timecompleted)) $niveaux_comp['Bronze']++;
+        } else if (stripos($ue->fullname, 'Argent') !== false) {
+            $niveaux_enrol['Argent']++;
+            if (!empty($ue->timecompleted)) $niveaux_comp['Argent']++;
         } else if (stripos($ue->fullname, 'Or') !== false) {
             $niveaux_enrol['Or']++;
             if (!empty($ue->timecompleted)) $niveaux_comp['Or']++;
-        } else if (stripos($ue->fullname, 'Argent') !== false || stripos($ue->fullname, 'Diamant') !== false) {
-            $niveaux_enrol['Diamant']++;
-            if (!empty($ue->timecompleted)) $niveaux_comp['Diamant']++;
         }
     }
 
     // Données individuelles
     $filtered_learners[] = [
-        'id'         => (int) $u->id,
-        'name'       => fullname($u),
-        'email'      => $u->email,
-        'sexe'       => $u->sexe ?: '–',
-        'region'     => $u->region ?: '–',
-        'province'   => $u->province ?: '–',
-        'commune'    => $u->commune ?: '–',
-        'statut'     => $u->statut ?: '–',
-        'enrolments' => count($user_enrols),
-        'completed'  => count($user_comps),
-        'certs'      => count($user_certs),
-        'lastaccess' => !empty($u->lastaccess) ? date('d/m/Y H:i', $u->lastaccess) : 'Jamais',
+        'id'                 => (int) $u->id,
+        'nom'                => fullname($u),
+        'name'               => fullname($u),
+        'email'              => $u->email,
+        'sexe'               => $u->sexe ?: '–',
+        'region'             => $u->region ?: '–',
+        'province'           => $u->province ?: '–',
+        'commune'            => $u->commune ?: '–',
+        'statut'             => $u->statut ?: '–',
+        'niveau_instruction' => $u->niveau_instruction ?: '–',
+        'instruction'        => $u->niveau_instruction ?: '–',
+        'inscription'        => !empty($u->timecreated) ? date('d/m/Y', $u->timecreated) : '–',
+        'enroled'            => count($user_enrols),
+        'enrolments'         => count($user_enrols),
+        'completed'          => count($user_comps),
+        'certificates'       => count($user_certs),
+        'certs'              => count($user_certs),
+        'last_access'        => !empty($u->lastaccess) ? date('d/m/Y H:i', $u->lastaccess) : 'Jamais',
+        'lastaccess'         => !empty($u->lastaccess) ? date('d/m/Y H:i', $u->lastaccess) : 'Jamais',
     ];
 }
 
@@ -307,6 +392,12 @@ foreach ($filtered_learners as $fl) {
     $total_completions += $fl['completed'];
     $total_certs += $fl['certs'];
 }
+
+foreach ($region_details as $k => &$rd) {
+    $rd['taux_femmes'] = $rd['total_users'] > 0 ? (int) round(($rd['female_users'] / $rd['total_users']) * 100) : 0;
+    $rd['taux_completion'] = $rd['enrolments'] > 0 ? (int) round(($rd['completions'] / $rd['enrolments']) * 100) : 0;
+}
+unset($rd);
 
 $taux_completion = ($total_enrolments > 0) ? (int) round(($total_completions / $total_enrolments) * 100) : 0;
 $taux_femmes = ($total_users > 0) ? (int) round(($gender_counts['Femme'] / $total_users) * 100) : 0;
@@ -332,13 +423,17 @@ foreach ($top_slice as $cs) {
     $c_taux = ($cs['enrolled'] > 0) ? (int) round(($cs['completed'] / $cs['enrolled']) * 100) : 0;
 
     $top_courses[] = [
-        'name'      => $cs['fullname'],
-        'domain'    => $cat_names[$cs['category']] ?? 'Général',
-        'niveau'    => $niv,
-        'enrolled'  => $cs['enrolled'],
-        'completed' => $cs['completed'],
-        'certs'     => $cs['certs'],
-        'taux'      => $c_taux,
+        'course'       => $cs['fullname'],
+        'name'         => $cs['fullname'],
+        'category'     => $cat_names[$cs['category']] ?? 'Général',
+        'domain'       => $cat_names[$cs['category']] ?? 'Général',
+        'niveau'       => $niv,
+        'enroled'      => $cs['enrolled'],
+        'enrolled'     => $cs['enrolled'],
+        'completed'    => $cs['completed'],
+        'certs'        => $cs['certs'],
+        'certificates' => $cs['certs'],
+        'taux'         => $c_taux,
     ];
 }
 
@@ -440,6 +535,7 @@ echo json_encode([
     'gender'              => $gender_counts,
     'statut'              => $statut_counts,
     'region'              => $region_counts,
+    'region_details'      => $region_details,
     'province'            => $province_counts,
     'commune'             => $commune_counts,
     'categories'          => $categories_dist,

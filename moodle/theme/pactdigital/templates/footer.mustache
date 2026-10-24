@@ -1,70 +1,68 @@
 {{!
     @template theme_pactdigital/footer
 }}
-<footer id="page-footer" class="bg-dark text-white py-5 mt-5">
-    <div class="container">
+<footer id="page-footer" class="fs-pied pact-standard-footer mt-5">
+    <div class="fs-tissage" style="--tissage-fond: var(--surface-enfoncee);"></div>
+    <div class="container py-5">
         <div class="row g-4">
-            <!-- Colonne 1 : Branding -->
+            <!-- Colonne 1 : Bloc-marque officiel (.fs-marque) -->
             <div class="col-lg-4 col-md-6">
-                <h4 class="text-white fw-bold mb-3">PACTDIGITAL-BF</h4>
-                <p class="text-white-50">Plateforme nationale de développement des compétences numériques du Burkina Faso.</p>
-                <div class="d-flex gap-3 mt-4">
-                    <!-- Placeholder pour des réseaux sociaux si besoin -->
-                    <a href="#" class="text-white-50 text-decoration-none" title="Facebook"><i class="fa fa-facebook-square fa-2x"></i></a>
-                    <a href="#" class="text-white-50 text-decoration-none" title="Twitter"><i class="fa fa-twitter-square fa-2x"></i></a>
-                    <a href="#" class="text-white-50 text-decoration-none" title="LinkedIn"><i class="fa fa-linkedin-square fa-2x"></i></a>
-                </div>
+                <a href="{{{ config.wwwroot }}}" class="fs-marque mb-3" style="padding: 0;">
+                    <img src="{{{ config.wwwroot }}}/theme/pactdigital/pix/armoiries.svg" alt="Armoiries du Burkina Faso" style="height: 44px; width: auto;">
+                    <span class="fs-marque-texte">
+                        <span class="fs-marque-pays">Burkina Faso</span>
+                        <span class="fs-marque-devise">La Patrie ou la Mort, nous Vaincrons</span>
+                        <span class="fs-marque-entite">MTDPCE — PACTDIGITAL-BF</span>
+                    </span>
+                </a>
+                <p class="fs-legende mt-2">Plateforme nationale de développement et de certification des compétences numériques du Burkina Faso.</p>
             </div>
 
             <!-- Colonne 2 : Liens rapides -->
             <div class="col-lg-4 col-md-6">
-                <h5 class="text-white mb-3">Liens rapides</h5>
+                <p class="fs-pied-titre">Liens rapides</p>
                 <ul class="list-unstyled d-flex flex-column gap-2">
-                    <li><a href="{{{ config.wwwroot }}}" class="text-white-50 text-decoration-none">Accueil</a></li>
-                    <li><a href="{{{ config.wwwroot }}}/local/pactdigital/catalogue.php" class="text-white-50 text-decoration-none">📚 Catalogue des formations</a></li>
-                    <li><a href="{{{ config.wwwroot }}}/local/pactdigital/signup.php" class="text-white-50 text-decoration-none">Créer un compte</a></li>
-                    <li><a href="{{{ config.wwwroot }}}/local/pactdigital/verify.php" class="text-white-50 text-decoration-none">🔍 Vérifier une attestation</a></li>
-                    <li><a href="{{{ config.wwwroot }}}/local/pactdigital/faq.php" class="text-white-50 text-decoration-none">❓ Foire Aux Questions (FAQ)</a></li>
-                    <li><a href="{{{ config.wwwroot }}}/local/pactdigital/legal.php" class="text-white-50 text-decoration-none">⚖️ Mentions Légales & Confidentialité</a></li>
+                    <li><a href="{{{ config.wwwroot }}}">Accueil</a></li>
+                    <li><a href="{{{ config.wwwroot }}}/local/pactdigital/catalogue.php">📚 Catalogue des formations</a></li>
+                    <li><a href="{{{ config.wwwroot }}}/local/pactdigital/signup.php">Créer un compte</a></li>
+                    <li><a href="{{{ config.wwwroot }}}/local/pactdigital/verify.php">🔍 Vérifier une attestation</a></li>
+                    <li><a href="{{{ config.wwwroot }}}/local/pactdigital/faq.php">❓ Foire Aux Questions (FAQ)</a></li>
+                    <li><a href="{{{ config.wwwroot }}}/local/pactdigital/legal.php">⚖️ Mentions Légales &amp; Confidentialité</a></li>
                     {{# output.page_doc_link }}
-                        <li><span class="text-white-50">{{{ output.page_doc_link }}}</span></li>
+                        <li><span>{{{ output.page_doc_link }}}</span></li>
                     {{/ output.page_doc_link }}
                 </ul>
             </div>
 
             <!-- Colonne 3 : Contact & Support -->
             <div class="col-lg-4 col-md-12">
-                <h5 class="text-white mb-3">Assistance & Support</h5>
+                <p class="fs-pied-titre">Assistance &amp; Support</p>
                 <ul class="list-unstyled d-flex flex-column gap-2">
-                    <li><a href="{{{ config.wwwroot }}}/local/pactdigital/contact.php" class="text-white-50 text-decoration-none">💬 Formulaire de Contact & Ticket</a></li>
-                    <li><span class="text-warning fw-bold">📞 Numéro vert gratuit : 34 34</span></li>
-                    <li><span class="text-white-50">✉️ support@pactdigital.bf</span></li>
+                    <li><a href="{{{ config.wwwroot }}}/local/pactdigital/contact.php">💬 Formulaire de Contact &amp; Ticket</a></li>
+                    <li><span class="fw-bold" style="color: var(--ocre-700, #7d5500);">📞 Numéro vert gratuit : 34 34</span></li>
+                    <li><span class="fs-legende">✉️ support@pactdigital.bf</span></li>
                     {{# output.supportemail }}
-                        <li><span class="text-white-50">{{{ output.supportemail }}}</span></li>
+                        <li><span class="fs-legende">{{{ output.supportemail }}}</span></li>
                     {{/ output.supportemail }}
                     {{# output.services_support_link }}
-                        <li><span class="text-white-50">{{{ output.services_support_link }}}</span></li>
+                        <li><span class="fs-legende">{{{ output.services_support_link }}}</span></li>
                     {{/ output.services_support_link }}
                 </ul>
-                <div class="mt-4 logininfo text-white-50 small">
+                <div class="mt-3 logininfo fs-legende small">
                     {{{ output.login_info }}}
                 </div>
             </div>
         </div>
 
-        <hr class="border-secondary mt-5 mb-4">
-
-        <!-- Copyright & Moodle info -->
-        <div class="row align-items-center">
-            <div class="col-md-6 text-white-50 small">
-                &copy; {{# str }} copyright, core {{/ str }} PACTDIGITAL-BF. Tous droits réservés.
-                <br>
-                <div class="mt-2">{{{ output.standard_footer_html }}}</div>
+        <div class="fs-pied-bas mt-4">
+            <div>
+                &copy; {{# str }} copyright, core {{/ str }} PACTDIGITAL-BF — Service officiel de l'administration burkinabè (Charte v2.0).
+                <div class="mt-1">{{{ output.standard_footer_html }}}</div>
             </div>
-            <div class="col-md-6 text-md-end text-white-50 small mt-3 mt-md-0">
+            <div class="text-md-end">
                 <div>{{#str}}poweredbymoodle, core{{/str}}</div>
                 {{#output.moodle_release}}
-                    <div class="text-muted">
+                    <div>
                         {{#str}}version, core{{/str}} {{{ output.moodle_release }}}
                     </div>
                 {{/output.moodle_release}}
@@ -84,18 +82,18 @@
 
 <script>
 (function() {
-    // Si l'utilisateur est sur la page standard /course/index.php, ajouter un bandeau invitant au Catalogue Netflix
+    // Si l'utilisateur est sur la page standard /course/index.php, ajouter un bandeau invitant au Catalogue
     const tree = document.querySelector('#page-course-index-category .course_category_tree');
     if (tree && !document.getElementById('pact-legacy-catalogue-banner')) {
         const banner = document.createElement('div');
         banner.id = 'pact-legacy-catalogue-banner';
-        banner.style.cssText = 'background: linear-gradient(135deg, #129b40, #0d7a32); color: white; padding: 1.5rem 2rem; border-radius: 16px; margin-bottom: 2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; box-shadow: 0 4px 20px rgba(18,155,64,0.25);';
+        banner.style.cssText = 'background: linear-gradient(135deg, var(--vert-700, #045527), var(--vert-500, #00843b)); color: white; padding: 1.5rem 2rem; border-radius: 16px; margin-bottom: 2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; box-shadow: 0 4px 20px rgba(0,132,59,0.22);';
         banner.innerHTML = `
             <div>
-                <h3 style="margin:0 0 0.3rem; font-size:1.3rem; font-weight:800; color:white;">📚 Nouveau Catalogue Immersif PACTDIGITAL-BF</h3>
-                <p style="margin:0; opacity:0.9; font-size:0.95rem;">Explorez nos 57 formations avec filtres par domaine, badges Bronze/Argent/Or et recherche instantanée.</p>
+                <h3 style="margin:0 0 0.3rem; font-size:1.3rem; font-weight:800; color:white; font-family: var(--police-titre);">📚 Catalogue Officiel PACTDIGITAL-BF</h3>
+                <p style="margin:0; opacity:0.92; font-size:0.95rem;">Explorez nos formations avec filtres par domaine, badges Bronze/Argent/Or et recherche instantanée.</p>
             </div>
-            <a href="/local/pactdigital/catalogue.php" style="background:#fad615; color:#1a1a1a; font-weight:800; padding:0.7rem 1.6rem; border-radius:50px; text-decoration:none; white-space:nowrap; box-shadow:0 3px 10px rgba(0,0,0,0.2); transition:transform 0.2s;">
+            <a href="/local/pactdigital/catalogue.php" style="background:var(--or-300, #ffed00); color:var(--neutre-900, #211d1a); font-family:var(--police-titre); font-weight:700; padding:0.7rem 1.6rem; border-radius:8px; text-decoration:none; white-space:nowrap; box-shadow:0 3px 10px rgba(33,29,26,0.2); transition:transform 0.2s;">
                 🎯 Découvrir le Catalogue ➔
             </a>
         `;

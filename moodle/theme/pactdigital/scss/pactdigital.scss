@@ -1,18 +1,462 @@
+/* ==========================================================================
+   CHARTE GRAPHIQUE DE L'ADMINISTRATION BURKINABÈ — VERSION 2.0 (MTDPCE)
+   Socle de jetons (tokens.css), Polices (Archivo & Inter) & Composants (.fs-*)
+   ========================================================================== */
+
+@font-face {
+    font-family: "Archivo";
+    font-style: normal;
+    font-weight: 400 800;
+    font-display: swap;
+    src: url("/theme/pactdigital/fonts/archivo.woff2") format("woff2");
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+                   U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F,
+                   U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400 700;
+    font-display: swap;
+    src: url("/theme/pactdigital/fonts/inter.woff2") format("woff2");
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+                   U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F,
+                   U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+    /* 1. PALETTES OFFICIELLES */
+    /* Rouge — révolution, courage. Teinte officielle : 500 */
+    --rouge-50:  #fff1f2;
+    --rouge-100: #ffe0e2;
+    --rouge-200: #ffc5c9;
+    --rouge-300: #f99aa1;
+    --rouge-400: #f0636e;
+    --rouge-500: #e30613;  /* drapeau */
+    --rouge-600: #c40511;
+    --rouge-700: #a2040e;
+    --rouge-800: #7d0610;
+    --rouge-900: #5a0810;
+
+    /* Vert — espérance, richesses agricoles. Teinte officielle : 500 */
+    --vert-50:  #ecf7f0;
+    --vert-100: #d3eddd;
+    --vert-200: #a8dbbc;
+    --vert-300: #74c296;
+    --vert-400: #3ea46d;
+    --vert-500: #00843b;  /* drapeau */
+    --vert-600: #026c31;
+    --vert-700: #045527;
+    --vert-800: #04411f;
+    --vert-900: #032e16;
+
+    /* Or — étoile, lumière. Teinte officielle : 300 */
+    --or-50:  #fffce5;
+    --or-100: #fff8bf;
+    --or-200: #fff287;
+    --or-300: #ffed00;  /* drapeau */
+    --or-400: #e8d400;
+    --or-500: #c9b600;
+    --or-600: #a39300;
+    --or-700: #7d7100;
+    --or-800: #5c5300;
+    --or-900: #3d3800;
+
+    /* Neutres chauds (base latérite) */
+    --neutre-0:   #ffffff;
+    --neutre-25:  #fcfbf9;
+    --neutre-50:  #f7f5f2;
+    --neutre-100: #efece7;
+    --neutre-200: #e2ddd6;
+    --neutre-300: #cfc8bf;
+    --neutre-400: #a9a199;
+    --neutre-450: #8e867f;
+    --neutre-500: #837b73;
+    --neutre-550: #756d66;
+    --neutre-600: #635c55;
+    --neutre-700: #4a443e;
+    --neutre-800: #332e2a;
+    --neutre-900: #211d1a;
+    --neutre-950: #14110f;
+
+    /* Bleu administratif — registre informatif uniquement */
+    --bleu-50:  #eef4f9;
+    --bleu-100: #d6e5f0;
+    --bleu-300: #7ba5c4;
+    --bleu-500: #2a6d9b;
+    --bleu-700: #173f5f;
+    --bleu-900: #0d2639;
+
+    /* Ocre — registre d'avertissement */
+    --ocre-50:  #fdf4e3;
+    --ocre-100: #f9e6c2;
+    --ocre-500: #b07800;
+    --ocre-700: #7d5500;
+    --ocre-900: #4a3200;
+
+    /* 2. TYPOGRAPHIE */
+    --police-titre: "Archivo", "Segoe UI", system-ui, -apple-system, sans-serif;
+    --police-texte: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+    --police-mono:  ui-monospace, "Cascadia Mono", "Segoe UI Mono", Consolas, "Liberation Mono", Menlo, monospace;
+
+    --taille-2xs: 0.6875rem;
+    --taille-xs:  0.75rem;
+    --taille-sm:  0.8125rem;
+    --taille-md:  0.9375rem;
+    --taille-lg:  1.0625rem;
+
+    --graisse-normale: 400;
+    --graisse-moyenne: 500;
+    --graisse-demi:    600;
+    --graisse-grasse:  700;
+    --graisse-noire:   800;
+
+    --approche-titre: -0.02em;
+    --approche-capitale: 0.08em;
+
+    /* 3. ESPACEMENT & FORMES */
+    --espace-1: 0.25rem;
+    --espace-2: 0.5rem;
+    --espace-3: 0.75rem;
+    --espace-4: 1rem;
+    --espace-5: 1.25rem;
+    --espace-6: 1.5rem;
+    --espace-8: 2rem;
+    --espace-12: 3rem;
+
+    --rayon-xs: 2px;
+    --rayon-sm: 4px;
+    --rayon-md: 6px;
+    --rayon-lg: 10px;
+    --rayon-xl: 16px;
+    --rayon-2xl: 24px;
+    --rayon-plein: 999px;
+
+    --ombre-xs: 0 1px 2px rgba(33, 29, 26, 0.06);
+    --ombre-sm: 0 1px 3px rgba(33, 29, 26, 0.08), 0 1px 2px rgba(33, 29, 26, 0.04);
+    --ombre-md: 0 4px 12px rgba(33, 29, 26, 0.08), 0 1px 3px rgba(33, 29, 26, 0.05);
+    --ombre-lg: 0 12px 28px rgba(33, 29, 26, 0.10), 0 4px 8px rgba(33, 29, 26, 0.05);
+    --ombre-xl: 0 24px 56px rgba(33, 29, 26, 0.14), 0 8px 16px rgba(33, 29, 26, 0.06);
+
+    --trait-fin:   1px;
+    --trait-moyen: 2px;
+    --trait-epais: 3px;
+
+    --etoile-or: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 95'%3E%3Cpath fill='%23ffed00' d='M50 0 61.8 36.3 100 36.3 69.1 58.7 80.9 95 50 72.6 19.1 95 30.9 58.7 0 36.3 38.2 36.3Z'/%3E%3C/svg%3E");
+
+    --largeur-contenu: 1400px;
+    --gouttiere: #{unquote("clamp(1rem, 0.6rem + 1.8vw, 2rem)")};
+    --cible-min: 44px;
+
+    /* 4. RÔLES SÉMANTIQUES */
+    --surface:            var(--neutre-0);
+    --surface-basse:      var(--neutre-25);
+    --surface-enfoncee:   var(--neutre-50);
+    --surface-haute:      var(--neutre-0);
+    --surface-inverse:    var(--neutre-900);
+
+    --texte:              var(--neutre-900);
+    --texte-attenue:      var(--neutre-600);
+    --texte-faible:       var(--neutre-550);
+    --texte-inverse:      var(--neutre-0);
+
+    --bordure:            var(--neutre-200);
+    --bordure-forte:      var(--neutre-450);
+
+    --action:             var(--vert-500);
+    --action-survol:      var(--vert-600);
+    --action-active:      var(--vert-700);
+    --action-tenue:       var(--vert-50);
+    --action-texte:       var(--neutre-0);
+    --action-sur-clair:   var(--vert-700);
+
+    --accent:             var(--rouge-500);
+    --accent-texte:       var(--neutre-0);
+    --accent-survol:      var(--rouge-600);
+    --accent-actif:       var(--rouge-700);
+    --accent-tenue:       var(--rouge-50);
+
+    --relief:             var(--or-300);
+    --relief-survol:      var(--or-400);
+    --relief-texte:       var(--neutre-900);
+    --relief-sur-clair:   var(--or-700);
+
+    --succes:             var(--vert-500);
+    --succes-fond:        var(--vert-50);
+    --succes-bord:        var(--vert-200);
+    --succes-texte:       var(--vert-700);
+
+    --alerte:             var(--ocre-500);
+    --alerte-fond:        var(--ocre-50);
+    --alerte-bord:        var(--ocre-100);
+    --alerte-texte:       var(--ocre-700);
+
+    --danger:             var(--rouge-500);
+    --danger-fond:        var(--rouge-50);
+    --danger-bord:        var(--rouge-200);
+    --danger-texte:       var(--rouge-700);
+
+    --info:               var(--bleu-500);
+    --info-fond:          var(--bleu-50);
+    --info-bord:          var(--bleu-100);
+    --info-texte:         var(--bleu-700);
+
+    --lien:               var(--vert-700);
+    --lien-survol:        var(--vert-800);
+    --focus-couleur:      var(--vert-600);
+}
+
+/* Application globale des polices et couleurs de la Charte v2.0 */
+body {
+    font-family: var(--police-texte);
+    color: var(--texte);
+    background-color: var(--surface-basse);
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6,
+.btn, .nav-link, .navbar-brand {
+    font-family: var(--police-titre);
+}
+
+::selection {
+    background: var(--or-200);
+    color: var(--neutre-900);
+}
+
+/* ── Composants institutionnels officiels (.fs-*) ── */
+.fs-conteneur {
+    width: 100%;
+    max-width: var(--largeur-contenu);
+    margin-inline: auto;
+    padding-inline: var(--gouttiere);
+}
+
+.fs-officiel {
+    display: flex;
+    align-items: center;
+    gap: var(--espace-3);
+    padding: 0.35rem 0;
+    background: var(--vert-900);
+    color: #ffffff;
+    font-family: var(--police-texte);
+    font-size: var(--taille-xs);
+    line-height: 1.4;
+}
+
+.fs-officiel .fs-conteneur {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--espace-3);
+    flex-wrap: wrap;
+}
+
+.fs-officiel-sceau {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--espace-2);
+    font-weight: var(--graisse-demi);
+}
+
+.fs-officiel-sceau::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    background: linear-gradient(to bottom, var(--rouge-500) 0 50%, var(--vert-500) 50% 100%);
+    flex-shrink: 0;
+}
+
+.fs-officiel code {
+    padding: 1px 6px;
+    background: rgba(255, 255, 255, 0.14);
+    border: 0;
+    border-radius: var(--rayon-sm);
+    color: #ffffff;
+    font-family: var(--police-mono);
+    font-size: inherit;
+}
+
+@media (max-width: 640px) {
+    .fs-masque-mobile {
+        display: none !important;
+    }
+}
+
+/* Filet national : rouge en haut, vert en bas, étoile d'or au centre */
+.fs-filet {
+    --filet-hauteur: 14px;
+    --filet-etoile: calc(var(--filet-hauteur) * 0.72);
+    width: 100%;
+    height: var(--filet-hauteur);
+    background-image:
+        var(--etoile-or),
+        linear-gradient(to bottom, var(--rouge-500) 0 50%, var(--vert-500) 50% 100%);
+    background-size: var(--filet-etoile) var(--filet-etoile), 100% 100%;
+    background-position: center, center;
+    background-repeat: no-repeat, no-repeat;
+}
+.fs-filet--fin { --filet-hauteur: 8px; }
+.fs-filet--epais { --filet-hauteur: 20px; }
+
+/* Repère national : vignette courte du drapeau */
+.fs-repere {
+    --repere-hauteur: 12px;
+    --repere-etoile: calc(var(--repere-hauteur) * 0.45);
+    display: inline-block;
+    width: 52px;
+    height: var(--repere-hauteur);
+    border-radius: var(--rayon-xs);
+    background-image:
+        var(--etoile-or),
+        linear-gradient(to bottom, var(--rouge-500) 0 50%, var(--vert-500) 50% 100%);
+    background-size: var(--repere-etoile) var(--repere-etoile), 100% 100%;
+    background-position: center, center;
+    background-repeat: no-repeat, no-repeat;
+    flex-shrink: 0;
+}
+.fs-repere--centre { margin-inline: auto; display: block; }
+
+/* Motif tissé Faso Dan Fani */
+.fs-tissage {
+    --tissage-fond: var(--surface);
+    width: 100%;
+    height: 8px;
+    background:
+        repeating-linear-gradient(to right,
+            var(--rouge-500) 0 18px,
+            var(--tissage-fond) 18px 21px,
+            var(--or-300) 21px 31px,
+            var(--tissage-fond) 31px 34px,
+            var(--vert-500) 34px 52px,
+            var(--tissage-fond) 52px 55px,
+            var(--or-300) 55px 61px,
+            var(--tissage-fond) 61px 64px);
+}
+.fs-tissage--fin { height: 4px; }
+
+/* Bloc-marque officiel (.fs-marque) */
+.fs-marque {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.85rem;
+    text-decoration: none !important;
+    color: var(--texte);
+}
+.fs-marque img {
+    width: auto;
+    height: 52px;
+    flex: none;
+}
+.fs-marque-texte {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+.fs-marque-pays {
+    font-family: var(--police-titre);
+    font-size: 1rem;
+    font-weight: var(--graisse-noire);
+    letter-spacing: var(--approche-capitale);
+    text-transform: uppercase;
+    line-height: 1.1;
+    color: var(--texte);
+}
+.fs-marque-devise {
+    font-family: var(--police-texte);
+    font-size: var(--taille-2xs);
+    font-style: italic;
+    color: var(--texte-attenue);
+    letter-spacing: 0.01em;
+}
+.fs-marque-entite {
+    font-family: var(--police-texte);
+    font-size: var(--taille-xs);
+    font-weight: var(--graisse-demi);
+    color: var(--vert-700);
+}
+@media (max-width: 640px) {
+    .fs-marque img { height: 42px; }
+    .fs-marque-devise { display: none; }
+}
+
+.fs-legende {
+    font-size: var(--taille-sm);
+    color: var(--texte-faible);
+}
+
+/* Pied de page institutionnel (.fs-pied) */
+.fs-pied {
+    background: var(--surface-enfoncee);
+    color: var(--texte-attenue);
+    border-top: var(--trait-fin) solid var(--bordure);
+}
+.fs-pied-titre {
+    margin-bottom: var(--espace-4);
+    font-family: var(--police-titre);
+    font-size: var(--taille-xs);
+    font-weight: var(--graisse-grasse);
+    letter-spacing: var(--approche-capitale);
+    text-transform: uppercase;
+    color: var(--texte);
+}
+.fs-pied a {
+    color: var(--texte-attenue);
+    font-size: var(--taille-sm);
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+.fs-pied a:hover {
+    color: var(--vert-700);
+    text-decoration: underline;
+}
+.fs-pied-bas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--espace-4);
+    padding-top: var(--espace-5);
+    border-top: var(--trait-fin) solid var(--bordure);
+    font-size: var(--taille-xs);
+    color: var(--texte-faible);
+}
+
+/* Adaptation de la navbar principale Moodle avec le filet national */
+nav.pact-main-navbar {
+    flex-direction: column;
+    padding-top: 0 !important;
+    border-bottom: 1px solid var(--bordure) !important;
+    background: var(--surface) !important;
+
+    .pact-navbar-filet {
+        width: 100%;
+        flex-shrink: 0;
+    }
+
+    > .container-fluid {
+        width: 100%;
+        min-height: 56px;
+    }
+}
+
 /* Custom styling for PACTDIGITAL-BF */
 .pactdigital-frontpage {
 
     .domain-card {
         transition: all 0.3s ease;
-        border: 2px solid #e9ecef;
+        border: 2px solid var(--bordure);
         cursor: pointer;
         
         &:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
-            border-color: #129b40; /* Green primary color */
+            box-shadow: var(--ombre-lg) !important;
+            border-color: var(--vert-500);
             
             p {
-                color: #129b40 !important;
+                color: var(--vert-500) !important;
                 font-weight: bold;
             }
         }
@@ -117,6 +561,15 @@ body.pagelayout-frontpage {
         margin: 0 !important;
         max-width: 100% !important;
         width: 100% !important;
+    }
+
+    /* Masquer le forum d'annonces du site s'il ne contient aucune discussion */
+    .site-announcements-wrapper.d-none {
+        display: none !important;
+    }
+    &:not(.editing) #site-news-forum:has(.forumnodiscuss),
+    &:not(.editing) .skip-block[href="#skipsitenews"] {
+        display: none !important;
     }
 }
 
@@ -278,16 +731,16 @@ body.pagelayout-frontpage {
 
 .ministere-title {
     font-size: 1.05rem !important;
-    color: #129b40 !important;
+    color: var(--vert-700, #045527) !important;
     letter-spacing: -0.2px;
 }
 
 .eburkina-presentation-card {
-    background: #fbfcfe;
-    border: 1px solid #e2e8f0;
-    border-left: 5px solid #129b40;
+    background: var(--surface-basse, #fcfbf9);
+    border: 1px solid var(--bordure, #e2ddd6);
+    border-left: 5px solid var(--vert-500, #00843b);
     border-radius: 16px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    box-shadow: var(--ombre-sm);
     max-width: 900px;
 }
 
@@ -305,10 +758,10 @@ body.pagelayout-frontpage {
         list-style: none;
 
         li.section.course-section {
-            background: #ffffff;
-            border-radius: 20px !important;
-            border: 1px solid #e9ecef !important;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04) !important;
+            background: var(--surface, #ffffff);
+            border-radius: var(--rayon-lg, 12px) !important;
+            border: 1px solid var(--bordure, #e2ddd6) !important;
+            box-shadow: var(--ombre-sm) !important;
             margin-bottom: 24px !important;
             padding: 24px 28px !important;
             transition: all 0.25s ease-in-out;
@@ -316,8 +769,8 @@ body.pagelayout-frontpage {
             overflow: hidden;
 
             &:hover {
-                box-shadow: 0 8px 24px rgba(20, 91, 55, 0.08) !important;
-                border-color: #d1e7dd !important;
+                box-shadow: var(--ombre-md) !important;
+                border-color: var(--vert-200, #a2e0bc) !important;
             }
 
             /* Bordure d'accentuation verte à gauche */
@@ -328,20 +781,20 @@ body.pagelayout-frontpage {
                 top: 0;
                 bottom: 0;
                 width: 6px;
-                background: linear-gradient(180deg, #129b40 0%, #157347 100%);
-                border-top-left-radius: 20px;
-                border-bottom-left-radius: 20px;
+                background: linear-gradient(180deg, var(--vert-500, #00843b) 0%, var(--vert-700, #045527) 100%);
+                border-top-left-radius: var(--rayon-lg, 12px);
+                border-bottom-left-radius: var(--rayon-lg, 12px);
             }
 
             /* Section actuelle / mise en avant */
             &.current {
-                border-color: #129b40 !important;
-                background: #fcfdfc;
-                box-shadow: 0 6px 20px rgba(18, 155, 64, 0.12) !important;
+                border-color: var(--vert-500, #00843b) !important;
+                background: var(--surface-basse, #fcfbf9);
+                box-shadow: var(--ombre-md) !important;
 
                 &::before {
                     width: 8px;
-                    background: #fad615; /* Or pour la section en cours */
+                    background: var(--or-300, #ffed00); /* Or national pour la section en cours */
                 }
             }
         }
@@ -352,27 +805,28 @@ body.pagelayout-frontpage {
 .course-section-header {
     margin-bottom: 16px;
     padding-bottom: 12px;
-    border-bottom: 1px dashed #e9ecef;
+    border-bottom: 1px dashed var(--bordure, #e2ddd6);
 
     .sectionname {
+        font-family: var(--police-titre);
         font-weight: 700 !important;
         font-size: 1.25rem !important;
-        color: #1e293b !important;
+        color: var(--texte, #211d1a) !important;
         letter-spacing: -0.2px;
 
         a {
-            color: #1e293b !important;
+            color: var(--texte, #211d1a) !important;
             text-decoration: none !important;
 
             &:hover {
-                color: #129b40 !important;
+                color: var(--vert-600, #026c31) !important;
             }
         }
     }
 
     /* Bouton d'accordéon / toggle chevron élégant */
     .btn-icon.icons-collapse-expand {
-        background: #f1f5f9;
+        background: var(--surface-enfoncee, #f7f5f2);
         border-radius: 50%;
         width: 36px;
         height: 36px;
@@ -382,24 +836,24 @@ body.pagelayout-frontpage {
         transition: background 0.2s;
 
         &:hover {
-            background: #e2e8f0;
+            background: var(--bordure, #e2ddd6);
         }
     }
 }
 
 /* 3. Cartes d'activités & ressources (Quiz, Devoirs, Vidéos, Fichiers, Attestations) */
 .activity-item {
-    background: #f8fafc !important;
-    border: 1px solid #e2e8f0 !important;
-    border-radius: 14px !important;
+    background: var(--surface-basse, #fcfbf9) !important;
+    border: 1px solid var(--bordure, #e2ddd6) !important;
+    border-radius: var(--rayon-lg, 12px) !important;
     padding: 14px 18px !important;
     margin-bottom: 12px !important;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 
     &:hover {
-        background: #ffffff !important;
-        border-color: #129b40 !important;
-        box-shadow: 0 4px 14px rgba(18, 155, 64, 0.1) !important;
+        background: var(--surface, #ffffff) !important;
+        border-color: var(--vert-500, #00843b) !important;
+        box-shadow: var(--ombre-sm) !important;
         transform: translateX(4px);
     }
 
@@ -412,11 +866,11 @@ body.pagelayout-frontpage {
     /* Lien et titre de l'activité */
     .activityname a {
         font-weight: 600 !important;
-        color: #1e293b !important;
+        color: var(--texte, #211d1a) !important;
         font-size: 0.98rem !important;
 
         &:hover {
-            color: #129b40 !important;
+            color: var(--vert-600, #026c31) !important;
             text-decoration: none !important;
         }
     }
@@ -433,14 +887,15 @@ body.pagelayout-frontpage {
 /* 4. Bannière d'en-tête du cours */
 .pagelayout-course #page-header,
 .pagelayout-incourse #page-header {
-    background: linear-gradient(135deg, #145B37 0%, #1e7a4a 100%) !important;
-    border-radius: 20px !important;
+    background: linear-gradient(135deg, var(--vert-800, #04411f) 0%, var(--vert-600, #026c31) 100%) !important;
+    border-radius: var(--rayon-lg, 12px) !important;
     color: #ffffff !important;
     padding: 24px 32px !important;
     margin-bottom: 28px !important;
-    box-shadow: 0 10px 25px rgba(20, 91, 55, 0.15) !important;
+    box-shadow: var(--ombre-md) !important;
 
     .page-header-headings h1 {
+        font-family: var(--police-titre);
         color: #ffffff !important;
         font-weight: 800 !important;
         font-size: 1.85rem !important;
@@ -453,14 +908,14 @@ body.pagelayout-frontpage {
         margin-bottom: 8px !important;
 
         .breadcrumb-item {
-            color: rgba(255, 255, 255, 0.75) !important;
+            color: rgba(255, 255, 255, 0.78) !important;
 
             a {
-                color: rgba(255, 255, 255, 0.9) !important;
+                color: rgba(255, 255, 255, 0.92) !important;
                 text-decoration: none !important;
 
                 &:hover {
-                    color: #fad615 !important;
+                    color: var(--or-300, #ffed00) !important;
                 }
             }
 
@@ -477,7 +932,7 @@ body.pagelayout-frontpage {
    ========================================================================== */
 
 body.pagelayout-login {
-    background: #ffffff !important;
+    background: var(--surface, #ffffff) !important;
     padding-top: 0 !important;
 
     #page-wrapper {
@@ -486,7 +941,7 @@ body.pagelayout-login {
 }
 
 .pact-login-branding {
-    background: linear-gradient(145deg, #104e2e 0%, #129b40 100%);
+    background: linear-gradient(145deg, var(--vert-900, #032e16) 0%, var(--vert-600, #026c31) 100%);
     position: relative;
     overflow: hidden;
 
@@ -497,7 +952,7 @@ body.pagelayout-login {
         right: -50px;
         width: 350px;
         height: 350px;
-        background: radial-gradient(circle, rgba(250, 214, 21, 0.15) 0%, transparent 70%);
+        background: radial-gradient(circle, rgba(255, 237, 0, 0.14) 0%, transparent 70%);
         border-radius: 50%;
         pointer-events: none;
     }
@@ -514,44 +969,46 @@ body.pagelayout-login {
     }
 
     .form-control {
-        border-radius: 12px !important;
+        border-radius: var(--rayon-md, 8px) !important;
         padding: 12px 16px !important;
-        border: 1.5px solid #e2e8f0 !important;
+        border: 1.5px solid var(--bordure-forte, #8e867f) !important;
         font-size: 0.95rem !important;
+        color: var(--texte, #211d1a) !important;
         transition: all 0.2s ease;
 
         &:focus {
-            border-color: #129b40 !important;
-            box-shadow: 0 0 0 4px rgba(18, 155, 64, 0.15) !important;
+            border-color: var(--vert-500, #00843b) !important;
+            box-shadow: 0 0 0 3px var(--vert-50, #ecf7f0) !important;
         }
     }
 
     #loginbtn {
-        background: #129b40 !important;
-        border-color: #129b40 !important;
-        border-radius: 50px !important;
+        background: var(--action, #00843b) !important;
+        border-color: var(--action, #00843b) !important;
+        border-radius: var(--rayon-md, 8px) !important;
+        font-family: var(--police-titre);
         font-weight: 700 !important;
         padding: 12px 24px !important;
         width: 100% !important;
         font-size: 1.05rem !important;
-        box-shadow: 0 4px 14px rgba(18, 155, 64, 0.3) !important;
+        box-shadow: var(--ombre-sm) !important;
         transition: all 0.2s ease;
 
         &:hover {
-            background: #0d7a31 !important;
-            border-color: #0d7a31 !important;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 18px rgba(18, 155, 64, 0.4) !important;
+            background: var(--action-survol, #026c31) !important;
+            border-color: var(--action-survol, #026c31) !important;
+            transform: translateY(-1px);
+            box-shadow: var(--ombre-md) !important;
         }
     }
 
     .login-form-forgotpassword a {
-        color: #64748b !important;
+        color: var(--texte-attenue, #635c55) !important;
         font-size: 0.88rem !important;
         text-decoration: none !important;
 
         &:hover {
-            color: #129b40 !important;
+            color: var(--vert-700, #045527) !important;
             text-decoration: underline !important;
         }
     }
@@ -564,25 +1021,26 @@ body.pagelayout-login {
 
 /* Cartes des Domaines de Formation */
 .pactdigital-domains {
-    background: #f8fafc !important;
-    border-top: 1px solid #edf2f7;
-    border-bottom: 1px solid #edf2f7;
+    background: var(--surface-enfoncee, #f7f5f2) !important;
+    border-top: 1px solid var(--bordure, #e2ddd6);
+    border-bottom: 1px solid var(--bordure, #e2ddd6);
 
     h2 {
+        font-family: var(--police-titre);
         font-weight: 800 !important;
         letter-spacing: 0.5px;
-        color: #0f172a;
+        color: var(--texte, #211d1a);
         font-size: 1.85rem;
     }
 }
 
 .domain-card {
-    background: #ffffff !important;
-    border-radius: 24px !important;
-    border: 1.5px solid #e2e8f0 !important;
+    background: var(--surface, #ffffff) !important;
+    border-radius: var(--rayon-lg, 12px) !important;
+    border: 1.5px solid var(--bordure, #e2ddd6) !important;
     padding: 32px 24px !important;
     transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04) !important;
+    box-shadow: var(--ombre-sm) !important;
 
     .display-4 {
         font-size: 3.2rem;
@@ -590,7 +1048,8 @@ body.pagelayout-login {
     }
 
     h3 {
-        color: #0f172a !important;
+        font-family: var(--police-titre);
+        color: var(--texte, #211d1a) !important;
         font-size: 1.15rem !important;
         line-height: 1.4;
         font-weight: 700 !important;
@@ -598,7 +1057,7 @@ body.pagelayout-login {
     }
 
     .explorer-link {
-        color: #129b40 !important;
+        color: var(--vert-700, #045527) !important;
         font-weight: 600;
         font-size: 0.92rem;
         display: inline-flex;
@@ -606,34 +1065,35 @@ body.pagelayout-login {
         gap: 6px;
         padding: 6px 16px;
         border-radius: 50px;
-        background: rgba(18, 155, 64, 0.08);
+        background: var(--vert-50, #ecf7f0);
         transition: all 0.25s ease;
     }
 
     &:hover {
-        transform: translateY(-8px) !important;
-        border-color: #129b40 !important;
-        box-shadow: 0 16px 32px rgba(18, 155, 64, 0.12) !important;
+        transform: translateY(-6px) !important;
+        border-color: var(--vert-500, #00843b) !important;
+        box-shadow: var(--ombre-lg) !important;
 
         .display-4 {
             transform: scale(1.15);
         }
 
         .explorer-link {
-            background: #129b40 !important;
-            color: #ffffff !important;
+            background: var(--action, #00843b) !important;
+            color: var(--action-texte, #ffffff) !important;
         }
     }
 }
 
 /* Section Parcours Disponibles */
 .pactdigital-parcours {
-    background: #ffffff !important;
+    background: var(--surface, #ffffff) !important;
 
     h2 {
+        font-family: var(--police-titre);
         font-weight: 800 !important;
         letter-spacing: 0.5px;
-        color: #0f172a;
+        color: var(--texte, #211d1a);
         font-size: 1.85rem;
     }
 }
@@ -647,21 +1107,22 @@ body.pagelayout-login {
     align-items: center;
     gap: 0.4rem;
     padding: 0.4rem 1rem;
-    background: linear-gradient(135deg, #129b40, #0d7a32);
+    background: var(--action, #00843b);
     color: #ffffff !important;
+    font-family: var(--police-titre);
     font-weight: 700;
     font-size: 0.85rem;
-    border-radius: 50px;
+    border-radius: var(--rayon-md, 8px);
     text-decoration: none !important;
     white-space: nowrap;
     transition: all 0.2s ease;
-    box-shadow: 0 2px 8px rgba(18,155,64,0.25);
+    box-shadow: var(--ombre-sm);
     letter-spacing: 0.02em;
 
     &:hover {
-        background: linear-gradient(135deg, #0d7a32, #075a24);
+        background: var(--action-survol, #026c31);
         transform: translateY(-1px);
-        box-shadow: 0 4px 16px rgba(18,155,64,0.4);
+        box-shadow: var(--ombre-md);
         color: #ffffff !important;
     }
 }
@@ -673,6 +1134,23 @@ body.pact-role-guest .pact-nav-formateur-btn {
 }
 
 body.pact-role-learner:not(.pact-role-admin) .pact-nav-formateur-btn {
+    display: none !important;
+}
+
+/* Boutons Gestion / Tableau de bord : réservés aux administrateurs et gestionnaires */
+.pact-nav-manager-btn {
+    display: none !important;
+}
+body.pact-role-admin .pact-nav-manager-btn,
+body.pact-role-manager .pact-nav-manager-btn {
+    display: inline-flex !important;
+    background: var(--vert-700, #065f2c) !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    border: 1.5px solid var(--vert-900, #032e16) !important;
+}
+body.pact-role-manager .pact-nav-apprenant-btn,
+body.pact-role-manager .pact-nav-formateur-btn {
     display: none !important;
 }
 
@@ -692,33 +1170,35 @@ body.pact-role-trainer:not(.pact-role-admin) .pact-nav-apprenant-btn {
     padding: 0 1.1rem;
     font-size: 0.85rem;
     font-weight: 700;
-    border-radius: 50px;
+    border-radius: var(--rayon-md, 8px);
 }
 .pact-nav-apprenant-btn {
-    background: #fad615 !important;
-    color: #000000 !important;
+    background: var(--or-300, #ffed00) !important;
+    color: var(--neutre-900, #211d1a) !important;
+    font-family: var(--police-titre);
     font-weight: 700 !important;
-    border: 1.5px solid #d4a700 !important;
-    box-shadow: 0 2px 8px rgba(250, 214, 21, 0.35);
+    border: 1.5px solid var(--or-500, #d4bc00) !important;
+    box-shadow: var(--ombre-sm);
 
     &:hover {
-        background: #eab308 !important;
-        color: #000000 !important;
-        box-shadow: 0 4px 14px rgba(234, 179, 8, 0.45);
+        background: var(--or-400, #f0dc00) !important;
+        color: var(--neutre-900, #211d1a) !important;
+        box-shadow: var(--ombre-md);
         transform: translateY(-1px);
     }
 }
 .pact-nav-formateur-btn {
-    background: #145b37 !important;
+    background: var(--vert-800, #04411f) !important;
     color: #ffffff !important;
+    font-family: var(--police-titre);
     font-weight: 700 !important;
-    border: 1.5px solid #0d4426 !important;
-    box-shadow: 0 2px 8px rgba(20, 91, 55, 0.3);
+    border: 1.5px solid var(--vert-900, #032e16) !important;
+    box-shadow: var(--ombre-sm);
 
     &:hover {
-        background: #0d4426 !important;
+        background: var(--vert-900, #032e16) !important;
         color: #ffffff !important;
-        box-shadow: 0 4px 14px rgba(20, 91, 55, 0.45);
+        box-shadow: var(--ombre-md);
         transform: translateY(-1px);
     }
 }
@@ -732,18 +1212,18 @@ body.pact-role-trainer:not(.pact-role-admin) .pact-nav-apprenant-btn {
     align-items: center;
     font-size: 0.85rem;
     font-weight: 600;
-    border-radius: 50px;
+    border-radius: var(--rayon-md, 8px);
     padding: 0 1.1rem;
-    background: #f8fafc !important;
-    color: #475569 !important;
-    border: 1.5px solid #cbd5e1 !important;
+    background: var(--surface-enfoncee, #f7f5f2) !important;
+    color: var(--texte-attenue, #635c55) !important;
+    border: 1.5px solid var(--bordure, #e2ddd6) !important;
     box-shadow: none !important;
     transition: all 0.2s ease;
 
     &:hover {
-        background: #e2e8f0 !important;
-        color: #1e293b !important;
-        border-color: #94a3b8 !important;
+        background: var(--bordure, #e2ddd6) !important;
+        color: var(--texte, #211d1a) !important;
+        border-color: var(--bordure-forte, #8e867f) !important;
     }
 }
 
@@ -753,8 +1233,8 @@ body.pact-role-trainer:not(.pact-role-admin) .pact-nav-apprenant-btn {
    ═══════════════════════════════════════════════════════════════ */
 
 .pact-quick-access-catalogue {
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-    border-radius: 16px;
+    background: linear-gradient(135deg, var(--vert-900, #032e16) 0%, var(--vert-800, #04411f) 55%, var(--vert-600, #026c31) 100%);
+    border-radius: var(--rayon-lg, 12px);
     padding: 1.8rem 2rem;
     color: white;
     display: flex;
@@ -764,6 +1244,7 @@ body.pact-role-trainer:not(.pact-role-admin) .pact-nav-apprenant-btn {
     margin-bottom: 1.5rem;
     position: relative;
     overflow: hidden;
+    border-left: 5px solid var(--or-300, #ffed00);
 }
 
 .pact-quick-access-catalogue::before {
@@ -777,6 +1258,7 @@ body.pact-role-trainer:not(.pact-role-admin) .pact-nav-apprenant-btn {
 }
 
 .pact-quick-access-catalogue .pact-qac-text h3 {
+    font-family: var(--police-titre);
     font-size: 1.3rem;
     font-weight: 800;
     margin: 0 0 0.4rem;
@@ -786,8 +1268,8 @@ body.pact-role-trainer:not(.pact-role-admin) .pact-nav-apprenant-btn {
 .pact-quick-access-catalogue .pact-qac-text p {
     margin: 0;
     font-size: 0.9rem;
-    opacity: 0.8;
-    color: rgba(255,255,255,0.8);
+    opacity: 0.85;
+    color: rgba(255,255,255,0.88);
 }
 
 .pact-quick-access-catalogue .pact-qac-btn {
@@ -795,10 +1277,11 @@ body.pact-role-trainer:not(.pact-role-admin) .pact-nav-apprenant-btn {
     align-items: center;
     gap: 0.5rem;
     padding: 0.7rem 1.5rem;
-    background: #fad615;
-    color: #1a1a1a !important;
+    background: var(--or-300, #ffed00);
+    color: var(--neutre-900, #211d1a) !important;
+    font-family: var(--police-titre);
     font-weight: 800;
-    border-radius: 50px;
+    border-radius: var(--rayon-md, 8px);
     text-decoration: none !important;
     font-size: 0.9rem;
     white-space: nowrap;
@@ -807,10 +1290,10 @@ body.pact-role-trainer:not(.pact-role-admin) .pact-nav-apprenant-btn {
 }
 
 .pact-quick-access-catalogue .pact-qac-btn:hover {
-    background: #f5c800;
+    background: var(--or-400, #f0dc00);
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(250,214,21,0.5);
-    color: #1a1a1a !important;
+    box-shadow: 0 6px 20px rgba(255,237,0,0.45);
+    color: var(--neutre-900, #211d1a) !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -822,54 +1305,56 @@ body#page-course-index-category {
         margin-top: 1.5rem;
 
         .category {
-            background: #ffffff;
-            border-radius: 14px;
+            background: var(--surface, #ffffff);
+            border-radius: var(--rayon-lg, 12px);
             padding: 1.2rem 1.5rem;
             margin-bottom: 1.2rem;
-            border: 2px solid #e9ecef;
-            border-left: 5px solid #129b40;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+            border: 1px solid var(--bordure, #e2ddd6);
+            border-left: 5px solid var(--vert-500, #00843b);
+            box-shadow: var(--ombre-sm);
             transition: all 0.25s ease;
 
             &:hover {
-                border-color: #129b40;
-                box-shadow: 0 8px 25px rgba(18,155,64,0.12);
+                border-color: var(--vert-500, #00843b);
+                box-shadow: var(--ombre-md);
                 transform: translateY(-2px);
             }
 
             .categoryname a {
-                color: #0f172a;
+                font-family: var(--police-titre);
+                color: var(--texte, #211d1a);
                 font-weight: 700;
                 font-size: 1.15rem;
                 text-decoration: none;
 
                 &:hover {
-                    color: #129b40;
+                    color: var(--vert-600, #026c31);
                 }
             }
         }
 
         .coursebox {
-            background: #f8fafc;
-            border-radius: 12px;
+            background: var(--surface-basse, #fcfbf9);
+            border-radius: var(--rayon-md, 8px);
             padding: 1rem 1.2rem;
             margin-bottom: 0.8rem;
-            border: 1px solid #e2e8f0;
+            border: 1px solid var(--bordure, #e2ddd6);
             transition: all 0.2s ease;
 
             &:hover {
-                background: #ffffff;
-                border-color: #129b40;
-                box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+                background: var(--surface, #ffffff);
+                border-color: var(--vert-500, #00843b);
+                box-shadow: var(--ombre-sm);
             }
 
             .coursename a {
-                color: #1e293b;
+                font-family: var(--police-titre);
+                color: var(--texte, #211d1a);
                 font-weight: 700;
                 text-decoration: none;
 
                 &:hover {
-                    color: #129b40;
+                    color: var(--vert-600, #026c31);
                 }
             }
         }
@@ -882,8 +1367,8 @@ body#page-course-index-category {
 
 .pact-cert-card {
     position: relative;
-    border-radius: 20px;
-    background: #ffffff;
+    border-radius: var(--rayon-lg, 12px);
+    background: var(--surface, #ffffff);
     padding: 1.6rem;
     display: flex;
     flex-direction: column;
@@ -914,14 +1399,16 @@ body#page-course-index-category {
     }
 
     .pact-cert-nation {
+        font-family: var(--police-titre);
         font-size: 0.68rem;
         font-weight: 800;
         letter-spacing: 0.08em;
         text-transform: uppercase;
-        color: #64748b;
+        color: var(--texte-attenue, #635c55);
     }
 
     .pact-cert-badge {
+        font-family: var(--police-titre);
         padding: 0.3rem 0.85rem;
         border-radius: 50px;
         font-size: 0.78rem;
@@ -933,32 +1420,34 @@ body#page-course-index-category {
 
     /* Titres */
     .pact-cert-type {
+        font-family: var(--police-titre);
         font-size: 0.8rem;
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.05em;
-        color: #129b40;
+        color: var(--vert-700, #045527);
         margin-bottom: 0.3rem;
     }
 
     .pact-cert-title {
+        font-family: var(--police-titre);
         font-size: 1.15rem;
         font-weight: 800;
-        color: #0f172a;
+        color: var(--texte, #211d1a);
         line-height: 1.35;
         margin-bottom: 0.6rem;
     }
 
     .pact-cert-recipient {
         font-size: 0.88rem;
-        color: #475569;
+        color: var(--texte-attenue, #635c55);
         margin-bottom: 1rem;
         display: flex;
         align-items: center;
         gap: 0.4rem;
 
         strong {
-            color: #0f172a;
+            color: var(--texte, #211d1a);
             font-weight: 700;
         }
     }
@@ -966,8 +1455,8 @@ body#page-course-index-category {
     /* Zone vérification & QR code */
     .pact-cert-verify-box {
         background: rgba(255,255,255,0.85);
-        border: 1px dashed #cbd5e1;
-        border-radius: 12px;
+        border: 1px dashed var(--bordure-forte, #8e867f);
+        border-radius: var(--rayon-md, 8px);
         padding: 0.75rem 0.9rem;
         display: flex;
         align-items: center;
@@ -983,23 +1472,23 @@ body#page-course-index-category {
 
         .pact-cert-code-label {
             font-size: 0.7rem;
-            color: #64748b;
+            color: var(--texte-attenue, #635c55);
             text-transform: uppercase;
             font-weight: 700;
             margin-bottom: 0.1rem;
         }
 
         .pact-cert-code {
-            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            font-family: var(--police-mono);
             font-size: 0.85rem;
             font-weight: 700;
-            color: #0f172a;
+            color: var(--texte, #211d1a);
             word-break: break-all;
         }
 
         .pact-cert-date {
             font-size: 0.75rem;
-            color: #64748b;
+            color: var(--texte-attenue, #635c55);
             margin-top: 0.2rem;
         }
     }
@@ -1010,7 +1499,7 @@ body#page-course-index-category {
         background: #ffffff;
         padding: 4px;
         border-radius: 8px;
-        border: 1px solid #e2e8f0;
+        border: 1px solid var(--bordure, #e2ddd6);
         flex-shrink: 0;
         display: flex;
         align-items: center;
@@ -1043,19 +1532,20 @@ body#page-course-index-category {
         justify-content: center;
         gap: 0.5rem;
         padding: 0.6rem 1rem;
-        background: linear-gradient(135deg, #129b40, #0d7a32);
+        background: var(--action, #00843b);
         color: #ffffff !important;
+        font-family: var(--police-titre);
         font-weight: 700;
         font-size: 0.85rem;
-        border-radius: 50px;
+        border-radius: var(--rayon-md, 8px);
         text-decoration: none !important;
         transition: all 0.2s ease;
-        box-shadow: 0 2px 8px rgba(18,155,64,0.25);
+        box-shadow: var(--ombre-sm);
 
         &:hover {
-            background: linear-gradient(135deg, #0d7a32, #075a24);
+            background: var(--action-survol, #026c31);
             transform: translateY(-1px);
-            box-shadow: 0 4px 15px rgba(18,155,64,0.4);
+            box-shadow: var(--ombre-md);
             color: #ffffff !important;
         }
     }
@@ -1072,19 +1562,20 @@ body#page-course-index-category {
         justify-content: center;
         gap: 0.35rem;
         padding: 0.5rem 0.75rem;
-        background: #0a66c2;
+        background: var(--bleu-500, #2a6d9b);
         color: #ffffff !important;
+        font-family: var(--police-titre);
         font-weight: 700;
         font-size: 0.78rem;
-        border-radius: 50px;
+        border-radius: var(--rayon-md, 8px);
         text-decoration: none !important;
         transition: all 0.2s ease;
 
         &:hover {
-            background: #004182;
+            background: var(--bleu-700, #173f5f);
             transform: translateY(-1px);
             color: #ffffff !important;
-            box-shadow: 0 3px 10px rgba(10,102,194,0.3);
+            box-shadow: var(--ombre-sm);
         }
     }
 
@@ -1093,17 +1584,18 @@ body#page-course-index-category {
         align-items: center;
         justify-content: center;
         padding: 0.5rem 0.8rem;
-        background: #e8f3fc;
-        color: #0a66c2 !important;
+        background: var(--bleu-50, #eef4f9);
+        color: var(--bleu-700, #173f5f) !important;
+        font-family: var(--police-titre);
         font-weight: 700;
         font-size: 0.78rem;
-        border-radius: 50px;
+        border-radius: var(--rayon-md, 8px);
         text-decoration: none !important;
         transition: all 0.2s ease;
-        border: 1px solid #bfdbfe;
+        border: 1px solid var(--bleu-500, #2a6d9b);
 
         &:hover {
-            background: #0a66c2;
+            background: var(--bleu-500, #2a6d9b);
             color: #ffffff !important;
             transform: translateY(-1px);
         }
@@ -1115,73 +1607,73 @@ body#page-course-index-category {
         justify-content: center;
         gap: 0.35rem;
         padding: 0.45rem 0.75rem;
-        background: #f1f5f9;
-        color: #475569 !important;
+        background: var(--surface-enfoncee, #f7f5f2);
+        color: var(--texte-attenue, #635c55) !important;
         font-weight: 600;
         font-size: 0.75rem;
-        border-radius: 50px;
+        border-radius: var(--rayon-md, 8px);
         text-decoration: none !important;
         transition: all 0.2s ease;
 
         &:hover {
-            background: #e2e8f0;
-            color: #0f172a !important;
+            background: var(--bordure, #e2ddd6);
+            color: var(--texte, #211d1a) !important;
         }
     }
 
     /* ── Variantes métalliques ── */
     &.cert-bronze {
-        border-color: #cd7f32;
-        background: linear-gradient(145deg, #ffffff 0%, #fffcf8 60%, #fbf3ec 100%);
-        box-shadow: 0 4px 20px rgba(205, 127, 50, 0.15);
+        border-color: var(--ocre-500, #b07800);
+        background: linear-gradient(145deg, #ffffff 0%, #fffcf8 60%, var(--ocre-50, #fdf4e3) 100%);
+        box-shadow: 0 4px 20px rgba(176, 120, 0, 0.14);
 
         &:hover {
-            box-shadow: 0 12px 35px rgba(205, 127, 50, 0.28);
+            box-shadow: 0 12px 35px rgba(176, 120, 0, 0.25);
         }
         .pact-cert-badge {
-            background: linear-gradient(135deg, #cd7f32, #8c531b);
+            background: linear-gradient(135deg, var(--ocre-500, #b07800), var(--ocre-700, #7d5500));
             color: #ffffff;
         }
     }
 
     &.cert-argent {
-        border-color: #90a4ae;
-        background: linear-gradient(145deg, #ffffff 0%, #f8fafc 60%, #eef2f6 100%);
-        box-shadow: 0 4px 20px rgba(144, 164, 174, 0.2);
+        border-color: var(--neutre-450, #8e867f);
+        background: linear-gradient(145deg, #ffffff 0%, var(--neutre-25, #fcfbf9) 60%, var(--neutre-100, #efece7) 100%);
+        box-shadow: 0 4px 20px rgba(142, 134, 127, 0.18);
 
         &:hover {
-            box-shadow: 0 12px 35px rgba(144, 164, 174, 0.35);
+            box-shadow: 0 12px 35px rgba(142, 134, 127, 0.32);
         }
         .pact-cert-badge {
-            background: linear-gradient(135deg, #78909c, #455a64);
+            background: linear-gradient(135deg, var(--neutre-600, #635c55), var(--neutre-800, #38332f));
             color: #ffffff;
         }
     }
 
     &.cert-or {
-        border-color: #d4af37;
-        background: linear-gradient(145deg, #ffffff 0%, #fffef4 60%, #fcf7db 100%);
-        box-shadow: 0 4px 20px rgba(212, 175, 55, 0.22);
+        border-color: var(--or-500, #d4bc00);
+        background: linear-gradient(145deg, #ffffff 0%, #fffef4 60%, var(--or-50, #fffde6) 100%);
+        box-shadow: 0 4px 20px rgba(212, 188, 0, 0.22);
 
         &:hover {
-            box-shadow: 0 12px 40px rgba(212, 175, 55, 0.4);
+            box-shadow: 0 12px 40px rgba(212, 188, 0, 0.38);
         }
         .pact-cert-badge {
-            background: linear-gradient(135deg, #d4af37, #996515);
-            color: #ffffff;
+            background: var(--or-300, #ffed00);
+            color: var(--neutre-900, #211d1a);
         }
     }
 
     &.cert-diamant {
-        border-color: #00bcd4;
-        background: linear-gradient(145deg, #ffffff 0%, #f0fdff 60%, #e0f7fa 100%);
-        box-shadow: 0 4px 20px rgba(0, 188, 212, 0.2);
+        border-color: var(--bleu-500, #2a6d9b);
+        background: linear-gradient(145deg, #ffffff 0%, #f7fbfe 60%, var(--bleu-50, #eef4f9) 100%);
+        box-shadow: 0 4px 20px rgba(42, 109, 155, 0.18);
 
         &:hover {
-            box-shadow: 0 12px 40px rgba(0, 188, 212, 0.38);
+            box-shadow: 0 12px 40px rgba(42, 109, 155, 0.32);
         }
         .pact-cert-badge {
-            background: linear-gradient(135deg, #00acc1, #00838f);
+            background: linear-gradient(135deg, var(--bleu-500, #2a6d9b), var(--bleu-700, #173f5f));
             color: #ffffff;
         }
     }
@@ -1200,36 +1692,38 @@ body.pagelayout-login .logincookies {
 }
 
 /* ==========================================================================
-   PACTDIGITAL-BF — VITRINE ACCUEIL STYLE UDEMY
+   PACTDIGITAL-BF — VITRINE ACCUEIL CONFORME CHARTE GRAPHIQUE V2.0 (MTDPCE)
    ========================================================================== */
 
 .pact-udemy-wrapper {
-    background-color: #f8fafc;
-    color: #1e293b;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: var(--surface-basse);
+    color: var(--texte);
+    font-family: var(--police-texte);
     min-height: 100vh;
 }
 
-/* ── 1. Top Navbar Style Udemy ── */
+/* ── 1. Top Navbar Institutionnel ── */
 .pact-udemy-navbar {
     position: sticky;
     top: 0;
     z-index: 1030;
-    background: #ffffff;
-    border-bottom: 1px solid #e2e8f0;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
-    height: 72px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--bordure);
+    box-shadow: var(--ombre-sm);
+    min-height: 80px;
+    padding-block: 0.65rem;
     display: flex;
     align-items: center;
 }
 
 .pact-udemy-nav-inner {
-    max-width: 1440px;
+    max-width: var(--largeur-contenu);
     width: 100%;
     margin: 0 auto;
     padding: 0 1.5rem;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 1.25rem;
 }
 
@@ -1243,7 +1737,7 @@ body.pagelayout-login .logincookies {
 }
 
 .pact-nav-flag {
-    height: 48px;
+    height: 56px;
     width: auto;
     object-fit: contain;
 }
@@ -1255,26 +1749,27 @@ body.pagelayout-login .logincookies {
 }
 
 .pact-nav-ministry-title {
-    font-size: 0.95rem;
-    font-weight: 800;
-    color: #0f172a;
+    font-size: var(--taille-xs);
+    font-weight: var(--graisse-demi);
+    color: var(--vert-700);
     line-height: 1.25;
-    letter-spacing: -0.01em;
 }
 
 .pact-nav-project-subtitle {
+    font-family: var(--police-titre);
     font-size: 0.82rem;
     font-weight: 700;
-    color: #129b40;
+    color: var(--vert-500);
     text-transform: uppercase;
     letter-spacing: 0.04em;
     margin-top: 2px;
 }
 
 .pact-nav-brand-title {
+    font-family: var(--police-titre);
     font-size: 1.15rem;
     font-weight: 800;
-    color: #0f172a;
+    color: var(--texte);
     letter-spacing: -0.02em;
     line-height: 1.1;
 }
@@ -1282,7 +1777,7 @@ body.pagelayout-login .logincookies {
 .pact-nav-brand-sub {
     font-size: 0.68rem;
     font-weight: 600;
-    color: #129b40;
+    color: var(--vert-500);
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
@@ -1296,17 +1791,18 @@ body.pagelayout-login .logincookies {
     align-items: center;
     gap: 0.5rem;
     padding: 0.5rem 1rem;
+    font-family: var(--police-titre);
     font-size: 0.9rem;
     font-weight: 600;
-    color: #334155;
+    color: var(--texte-attenue);
     text-decoration: none;
-    border-radius: 9999px;
-    background: #f1f5f9;
+    border-radius: var(--rayon-md);
+    background: var(--surface-enfoncee);
     transition: all 0.2s ease;
 
     &:hover {
-        background: #e2e8f0;
-        color: #0f172a;
+        background: var(--bordure);
+        color: var(--texte);
     }
 }
 
@@ -1319,22 +1815,22 @@ body.pagelayout-login .logincookies {
     position: relative;
     display: flex;
     align-items: center;
-    background: #f8fafc;
-    border: 1px solid #cbd5e1;
-    border-radius: 9999px;
+    background: var(--surface-basse);
+    border: 1px solid var(--bordure-forte);
+    border-radius: var(--rayon-md);
     padding: 0.35rem 0.6rem 0.35rem 1.1rem;
     transition: all 0.2s ease;
 
     &:focus-within {
-        border-color: #129b40;
-        background: #ffffff;
-        box-shadow: 0 0 0 3px rgba(18, 155, 64, 0.15);
+        border-color: var(--vert-600);
+        background: var(--surface);
+        box-shadow: 0 0 0 3px var(--vert-50);
     }
 }
 
 .pact-search-icon {
     font-size: 0.95rem;
-    color: #94a3b8;
+    color: var(--texte-faible);
     margin-right: 0.5rem;
 }
 
@@ -1344,26 +1840,27 @@ body.pagelayout-login .logincookies {
     outline: none;
     width: 100%;
     font-size: 0.92rem;
-    color: #1e293b;
+    color: var(--texte);
 
     &::placeholder {
-        color: #94a3b8;
+        color: var(--texte-faible);
     }
 }
 
 .pact-search-btn {
-    background: #129b40;
-    color: #ffffff;
+    background: var(--action);
+    color: var(--action-texte);
     border: none;
-    border-radius: 9999px;
+    border-radius: var(--rayon-md);
     padding: 0.4rem 1rem;
+    font-family: var(--police-titre);
     font-size: 0.85rem;
     font-weight: 600;
     cursor: pointer;
     transition: background 0.2s ease;
 
     &:hover {
-        background: #0e7a32;
+        background: var(--action-survol);
     }
 }
 
@@ -1376,16 +1873,17 @@ body.pagelayout-login .logincookies {
 }
 
 .pact-nav-link {
+    font-family: var(--police-titre);
     font-size: 0.88rem;
     font-weight: 600;
-    color: #475569;
+    color: var(--texte-attenue);
     text-decoration: none;
     padding: 0.4rem 0.6rem;
-    border-radius: 6px;
+    border-radius: var(--rayon-md);
     transition: color 0.2s;
 
     &:hover {
-        color: #129b40;
+        color: var(--vert-700);
     }
 }
 
@@ -1393,8 +1891,10 @@ body.pagelayout-login .logincookies {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    min-height: 40px;
     padding: 0.5rem 1.15rem;
-    border-radius: 8px;
+    border-radius: var(--rayon-md);
+    font-family: var(--police-titre);
     font-size: 0.88rem;
     font-weight: 600;
     text-decoration: none;
@@ -1403,35 +1903,37 @@ body.pagelayout-login .logincookies {
 }
 
 .pact-btn-outline {
-    border: 1px solid #0f172a;
-    color: #0f172a;
+    border: 2px solid var(--action);
+    color: var(--action-sur-clair);
     background: transparent;
 
     &:hover {
-        background: #f1f5f9;
-        color: #0f172a;
+        background: var(--action-tenue);
+        color: var(--action-sur-clair);
     }
 }
 
 .pact-btn-primary {
-    background: #129b40;
-    border: 1px solid #129b40;
-    color: #ffffff;
+    background: var(--action);
+    border: 2px solid var(--action);
+    color: var(--action-texte);
 
     &:hover {
-        background: #0e7a32;
-        color: #ffffff;
+        background: var(--action-survol);
+        border-color: var(--action-survol);
+        color: var(--action-texte);
     }
 }
 
 .pact-btn-espace {
-    background: #fef9c3;
-    border: 1px solid #facc15;
-    color: #854d0e;
+    background: var(--relief);
+    border: 2px solid var(--relief);
+    color: var(--relief-texte);
 
     &:hover {
-        background: #fef08a;
-        color: #713f12;
+        background: var(--relief-survol);
+        border-color: var(--relief-survol);
+        color: var(--relief-texte);
     }
 }
 
@@ -1439,17 +1941,19 @@ body.pagelayout-login .logincookies {
     display: flex;
     align-items: center;
     gap: 0.6rem;
-    background: #f1f5f9;
-    padding: 0.35rem 0.8rem;
-    border-radius: 9999px;
+    background: var(--surface-enfoncee);
+    border: 1px solid var(--bordure);
+    padding: 0.35rem 0.85rem;
+    border-radius: var(--rayon-plein);
     font-size: 0.85rem;
 
     .user-greeting {
         font-weight: 600;
-        color: #0f172a;
+        color: var(--texte);
     }
     .pact-logout-link {
-        color: #dc2626;
+        color: var(--danger-texte);
+        font-weight: 600;
         text-decoration: none;
         font-size: 0.78rem;
         margin-left: 0.3rem;
@@ -1460,9 +1964,9 @@ body.pagelayout-login .logincookies {
     }
 }
 
-/* ── 2. Hero Section ── */
+/* ── 2. Hero Section (Charte v2.0 : Vert souverain & Neutres chauds) ── */
 .pact-hero-section {
-    background: linear-gradient(135deg, #091e3a 0%, #0f3959 50%, #124e38 100%);
+    background: linear-gradient(135deg, var(--vert-900) 0%, var(--vert-800) 55%, var(--vert-600) 100%);
     padding: 3.5rem 1.5rem;
     position: relative;
     overflow: hidden;
@@ -1471,23 +1975,25 @@ body.pagelayout-login .logincookies {
         content: "";
         position: absolute;
         top: 0; left: 0; right: 0; bottom: 0;
-        background: radial-gradient(circle at 80% 20%, rgba(250, 214, 21, 0.12) 0%, transparent 60%);
+        background: radial-gradient(circle at 85% 20%, rgba(255, 237, 0, 0.14) 0%, transparent 60%);
         pointer-events: none;
     }
 }
 
 .pact-hero-container {
-    max-width: 1440px;
+    max-width: var(--largeur-contenu);
     margin: 0 auto;
 }
 
 .pact-hero-card {
-    background: #ffffff;
-    border-radius: 20px;
+    background: var(--surface);
+    border-radius: var(--rayon-xl);
+    border: 1px solid var(--bordure);
+    border-top: 4px solid var(--vert-500);
     padding: 3rem;
     width: 100%;
     max-width: 100%;
-    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--ombre-xl);
     position: relative;
     z-index: 2;
 
@@ -1501,49 +2007,52 @@ body.pagelayout-login .logincookies {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    background: #ecfdf5;
-    border: 1px solid #a7f3d0;
-    color: #065f46;
-    font-size: 0.82rem;
+    background: var(--vert-50);
+    border: 1px solid var(--vert-200);
+    color: var(--vert-700);
+    font-family: var(--police-titre);
+    font-size: var(--taille-xs);
     font-weight: 700;
-    padding: 0.4rem 0.95rem;
-    border-radius: 9999px;
+    padding: 0.35rem 0.9rem;
+    border-radius: var(--rayon-plein);
     text-transform: uppercase;
-    letter-spacing: 0.04em;
+    letter-spacing: var(--approche-capitale);
     margin-bottom: 1.25rem;
 }
 
 .pact-hero-title {
-    font-size: 2.2rem;
-    font-weight: 800;
-    color: #0f172a;
-    line-height: 1.25;
+    font-family: var(--police-titre);
+    font-size: unquote("clamp(1.85rem, 1.5rem + 1.5vw, 2.5rem)");
+    font-weight: var(--graisse-noire);
+    color: var(--texte);
+    line-height: 1.2;
     margin-bottom: 1.25rem;
-    letter-spacing: -0.02em;
+    letter-spacing: var(--approche-titre);
 }
 
 .pact-hero-subtitle {
-    font-size: 1.12rem;
-    color: #334155;
+    font-size: 1.08rem;
+    color: var(--texte-attenue);
     line-height: 1.7;
     margin-bottom: 1rem;
 
     strong {
-        color: #0f172a;
+        color: var(--texte);
+        font-weight: var(--graisse-demi);
     }
 }
 
 .pact-hero-desc-lead {
-    font-size: 1.02rem;
-    color: #475569;
+    font-size: 1rem;
+    color: var(--texte-attenue);
     line-height: 1.7;
     margin-bottom: 2rem;
 
     strong {
-        color: #0f172a;
+        color: var(--texte);
+        font-weight: var(--graisse-demi);
     }
 }
-
 
 .pact-hero-search-form {
     margin-bottom: 1.25rem;
@@ -1552,22 +2061,22 @@ body.pagelayout-login .logincookies {
 .hero-search-wrapper {
     display: flex;
     align-items: center;
-    background: #f8fafc;
-    border: 2px solid #e2e8f0;
-    border-radius: 12px;
+    background: var(--surface-basse);
+    border: 2px solid var(--bordure-forte);
+    border-radius: var(--rayon-lg);
     padding: 0.4rem 0.5rem 0.4rem 1rem;
     transition: all 0.2s ease;
 
     &:focus-within {
-        border-color: #129b40;
-        background: #ffffff;
-        box-shadow: 0 0 0 4px rgba(18, 155, 64, 0.12);
+        border-color: var(--vert-600);
+        background: var(--surface);
+        box-shadow: 0 0 0 4px var(--vert-50);
     }
 }
 
 .hero-search-icon {
     font-size: 1.1rem;
-    color: #94a3b8;
+    color: var(--texte-faible);
     margin-right: 0.6rem;
 }
 
@@ -1577,26 +2086,27 @@ body.pagelayout-login .logincookies {
     background: transparent;
     width: 100%;
     font-size: 0.98rem;
-    color: #0f172a;
+    color: var(--texte);
 
     &::placeholder {
-        color: #94a3b8;
+        color: var(--texte-faible);
     }
 }
 
 .hero-search-submit {
-    background: #129b40;
-    color: #ffffff;
+    background: var(--action);
+    color: var(--action-texte);
     border: none;
-    border-radius: 8px;
+    border-radius: var(--rayon-md);
     padding: 0.6rem 1.4rem;
+    font-family: var(--police-titre);
     font-size: 0.92rem;
     font-weight: 700;
     cursor: pointer;
     transition: background 0.2s;
 
     &:hover {
-        background: #0e7a32;
+        background: var(--action-survol);
     }
 }
 
@@ -1610,21 +2120,21 @@ body.pagelayout-login .logincookies {
 
     .tags-label {
         font-weight: 600;
-        color: #64748b;
+        color: var(--texte-faible);
     }
 
     .hero-tag {
-        background: #f1f5f9;
-        color: #334155;
+        background: var(--surface-enfoncee);
+        color: var(--texte-attenue);
         text-decoration: none;
         padding: 0.25rem 0.65rem;
-        border-radius: 6px;
+        border-radius: var(--rayon-md);
         font-weight: 500;
         transition: all 0.2s ease;
 
         &:hover {
-            background: #e2e8f0;
-            color: #129b40;
+            background: var(--vert-50);
+            color: var(--vert-700);
         }
     }
 }
@@ -1639,57 +2149,58 @@ body.pagelayout-login .logincookies {
     width: 100%;
 }
 
-
 .btn-hero-primary {
     display: inline-flex;
     align-items: center;
-    background: #129b40;
-    color: #ffffff;
-    font-weight: 700;
+    min-height: 52px;
+    background: var(--action);
+    color: var(--action-texte);
+    font-family: var(--police-titre);
+    font-weight: var(--graisse-demi);
     font-size: 1.05rem;
     padding: 0.85rem 2rem;
-    border-radius: 9999px;
+    border-radius: var(--rayon-md);
     text-decoration: none;
-    box-shadow: 0 4px 14px rgba(18, 155, 64, 0.35);
+    box-shadow: var(--ombre-sm);
     transition: all 0.2s ease;
 
     &:hover {
-        background: #0e7a32;
-        color: #ffffff;
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(18, 155, 64, 0.45);
+        background: var(--action-survol);
+        color: var(--action-texte);
+        transform: translateY(-1px);
+        box-shadow: var(--ombre-md);
     }
 }
-
 
 .btn-hero-secondary {
     display: inline-flex;
     align-items: center;
-    background: #f8fafc;
-    border: 1px solid #cbd5e1;
-    color: #0f172a;
+    background: var(--surface-basse);
+    border: 2px solid var(--bordure-forte);
+    color: var(--texte);
+    font-family: var(--police-titre);
     font-weight: 600;
     font-size: 0.95rem;
     padding: 0.75rem 1.4rem;
-    border-radius: 10px;
+    border-radius: var(--rayon-md);
     text-decoration: none;
     transition: all 0.2s ease;
 
     &:hover {
-        background: #e2e8f0;
-        color: #0f172a;
+        background: var(--surface-enfoncee);
+        color: var(--texte);
     }
 }
 
 /* ── 3. Stats Strip ── */
 .pact-stats-strip {
-    background: #ffffff;
-    border-bottom: 1px solid #e2e8f0;
-    padding: 1.5rem;
+    background: var(--surface-enfoncee);
+    border-bottom: 1px solid var(--bordure);
+    padding: 1.75rem 1.5rem;
 }
 
 .pact-stats-container {
-    max-width: 1440px;
+    max-width: var(--largeur-contenu);
     margin: 0 auto;
     display: flex;
     align-items: center;
@@ -1709,22 +2220,23 @@ body.pagelayout-login .logincookies {
 }
 
 .stat-number {
-    font-size: 1.35rem;
-    font-weight: 800;
-    color: #0f172a;
+    font-family: var(--police-titre);
+    font-size: 1.45rem;
+    font-weight: var(--graisse-noire);
+    color: var(--vert-700);
     line-height: 1.1;
 }
 
 .stat-label {
-    font-size: 0.82rem;
+    font-size: var(--taille-sm);
     font-weight: 500;
-    color: #64748b;
+    color: var(--texte-attenue);
 }
 
 .pact-stat-divider {
     width: 1px;
     height: 40px;
-    background: #e2e8f0;
+    background: var(--bordure);
     display: block;
 
     @media (max-width: 768px) {
@@ -1732,14 +2244,14 @@ body.pagelayout-login .logincookies {
     }
 }
 
-/* ── 4. Skills Tabs Section (Style Udemy) ── */
+/* ── 4. Skills Tabs Section ── */
 .pact-skills-section {
     padding: 4rem 1.5rem;
-    background: #ffffff;
+    background: var(--surface);
 }
 
 .pact-skills-container {
-    max-width: 1440px;
+    max-width: var(--largeur-contenu);
     margin: 0 auto;
 }
 
@@ -1748,49 +2260,51 @@ body.pagelayout-login .logincookies {
 }
 
 .pact-section-title {
-    font-size: 1.85rem;
-    font-weight: 800;
-    color: #0f172a;
+    font-family: var(--police-titre);
+    font-size: unquote("clamp(1.625rem, 1.36rem + 1.17vw, 2.2rem)");
+    font-weight: var(--graisse-grasse);
+    color: var(--texte);
     margin-bottom: 0.5rem;
-    letter-spacing: -0.02em;
+    letter-spacing: var(--approche-titre);
 }
 
 .pact-section-sub {
     font-size: 1.05rem;
-    color: #64748b;
+    color: var(--texte-attenue);
     margin-bottom: 0;
 }
 
 .pact-tabs-nav {
     display: flex;
     align-items: center;
-    gap: 0.6rem;
+    gap: 0.5rem;
     overflow-x: auto;
     padding-bottom: 0.5rem;
     margin-bottom: 2rem;
-    border-bottom: 2px solid #f1f5f9;
+    border-bottom: 2px solid var(--bordure);
 }
 
 .pact-tab-btn {
     border: none;
     background: transparent;
     padding: 0.65rem 1.25rem;
+    font-family: var(--police-titre);
     font-size: 0.95rem;
     font-weight: 600;
-    color: #64748b;
-    border-radius: 9999px;
+    color: var(--texte-attenue);
+    border-radius: var(--rayon-md);
     cursor: pointer;
     white-space: nowrap;
     transition: all 0.2s ease;
 
     &:hover {
-        background: #f1f5f9;
-        color: #0f172a;
+        background: var(--surface-enfoncee);
+        color: var(--texte);
     }
 
     &.active {
-        background: #0f172a;
-        color: #ffffff;
+        background: var(--action);
+        color: var(--action-texte);
         font-weight: 700;
     }
 }
@@ -1814,9 +2328,10 @@ body.pagelayout-login .logincookies {
 }
 
 .pact-tab-lead {
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 14px;
+    background: var(--surface-enfoncee);
+    border: 1px solid var(--bordure);
+    border-left: 4px solid var(--vert-500);
+    border-radius: var(--rayon-lg);
     padding: 1.5rem 2rem;
     margin-bottom: 2rem;
     display: flex;
@@ -1827,33 +2342,36 @@ body.pagelayout-login .logincookies {
 }
 
 .tab-lead-title {
+    font-family: var(--police-titre);
     font-size: 1.25rem;
     font-weight: 700;
-    color: #0f172a;
+    color: var(--texte);
     margin-bottom: 0.35rem;
 }
 
 .tab-lead-desc {
     font-size: 0.92rem;
-    color: #475569;
+    color: var(--texte-attenue);
     margin-bottom: 0;
 }
 
 .tab-lead-link {
     display: inline-flex;
     align-items: center;
+    font-family: var(--police-titre);
     font-weight: 700;
     font-size: 0.92rem;
-    color: #129b40;
+    color: var(--lien);
     text-decoration: none;
     white-space: nowrap;
 
     &:hover {
+        color: var(--lien-survol);
         text-decoration: underline;
     }
 }
 
-/* Grille de cours façon Udemy */
+/* Grille de cours */
 .pact-courses-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -1871,9 +2389,9 @@ body.pagelayout-login .logincookies {
 }
 
 .pact-course-card {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
+    background: var(--surface);
+    border: 1px solid var(--bordure);
+    border-radius: var(--rayon-lg);
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -1881,8 +2399,8 @@ body.pagelayout-login .logincookies {
 
     &:hover {
         transform: translateY(-4px);
-        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
-        border-color: #cbd5e1;
+        box-shadow: var(--ombre-lg);
+        border-color: var(--vert-500);
     }
 
     .card-image-wrap {
@@ -1890,7 +2408,7 @@ body.pagelayout-login .logincookies {
         display: block;
         aspect-ratio: 16 / 9;
         overflow: hidden;
-        background: #0f172a;
+        background: var(--neutre-900);
 
         .card-img {
             width: 100%;
@@ -1916,25 +2434,26 @@ body.pagelayout-login .logincookies {
             position: absolute;
             top: 10px;
             left: 10px;
+            font-family: var(--police-titre);
             font-size: 0.72rem;
             font-weight: 700;
-            padding: 0.25rem 0.6rem;
-            border-radius: 6px;
+            padding: 0.25rem 0.65rem;
+            border-radius: var(--rayon-sm);
             text-transform: uppercase;
-            letter-spacing: 0.03em;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            letter-spacing: 0.04em;
+            box-shadow: var(--ombre-sm);
 
             &.level-bronze {
-                background: #b45309;
+                background: var(--ocre-700);
                 color: #ffffff;
             }
             &.level-argent {
-                background: #475569;
+                background: var(--neutre-700);
                 color: #ffffff;
             }
             &.level-or {
-                background: #d97706;
-                color: #ffffff;
+                background: var(--or-300);
+                color: var(--neutre-900);
             }
         }
     }
@@ -1955,20 +2474,22 @@ body.pagelayout-login .logincookies {
     }
 
     .card-domain-tag {
+        font-family: var(--police-titre);
         font-weight: 700;
-        color: #129b40;
+        color: var(--vert-700);
         text-transform: uppercase;
         letter-spacing: 0.04em;
     }
 
     .card-duration {
-        color: #64748b;
+        color: var(--texte-faible);
     }
 
     .card-title {
+        font-family: var(--police-titre);
         font-size: 0.98rem;
         font-weight: 700;
-        color: #0f172a;
+        color: var(--texte);
         line-height: 1.35;
         margin-bottom: 0.5rem;
         display: -webkit-box;
@@ -1982,14 +2503,14 @@ body.pagelayout-login .logincookies {
             text-decoration: none;
 
             &:hover {
-                color: #129b40;
+                color: var(--vert-600);
             }
         }
     }
 
     .card-summary {
         font-size: 0.85rem;
-        color: #64748b;
+        color: var(--texte-attenue);
         line-height: 1.5;
         margin-bottom: 0.85rem;
         display: -webkit-box;
@@ -2007,12 +2528,13 @@ body.pagelayout-login .logincookies {
     }
 
     .card-feature-pill {
-        background: #f1f5f9;
-        color: #334155;
+        background: var(--surface-enfoncee);
+        color: var(--texte-attenue);
+        border: 1px solid var(--bordure);
         font-size: 0.72rem;
         font-weight: 600;
-        padding: 0.2rem 0.5rem;
-        border-radius: 4px;
+        padding: 0.2rem 0.55rem;
+        border-radius: var(--rayon-sm);
     }
 
     .card-footer {
@@ -2020,29 +2542,33 @@ body.pagelayout-login .logincookies {
         align-items: center;
         justify-content: space-between;
         padding-top: 0.75rem;
-        border-top: 1px solid #f1f5f9;
+        border-top: 1px solid var(--bordure);
         margin-top: auto;
     }
 
     .card-price {
+        font-family: var(--police-titre);
         font-size: 0.92rem;
         font-weight: 800;
-        color: #129b40;
+        color: var(--vert-700);
     }
 
     .btn-card-action {
+        font-family: var(--police-titre);
         font-size: 0.85rem;
         font-weight: 700;
-        color: #0f172a;
+        color: var(--texte);
         text-decoration: none;
-        padding: 0.35rem 0.75rem;
-        border-radius: 6px;
-        background: #f1f5f9;
+        padding: 0.35rem 0.8rem;
+        border-radius: var(--rayon-md);
+        background: var(--surface-enfoncee);
+        border: 1px solid var(--bordure);
         transition: all 0.2s;
 
         &:hover {
-            background: #129b40;
-            color: #ffffff;
+            background: var(--action);
+            border-color: var(--action);
+            color: var(--action-texte);
         }
     }
 }
@@ -2050,29 +2576,30 @@ body.pagelayout-login .logincookies {
 .btn-view-all {
     display: inline-flex;
     align-items: center;
-    background: #ffffff;
-    border: 2px solid #0f172a;
-    color: #0f172a;
+    background: var(--surface);
+    border: 2px solid var(--action);
+    color: var(--action-sur-clair);
+    font-family: var(--police-titre);
     font-weight: 700;
     padding: 0.65rem 1.75rem;
-    border-radius: 8px;
+    border-radius: var(--rayon-md);
     text-decoration: none;
     transition: all 0.2s ease;
 
     &:hover {
-        background: #0f172a;
-        color: #ffffff;
+        background: var(--action);
+        color: var(--action-texte);
     }
 }
 
 /* ── 5. Pillars Section ── */
 .pact-pillars-section {
     padding: 4.5rem 1.5rem;
-    background: #f8fafc;
+    background: var(--surface-enfoncee);
 }
 
 .pact-pillars-container {
-    max-width: 1440px;
+    max-width: var(--largeur-contenu);
     margin: 0 auto;
 }
 
@@ -2091,12 +2618,12 @@ body.pagelayout-login .logincookies {
 }
 
 .pact-pillar-card {
-    background: #ffffff;
-    border-radius: 14px;
+    background: var(--surface);
+    border-radius: var(--rayon-lg);
     padding: 2rem 1.75rem;
-    border: 1px solid #e2e8f0;
-    border-top: 4px solid #129b40;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    border: 1px solid var(--bordure);
+    border-top: 4px solid var(--vert-500);
+    box-shadow: var(--ombre-sm);
     text-decoration: none;
     color: inherit;
     display: flex;
@@ -2105,13 +2632,13 @@ body.pagelayout-login .logincookies {
 
     &:hover {
         transform: translateY(-6px);
-        box-shadow: 0 16px 32px rgba(0, 0, 0, 0.07);
+        box-shadow: var(--ombre-lg);
     }
 
     .pillar-icon {
         width: 56px;
         height: 56px;
-        border-radius: 12px;
+        border-radius: var(--rayon-lg);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -2121,10 +2648,11 @@ body.pagelayout-login .logincookies {
 
     .pillar-badge {
         display: inline-block;
+        font-family: var(--police-titre);
         font-size: 0.72rem;
         font-weight: 700;
         padding: 0.25rem 0.6rem;
-        border-radius: 6px;
+        border-radius: var(--rayon-sm);
         margin-bottom: 0.75rem;
         align-self: flex-start;
         text-transform: uppercase;
@@ -2132,22 +2660,24 @@ body.pagelayout-login .logincookies {
     }
 
     .pillar-title {
+        font-family: var(--police-titre);
         font-size: 1.15rem;
         font-weight: 700;
-        color: #0f172a;
+        color: var(--texte);
         margin-bottom: 0.65rem;
         line-height: 1.3;
     }
 
     .pillar-desc {
         font-size: 0.88rem;
-        color: #64748b;
+        color: var(--texte-attenue);
         line-height: 1.55;
         margin-bottom: 1.25rem;
         flex: 1;
     }
 
     .pillar-cta {
+        font-family: var(--police-titre);
         font-size: 0.88rem;
         font-weight: 700;
         margin-top: auto;
@@ -2157,11 +2687,11 @@ body.pagelayout-login .logincookies {
 /* ── 6. Why Choose Us Section ── */
 .pact-why-section {
     padding: 4.5rem 1.5rem;
-    background: #ffffff;
+    background: var(--surface);
 }
 
 .pact-why-container {
-    max-width: 1440px;
+    max-width: var(--largeur-contenu);
     margin: 0 auto;
 }
 
@@ -2180,17 +2710,17 @@ body.pagelayout-login .logincookies {
 }
 
 .pact-feature-card {
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 14px;
+    background: var(--surface-basse);
+    border: 1px solid var(--bordure);
+    border-radius: var(--rayon-lg);
     padding: 2rem 1.5rem;
     text-align: left;
     transition: all 0.2s ease;
 
     &:hover {
-        border-color: #cbd5e1;
-        background: #ffffff;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+        border-color: var(--vert-500);
+        background: var(--surface);
+        box-shadow: var(--ombre-md);
     }
 
     .feature-icon-box {
@@ -2199,20 +2729,21 @@ body.pagelayout-login .logincookies {
     }
 
     .feature-title {
+        font-family: var(--police-titre);
         font-size: 1.08rem;
         font-weight: 700;
-        color: #0f172a;
+        color: var(--texte);
         margin-bottom: 0.65rem;
     }
 
     .feature-text {
         font-size: 0.88rem;
-        color: #64748b;
+        color: var(--texte-attenue);
         line-height: 1.6;
         margin-bottom: 0;
 
         strong {
-            color: #0f172a;
+            color: var(--texte);
         }
     }
 }
@@ -2220,11 +2751,11 @@ body.pagelayout-login .logincookies {
 /* ── 7. Dual CTA Section (Trainer + Verify) ── */
 .pact-dual-cta-section {
     padding: 4rem 1.5rem;
-    background: #f1f5f9;
+    background: var(--surface-enfoncee);
 }
 
 .pact-dual-container {
-    max-width: 1440px;
+    max-width: var(--largeur-contenu);
     margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -2236,14 +2767,15 @@ body.pagelayout-login .logincookies {
 }
 
 .pact-cta-box {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 16px;
+    background: var(--surface);
+    border: 1px solid var(--bordure);
+    border-top: 4px solid var(--vert-500);
+    border-radius: var(--rayon-lg);
     padding: 2.5rem;
     display: flex;
     gap: 1.5rem;
     align-items: flex-start;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.03);
+    box-shadow: var(--ombre-sm);
 
     .box-icon {
         font-size: 2.5rem;
@@ -2255,25 +2787,27 @@ body.pagelayout-login .logincookies {
     }
 
     .box-tag {
-        font-size: 0.72rem;
+        font-family: var(--police-titre);
+        font-size: var(--taille-xs);
         font-weight: 700;
         text-transform: uppercase;
-        color: #129b40;
-        letter-spacing: 0.04em;
+        color: var(--vert-700);
+        letter-spacing: var(--approche-capitale);
         margin-bottom: 0.5rem;
         display: block;
     }
 
     .box-title {
+        font-family: var(--police-titre);
         font-size: 1.25rem;
         font-weight: 800;
-        color: #0f172a;
+        color: var(--texte);
         margin-bottom: 0.65rem;
     }
 
     .box-desc {
         font-size: 0.9rem;
-        color: #64748b;
+        color: var(--texte-attenue);
         line-height: 1.6;
         margin-bottom: 1.25rem;
     }
@@ -2281,18 +2815,19 @@ body.pagelayout-login .logincookies {
     .btn-box-action {
         display: inline-flex;
         align-items: center;
-        background: #0f172a;
-        color: #ffffff;
+        background: var(--action);
+        color: var(--action-texte);
+        font-family: var(--police-titre);
         font-weight: 700;
         font-size: 0.88rem;
         padding: 0.65rem 1.25rem;
-        border-radius: 8px;
+        border-radius: var(--rayon-md);
         text-decoration: none;
         transition: background 0.2s;
 
         &:hover {
-            background: #129b40;
-            color: #ffffff;
+            background: var(--action-survol);
+            color: var(--action-texte);
         }
     }
 }
@@ -2303,42 +2838,49 @@ body.pagelayout-login .logincookies {
 
     .verify-input {
         flex: 1;
-        border: 1px solid #cbd5e1;
-        border-radius: 8px;
+        border: 1px solid var(--bordure-forte);
+        border-radius: var(--rayon-md);
         padding: 0.6rem 0.85rem;
         font-size: 0.9rem;
         outline: none;
+        background: var(--surface);
+        color: var(--texte);
 
         &:focus {
-            border-color: #129b40;
+            border-color: var(--vert-600);
+            box-shadow: 0 0 0 3px var(--vert-50);
         }
     }
 
     .verify-submit-btn {
-        background: #129b40;
-        color: #ffffff;
+        background: var(--action);
+        color: var(--action-texte);
         border: none;
-        border-radius: 8px;
+        border-radius: var(--rayon-md);
         padding: 0.6rem 1.2rem;
+        font-family: var(--police-titre);
         font-weight: 700;
         font-size: 0.88rem;
         cursor: pointer;
 
         &:hover {
-            background: #0e7a32;
+            background: var(--action-survol);
         }
     }
 }
 
-/* ── 8. Footer Institutionnel Style Udemy ── */
+/* ── 8. Footer Institutionnel Conforme Charte v2.0 (.fs-pied) ── */
 .pact-udemy-footer {
-    background: #0b1329;
-    color: #94a3b8;
-    border-top: 1px solid #1e293b;
-    padding-top: 4rem;
+    background: var(--surface-enfoncee);
+    color: var(--texte-attenue);
+    border-top: 1px solid var(--bordure);
+
+    .footer-top {
+        padding-top: 3.5rem;
+    }
 
     .footer-container {
-        max-width: 1440px;
+        max-width: var(--largeur-contenu);
         margin: 0 auto;
         padding: 0 1.5rem 3rem 1.5rem;
         display: grid;
@@ -2358,6 +2900,7 @@ body.pagelayout-login .logincookies {
         align-items: center;
         gap: 1rem;
         margin-bottom: 1.25rem;
+        text-decoration: none;
     }
 
     .footer-flag {
@@ -2366,31 +2909,35 @@ body.pagelayout-login .logincookies {
     }
 
     .footer-country {
+        font-family: var(--police-titre);
         font-size: 1.05rem;
         font-weight: 800;
-        color: #ffffff;
-        letter-spacing: 0.05em;
+        color: var(--texte);
+        letter-spacing: var(--approche-capitale);
     }
 
     .footer-ministry {
-        font-size: 0.78rem;
-        color: #129b40;
+        font-size: var(--taille-xs);
+        color: var(--vert-700);
         font-weight: 600;
         line-height: 1.3;
     }
 
     .footer-about {
-        font-size: 0.85rem;
-        color: #64748b;
+        font-size: var(--taille-sm);
+        color: var(--texte-attenue);
         line-height: 1.6;
         max-width: 360px;
     }
 
     .footer-col-title {
-        font-size: 0.95rem;
+        font-family: var(--police-titre);
+        font-size: var(--taille-xs);
         font-weight: 700;
-        color: #ffffff;
-        margin-bottom: 1.25rem;
+        text-transform: uppercase;
+        letter-spacing: var(--approche-capitale);
+        color: var(--texte);
+        margin-bottom: 1.15rem;
     }
 
     .footer-links {
@@ -2399,52 +2946,54 @@ body.pagelayout-login .logincookies {
         margin: 0;
 
         li {
-            margin-bottom: 0.65rem;
+            margin-bottom: 0.6rem;
         }
 
         a {
-            color: #94a3b8;
+            color: var(--texte-attenue);
             text-decoration: none;
-            font-size: 0.85rem;
+            font-size: var(--taille-sm);
             transition: color 0.2s;
 
             &:hover {
-                color: #ffffff;
+                color: var(--vert-700);
+                text-decoration: underline;
             }
         }
     }
 
     .footer-legal-note {
-        font-size: 0.82rem;
+        font-size: var(--taille-sm);
         line-height: 1.6;
-        color: #64748b;
+        color: var(--texte-attenue);
         margin-bottom: 1rem;
 
         strong {
-            color: #94a3b8;
+            color: var(--texte);
         }
     }
 
     .footer-badge-pact {
-        background: #1e293b;
-        border: 1px solid #334155;
-        color: #fad615;
+        background: var(--or-300);
+        border: 1px solid var(--or-400);
+        color: var(--neutre-900);
+        font-family: var(--police-titre);
         font-size: 0.75rem;
         font-weight: 700;
-        padding: 0.4rem 0.8rem;
-        border-radius: 6px;
+        padding: 0.4rem 0.85rem;
+        border-radius: var(--rayon-sm);
         display: inline-block;
     }
 
     .footer-bottom {
-        border-top: 1px solid #1e293b;
+        border-top: 1px solid var(--bordure);
         padding: 1.5rem;
-        font-size: 0.82rem;
-        color: #64748b;
+        font-size: var(--taille-xs);
+        color: var(--texte-faible);
     }
 
     .footer-bottom-inner {
-        max-width: 1440px;
+        max-width: var(--largeur-contenu);
         margin: 0 auto;
         display: flex;
         align-items: center;
@@ -2459,11 +3008,12 @@ body.pagelayout-login .logincookies {
         gap: 0.75rem;
 
         a {
-            color: #64748b;
+            color: var(--texte-attenue);
             text-decoration: none;
 
             &:hover {
-                color: #ffffff;
+                color: var(--vert-700);
+                text-decoration: underline;
             }
         }
     }

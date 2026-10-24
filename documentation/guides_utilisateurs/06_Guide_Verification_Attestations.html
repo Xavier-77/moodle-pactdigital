@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <title>06_Guide_Verification_Attestations - Guide de Vérification Publique des Attestations Officielles — PACTDIGITAL-BF</title>
+    <style>
+        
+@page {
+    size: A4;
+    margin: 20mm 15mm 20mm 15mm;
+}
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: #211d1a;
+    background-color: #ffffff;
+    line-height: 1.45;
+    font-size: 10.5pt;
+    margin: 0;
+    padding: 0;
+}
+.cover-page {
+    page-break-after: always;
+    padding: 30px 20px;
+    text-align: center;
+}
+.header-timbre {
+    width: 100%;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #0a5496;
+    padding-bottom: 12px;
+}
+.header-timbre table {
+    width: 100%;
+    border-collapse: collapse;
+    border: none;
+}
+.header-timbre td {
+    border: none;
+    padding: 0;
+    vertical-align: top;
+}
+.timbre-left {
+    text-align: left;
+    font-size: 8.5pt;
+    font-weight: bold;
+    color: #0a5496;
+    line-height: 1.25;
+}
+.timbre-right {
+    text-align: right;
+    font-size: 9pt;
+    font-weight: bold;
+    color: #211d1a;
+    line-height: 1.3;
+}
+.devise {
+    font-style: italic;
+    color: #b07800;
+    font-size: 8.5pt;
+}
+.tricolor-ribbon {
+    height: 4px;
+    width: 100%;
+    margin: 15px 0 25px 0;
+    display: table;
+}
+.ribbon-red { display: table-cell; width: 33.33%; background-color: #ed1c24; height: 4px; }
+.ribbon-yellow { display: table-cell; width: 33.34%; background-color: #f9cf0c; height: 4px; }
+.ribbon-green { display: table-cell; width: 33.33%; background-color: #0e9c49; height: 4px; }
+
+.cover-badge {
+    display: inline-block;
+    background-color: #ecf7f0;
+    color: #00843b;
+    border: 1px solid #00843b;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 9pt;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+.cover-title {
+    font-size: 22pt;
+    color: #0a5496;
+    font-weight: bold;
+    margin: 15px 0 10px 0;
+    line-height: 1.2;
+}
+.cover-subtitle {
+    font-size: 13pt;
+    color: #00843b;
+    font-weight: 600;
+    margin-bottom: 25px;
+}
+.cover-profile-box {
+    background-color: #f7f5f2;
+    border: 1px solid #e2ddd6;
+    border-left: 6px solid #0a5496;
+    padding: 15px;
+    margin: 25px auto;
+    text-align: left;
+    max-width: 500px;
+    border-radius: 4px;
+}
+.cover-meta {
+    margin-top: 35px;
+    font-size: 9pt;
+    color: #635c55;
+    line-height: 1.5;
+}
+
+h1 {
+    color: #0a5496;
+    font-size: 15pt;
+    border-bottom: 1.5px solid #00843b;
+    padding-bottom: 4px;
+    margin-top: 24px;
+    margin-bottom: 12px;
+    page-break-after: avoid;
+}
+h2 {
+    color: #00843b;
+    font-size: 12.5pt;
+    margin-top: 18px;
+    margin-bottom: 8px;
+    page-break-after: avoid;
+}
+h3 {
+    color: #211d1a;
+    font-size: 11pt;
+    margin-top: 14px;
+    margin-bottom: 6px;
+    font-weight: bold;
+}
+p, li {
+    text-align: justify;
+    margin-bottom: 6px;
+}
+ul, ol {
+    margin-top: 4px;
+    margin-bottom: 10px;
+    padding-left: 22px;
+}
+li {
+    margin-bottom: 4px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 16px 0;
+    font-size: 9.5pt;
+}
+th, td {
+    border: 1px solid #e2ddd6;
+    padding: 6px 10px;
+    vertical-align: top;
+}
+th {
+    background-color: #0a5496;
+    color: #ffffff;
+    font-weight: bold;
+    text-align: left;
+}
+tr:nth-child(even) td {
+    background-color: #fcfbf9;
+}
+
+.box-alert {
+    padding: 10px 14px;
+    margin: 12px 0;
+    border-radius: 4px;
+    font-size: 9.5pt;
+}
+.box-tip {
+    background-color: #ecf7f0;
+    border-left: 4px solid #00843b;
+    color: #04411f;
+}
+.box-warn {
+    background-color: #fef9e7;
+    border-left: 4px solid #b07800;
+    color: #5c3f00;
+}
+.box-error {
+    background-color: #fdf2f2;
+    border-left: 4px solid #e30613;
+    color: #63050a;
+}
+
+.step-card {
+    background-color: #ffffff;
+    border: 1px solid #e2ddd6;
+    border-radius: 4px;
+    padding: 10px 14px;
+    margin-bottom: 10px;
+}
+.step-header {
+    font-weight: bold;
+    color: #0a5496;
+    margin-bottom: 4px;
+}
+.badge-req {
+    background-color: #e30613;
+    color: white;
+    font-size: 7.5pt;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: bold;
+}
+.badge-opt {
+    background-color: #756d66;
+    color: white;
+    font-size: 7.5pt;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: bold;
+}
+.badge-verified {
+    background-color: #00843b;
+    color: white;
+    font-size: 7.5pt;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: bold;
+}
+
+.ui-capture {
+    background-color: #f7f5f2;
+    border: 1px dashed #8e867f;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+    font-size: 9pt;
+}
+.ui-capture-title {
+    font-weight: bold;
+    color: #0a5496;
+    margin-bottom: 6px;
+}
+.ui-capture-caption {
+    font-style: italic;
+    color: #635c55;
+    font-size: 8.5pt;
+    margin-top: 6px;
+}
+
+    </style>
+</head>
+<body>
+    <!-- PAGE DE COUVERTURE -->
+    <div class="cover-page">
+        <div class="header-timbre">
+            <table>
+                <tr>
+                    <td class="timbre-left">
+                        MINISTÈRE DE LA TRANSITION DIGITALE, DES POSTES<br>
+                        ET DES COMMUNICATIONS ÉLECTRONIQUES<br>
+                        ------------------------------------<br>
+                        SECRÉTARIAT GÉNÉRAL<br>
+                        ------------------------------------<br>
+                        DIRECTION GÉNÉRALE DE LA TRANSITION DIGITALE
+                    </td>
+                    <td class="timbre-right">
+                        BURKINA FASO<br>
+                        <span class="devise">La Patrie ou la Mort, nous Vaincrons</span><br>
+                        ------------------------------------<br>
+                        <strong>PROGRAMME PACTDIGITAL-BF</strong>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="tricolor-ribbon">
+            <div class="ribbon-red"></div>
+            <div class="ribbon-yellow"></div>
+            <div class="ribbon-green"></div>
+        </div>
+
+        <div class="cover-badge">Guide Utilisateur Officiel</div>
+        <div class="cover-title">Guide de Vérification Publique des Attestations Officielles</div>
+        <div class="cover-subtitle">Plateforme Nationale d'Apprentissage PACTDIGITAL-BF</div>
+
+        <div class="cover-profile-box">
+            <p style="margin: 0 0 5px 0;"><strong>Profil utilisateur :</strong> Employeurs, Administrations, Partenaires techniques, Grand Public</p>
+            <p style="margin: 0 0 5px 0;"><strong>Référence document :</strong> 06_Guide_Verification_Attestations</p>
+            <p style="margin: 0 0 5px 0;"><strong>Conformité :</strong> Implémentation réelle PACTDIGITAL-BF (Moodle 4.3+)</p>
+            <p style="margin: 0;"><strong>Charte graphique :</strong> MTDPCE v1.0 (mai 2026) / v2.0</p>
+        </div>
+
+        <div class="cover-meta">
+            <p><strong>Éditeur :</strong> Direction Générale de la Transition Digitale (DGTD)</p>
+            <p><strong>Assistance Citoyenne Gratuite :</strong> Numéro Vert <strong>34 34</strong> | support@pactdigital.bf</p>
+            <p><strong>Version :</strong> 1.0 (Octobre 2026) — Diffusion officielle</p>
+        </div>
+    </div>
+
+    <!-- CORPS DU GUIDE -->
+    <div class="guide-content">
+        
+    <h1>Sommaire</h1>
+    <ol>
+        <li><strong>Objet et valeur légale des attestations PACTDIGITAL-BF</strong></li>
+        <li><strong>Objectifs du guide</strong></li>
+        <li><strong>Caractéristiques de sécurité et infalsifiabilité</strong></li>
+        <li><strong>Accès au portail public de vérification</strong></li>
+        <li><strong>Procédures pas à pas de contrôle</strong>
+            <ul>
+                <li>5.1. Vérification instantanée par scan du QR Code</li>
+                <li>5.2. Vérification par saisie manuelle du code cryptographique</li>
+                <li>5.3. Interprétation du certificat officiel authentique</li>
+                <li>5.4. Que faire en cas de certificat introuvable ou invalide ?</li>
+            </ul>
+        </li>
+        <li><strong>Exemples concrets de vérification par un employeur</strong></li>
+        <li><strong>Règles de confidentialité et protection des données (CIL)</strong></li>
+        <li><strong>Foire Aux Questions (FAQ) du Vérificateur</strong></li>
+        <li><strong>Coordonnées officielles pour vérification administrative</strong></li>
+        <li><strong>Glossaire de l'authentification numérique</strong></li>
+        <li><strong>Historique des versions</strong></li>
+    </ol>
+
+    <h1>1. Objet et valeur légale des attestations PACTDIGITAL-BF</h1>
+    <p>L'<strong>Attestation Officielle de Compétences Numériques PACTDIGITAL-BF</strong> est le titre républicain délivré sous la tutelle du Ministère de la Transition Digitale, des Postes et des Communications Électroniques (MTDPCE) et visé par la Direction Générale de la Transition Digitale (DGTD).</p>
+    <p>Elle sanctionne la réussite effective d'un citoyen à l'un des 60 parcours d'évaluation nationale (au niveau <strong>Bronze</strong>, <strong>Argent</strong> ou <strong>Or</strong>) selon les exigences du Référentiel National de Littératie Numérique, avec un seuil de succès certifié d'au moins <strong>70% de bonnes réponses</strong>.</p>
+    <p>Cette attestation constitue un titre reconnu par les administrations publiques, les entreprises privées et les partenaires techniques et financiers pour valoriser l'aptitude opérationnelle des candidats sur les outils informatiques et Internet.</p>
+
+    <h1>2. Objectifs du guide</h1>
+    <p>Ce guide est destiné aux recruteurs, services des ressources humaines, directions administratives et certificateurs :</p>
+    <ul>
+        <li>Vérifier en moins de 10 secondes l'authenticité d'une attestation présentée sur papier ou sous format PDF.</li>
+        <li>Comprendre le fonctionnement du contrôle cryptographique décentralisé par QR Code.</li>
+        <li>Identifier à coup sûr les documents authentiques et déjouer les tentatives de falsification ou d'usurpation d'identité.</li>
+        <li>Connaître la procédure administrative officielle de signalement auprès du MTDPCE en cas d'attestation frauduleuse.</li>
+    </ul>
+
+    <h1>3. Caractéristiques de sécurité et infalsifiabilité</h1>
+    <table>
+        <tr><th>Élément de sécurité</th><th>Description technique</th><th>Rôle dans l'authentification</th></tr>
+        <tr><td><strong>Identifiant cryptographique unique</strong></td><td>Code alphanumérique de 10 à 12 caractères généré par le module <code>customcert</code> (ex: <code>IWHZ4Smehu</code>).</td><td>Clé primaire infalsifiable enregistrée dans la base nationale sécurisée du MTDPCE.</td></tr>
+        <tr><td><strong>QR Code 2D haute densité</strong></td><td>Code-barres bidimensionnel vectoriel intégré en bas à droite du certificat PDF.</td><td>Permet un aiguillage immédiat vers l'URL officielle de vérification cryptographique.</td></tr>
+        <tr><td><strong>Bloc-marque souverain</strong></td><td>Armoiries officielles vectorielles du Burkina Faso et devise nationale <em>« La Patrie ou la Mort, nous Vaincrons »</em>.</td><td>Garantit la conformité à la Charte Graphique des actes d'État.</td></tr>
+        <tr><td><strong>Horodatage certifié</strong></td><td>Date et heure d'émission enregistrées à la seconde près.</td><td>Empêche la rétroactivité ou la modification post-mortem des titres.</td></tr>
+    </table>
+
+    <h1>4. Accès au portail public de vérification</h1>
+    <p>Le service de vérification est <strong>ouvert à tous, public, gratuit et accessible sans obligation de créer un compte</strong> :</p>
+    <ul>
+        <li><strong>Par l'URL directe :</strong> <code>/local/pactdigital/verify.php</code> (ou via le domaine national <code>https://pactdigital.bf/verify.php</code>).</li>
+        <li><strong>Depuis la page d'accueil :</strong> section <em>« Employeurs & Recruteurs — Vérifier l'authenticité d'une attestation »</em>.</li>
+        <li><strong>Depuis le pied de page :</strong> lien permanent <em>« Vérifier attestation »</em> présent sur l'ensemble des pages de la plateforme.</li>
+    </ul>
+
+    <h1>5. Procédures pas à pas de contrôle</h1>
+
+    <h2>5.1. Vérification instantanée par scan du QR Code</h2>
+    <div class="step-card">
+        <div class="step-header">Méthode recommandée (Smartphone ou lecteur optique)</div>
+        <p>1. Munissez-vous du certificat physique ou affichez le document PDF sur un écran.<br>
+        2. Ouvrez l'application appareil photo de votre smartphone (ou une application de scan QR Code).<br>
+        3. Pointez l'objectif vers le QR code figurant sur l'attestation.<br>
+        4. Une notification comportant le lien officiel vers <code>pactdigital.bf/local/pactdigital/verify.php?code=XXXX</code> apparaît à l'écran.<br>
+        5. Cliquez sur la notification : la page officielle de vérification du Gouvernement s'ouvre directement avec le résultat du contrôle.</p>
+    </div>
+
+    <h2>5.2. Vérification par saisie manuelle du code cryptographique</h2>
+    <div class="step-card">
+        <div class="step-header">Méthode alternative (Poste informatique sans scanner)</div>
+        <p>1. Rendez-vous sur <code>/local/pactdigital/verify.php</code>.<br>
+        2. Repérez le champ de recherche central : <em>« Saisissez le code de l'attestation (ex. IWHZ4Smehu) »</em>.<br>
+        3. Recopiez exactement la suite de lettres et chiffres figurant sous le QR code ou dans l'en-tête du document fourni par le candidat.<br>
+        4. Cliquez sur le bouton vert <strong>« Vérifier l'attestation »</strong>.</p>
+    </div>
+
+    <h2>5.3. Interprétation du certificat officiel authentique</h2>
+    <div class="box-alert box-tip">
+        <strong>Résultat positif — Attestation authentique et valide</strong><br>
+        Lorsque le code correspond à une émission officielle enregistrée dans la base nationale, la plateforme affiche la <strong>Carte Officielle d'Attestation</strong> bordée de vert avec les mentions suivantes :
+        <ul>
+            <li>En-tête républicain : <em>« 🇧🇫 BURKINA FASO — Ministère de la Transition Digitale, des Postes et des Communications Électroniques »</em>.</li>
+            <li>Bandeau d'authenticité : <strong>« ✅ ATTESTATION OFFICIELLE AUTHENTIQUE ET VALIDE »</strong>.</li>
+            <li><strong>Bénéficiaire :</strong> Nom et prénom complets du citoyen certifié (ex: <em>Moussa TRAORÉ</em>).</li>
+            <li><strong>Code unique :</strong> Rappel du numéro de série cryptographique vérifié.</li>
+            <li><strong>Module de formation :</strong> Intitulé du cours validé (ex: <em>Découvrir l'informatique</em>) et Domaine d'appartenance.</li>
+            <li><strong>Niveau certifié :</strong> Badge officiel du niveau obtenu (🥉 <em>Bronze — Débutant</em>, 🥈 <em>Argent — Intermédiaire</em>, 🥇 <em>Or — Avancé</em>).</li>
+            <li><strong>Date de délivrance :</strong> Date officielle d'émission (format <em>JJ Mois AAAA</em>).</li>
+            <li>Signature numérique institutionnelle : <em>« 🛡️ Signé numériquement par le MTDPCE / DGTD »</em>.</li>
+        </ul>
+    </div>
+
+    <div class="box-alert box-warn">
+        <strong>Règle de protection des données privées (CIL) :</strong> Pour préserver la vie privée des apprenants, la note d'examen chiffrée n'est pas divulguée sur la page publique de vérification. Seul le statut de réussite certifiée (&ge; 70%) et le niveau de qualification sont attestés.
+    </div>
+
+    <h2>5.4. Que faire en cas de certificat introuvable ou invalide ?</h2>
+    <div class="box-alert box-error">
+        <strong>Résultat négatif — Attestation introuvable</strong><br>
+        Si le système affiche le pavé rouge <em>« ❌ Attestation introuvable — Aucune attestation officielle ne correspond au code... »</em> :
+        <ul>
+            <li><strong>Vérification 1 :</strong> Contrôlez qu'aucune erreur de frappe n'a été commise lors de la saisie (attention à la distinction entre la lettre <code>O</code> et le chiffre <code>0</code>, ou entre la lettre <code>I</code> et le chiffre <code>1</code>).</li>
+            <li><strong>Vérification 2 :</strong> Demandez au candidat de vous présenter le document original téléchargé depuis son Espace Apprenant officiel.</li>
+            <li><strong>Vérification 3 :</strong> Si le document fourni semble falsifié (nom altéré, faux logo), il s'agit d'une tentative de fraude. Vous pouvez solliciter une vérification manuelle auprès de la DGTD en transmettant une copie à <code>support@pactdigital.bf</code>.</li>
+        </ul>
+    </div>
+
+    <h1>6. Exemples concrets de vérification par un employeur</h1>
+    <div class="step-card">
+        <div class="step-header">Cas pratique : Recrutement d'une secrétaire de direction par une entreprise à Ouagadougou</div>
+        <p><em>Situation :</em> Une entreprise de télécommunications recrute un assistant administratif. Une candidate présente une attestation <em>Traiter un document — Argent</em> portant le code <code>K7x9M2pL01</code>.<br>
+        <em>Action du recruteur :</em> Le responsable RH scanne le QR code avec sa tablette de bureau. Le navigateur ouvre <code>pactdigital.bf/local/pactdigital/verify.php?code=K7x9M2pL01</code>. L'écran confirme en vert le nom exact de la candidate, la délivrance en septembre 2026 et le niveau certifié Argent. Le recrutement est validé avec l'assurance d'une maîtrise technique effective et vérifiée par l'État.</p>
+    </div>
+
+    <h1>7. Règles de confidentialité et protection des données (CIL)</h1>
+    <p>Le système de vérification publique a été conçu en stricte conformité avec les décrets de la Commission de l'Informatique et des Libertés (CIL) du Burkina Faso :</p>
+    <ul>
+        <li>Aucune information sensible (numéro de téléphone, adresse e-mail personnelle, année de naissance, situation socio-professionnelle) n'est accessible aux vérificateurs tiers.</li>
+        <li>Les consultations ne font l'objet d'aucune exploitation commerciale ou de profilage.</li>
+    </ul>
+
+    <h1>8. Foire Aux Questions (FAQ) du Vérificateur</h1>
+    <p><strong>Q1 : La vérification nécessite-t-elle de payer un droit de timbre ?</strong><br>
+    <em>Réponse :</em> Non. Le contrôle de validité des attestations PACTDIGITAL-BF est un service public entièrement gratuit pour l'ensemble des acteurs économiques et administratifs.</p>
+
+    <p><strong>Q2 : Quelle est la durée de validité d'une attestation PACTDIGITAL-BF ?</strong><br>
+    <em>Réponse :</em> Les attestations de compétences de base n'ont pas de date de péremption prédéfinie. Toutefois, compte tenu de l'évolution rapide des technologies, il est recommandé aux employeurs de privilégier les certifications datant de moins de 3 ans.</p>
+
+    <h1>9. Coordonnées officielles pour vérification administrative</h1>
+    <ul>
+        <li><strong>Service d'authentification des diplômes et attestations :</strong> Direction Générale de la Transition Digitale (DGTD), Ministère de la Transition Digitale, des Postes et des Communications Électroniques (MTDPCE).</li>
+        <li><strong>Courriel dédié aux vérifications institutionnelles :</strong> <code>contact@transition-digitale.gov.bf</code></li>
+        <li><strong>Assistance téléphonique officielle :</strong> <strong>34 34</strong> (Numéro Vert gratuit) ou +226 25 32 40 00.</li>
+        <li><strong>Adresse :</strong> Avenue de l'Indépendance, Ouagadougou, Burkina Faso.</li>
+    </ul>
+
+    <h1>10. Glossaire de l'authentification numérique</h1>
+    <ul>
+        <li><strong>Code cryptographique :</strong> Suite de caractères uniques aléatoires générée mathématiquement lors de l'émission du certificat pour garantir son unicité absolue.</li>
+        <li><strong>QR Code (Quick Response) :</strong> Matrice bidimensionnelle permettant une lecture optique rapide d'une URL de validation.</li>
+        <li><strong>mod_customcert :</strong> Module Moodle souverain d'émission et de sécurisation des attestations numériques.</li>
+    </ul>
+
+    <h1>11. Historique des versions</h1>
+    <table>
+        <tr><th>Version</th><th>Date</th><th>Auteur</th><th>Nature des modifications</th></tr>
+        <tr><td>1.0</td><td>Octobre 2026</td><td>DGTD / MTDPCE</td><td>Version initiale conforme à l'implémentation de verify.php et à la table customcert_issues.</td></tr>
+    </table>
+    
+    </div>
+</body>
+</html>

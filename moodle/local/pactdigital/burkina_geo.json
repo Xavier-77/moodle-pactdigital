@@ -1,0 +1,1085 @@
+{
+  "Centre": {
+    "Kadiogo": [
+      "Ouagadougou",
+      "Komki-Ipala",
+      "Komsilga",
+      "Koubri",
+      "Pabré",
+      "Saaba",
+      "Tanghin-Dassouri"
+    ]
+  },
+  "Kadiogo": {
+    "Kadiogo": [
+      "Ouagadougou",
+      "Komki-Ipala",
+      "Komsilga",
+      "Koubri",
+      "Pabré",
+      "Saaba",
+      "Tanghin-Dassouri"
+    ]
+  },
+  "Hauts-Bassins": {
+    "Houet": [
+      "Bobo-Dioulasso",
+      "Bama",
+      "Dandé",
+      "Faramana",
+      "Fô",
+      "Karangasso-Sambabla",
+      "Karangasso-Vigué",
+      "Koundougou",
+      "Léna",
+      "Padéma",
+      "Péni",
+      "Satiri",
+      "Toussiana"
+    ],
+    "Kénédougou": [
+      "Orodara",
+      "Banzon",
+      "Djigouè",
+      "Koloko",
+      "Kourouma",
+      "Kourinion",
+      "Morolaba",
+      "N'Dorola",
+      "Samorogouan",
+      "Samogohiri",
+      "Sindo"
+    ],
+    "Tuy": [
+      "Houndé",
+      "Békuy",
+      "Béréba",
+      "Boni",
+      "Founzan",
+      "Koti",
+      "Koumbia"
+    ]
+  },
+  "Guiriko": {
+    "Houet": [
+      "Bobo-Dioulasso",
+      "Bama",
+      "Dandé",
+      "Faramana",
+      "Fô",
+      "Karangasso-Sambabla",
+      "Karangasso-Vigué",
+      "Koundougou",
+      "Léna",
+      "Padéma",
+      "Péni",
+      "Satiri",
+      "Toussiana"
+    ],
+    "Kénédougou": [
+      "Orodara",
+      "Banzon",
+      "Djigouè",
+      "Koloko",
+      "Kourouma",
+      "Kourinion",
+      "Morolaba",
+      "N'Dorola",
+      "Samorogouan",
+      "Samogohiri",
+      "Sindo"
+    ],
+    "Tuy": [
+      "Houndé",
+      "Békuy",
+      "Béréba",
+      "Boni",
+      "Founzan",
+      "Koti",
+      "Koumbia"
+    ]
+  },
+  "Boucle du Mouhoun": {
+    "Balé": [
+      "Boromo",
+      "Bagassi",
+      "Bana",
+      "Fara",
+      "Oury",
+      "Pa",
+      "Pompoï",
+      "Poura",
+      "Siby",
+      "Yaho"
+    ],
+    "Banwa": [
+      "Solenzo",
+      "Balavé",
+      "Kouka",
+      "Sami",
+      "Sanaba",
+      "Tansila"
+    ],
+    "Kossi": [
+      "Nouna",
+      "Barani",
+      "Bomborokuy",
+      "Bourasso",
+      "Djibasso",
+      "Dokuy",
+      "Doumbala",
+      "Kombori",
+      "Madouba",
+      "Sono"
+    ],
+    "Mouhoun": [
+      "Dédougou",
+      "Bondokuy",
+      "Douroula",
+      "Kona",
+      "Ouarkoye",
+      "Safané",
+      "Tchériba"
+    ],
+    "Nayala": [
+      "Toma",
+      "Gassan",
+      "Gossina",
+      "Kougny",
+      "Yaba",
+      "Yé"
+    ],
+    "Sourou": [
+      "Tougan",
+      "Di",
+      "Gomboro",
+      "Kassoum",
+      "Kiembara",
+      "Lanfièra",
+      "Lankoué",
+      "Toéni"
+    ]
+  },
+  "Bankui": {
+    "Balé": [
+      "Boromo",
+      "Bagassi",
+      "Bana",
+      "Fara",
+      "Oury",
+      "Pa",
+      "Pompoï",
+      "Poura",
+      "Siby",
+      "Yaho"
+    ],
+    "Banwa": [
+      "Solenzo",
+      "Balavé",
+      "Kouka",
+      "Sami",
+      "Sanaba",
+      "Tansila"
+    ],
+    "Kossi": [
+      "Nouna",
+      "Barani",
+      "Bomborokuy",
+      "Bourasso",
+      "Djibasso",
+      "Dokuy",
+      "Doumbala",
+      "Kombori",
+      "Madouba",
+      "Sono"
+    ],
+    "Mouhoun": [
+      "Dédougou",
+      "Bondokuy",
+      "Douroula",
+      "Kona",
+      "Ouarkoye",
+      "Safané",
+      "Tchériba"
+    ],
+    "Nayala": [
+      "Toma",
+      "Gassan",
+      "Gossina",
+      "Kougny",
+      "Yaba",
+      "Yé"
+    ],
+    "Sourou": [
+      "Tougan",
+      "Di",
+      "Gomboro",
+      "Kassoum",
+      "Kiembara",
+      "Lanfièra",
+      "Lankoué",
+      "Toéni"
+    ]
+  },
+  "Sourou": {
+    "Balé": [
+      "Boromo",
+      "Bagassi",
+      "Bana",
+      "Fara",
+      "Oury",
+      "Pa",
+      "Pompoï",
+      "Poura",
+      "Siby",
+      "Yaho"
+    ],
+    "Banwa": [
+      "Solenzo",
+      "Balavé",
+      "Kouka",
+      "Sami",
+      "Sanaba",
+      "Tansila"
+    ],
+    "Kossi": [
+      "Nouna",
+      "Barani",
+      "Bomborokuy",
+      "Bourasso",
+      "Djibasso",
+      "Dokuy",
+      "Doumbala",
+      "Kombori",
+      "Madouba",
+      "Sono"
+    ],
+    "Mouhoun": [
+      "Dédougou",
+      "Bondokuy",
+      "Douroula",
+      "Kona",
+      "Ouarkoye",
+      "Safané",
+      "Tchériba"
+    ],
+    "Nayala": [
+      "Toma",
+      "Gassan",
+      "Gossina",
+      "Kougny",
+      "Yaba",
+      "Yé"
+    ],
+    "Sourou": [
+      "Tougan",
+      "Di",
+      "Gomboro",
+      "Kassoum",
+      "Kiembara",
+      "Lanfièra",
+      "Lankoué",
+      "Toéni"
+    ]
+  },
+  "Cascades": {
+    "Comoé": [
+      "Banfora",
+      "Bérégadougou",
+      "Mangodara",
+      "Moussodougou",
+      "Niangoloko",
+      "Ouo",
+      "Sidéradougou",
+      "Soubakaniédougou",
+      "Tiéfora"
+    ],
+    "Léraba": [
+      "Sindou",
+      "Dakoro",
+      "Douna",
+      "Kankalaba",
+      "Loumana",
+      "Niankorodougou",
+      "Ouéléni",
+      "Wolonkoto"
+    ]
+  },
+  "Djôrô": {
+    "Comoé": [
+      "Banfora",
+      "Bérégadougou",
+      "Mangodara",
+      "Moussodougou",
+      "Niangoloko",
+      "Ouo",
+      "Sidéradougou",
+      "Soubakaniédougou",
+      "Tiéfora"
+    ],
+    "Léraba": [
+      "Sindou",
+      "Dakoro",
+      "Douna",
+      "Kankalaba",
+      "Loumana",
+      "Niankorodougou",
+      "Ouéléni",
+      "Wolonkoto"
+    ]
+  },
+  "Centre-Nord": {
+    "Bam": [
+      "Kongoussi",
+      "Bourzanga",
+      "Guibaré",
+      "Nasséré",
+      "Rollo",
+      "Rouko",
+      "Sabcé",
+      "Tikaré",
+      "Zimtenga"
+    ],
+    "Namentenga": [
+      "Boulsa",
+      "Boala",
+      "Bouroum",
+      "Dargo",
+      "Nagbingou",
+      "Tougrice",
+      "Yalgo",
+      "Zéguédéguin"
+    ],
+    "Sanmatenga": [
+      "Kaya",
+      "Barsalogho",
+      "Boussouma",
+      "Dablo",
+      "Korsimoro",
+      "Mané",
+      "Namissiguima",
+      "Pensa",
+      "Piba",
+      "Pissila"
+    ]
+  },
+  "Kuilsé": {
+    "Bam": [
+      "Kongoussi",
+      "Bourzanga",
+      "Guibaré",
+      "Nasséré",
+      "Rollo",
+      "Rouko",
+      "Sabcé",
+      "Tikaré",
+      "Zimtenga"
+    ],
+    "Namentenga": [
+      "Boulsa",
+      "Boala",
+      "Bouroum",
+      "Dargo",
+      "Nagbingou",
+      "Tougrice",
+      "Yalgo",
+      "Zéguédéguin"
+    ],
+    "Sanmatenga": [
+      "Kaya",
+      "Barsalogho",
+      "Boussouma",
+      "Dablo",
+      "Korsimoro",
+      "Mané",
+      "Namissiguima",
+      "Pensa",
+      "Piba",
+      "Pissila"
+    ]
+  },
+  "Centre-Ouest": {
+    "Boulkiemdé": [
+      "Koudougou",
+      "Bingo",
+      "Imasgo",
+      "Kindi",
+      "Kokologho",
+      "Nanoro",
+      "Nandiala",
+      "Pella",
+      "Ramongho",
+      "Sabou",
+      "Siglé",
+      "Soaw",
+      "Sourgou",
+      "Thyou"
+    ],
+    "Sanguié": [
+      "Réo",
+      "Dassa",
+      "Didyr",
+      "Godyr",
+      "Kordié",
+      "Kyon",
+      "Pouni",
+      "Ténado",
+      "Zamo",
+      "Zawara"
+    ],
+    "Sissili": [
+      "Léo",
+      "Biéha",
+      "Boura",
+      "Nébiélianayou",
+      "Silly",
+      "Tô"
+    ],
+    "Ziro": [
+      "Sapouy",
+      "Bakata",
+      "Bougnounou",
+      "Cassou",
+      "Dalo",
+      "Gao"
+    ]
+  },
+  "Nando": {
+    "Boulkiemdé": [
+      "Koudougou",
+      "Bingo",
+      "Imasgo",
+      "Kindi",
+      "Kokologho",
+      "Nanoro",
+      "Nandiala",
+      "Pella",
+      "Ramongho",
+      "Sabou",
+      "Siglé",
+      "Soaw",
+      "Sourgou",
+      "Thyou"
+    ],
+    "Sanguié": [
+      "Réo",
+      "Dassa",
+      "Didyr",
+      "Godyr",
+      "Kordié",
+      "Kyon",
+      "Pouni",
+      "Ténado",
+      "Zamo",
+      "Zawara"
+    ],
+    "Sissili": [
+      "Léo",
+      "Biéha",
+      "Boura",
+      "Nébiélianayou",
+      "Silly",
+      "Tô"
+    ],
+    "Ziro": [
+      "Sapouy",
+      "Bakata",
+      "Bougnounou",
+      "Cassou",
+      "Dalo",
+      "Gao"
+    ]
+  },
+  "Centre-Sud": {
+    "Bazèga": [
+      "Kombissiri",
+      "Doulougou",
+      "Gaongo",
+      "Ipelcé",
+      "Kayao",
+      "Saponé",
+      "Toécé"
+    ],
+    "Nahouri": [
+      "Pô",
+      "Guiaro",
+      "Tiébélé",
+      "Zecco",
+      "Ziou"
+    ],
+    "Zoundwéogo": [
+      "Manga",
+      "Béré",
+      "Bindé",
+      "Gogo",
+      "Gomboussougou",
+      "Guiba",
+      "Nobéré"
+    ]
+  },
+  "Nazinon": {
+    "Bazèga": [
+      "Kombissiri",
+      "Doulougou",
+      "Gaongo",
+      "Ipelcé",
+      "Kayao",
+      "Saponé",
+      "Toécé"
+    ],
+    "Nahouri": [
+      "Pô",
+      "Guiaro",
+      "Tiébélé",
+      "Zecco",
+      "Ziou"
+    ],
+    "Zoundwéogo": [
+      "Manga",
+      "Béré",
+      "Bindé",
+      "Gogo",
+      "Gomboussougou",
+      "Guiba",
+      "Nobéré"
+    ]
+  },
+  "Centre-Est": {
+    "Boulgou": [
+      "Tenkodogo",
+      "Bagré",
+      "Bané",
+      "Béguédo",
+      "Bissiga",
+      "Boussouma",
+      "Garango",
+      "Komtoèga",
+      "Niaogho",
+      "Zabré",
+      "Zoaga",
+      "Zonsé"
+    ],
+    "Koulpélogo": [
+      "Ouargaye",
+      "Comin-Yanga",
+      "Dourtenga",
+      "Lalgaye",
+      "Sangha",
+      "Soudougui",
+      "Yargatenga",
+      "Yondé"
+    ],
+    "Kouritenga": [
+      "Koupéla",
+      "Andemtenga",
+      "Baskouré",
+      "Dialgaye",
+      "Gounghin",
+      "Kando",
+      "Pouytenga",
+      "Yalgo"
+    ]
+  },
+  "Nakambé": {
+    "Boulgou": [
+      "Tenkodogo",
+      "Bagré",
+      "Bané",
+      "Béguédo",
+      "Bissiga",
+      "Boussouma",
+      "Garango",
+      "Komtoèga",
+      "Niaogho",
+      "Zabré",
+      "Zoaga",
+      "Zonsé"
+    ],
+    "Koulpélogo": [
+      "Ouargaye",
+      "Comin-Yanga",
+      "Dourtenga",
+      "Lalgaye",
+      "Sangha",
+      "Soudougui",
+      "Yargatenga",
+      "Yondé"
+    ],
+    "Kouritenga": [
+      "Koupéla",
+      "Andemtenga",
+      "Baskouré",
+      "Dialgaye",
+      "Gounghin",
+      "Kando",
+      "Pouytenga",
+      "Yalgo"
+    ]
+  },
+  "Est": {
+    "Gnagna": [
+      "Bogandé",
+      "Bilanga",
+      "Coalla",
+      "Mani",
+      "Piéla",
+      "Thion"
+    ],
+    "Gourma": [
+      "Fada N'Gourma",
+      "Diabo",
+      "Diapangou",
+      "Matiacoali",
+      "Tibga",
+      "Yamba"
+    ],
+    "Komondjari": [
+      "Gayéri",
+      "Bartiebougou",
+      "Foutouri"
+    ],
+    "Kompienga": [
+      "Pama",
+      "Kompienga",
+      "Madjoari"
+    ],
+    "Tapoa": [
+      "Diapaga",
+      "Bottou",
+      "Kantchari",
+      "Logobou",
+      "Partiaga",
+      "Tambaga",
+      "Tansarga"
+    ]
+  },
+  "Goulmou": {
+    "Gnagna": [
+      "Bogandé",
+      "Bilanga",
+      "Coalla",
+      "Mani",
+      "Piéla",
+      "Thion"
+    ],
+    "Gourma": [
+      "Fada N'Gourma",
+      "Diabo",
+      "Diapangou",
+      "Matiacoali",
+      "Tibga",
+      "Yamba"
+    ],
+    "Komondjari": [
+      "Gayéri",
+      "Bartiebougou",
+      "Foutouri"
+    ],
+    "Kompienga": [
+      "Pama",
+      "Kompienga",
+      "Madjoari"
+    ],
+    "Tapoa": [
+      "Diapaga",
+      "Bottou",
+      "Kantchari",
+      "Logobou",
+      "Partiaga",
+      "Tambaga",
+      "Tansarga"
+    ]
+  },
+  "Sirba": {
+    "Gnagna": [
+      "Bogandé",
+      "Bilanga",
+      "Coalla",
+      "Mani",
+      "Piéla",
+      "Thion"
+    ],
+    "Gourma": [
+      "Fada N'Gourma",
+      "Diabo",
+      "Diapangou",
+      "Matiacoali",
+      "Tibga",
+      "Yamba"
+    ],
+    "Komondjari": [
+      "Gayéri",
+      "Bartiebougou",
+      "Foutouri"
+    ],
+    "Kompienga": [
+      "Pama",
+      "Kompienga",
+      "Madjoari"
+    ],
+    "Tapoa": [
+      "Diapaga",
+      "Bottou",
+      "Kantchari",
+      "Logobou",
+      "Partiaga",
+      "Tambaga",
+      "Tansarga"
+    ]
+  },
+  "Tapoa": {
+    "Gnagna": [
+      "Bogandé",
+      "Bilanga",
+      "Coalla",
+      "Mani",
+      "Piéla",
+      "Thion"
+    ],
+    "Gourma": [
+      "Fada N'Gourma",
+      "Diabo",
+      "Diapangou",
+      "Matiacoali",
+      "Tibga",
+      "Yamba"
+    ],
+    "Komondjari": [
+      "Gayéri",
+      "Bartiebougou",
+      "Foutouri"
+    ],
+    "Kompienga": [
+      "Pama",
+      "Kompienga",
+      "Madjoari"
+    ],
+    "Tapoa": [
+      "Diapaga",
+      "Bottou",
+      "Kantchari",
+      "Logobou",
+      "Partiaga",
+      "Tambaga",
+      "Tansarga"
+    ]
+  },
+  "Nord": {
+    "Loroum": [
+      "Titao",
+      "Banh",
+      "Ouindigui",
+      "Sollé"
+    ],
+    "Passoré": [
+      "Yako",
+      "Arbollé",
+      "Bagaré",
+      "Bokin",
+      "Gomponsom",
+      "Kirsi",
+      "Lâ-Todin",
+      "Pilimpikou",
+      "Samba"
+    ],
+    "Yatenga": [
+      "Ouahigouya",
+      "Barga",
+      "Kalsaka",
+      "Kossouka",
+      "Koumbri",
+      "Namissiguima",
+      "Oula",
+      "Rambo",
+      "Séguénéga",
+      "Tangaye",
+      "Thiou",
+      "Zogoré"
+    ],
+    "Zondoma": [
+      "Gourcy",
+      "Bassi",
+      "Boussou",
+      "Léba",
+      "Tougo"
+    ]
+  },
+  "Yaadga": {
+    "Loroum": [
+      "Titao",
+      "Banh",
+      "Ouindigui",
+      "Sollé"
+    ],
+    "Passoré": [
+      "Yako",
+      "Arbollé",
+      "Bagaré",
+      "Bokin",
+      "Gomponsom",
+      "Kirsi",
+      "Lâ-Todin",
+      "Pilimpikou",
+      "Samba"
+    ],
+    "Yatenga": [
+      "Ouahigouya",
+      "Barga",
+      "Kalsaka",
+      "Kossouka",
+      "Koumbri",
+      "Namissiguima",
+      "Oula",
+      "Rambo",
+      "Séguénéga",
+      "Tangaye",
+      "Thiou",
+      "Zogoré"
+    ],
+    "Zondoma": [
+      "Gourcy",
+      "Bassi",
+      "Boussou",
+      "Léba",
+      "Tougo"
+    ]
+  },
+  "Plateau-Central": {
+    "Ganzourgou": [
+      "Zorgho",
+      "Boudry",
+      "Kogho",
+      "Méguet",
+      "Mogtédo",
+      "Salogo",
+      "Zam",
+      "Zoungou"
+    ],
+    "Kourwéogo": [
+      "Boussé",
+      "Laye",
+      "Niou",
+      "Sourgoubila",
+      "Toéghin"
+    ],
+    "Oubritenga": [
+      "Ziniaré",
+      "Absouya",
+      "Dapélogo",
+      "Loumbila",
+      "Nagréongo",
+      "Ourgou-Manéga",
+      "Zitenga"
+    ]
+  },
+  "Oubri": {
+    "Ganzourgou": [
+      "Zorgho",
+      "Boudry",
+      "Kogho",
+      "Méguet",
+      "Mogtédo",
+      "Salogo",
+      "Zam",
+      "Zoungou"
+    ],
+    "Kourwéogo": [
+      "Boussé",
+      "Laye",
+      "Niou",
+      "Sourgoubila",
+      "Toéghin"
+    ],
+    "Oubritenga": [
+      "Ziniaré",
+      "Absouya",
+      "Dapélogo",
+      "Loumbila",
+      "Nagréongo",
+      "Ourgou-Manéga",
+      "Zitenga"
+    ]
+  },
+  "Sahel": {
+    "Oudalan": [
+      "Gorom-Gorom",
+      "Déou",
+      "Markoye",
+      "Oursi",
+      "Tin-Akoff"
+    ],
+    "Séno": [
+      "Dori",
+      "Bani",
+      "Falagountou",
+      "Gorgadji",
+      "Sampelga",
+      "Seytenga"
+    ],
+    "Soum": [
+      "Djibo",
+      "Arbinda",
+      "Baraboulé",
+      "Diguel",
+      "Kelbo",
+      "Koutougou",
+      "Nassoumbou",
+      "Pobé-Mengao",
+      "Tongomayel"
+    ],
+    "Yagha": [
+      "Sebba",
+      "Boundoré",
+      "Mansila",
+      "Solhan",
+      "Tankougounadié",
+      "Titabé"
+    ]
+  },
+  "Liptako": {
+    "Oudalan": [
+      "Gorom-Gorom",
+      "Déou",
+      "Markoye",
+      "Oursi",
+      "Tin-Akoff"
+    ],
+    "Séno": [
+      "Dori",
+      "Bani",
+      "Falagountou",
+      "Gorgadji",
+      "Sampelga",
+      "Seytenga"
+    ],
+    "Soum": [
+      "Djibo",
+      "Arbinda",
+      "Baraboulé",
+      "Diguel",
+      "Kelbo",
+      "Koutougou",
+      "Nassoumbou",
+      "Pobé-Mengao",
+      "Tongomayel"
+    ],
+    "Yagha": [
+      "Sebba",
+      "Boundoré",
+      "Mansila",
+      "Solhan",
+      "Tankougounadié",
+      "Titabé"
+    ]
+  },
+  "Soum": {
+    "Oudalan": [
+      "Gorom-Gorom",
+      "Déou",
+      "Markoye",
+      "Oursi",
+      "Tin-Akoff"
+    ],
+    "Séno": [
+      "Dori",
+      "Bani",
+      "Falagountou",
+      "Gorgadji",
+      "Sampelga",
+      "Seytenga"
+    ],
+    "Soum": [
+      "Djibo",
+      "Arbinda",
+      "Baraboulé",
+      "Diguel",
+      "Kelbo",
+      "Koutougou",
+      "Nassoumbou",
+      "Pobé-Mengao",
+      "Tongomayel"
+    ],
+    "Yagha": [
+      "Sebba",
+      "Boundoré",
+      "Mansila",
+      "Solhan",
+      "Tankougounadié",
+      "Titabé"
+    ]
+  },
+  "Sud-Ouest": {
+    "Bougouriba": [
+      "Diébougou",
+      "Bondigui",
+      "Dolo",
+      "Ioniété",
+      "Tiankoura"
+    ],
+    "Ioba": [
+      "Dano",
+      "Dissin",
+      "Guéguéré",
+      "Koper",
+      "Niégo",
+      "Oronkua",
+      "Zambo"
+    ],
+    "Noumbiel": [
+      "Batié",
+      "Boussoukoula",
+      "Kpuéré",
+      "Legmoin",
+      "Midébdo"
+    ],
+    "Poni": [
+      "Gaoua",
+      "Bouroum-Bouroum",
+      "Boussera",
+      "Djigouè",
+      "Gbomblora",
+      "Kampti",
+      "Loropéni",
+      "Malba",
+      "Nako",
+      "Périgban"
+    ]
+  },
+  "Tannounyan": {
+    "Bougouriba": [
+      "Diébougou",
+      "Bondigui",
+      "Dolo",
+      "Ioniété",
+      "Tiankoura"
+    ],
+    "Ioba": [
+      "Dano",
+      "Dissin",
+      "Guéguéré",
+      "Koper",
+      "Niégo",
+      "Oronkua",
+      "Zambo"
+    ],
+    "Noumbiel": [
+      "Batié",
+      "Boussoukoula",
+      "Kpuéré",
+      "Legmoin",
+      "Midébdo"
+    ],
+    "Poni": [
+      "Gaoua",
+      "Bouroum-Bouroum",
+      "Boussera",
+      "Djigouè",
+      "Gbomblora",
+      "Kampti",
+      "Loropéni",
+      "Malba",
+      "Nako",
+      "Périgban"
+    ]
+  }
+}

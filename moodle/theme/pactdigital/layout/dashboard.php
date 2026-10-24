@@ -77,7 +77,8 @@ $templatecontext = array_merge([
     'hasregionmainsettingsmenu' => !empty($regionmainsettingsmenu),
     'overflow' => $overflow,
     'headercontent' => $headercontent,
-    'addblockbutton' => $addblockbutton
+    'addblockbutton' => $addblockbutton,
+    'armoiries_url' => $OUTPUT->image_url('armoiries', 'theme_pactdigital')->out(),
 ], $pactdata);
 
 echo $OUTPUT->render_from_template('theme_pactdigital/dashboard', $templatecontext);

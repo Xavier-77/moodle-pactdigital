@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <title>02_Guide_Apprenant - Guide de l'Apprenant — Parcours & Certification — PACTDIGITAL-BF</title>
+    <style>
+        
+@page {
+    size: A4;
+    margin: 20mm 15mm 20mm 15mm;
+}
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: #211d1a;
+    background-color: #ffffff;
+    line-height: 1.45;
+    font-size: 10.5pt;
+    margin: 0;
+    padding: 0;
+}
+.cover-page {
+    page-break-after: always;
+    padding: 30px 20px;
+    text-align: center;
+}
+.header-timbre {
+    width: 100%;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #0a5496;
+    padding-bottom: 12px;
+}
+.header-timbre table {
+    width: 100%;
+    border-collapse: collapse;
+    border: none;
+}
+.header-timbre td {
+    border: none;
+    padding: 0;
+    vertical-align: top;
+}
+.timbre-left {
+    text-align: left;
+    font-size: 8.5pt;
+    font-weight: bold;
+    color: #0a5496;
+    line-height: 1.25;
+}
+.timbre-right {
+    text-align: right;
+    font-size: 9pt;
+    font-weight: bold;
+    color: #211d1a;
+    line-height: 1.3;
+}
+.devise {
+    font-style: italic;
+    color: #b07800;
+    font-size: 8.5pt;
+}
+.tricolor-ribbon {
+    height: 4px;
+    width: 100%;
+    margin: 15px 0 25px 0;
+    display: table;
+}
+.ribbon-red { display: table-cell; width: 33.33%; background-color: #ed1c24; height: 4px; }
+.ribbon-yellow { display: table-cell; width: 33.34%; background-color: #f9cf0c; height: 4px; }
+.ribbon-green { display: table-cell; width: 33.33%; background-color: #0e9c49; height: 4px; }
+
+.cover-badge {
+    display: inline-block;
+    background-color: #ecf7f0;
+    color: #00843b;
+    border: 1px solid #00843b;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 9pt;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+.cover-title {
+    font-size: 22pt;
+    color: #0a5496;
+    font-weight: bold;
+    margin: 15px 0 10px 0;
+    line-height: 1.2;
+}
+.cover-subtitle {
+    font-size: 13pt;
+    color: #00843b;
+    font-weight: 600;
+    margin-bottom: 25px;
+}
+.cover-profile-box {
+    background-color: #f7f5f2;
+    border: 1px solid #e2ddd6;
+    border-left: 6px solid #0a5496;
+    padding: 15px;
+    margin: 25px auto;
+    text-align: left;
+    max-width: 500px;
+    border-radius: 4px;
+}
+.cover-meta {
+    margin-top: 35px;
+    font-size: 9pt;
+    color: #635c55;
+    line-height: 1.5;
+}
+
+h1 {
+    color: #0a5496;
+    font-size: 15pt;
+    border-bottom: 1.5px solid #00843b;
+    padding-bottom: 4px;
+    margin-top: 24px;
+    margin-bottom: 12px;
+    page-break-after: avoid;
+}
+h2 {
+    color: #00843b;
+    font-size: 12.5pt;
+    margin-top: 18px;
+    margin-bottom: 8px;
+    page-break-after: avoid;
+}
+h3 {
+    color: #211d1a;
+    font-size: 11pt;
+    margin-top: 14px;
+    margin-bottom: 6px;
+    font-weight: bold;
+}
+p, li {
+    text-align: justify;
+    margin-bottom: 6px;
+}
+ul, ol {
+    margin-top: 4px;
+    margin-bottom: 10px;
+    padding-left: 22px;
+}
+li {
+    margin-bottom: 4px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 16px 0;
+    font-size: 9.5pt;
+}
+th, td {
+    border: 1px solid #e2ddd6;
+    padding: 6px 10px;
+    vertical-align: top;
+}
+th {
+    background-color: #0a5496;
+    color: #ffffff;
+    font-weight: bold;
+    text-align: left;
+}
+tr:nth-child(even) td {
+    background-color: #fcfbf9;
+}
+
+.box-alert {
+    padding: 10px 14px;
+    margin: 12px 0;
+    border-radius: 4px;
+    font-size: 9.5pt;
+}
+.box-tip {
+    background-color: #ecf7f0;
+    border-left: 4px solid #00843b;
+    color: #04411f;
+}
+.box-warn {
+    background-color: #fef9e7;
+    border-left: 4px solid #b07800;
+    color: #5c3f00;
+}
+.box-error {
+    background-color: #fdf2f2;
+    border-left: 4px solid #e30613;
+    color: #63050a;
+}
+
+.step-card {
+    background-color: #ffffff;
+    border: 1px solid #e2ddd6;
+    border-radius: 4px;
+    padding: 10px 14px;
+    margin-bottom: 10px;
+}
+.step-header {
+    font-weight: bold;
+    color: #0a5496;
+    margin-bottom: 4px;
+}
+.badge-req {
+    background-color: #e30613;
+    color: white;
+    font-size: 7.5pt;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: bold;
+}
+.badge-opt {
+    background-color: #756d66;
+    color: white;
+    font-size: 7.5pt;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: bold;
+}
+.badge-verified {
+    background-color: #00843b;
+    color: white;
+    font-size: 7.5pt;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: bold;
+}
+
+.ui-capture {
+    background-color: #f7f5f2;
+    border: 1px dashed #8e867f;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+    font-size: 9pt;
+}
+.ui-capture-title {
+    font-weight: bold;
+    color: #0a5496;
+    margin-bottom: 6px;
+}
+.ui-capture-caption {
+    font-style: italic;
+    color: #635c55;
+    font-size: 8.5pt;
+    margin-top: 6px;
+}
+
+    </style>
+</head>
+<body>
+    <!-- PAGE DE COUVERTURE -->
+    <div class="cover-page">
+        <div class="header-timbre">
+            <table>
+                <tr>
+                    <td class="timbre-left">
+                        MINISTÈRE DE LA TRANSITION DIGITALE, DES POSTES<br>
+                        ET DES COMMUNICATIONS ÉLECTRONIQUES<br>
+                        ------------------------------------<br>
+                        SECRÉTARIAT GÉNÉRAL<br>
+                        ------------------------------------<br>
+                        DIRECTION GÉNÉRALE DE LA TRANSITION DIGITALE
+                    </td>
+                    <td class="timbre-right">
+                        BURKINA FASO<br>
+                        <span class="devise">La Patrie ou la Mort, nous Vaincrons</span><br>
+                        ------------------------------------<br>
+                        <strong>PROGRAMME PACTDIGITAL-BF</strong>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="tricolor-ribbon">
+            <div class="ribbon-red"></div>
+            <div class="ribbon-yellow"></div>
+            <div class="ribbon-green"></div>
+        </div>
+
+        <div class="cover-badge">Guide Utilisateur Officiel</div>
+        <div class="cover-title">Guide de l'Apprenant — Parcours & Certification</div>
+        <div class="cover-subtitle">Plateforme Nationale d'Apprentissage PACTDIGITAL-BF</div>
+
+        <div class="cover-profile-box">
+            <p style="margin: 0 0 5px 0;"><strong>Profil utilisateur :</strong> Apprenant, Bénéficiaire de formation citoyenne</p>
+            <p style="margin: 0 0 5px 0;"><strong>Référence document :</strong> 02_Guide_Apprenant</p>
+            <p style="margin: 0 0 5px 0;"><strong>Conformité :</strong> Implémentation réelle PACTDIGITAL-BF (Moodle 4.3+)</p>
+            <p style="margin: 0;"><strong>Charte graphique :</strong> MTDPCE v1.0 (mai 2026) / v2.0</p>
+        </div>
+
+        <div class="cover-meta">
+            <p><strong>Éditeur :</strong> Direction Générale de la Transition Digitale (DGTD)</p>
+            <p><strong>Assistance Citoyenne Gratuite :</strong> Numéro Vert <strong>34 34</strong> | support@pactdigital.bf</p>
+            <p><strong>Version :</strong> 1.0 (Octobre 2026) — Diffusion officielle</p>
+        </div>
+    </div>
+
+    <!-- CORPS DU GUIDE -->
+    <div class="guide-content">
+        
+    <h1>Sommaire</h1>
+    <ol>
+        <li><strong>Présentation du parcours apprenant</strong></li>
+        <li><strong>Objectifs du guide</strong></li>
+        <li><strong>Prérequis et environnement d'apprentissage</strong></li>
+        <li><strong>Fonctionnalités accessibles dans Mon Espace Apprenant</strong></li>
+        <li><strong>Procédures pas à pas</strong>
+            <ul>
+                <li>5.1. Se connecter et prendre en main Mon Espace Apprenant</li>
+                <li>5.2. S'inscrire à une nouvelle formation en 1 clic</li>
+                <li>5.3. Découvrir la page d'accueil du cours et choisir sa voie</li>
+                <li>5.4. Suivre la Voie 1 : Le Parcours d'apprentissage progressif</li>
+                <li>5.5. Télécharger et imprimer les Fiches Mémo de révision (PDF)</li>
+                <li>5.6. Suivre la Voie 2 : L'Examen direct de certification</li>
+                <li>5.7. Déroulement de l'examen en ligne et chronomètre interactif</li>
+                <li>5.8. Consulter ses notes et analyser ses résultats (Seuil 70%)</li>
+                <li>5.9. Télécharger et vérifier son attestation officielle avec QR Code</li>
+                <li>5.10. Consulter et partager ses badges numériques sur les réseaux professionnels</li>
+                <li>5.11. Utiliser la plateforme sur smartphone et consignes hors-ligne</li>
+            </ul>
+        </li>
+        <li><strong>Exemples pratiques de parcours de formation</strong></li>
+        <li><strong>Résolution des difficultés courantes</strong></li>
+        <li><strong>Foire Aux Questions (FAQ) de l'Apprenant</strong></li>
+        <li><strong>Coordonnées officielles de l'assistance</strong></li>
+        <li><strong>Glossaire des termes techniques</strong></li>
+        <li><strong>Historique des versions</strong></li>
+    </ol>
+
+    <h1>1. Présentation du parcours apprenant</h1>
+    <p>En tant qu'apprenant inscrit sur <strong>PACTDIGITAL-BF</strong>, vous êtes au cœur du Programme National de Littératie Numérique. La plateforme vous propose une démarche d'apprentissage moderne, flexible et valorisante, sanctionnée par des <strong>attestations officielles de l'État burkinabè</strong>.</p>
+    <p>Chaque cours s'articule autour d'une pédagogie par compétences (axée sur la taxonomie de Bloom) combinant des mises en situation de la vie quotidienne burkinabè, des fiches de synthèse pratiques, des quiz d'entraînement et une double voie d'évaluation adaptée à votre niveau initial.</p>
+
+    <h1>2. Objectifs du guide</h1>
+    <p>Ce guide vous accompagne pas à pas depuis votre première connexion jusqu'à l'obtention de votre certificat :</p>
+    <ul>
+        <li>Maîtriser la navigation dans votre tableau de bord personnel (<em>Mon Espace</em>).</li>
+        <li>S'inscrire instantanément aux formations de votre choix dans les 20 domaines nationaux.</li>
+        <li>Choisir judicieusement entre la <strong>Voie 1 (Parcours complet)</strong> et la <strong>Voie 2 (Examen direct)</strong>.</li>
+        <li>Télécharger vos fiches mémo pour réviser même sans connexion Internet.</li>
+        <li>Passer sereinement les examens finaux en maîtrisant les règles de gestion du temps et le seuil de réussite de 70%.</li>
+        <li>Télécharger votre attestation officielle infalsifiable munie de son QR code et faire valoir vos compétences auprès des employeurs.</li>
+    </ul>
+
+    <h1>3. Prérequis et environnement d'apprentissage</h1>
+    <table>
+        <tr><th>Élément</th><th>Spécification</th><th>Recommandation pratique</th></tr>
+        <tr><td><strong>Compte utilisateur</strong></td><td>Compte citoyen PACTDIGITAL-BF actif</td><td>Identifiant et mot de passe mémorisés.</td></tr>
+        <tr><td><strong>Appareil</strong></td><td>Smartphone Android/iOS, ordinateur portable ou de bureau</td><td>Sur smartphone, orienter l'écran en mode paysage pour les tableaux complexes.</td></tr>
+        <tr><td><strong>Navigateur</strong></td><td>Chrome, Firefox, Safari ou Edge à jour</td><td>Éviter les navigateurs intégrés à des applications tierces (ex: navigateur interne Facebook).</td></tr>
+        <tr><td><strong>Lecteur PDF</strong></td><td>Visionneuse PDF standard</td><td>Requis pour consulter les Fiches Mémo et l'attestation finale.</td></tr>
+        <tr><td><strong>Disponibilité</strong></td><td>Environ 30 à 45 minutes par séquence d'apprentissage</td><td>Prévoir un environnement calme pour le passage de l'examen final (30 min sans interruption).</td></tr>
+    </table>
+
+    <h1>4. Fonctionnalités accessibles dans Mon Espace Apprenant</h1>
+    <p>Accessible via le bouton doré <strong>« Mon Espace »</strong> dans l'en-tête ou via l'URL <code>/local/pactdigital/apprenant.php</code>, votre portail personnel est structuré en 4 onglets majeurs :</p>
+    <ul>
+        <li><strong>📚 Mes Formations :</strong> liste de tous les cours auxquels vous êtes inscrit avec pourcentage de progression en temps réel, statut (<em>Non démarré</em>, <em>En cours</em>, <em>Terminé</em>) et bouton d'accès rapide.</li>
+        <li><strong>📊 Mes Résultats & Notes :</strong> récapitulatif détaillé de toutes vos tentatives de quiz et d'examens (score, date, statut de réussite) et accès direct au téléchargement de vos attestations d'État.</li>
+        <li><strong>🏆 Mes Badges :</strong> galerie de vos badges de compétences numériques validés, avec bouton de partage direct vers LinkedIn et Facebook.</li>
+        <li><strong>🛒 S'inscrire à un cours :</strong> passerelle directe vers le catalogue complet des 60 formations nationales.</li>
+    </ul>
+
+    <h1>5. Procédures pas à pas</h1>
+
+    <h2>5.1. Se connecter et prendre en main Mon Espace Apprenant</h2>
+    <div class="step-card">
+        <div class="step-header">Accès au tableau de bord apprenant</div>
+        <p>1. Rendez-vous sur <code>/login/index.php</code> et saisissez vos identifiants.<br>
+        2. Une fois connecté, cliquez sur le bouton doré <strong>« Mon Espace »</strong> situé dans la barre supérieure.<br>
+        3. En haut de l'écran, observez vos 4 compteurs clés : <em>Inscrit(s)</em>, <em>Terminé(s)</em>, <em>En cours</em> et <em>Badges</em>.<br>
+        4. Pour reprendre un cours, repérez la carte de la formation dans l'onglet <strong>Mes Formations</strong> et cliquez sur <strong>« ▶️ Continuer »</strong> (ou <strong>« 🚀 Commencer »</strong> s'il s'agit d'un nouveau cours).</p>
+    </div>
+
+    <h2>5.2. S'inscrire à une nouvelle formation en 1 clic</h2>
+    <div class="step-card">
+        <div class="step-header">Procédure d'inscription simplifiée depuis le catalogue</div>
+        <p>1. Cliquez sur le bouton <strong>« Catalogue »</strong> dans la barre supérieure (URL : <code>/local/pactdigital/catalogue.php</code>).<br>
+        2. Parcourez la liste ou filtrez par pilier thématique (ex: <em>Fondamentales</em>).<br>
+        3. Sur la formation souhaitée, cliquez sur le bouton vert :<br>
+        <strong>« 🎓 S'inscrire en 1 clic »</strong>.<br>
+        4. Une boîte de dialogue sécurisée s'ouvre : <em>« Inscription à la formation »</em>.<br>
+        5. Renseignez votre <strong>Année de naissance</strong> (ex: <em>1998</em>) pour vérification de l'éligibilité (réservé aux 18 ans et plus).<br>
+        6. Cliquez sur <strong>« 🎓 Confirmer l'inscription »</strong>.<br>
+        7. Le bouton affiche <em>« ⏳ Inscription en cours… »</em> puis <em>« ✅ Inscrit(e) ! »</em>. Vous êtes automatiquement redirigé vers l'accueil du cours.</p>
+    </div>
+
+    <h2>5.3. Découvrir la page d'accueil du cours et choisir sa voie</h2>
+    <p>Lorsque vous ouvrez une formation, vous arrivez sur la page d'accueil personnalisée (URL : <code>/local/pactdigital/course_welcome.php?id=X</code>). Cet écran affiche :</p>
+    <ul>
+        <li>Le titre complet de la formation et son domaine de rattachement.</li>
+        <li>Votre barre de progression globale et le nombre de séquences validées.</li>
+        <li><strong>L'Aiguillage Pédagogique à 2 Voies :</strong>
+            <ul>
+                <li><strong>Voie 1 (Parcours complet) :</strong> Carte bleue <em>« Commencer / Continuer la formation »</em>. Recommandée pour tous ceux qui découvrent le sujet. Vous étudiez les séquences pas à pas, pratiquez sur les quiz et téléchargez vos fiches mémo.</li>
+                <li><strong>Voie 2 (Examen direct) :</strong> Carte jaune <em>« ⚡ Passer directement l'examen »</em>. Destinée aux personnes qui maîtrisent déjà le sujet et souhaitent obtenir immédiatement leur attestation sans parcourir les cours.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h2>5.4. Suivre la Voie 1 : Le Parcours d'apprentissage progressif</h2>
+    <p>En choisissant la Voie 1, vous progressez à travers 7 sections structurées :</p>
+    <div class="step-card">
+        <div class="step-header">Déroulement type d'une formation (Exemple du Domaine 1 Bronze)</div>
+        <p>1. <strong>Section 0 — Accueil & Cadrage :</strong> découvrez les 5 objectifs pédagogiques et les compétences visées (ex: <em>D1-B-01</em> à <em>D1-B-07</em>). Présentez-vous sur le forum des apprenants.<br>
+        2. <strong>Section 1 — Pré-test de positionnement :</strong> 16 questions d'auto-évaluation sans impact sur la note finale pour faire le point sur vos acquis.<br>
+        3. <strong>Section 2 — Séquences d'apprentissage :</strong> parcourez les 10 fiches interactives illustrées, découvrez les conseils d'Awa et d'Issouf, et téléchargez la Fiche Mémo.<br>
+        4. <strong>Quiz d'entraînement formatif :</strong> entraînez-vous avec des tentatives illimitées pour tester votre compréhension avant l'examen officiel.<br>
+        5. <strong>Section 3 — Examen final certifiant :</strong> 21 questions couvrant l'ensemble des compétences.<br>
+        6. <strong>Section 4 — Enquête de satisfaction :</strong> donnez votre avis en 2 minutes pour contribuer à l'amélioration du programme national.<br>
+        7. <strong>Section 5 — Attestation de réussite :</strong> débloquez et téléchargez votre certificat d'État.</p>
+    </div>
+
+    <h2>5.5. Télécharger et imprimer les Fiches Mémo de révision (PDF)</h2>
+    <p>Pour réviser hors-ligne, chaque séquence propose un bouton dédié : <strong>« 📄 Fiche mémo PDF »</strong>.</p>
+    <div class="step-card">
+        <div class="step-header">Utilisation de la Fiche Mémo (sequence_memo.php)</div>
+        <p>1. Sur la page d'accueil du cours, repérez la liste des séquences.<br>
+        2. Cliquez sur le bouton <strong>« 📄 Fiche mémo PDF »</strong> en regard de la séquence souhaitée.<br>
+        3. La fiche officielle s'ouvre : elle synthétise les points clés à retenir, le vocabulaire essentiel et comporte des lignes vierges pour vos notes personnelles.<br>
+        4. Cliquez sur <strong>« 🖨️ Imprimer / Sauvegarder en PDF »</strong> pour conserver le document sur votre appareil ou l'imprimer sur papier.</p>
+    </div>
+
+    <h2>5.6. Suivre la Voie 2 : L'Examen direct de certification</h2>
+    <div class="box-alert box-warn">
+        <strong>Règle stricte de la Voie 2 :</strong> Vous disposez de <strong>2 tentatives directes au maximum</strong>. Si vous échouez à ces 2 tentatives sans avoir validé les séquences de cours, l'accès à l'examen direct est définitivement bloqué. Vous devrez alors obligatoirement suivre l'intégralité des séquences de la Voie 1 pour débloquer une nouvelle chance.
+    </div>
+    <div class="step-card">
+        <div class="step-header">Procédure de passage en Voie 2</div>
+        <p>1. Sur l'accueil du cours, cliquez sur <strong>« ⚡ Passer directement l'examen »</strong>.<br>
+        2. La modale <em>« 📋 Règles de l'examen »</em> s'affiche et récapitule : la durée (<em>30 minutes</em>), le nombre de questions (<em>21 questions</em>), le seuil de réussite (<em>70%</em>) et le nombre de tentatives directes restantes (<em>X restante(s)</em>).<br>
+        3. Prenez connaissance de l'avertissement en rouge : <em>« Tentative directe : une tentative sera décomptée »</em>.<br>
+        4. Cliquez sur <strong>« 🚀 Démarrer l'examen maintenant »</strong>. Le système incrémente votre compteur direct et lance l'épreuve.</p>
+    </div>
+
+    <h2>5.7. Déroulement de l'examen en ligne et chronomètre interactif</h2>
+    <p>Dès le lancement du quiz, le système affiche en haut à droite de votre écran le widget officiel : <strong>« ⏱️ Examen en cours »</strong>.</p>
+    <ul>
+        <li><strong>Compte à rebours temps réel :</strong> affiche le temps restant sous le format <code>HH:MM:SS</code>.</li>
+        <li><strong>Alertes de temps :</strong> le chronomètre passe en jaune d'avertissement à <strong>5 minutes de la fin</strong>, puis en rouge clignotant à <strong>2 minutes de la fin</strong>.</li>
+        <li><strong>Pastilles de suivi :</strong> chaque pastille numérotée passe au vert dès que vous avez coché ou saisi une réponse à la question correspondante.</li>
+        <li><strong>Sauvegarde automatique :</strong> une notification discrète apparaît toutes les 30 secondes en bas de votre écran pour confirmer la sauvegarde de vos réponses : <em>« 💾 Réponses sauvegardées automatiquement »</em>. Vous ne perdez rien en cas de brève coupure de connexion.</li>
+        <li>Pour valider l'épreuve, cliquez sur <strong>« Terminer le test… »</strong> puis sur <strong>« Tout envoyer et terminer »</strong>.</li>
+    </ul>
+
+    <h2>5.8. Consulter ses notes et analyser ses résultats (Seuil 70%)</h2>
+    <p>À la soumission de l'examen, vous êtes automatiquement redirigé vers l'écran officiel de résultat (URL : <code>/local/pactdigital/exam_result.php?attemptid=X</code>).</p>
+    
+    <div class="box-alert box-tip">
+        <strong>Cas de succès : Score &ge; 70%</strong><br>
+        La bannière verte s'affiche : <em>« 🏆 Félicitations ! Examen réussi ! »</em> avec votre score en pourcentage et le badge de réussite officiel. Vous avez accès immédiat à deux boutons :<br>
+        - <strong>« 📥 Télécharger mon attestation officielle (PDF) »</strong><br>
+        - <strong>« 🛡️ Vérifier l'attestation en ligne »</strong>
+    </div>
+
+    <div class="box-alert box-error">
+        <strong>Cas d'échec : Score &lt; 70%</strong><br>
+        La bannière rouge s'affiche : <em>« 📚 Continuez à vous améliorer ! »</em> indiquant votre score et le seuil de 70% non atteint.<br>
+        - Cliquez sur <strong>« 📋 Voir le détail de mes réponses »</strong> pour comprendre vos erreurs grâce aux rétroactions pédagogiques.<br>
+        - Cliquez sur <strong>« 🔄 Réviser et repasser l'examen »</strong> pour revenir aux séquences et préparer votre seconde tentative.
+    </div>
+
+    <h2>5.9. Télécharger et vérifier son attestation officielle avec QR Code</h2>
+    <div class="step-card">
+        <div class="step-header">Téléchargement et vérification</div>
+        <p>1. Rendez-vous dans <strong>Mon Espace</strong> > onglet <strong>Mes Résultats & Notes</strong>.<br>
+        2. Sous la rubrique <em>« 📜 Mes Attestations officielles de réussite »</em>, repérez la formation validée.<br>
+        3. Cliquez sur <strong>« 📥 Télécharger l'attestation PDF »</strong> pour enregistrer le document officiel.<br>
+        4. Cliquez sur <strong>« 🛡️ Page de vérification publique »</strong> pour prévisualiser la fiche de contrôle cryptographique que verront les employeurs.</p>
+    </div>
+
+    <h2>5.10. Partager ses badges numériques sur les réseaux professionnels</h2>
+    <p>Dans l'onglet <strong>« 🏆 Mes Badges »</strong> de votre Espace Apprenant :</p>
+    <ul>
+        <li>Chaque compétence validée vous confère un badge numérique d'État.</li>
+        <li>Cliquez sur le bouton <strong>« 🔗 Partager ce badge »</strong> situé sous le badge concerné.</li>
+        <li>Une fenêtre s'ouvre avec les options :
+            <ul>
+                <li><strong>💼 LinkedIn :</strong> pour ajouter la certification directement sur votre profil professionnel.</li>
+                <li><strong>📘 Facebook :</strong> pour publier votre réussite auprès de votre réseau.</li>
+                <li><strong>📋 Copier le lien :</strong> pour coller l'adresse de vérification dans votre CV numérique.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h2>5.11. Utiliser la plateforme sur smartphone et consignes hors-ligne</h2>
+    <p>La plateforme PACTDIGITAL-BF est 100% responsive : elle s'adapte à tous les écrans sans perte de lisibilité.</p>
+    <ul>
+        <li><strong>Sur smartphone :</strong> utilisez le menu « hamburger » (trois barres horizontales) en haut à gauche pour accéder à la navigation, au catalogue et à votre espace.</li>
+        <li><strong>Économie de données :</strong> les pages ont été allégées (polices souveraines locales, absence de vidéos lourdes obligatoires).</li>
+        <li><strong>Astuce hors-ligne :</strong> téléchargez les <strong>Fiches Mémo PDF</strong> lorsque vous disposez d'une connexion Wi-Fi ou mobile. Vous pourrez ensuite les lire à tout moment sans consommer de forfait Internet.</li>
+    </ul>
+
+    <h1>6. Exemples pratiques de parcours de formation</h1>
+    <div class="step-card">
+        <div class="step-header">Cas pratique : Parcours réussi par Moussa, étudiant à Bobo-Dioulasso</div>
+        <p><em>Profil :</em> Moussa étudie la gestion à Bobo-Dioulasso. Il souhaite faire certifier ses compétences en traitement de texte pour postuler à un stage administratif.<br>
+        <em>Parcours :</em><br>
+        1. Moussa se connecte à son Espace Apprenant et s'inscrit au cours <em>Traiter un document — Bronze</em>.<br>
+        2. Pensant maîtriser le sujet, il tente la Voie 2 (Examen direct). Il obtient 62%, un score insuffisant pour le seuil des 70%.<br>
+        3. Le système l'avertit qu'il lui reste 1 tentative directe, mais lui recommande de réviser.<br>
+        4. Moussa bascule en Voie 1, étudie les séquences 4 et 5 sur la mise en page et les styles, et télécharge les fiches mémo.<br>
+        5. Il s'entraîne sur le quiz formatif et obtient 100%.<br>
+        6. Il repasse l'examen final et décroche la note de 88%. Son attestation officielle Bronze est générée instantanément avec son QR code, qu'il intègre directement à son CV en ligne.</p>
+    </div>
+
+    <h1>7. Résolution des difficultés courantes</h1>
+    <table>
+        <tr><th>Difficulté constatée</th><th>Cause</th><th>Solution</th></tr>
+        <tr><td><em>« Vous devez d'abord vous inscrire à cette formation »</em></td><td>Vous tentez d'ouvrir l'accueil d'un cours sans y être inscrit.</td><td>Rendez-vous sur le catalogue et cliquez sur « S'inscrire en 1 clic » pour ce cours.</td></tr>
+        <tr><td><em>« Examen direct bloqué (2/2 tentatives épuisées) »</em></td><td>Vos 2 essais en Voie 2 ont échoué.</td><td>Suivez l'intégralité des séquences de la Voie 1 pour débloquer l'accès à l'examen.</td></tr>
+        <tr><td><em>Coupure Internet pendant l'examen</em></td><td>Problème de réseau local ou de données mobiles.</td><td>Ne fermez pas la page. Vos réponses sont sauvegardées toutes les 30s. Reconnectez-vous rapidement et rechargez la page pour continuer l'épreuve dans la limite du temps restant.</td></tr>
+        <tr><td><em>Attestation introuvable après l'examen</em></td><td>La note obtenue est inférieure à 70% ou l'enquête n'a pas été validée.</td><td>Vérifiez que votre score est &ge; 70% et que vous avez bien rempli l'enquête de satisfaction en fin de module.</td></tr>
+    </table>
+
+    <h1>8. Foire Aux Questions (FAQ) de l'Apprenant</h1>
+    <p><strong>Q1 : Combien de fois puis-je tenter l'examen final ?</strong><br>
+    <em>Réponse :</em> Dans le cadre du parcours guidé (Voie 1), vous disposez de 2 tentatives officielles configurées sur l'examen. Dans le cadre de l'examen direct (Voie 2), vous disposez également de 2 tentatives directes avant blocage et basculement obligatoire en parcours guidé.</p>
+
+    <p><strong>Q2 : L'attestation est-elle reconnue par les employeurs ?</strong><br>
+    <em>Réponse :</em> Oui. Il s'agit d'une attestation officielle délivrée par le Ministère de la Transition Digitale (MTDPCE) dans le cadre du Programme National de Littératie Numérique. Tout recruteur peut en vérifier l'authenticité en quelques secondes grâce au QR code.</p>
+
+    <p><strong>Q3 : Combien de cours puis-je suivre en même temps ?</strong><br>
+    <em>Réponse :</em> Il n'y a aucune restriction. Vous pouvez vous inscrire à autant de formations que vous le souhaitez parmi les 60 parcours disponibles.</p>
+
+    <h1>9. Coordonnées officielles de l'assistance</h1>
+    <ul>
+        <li><strong>Numéro Vert gratuit :</strong> <strong>34 34</strong> (appel sans frais depuis tous les opérateurs nationaux).</li>
+        <li><strong>Support Apprenant :</strong> <code>support@pactdigital.bf</code></li>
+        <li><strong>Permanence d'assistance :</strong> Du lundi au vendredi de 07h30 à 16h00 (heure de Ouagadougou).</li>
+    </ul>
+
+    <h1>10. Glossaire des termes techniques</h1>
+    <ul>
+        <li><strong>Voie 1 (Parcours) :</strong> Modalité d'apprentissage complète comprenant séquences, exercices et examen final.</li>
+        <li><strong>Voie 2 (Direct) :</strong> Modalité accélérée permettant de passer immédiatement l'examen de certification sans suivre les cours.</li>
+        <li><strong>Seuil de réussite (70%) :</strong> Note minimale requise (ex: 14,70 / 21) pour valider une formation et obtenir l'attestation officielle.</li>
+        <li><strong>Fiche Mémo :</strong> Document de révision synthétique au format PDF téléchargeable pour chaque séquence.</li>
+        <li><strong>Badge numérique :</strong> Reconnaissance visuelle certifiée d'une compétence acquise, partageable sur les réseaux sociaux.</li>
+    </ul>
+
+    <h1>11. Historique des versions</h1>
+    <table>
+        <tr><th>Version</th><th>Date</th><th>Auteur</th><th>Nature des modifications</th></tr>
+        <tr><td>1.0</td><td>Octobre 2026</td><td>DGTD / MTDPCE</td><td>Version initiale conforme aux flux réels de Moodle 4.3+ et du module local_pactdigital.</td></tr>
+    </table>
+    
+    </div>
+</body>
+</html>

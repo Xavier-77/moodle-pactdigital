@@ -47,14 +47,21 @@ $enrolled_courses = $DB->get_records_sql($sql_enrolled, [
     'userid3' => $USER->id,
 ]);
 
+// ── Délivrance 100% automatique : attestation et badge dès réussite d'un cours ───
+require_once(__DIR__ . '/lib.php');
+foreach ($enrolled_courses as $enc) {
+    pactdigital_auto_award_credentials($USER->id, $enc->id);
+}
+
 // ── Récupérer les résultats d'examen (quiz) pour cet apprenant uniquement ────
 $sql_quiz_attempts = "SELECT qa.id, qa.quiz AS quizid, q.name AS quizname,
-                             q.course AS courseid, c.fullname AS coursename,
+                             q.course AS courseid, c.fullname AS coursename, cat.name AS catname,
                              qa.attempt, qa.sumgrades, qa.state,
                              qa.timefinish, q.grade AS maxgrade, q.attempts AS maxattempts
                       FROM {quiz_attempts} qa
                       JOIN {quiz} q ON q.id = qa.quiz
                       JOIN {course} c ON c.id = q.course
+                      JOIN {course_categories} cat ON cat.id = c.category
                       WHERE qa.userid = :userid AND qa.preview = 0
                       ORDER BY qa.timefinish DESC";
 
@@ -63,22 +70,29 @@ $quiz_attempts = $DB->get_records_sql($sql_quiz_attempts, ['userid' => $USER->id
 // ── Récupérer les badges de l'apprenant ──────────────────────────────────────
 $sql_badges = "SELECT bi.id, b.name, b.description, b.issuername,
                       bi.dateissued, b.courseid,
-                      c.fullname AS coursename
+                      c.fullname AS coursename, cat.name AS catname
                FROM {badge_issued} bi
                JOIN {badge} b ON b.id = bi.badgeid
                LEFT JOIN {course} c ON c.id = b.courseid
+               LEFT JOIN {course_categories} cat ON cat.id = c.category
                WHERE bi.userid = :userid AND b.status != 0
                ORDER BY bi.dateissued DESC";
 
 $my_badges = $DB->get_records_sql($sql_badges, ['userid' => $USER->id]);
+foreach ($my_badges as $b) {
+    if (!empty($b->coursename) && in_array($b->coursename, ['Bronze', 'Argent', 'Or'])) {
+        $b->coursename = ($b->catname ? $b->catname . ' — ' : '') . $b->coursename;
+    }
+}
 
 // ── Récupérer les attestations délivrées (mod_customcert) ───────────────────
 $sql_customcerts = "SELECT ci.id AS issueid, ci.code, ci.timecreated,
-                           c.id AS courseid, c.fullname AS coursename, c.shortname,
+                           c.id AS courseid, c.fullname AS coursename, c.shortname, cat.name AS catname,
                            cm.id AS cmid
                     FROM {customcert_issues} ci
                     JOIN {customcert} cert ON cert.id = ci.customcertid
                     JOIN {course} c ON c.id = cert.course
+                    JOIN {course_categories} cat ON cat.id = c.category
                     LEFT JOIN {modules} m ON m.name = 'customcert'
                     LEFT JOIN {course_modules} cm ON cm.module = m.id AND cm.instance = cert.id
                     WHERE ci.userid = :userid
@@ -87,9 +101,10 @@ $issued_certs = $DB->get_records_sql($sql_customcerts, ['userid' => $USER->id]);
 
 // Récupérer aussi les cours complétés au cas où l'émission customcert est en attente
 $sql_certs = "SELECT cc.id, cc.course AS courseid, cc.timecompleted,
-                     c.fullname AS coursename, c.shortname
+                     c.fullname AS coursename, c.shortname, cat.name AS catname
               FROM {course_completions} cc
               JOIN {course} c ON c.id = cc.course
+              JOIN {course_categories} cat ON cat.id = c.category
               WHERE cc.userid = :userid AND cc.timecompleted IS NOT NULL
               ORDER BY cc.timecompleted DESC";
 $my_completions = $DB->get_records_sql($sql_certs, ['userid' => $USER->id]);
@@ -97,24 +112,26 @@ $my_completions = $DB->get_records_sql($sql_certs, ['userid' => $USER->id]);
 // Combiner les attestations
 $my_certs = [];
 foreach ($issued_certs as $ic) {
+    $cname = in_array($ic->coursename, ['Bronze', 'Argent', 'Or']) ? $ic->catname . ' — ' . $ic->coursename : $ic->coursename;
     $my_certs[$ic->courseid] = (object) [
         'id'            => $ic->issueid,
         'courseid'      => $ic->courseid,
-        'coursename'    => $ic->coursename,
+        'coursename'    => $cname,
         'shortname'     => $ic->shortname,
         'timecompleted' => $ic->timecreated,
         'code'          => $ic->code,
         'cmid'          => $ic->cmid,
-        'download_url'  => $ic->cmid ? (new moodle_url('/mod/customcert/view.php', ['id' => $ic->cmid, 'downloadissue' => $ic->issueid]))->out(false) : null,
+        'download_url'  => $ic->cmid ? (new moodle_url('/mod/customcert/view.php', ['id' => $ic->cmid, 'downloadown' => 1]))->out(false) : null,
         'verify_url'    => (new moodle_url('/local/pactdigital/verify.php', ['code' => $ic->code]))->out(false),
     ];
 }
 foreach ($my_completions as $mc) {
     if (!isset($my_certs[$mc->courseid])) {
+        $cname = in_array($mc->coursename, ['Bronze', 'Argent', 'Or']) ? $mc->catname . ' — ' . $mc->coursename : $mc->coursename;
         $my_certs[$mc->courseid] = (object) [
             'id'            => $mc->id,
             'courseid'      => $mc->courseid,
-            'coursename'    => $mc->coursename,
+            'coursename'    => $cname,
             'shortname'     => $mc->shortname,
             'timecompleted' => $mc->timecompleted,
             'code'          => null,
@@ -167,7 +184,7 @@ foreach ($enrolled_courses as $c) {
 
     $courses_data[] = [
         'id'               => $c->id,
-        'fullname'         => $c->fullname,
+        'fullname'         => in_array($c->fullname, ['Bronze', 'Argent', 'Or']) ? $c->catname . ' — ' . $c->fullname : $c->fullname,
         'catname'          => $c->catname,
         'enrol_date'       => $c->enrol_date ? userdate($c->enrol_date, '%d/%m/%Y') : '–',
         'last_access'      => $c->last_course_access ? userdate($c->last_course_access, '%d/%m/%Y') : 'Jamais',
@@ -185,7 +202,7 @@ foreach ($quiz_attempts as $qa) {
     if ($qa->state !== 'finished') continue;
     $score_pct = ($qa->maxgrade > 0) ? round(($qa->sumgrades / $qa->maxgrade) * 100, 1) : 0;
     $quiz_results_grouped[$qa->quizid]['name']        = $qa->quizname;
-    $quiz_results_grouped[$qa->quizid]['coursename']  = $qa->coursename;
+    $quiz_results_grouped[$qa->quizid]['coursename']  = in_array($qa->coursename, ['Bronze', 'Argent', 'Or']) ? $qa->catname . ' — ' . $qa->coursename : $qa->coursename;
     $quiz_results_grouped[$qa->quizid]['courseid']    = $qa->courseid;
     $quiz_results_grouped[$qa->quizid]['maxattempts'] = $qa->maxattempts;
     $quiz_results_grouped[$qa->quizid]['attempts'][]  = [
@@ -202,30 +219,31 @@ echo $OUTPUT->header();
 ?>
 
 <style>
-/* ═══ ESPACE APPRENANT — PACTDIGITAL-BF ═══════════════════════════════════ */
+/* ═══ ESPACE APPRENANT — CONFORME CHARTE GRAPHIQUE V2.0 (MTDPCE) ════════════ */
 :root {
-    --green:  #129b40;
-    --green-dark: #0d7a32;
-    --yellow: #fad615;
-    --red:    #D32F2F;
-    --blue:   #1565C0;
-    --grey:   #64748b;
-    --border: #e2e8f0;
-    --white:  #ffffff;
-    --shadow: 0 4px 15px rgba(18,155,64,0.08);
+    --green:  var(--vert-500, #00843b);
+    --green-dark: var(--vert-700, #045527);
+    --yellow: var(--or-300, #ffed00);
+    --red:    var(--rouge-500, #e30613);
+    --blue:   var(--bleu-500, #2a6d9b);
+    --grey:   var(--texte-attenue, #635c55);
+    --border: var(--bordure, #e2ddd6);
+    --white:  var(--surface, #ffffff);
+    --shadow: var(--ombre-sm);
 }
 
 .pact-learner-page {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 1.5rem 4rem;
-    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-family: var(--police-texte, "Inter", system-ui, sans-serif);
+    color: var(--texte, #211d1a);
 }
 
 /* ── Hero ──────────────────────────────────────────────────────────────── */
 .learner-hero {
-    background: linear-gradient(135deg, #0d7a32 0%, #129b40 50%, #1db954 100%);
-    border-radius: 20px;
+    background: linear-gradient(135deg, var(--vert-900, #032e16) 0%, var(--vert-700, #045527) 50%, var(--vert-500, #00843b) 100%);
+    border-radius: var(--rayon-lg, 12px);
     padding: 2.5rem;
     margin-bottom: 2rem;
     color: white;
@@ -236,6 +254,7 @@ echo $OUTPUT->header();
     align-items: center;
     flex-wrap: wrap;
     gap: 1.5rem;
+    box-shadow: var(--ombre-md);
 }
 .learner-hero::before {
     content: '';
@@ -246,10 +265,12 @@ echo $OUTPUT->header();
     border-radius: 50%;
 }
 .learner-hero h1 {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     font-size: 1.8rem;
     font-weight: 800;
     margin: 0 0 0.4rem;
     position: relative; z-index: 1;
+    color: #ffffff;
 }
 .learner-hero p {
     opacity: 0.9;
@@ -263,16 +284,18 @@ echo $OUTPUT->header();
     flex-wrap: wrap;
 }
 .hero-stat {
-    background: rgba(255,255,255,0.15);
-    border-radius: 14px;
+    background: rgba(255,255,255,0.14);
+    border: 1px solid rgba(255,255,255,0.22);
+    border-radius: var(--rayon-md, 8px);
     padding: 0.8rem 1.2rem;
     text-align: center;
     min-width: 90px;
 }
 .hero-stat .val {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     font-size: 1.8rem;
     font-weight: 800;
-    color: #fad615;
+    color: var(--or-300, #ffed00);
     display: block;
     line-height: 1;
 }
@@ -292,6 +315,7 @@ echo $OUTPUT->header();
     overflow-x: auto;
 }
 .ltab-btn {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     background: transparent;
     border: none;
     padding: 0.85rem 1.2rem;
@@ -308,9 +332,9 @@ echo $OUTPUT->header();
     margin-bottom: -2px;
     white-space: nowrap;
 }
-.ltab-btn:hover { color: var(--green); background: #f0faf5; }
+.ltab-btn:hover { color: var(--green-dark); background: var(--vert-50, #ecf7f0); }
 .ltab-btn.active {
-    color: var(--green);
+    color: var(--green-dark);
     border-bottom-color: var(--green);
     background: white;
     font-weight: 700;
@@ -322,16 +346,17 @@ echo $OUTPUT->header();
 /* ── Cards génériques ───────────────────────────────────────────────────── */
 .section-card {
     background: var(--white);
-    border-radius: 14px;
+    border-radius: var(--rayon-lg, 12px);
     padding: 1.5rem;
     box-shadow: var(--shadow);
     border: 1px solid var(--border);
     margin-bottom: 1.5rem;
 }
 .section-title {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     font-size: 1rem;
     font-weight: 700;
-    color: var(--green);
+    color: var(--green-dark);
     display: flex;
     align-items: center;
     gap: 8px;
@@ -341,7 +366,7 @@ echo $OUTPUT->header();
 /* ── Course Cards ───────────────────────────────────────────────────────── */
 .course-card {
     background: white;
-    border-radius: 12px;
+    border-radius: var(--rayon-md, 8px);
     border: 1px solid var(--border);
     padding: 1.2rem;
     margin-bottom: 1rem;
@@ -352,14 +377,15 @@ echo $OUTPUT->header();
     flex-wrap: wrap;
 }
 .course-card:hover {
-    box-shadow: 0 6px 20px rgba(18,155,64,0.12);
+    box-shadow: var(--ombre-md);
     transform: translateY(-2px);
+    border-color: var(--green);
 }
 .course-icon {
     width: 52px;
     height: 52px;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #129b4020, #129b4040);
+    border-radius: var(--rayon-md, 8px);
+    background: var(--vert-50, #ecf7f0);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -368,9 +394,10 @@ echo $OUTPUT->header();
 }
 .course-info { flex: 1; min-width: 200px; }
 .course-name {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     font-weight: 700;
     font-size: 0.96rem;
-    color: #1a1a1a;
+    color: var(--texte, #211d1a);
     margin-bottom: 0.2rem;
 }
 .course-cat {
@@ -384,23 +411,24 @@ echo $OUTPUT->header();
 .progress-track {
     width: 100%;
     height: 8px;
-    background: #e8e8e8;
+    background: var(--bordure, #e2ddd6);
     border-radius: 4px;
     overflow: hidden;
     margin-bottom: 0.3rem;
 }
 .progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, #129b40, #1db954);
+    background: var(--vert-500, #00843b);
     border-radius: 4px;
     transition: width 0.6s ease;
 }
 .progress-pct {
     font-size: 0.8rem;
     font-weight: 700;
-    color: var(--green);
+    color: var(--green-dark);
 }
 .badge-status {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     padding: 4px 10px;
     border-radius: 20px;
     font-size: 0.72rem;
@@ -409,37 +437,38 @@ echo $OUTPUT->header();
     align-items: center;
     gap: 4px;
 }
-.badge-green  { background: #dcfce7; color: #15803d; }
-.badge-blue   { background: #dbeafe; color: #1d4ed8; }
-.badge-yellow { background: #fef3c7; color: #b45309; }
-.badge-red    { background: #fee2e2; color: #b91c1c; }
+.badge-green  { background: var(--vert-50, #ecf7f0); color: var(--vert-700, #045527); }
+.badge-blue   { background: var(--bleu-50, #eef4f9); color: var(--bleu-700, #173f5f); }
+.badge-yellow { background: var(--ocre-50, #fdf4e3); color: var(--ocre-700, #7d5500); }
+.badge-red    { background: var(--rouge-50, #fdecef); color: var(--rouge-700, #a2040e); }
 
 .btn-course {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     padding: 0.5rem 1.1rem;
-    border-radius: 8px;
+    border-radius: var(--rayon-md, 8px);
     font-size: 0.84rem;
     font-weight: 700;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
     gap: 5px;
-    background: var(--green);
+    background: var(--action, #00843b);
     color: white;
     transition: background 0.2s;
     white-space: nowrap;
 }
 .btn-course:hover {
-    background: var(--green-dark);
+    background: var(--action-survol, #026c31);
     color: white;
 }
 .btn-outline-course {
     background: white;
-    color: var(--green);
+    color: var(--green-dark);
     border: 1.5px solid var(--green);
 }
 .btn-outline-course:hover {
-    background: #f0faf5;
-    color: var(--green);
+    background: var(--vert-50, #ecf7f0);
+    color: var(--green-dark);
 }
 
 /* ── Quiz Results Table ─────────────────────────────────────────────────── */
@@ -449,7 +478,8 @@ echo $OUTPUT->header();
     font-size: 0.86rem;
 }
 .results-table th {
-    background: var(--green);
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
+    background: var(--vert-800, #04411f);
     color: white;
     padding: 10px 14px;
     text-align: left;
@@ -458,10 +488,10 @@ echo $OUTPUT->header();
 .results-table td {
     padding: 10px 14px;
     border-bottom: 1px solid var(--border);
-    color: #333;
+    color: var(--texte, #211d1a);
     vertical-align: middle;
 }
-.results-table tr:hover td { background: #f7faf8; }
+.results-table tr:hover td { background: var(--surface-basse, #fcfbf9); }
 .score-bar {
     display: flex;
     align-items: center;
@@ -470,7 +500,7 @@ echo $OUTPUT->header();
 .score-bar-track {
     flex: 1;
     height: 7px;
-    background: #e2e8f0;
+    background: var(--bordure, #e2ddd6);
     border-radius: 4px;
     overflow: hidden;
 }
@@ -486,8 +516,8 @@ echo $OUTPUT->header();
 }
 .badge-card {
     background: white;
-    border-radius: 14px;
-    border: 2px solid #fad61540;
+    border-radius: var(--rayon-lg, 12px);
+    border: 2px solid var(--or-500, #d4bc00);
     padding: 1.5rem;
     text-align: center;
     box-shadow: var(--shadow);
@@ -495,13 +525,14 @@ echo $OUTPUT->header();
 }
 .badge-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 10px 30px rgba(250,214,21,0.2);
+    box-shadow: var(--ombre-md);
 }
 .badge-icon { font-size: 3rem; margin-bottom: 0.6rem; }
 .badge-name {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     font-weight: 700;
     font-size: 0.9rem;
-    color: #1a1a1a;
+    color: var(--texte, #211d1a);
     margin-bottom: 0.3rem;
 }
 .badge-course {
@@ -512,19 +543,20 @@ echo $OUTPUT->header();
 .badge-date {
     font-size: 0.72rem;
     color: var(--grey);
-    background: #f7f7f7;
+    background: var(--surface-enfoncee, #f7f5f2);
     padding: 3px 10px;
     border-radius: 20px;
     display: inline-block;
     margin-bottom: 0.8rem;
 }
 .btn-share-badge {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     display: inline-flex;
     align-items: center;
     gap: 5px;
     padding: 0.45rem 1rem;
-    border-radius: 20px;
-    background: linear-gradient(135deg, #129b40, #0d7a32);
+    border-radius: var(--rayon-md, 8px);
+    background: var(--action, #00843b);
     color: white;
     font-size: 0.78rem;
     font-weight: 700;
@@ -536,8 +568,9 @@ echo $OUTPUT->header();
     justify-content: center;
 }
 .btn-share-badge:hover {
+    background: var(--action-survol, #026c31);
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(18,155,64,0.3);
+    box-shadow: var(--ombre-sm);
     color: white;
 }
 
@@ -548,7 +581,7 @@ echo $OUTPUT->header();
     color: var(--grey);
 }
 .empty-state .icon { font-size: 3rem; margin-bottom: 0.8rem; }
-.empty-state h3 { font-size: 1.1rem; color: #bbb; }
+.empty-state h3 { font-size: 1.1rem; color: var(--texte-faible, #756d66); }
 
 /* ── Share Modal ─────────────────────────────────────────────────────────── */
 .share-modal-backdrop {
@@ -560,29 +593,30 @@ echo $OUTPUT->header();
 .share-modal-backdrop.open { display: flex; }
 .share-modal {
     background: white;
-    border-radius: 16px;
+    border-radius: var(--rayon-lg, 12px);
     padding: 2rem;
     max-width: 480px;
     width: 100%;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    box-shadow: var(--ombre-lg);
     animation: fadeIn 0.2s ease-out;
 }
 .share-modal h3 {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     font-size: 1.2rem;
     font-weight: 700;
-    color: var(--green);
+    color: var(--green-dark);
     margin: 0 0 0.5rem;
 }
 .share-preview {
-    background: linear-gradient(135deg, #0d7a32, #1db954);
-    border-radius: 14px;
+    background: linear-gradient(135deg, var(--vert-800, #04411f), var(--vert-500, #00843b));
+    border-radius: var(--rayon-lg, 12px);
     padding: 2rem;
     text-align: center;
     color: white;
     margin: 1.2rem 0;
 }
 .share-preview .big-icon { font-size: 4rem; margin-bottom: 0.5rem; }
-.share-preview .badge-title { font-size: 1.3rem; font-weight: 800; }
+.share-preview .badge-title { font-family: var(--police-titre, "Archivo", system-ui, sans-serif); font-size: 1.3rem; font-weight: 800; }
 .share-preview .badge-info { font-size: 0.85rem; opacity: 0.85; }
 .share-btns {
     display: flex;
@@ -590,10 +624,11 @@ echo $OUTPUT->header();
     flex-wrap: wrap;
 }
 .btn-social {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     flex: 1;
     min-width: 120px;
     padding: 0.6rem 1rem;
-    border-radius: 10px;
+    border-radius: var(--rayon-md, 8px);
     font-size: 0.85rem;
     font-weight: 700;
     text-align: center;
@@ -606,25 +641,25 @@ echo $OUTPUT->header();
     transition: all 0.15s;
     text-decoration: none;
 }
-.btn-linkedin { background: #0A66C2; color: white; }
-.btn-linkedin:hover { background: #084fa3; color: white; }
-.btn-facebook { background: #1877F2; color: white; }
-.btn-facebook:hover { background: #0e5fcc; color: white; }
-.btn-copy { background: #1e293b; color: white; }
-.btn-copy:hover { background: #0f172a; color: white; }
+.btn-linkedin { background: var(--bleu-500, #2a6d9b); color: white; }
+.btn-linkedin:hover { background: var(--bleu-700, #173f5f); color: white; }
+.btn-facebook { background: var(--bleu-700, #173f5f); color: white; }
+.btn-facebook:hover { background: #0f2c44; color: white; }
+.btn-copy { background: var(--neutre-900, #211d1a); color: white; }
+.btn-copy:hover { background: var(--neutre-800, #38332f); color: white; }
 .btn-close-modal {
     background: none;
     border: 1px solid var(--border);
     color: var(--grey);
     padding: 0.5rem 1.2rem;
-    border-radius: 8px;
+    border-radius: var(--rayon-md, 8px);
     cursor: pointer;
     font-size: 0.85rem;
     margin-top: 1rem;
     width: 100%;
     transition: all 0.15s;
 }
-.btn-close-modal:hover { background: #f7f7f7; }
+.btn-close-modal:hover { background: var(--surface-enfoncee, #f7f5f2); }
 
 @media (max-width: 768px) {
     .learner-hero { flex-direction: column; }
@@ -812,9 +847,9 @@ echo $OUTPUT->header();
         </div>
 
         <!-- ── Attestations ─────────────────────────────────────────── -->
-        <?php if (!empty($my_certs)): ?>
         <div class="section-card">
             <div class="section-title">📜 Mes Attestations officielles de réussite (EF-CER-01 / EF-CER-03)</div>
+            <?php if (!empty($my_certs)): ?>
             <p style="color:var(--grey); font-size:0.88rem; margin-top:-0.5rem; margin-bottom:1.2rem;">
                 Toutes vos attestations délivrées par le MTDPCE sont disponibles ci-dessous avec leur numéro unique vérifiable publiquement.
             </p>
@@ -849,8 +884,14 @@ echo $OUTPUT->header();
                 </div>
             </div>
             <?php endforeach; ?>
+            <?php else: ?>
+            <div class="empty-state" style="padding: 2rem 1rem;">
+                <div class="icon">📜</div>
+                <h3 style="font-size: 1rem;">Aucune attestation obtenue pour l'instant</h3>
+                <p>Vos attestations officielles délivrées par le MTDPCE avec QR Code apparaîtront ici dès que vous réussirez un cours.</p>
+            </div>
+            <?php endif; ?>
         </div>
-        <?php endif; ?>
     </div>
 
     <!-- ═══════════════════════════════════════════════════════════════ -->
@@ -864,7 +905,7 @@ echo $OUTPUT->header();
             <div class="empty-state">
                 <div class="icon">🏅</div>
                 <h3>Aucun badge obtenu pour l'instant</h3>
-                <p>Complétez vos formations pour débloquer des badges numériques partageables.</p>
+                <p>Suivez et réussissez vos formations pour obtenir vos badges numériques certifiés.</p>
             </div>
             <?php else: ?>
             <div class="badges-grid">

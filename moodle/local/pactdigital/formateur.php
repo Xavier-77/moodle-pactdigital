@@ -47,15 +47,19 @@ if (!function_exists('pactdigital_set_user_field')) {
 require_login();
 
 $courseid = optional_param('id', 0, PARAM_INT);
-$action   = optional_param('action', '', PARAM_ALPHA);
+$action   = optional_param('action', '', PARAM_ALPHANUMEXT);
 
 $PAGE->set_url(new moodle_url('/local/pactdigital/formateur.php', $courseid ? ['id' => $courseid] : []));
 $PAGE->set_pagelayout('incourse');
 
 // ── Récupérer la liste des cours où l'utilisateur a un rôle d'encadrant ─────
 $is_admin = is_siteadmin();
+// Le gestionnaire (rôle manager au niveau site) voit tous les cours comme l'administrateur.
+$is_manager = !$is_admin
+    && has_capability('local/pactdigital:viewdashboard', context_system::instance())
+    && has_capability('moodle/course:update', context_system::instance());
 
-if ($is_admin) {
+if ($is_admin || $is_manager) {
     // L'administrateur a accès à tous les cours
     $sql_courses = "SELECT c.id, c.fullname, c.shortname, c.summary, c.category, cat.name AS catname
                     FROM {course} c
@@ -137,8 +141,20 @@ if ($action === 'export_session_report' && $courseid > 0) {
                        LEFT JOIN {user_lastaccess} ula ON ula.userid = u.id AND ula.courseid = :courseid2
                        LEFT JOIN {course_completions} cc ON cc.userid = u.id AND cc.course = :courseid3
                        WHERE u.deleted = 0 AND ue.status = 0
+                         AND u.id NOT IN (
+                             SELECT ra.userid 
+                             FROM {role_assignments} ra 
+                             JOIN {role} r ON r.id = ra.roleid 
+                             WHERE ra.contextid = :contextid 
+                               AND r.shortname IN ('editingteacher', 'teacher', 'manager', 'coursecreator')
+                         )
+                         AND u.id NOT IN (
+                             SELECT ra_sys.userid
+                             FROM {role_assignments} ra_sys
+                             WHERE ra_sys.contextid = 1 AND ra_sys.roleid IN (1, 2)
+                         )
                        ORDER BY u.lastname ASC, u.firstname ASC";
-            $st_list = $DB->get_records_sql($sql_st, ['courseid' => $courseid, 'courseid2' => $courseid, 'courseid3' => $courseid]);
+            $st_list = $DB->get_records_sql($sql_st, ['courseid' => $courseid, 'courseid2' => $courseid, 'courseid3' => $courseid, 'contextid' => $context->id]);
 
             $c_info = new completion_info($report_course);
             $c_enabled = $c_info->is_enabled();
@@ -213,7 +229,7 @@ $notification_type = 'success';
 // 1. Clôture de session
 if ($action === 'close_session' && $courseid > 0 && confirm_sesskey()) {
     set_config("session_closed_{$courseid}_{$USER->id}", time(), 'local_pactdigital');
-    $notification_msg = "🏁 La session a été clôturée avec succès. Les résultats finaux ont été validés et le procès-verbal officiel est prêt au téléchargement.";
+    $notification_msg = "La session a été clôturée avec succès. Les résultats finaux ont été validés et le procès-verbal officiel est prêt au téléchargement.";
     $notification_type = 'success';
 }
 
@@ -335,7 +351,7 @@ if ($action === 'import_csv' && $courseid > 0 && confirm_sesskey()) {
             }
             fclose($handle);
 
-            $notification_msg = "✅ Inscription réussie : {$enrolled_count} apprenant(s) inscrit(s) dans la formation ({$created_count} nouveaux comptes créés avec mot de passe 'Pactdigital2026!', {$existing_count} comptes existants). Tous rattachés au groupe '{$group_name}'.";
+            $notification_msg = "Inscription réussie : {$enrolled_count} apprenant(s) inscrit(s) dans la formation ({$created_count} nouveaux comptes créés avec mot de passe 'Pactdigital2026!', {$existing_count} comptes existants). Tous rattachés au groupe '{$group_name}'.";
             if (!empty($errors)) {
                 $notification_msg .= "<br><small style='color:#b91c1c;'>" . implode("<br>", array_slice($errors, 0, 5)) . "</small>";
             }
@@ -389,7 +405,7 @@ if ($action === 'send_reminder' && $courseid > 0 && confirm_sesskey()) {
                 }
             }
         }
-        $notification_msg = "✅ Relance envoyée avec succès à {$sent_count} apprenant(s).";
+        $notification_msg = "Relance envoyée avec succès à {$sent_count} apprenant(s).";
         $notification_type = 'success';
     }
 }
@@ -455,12 +471,25 @@ if ($courseid > 0) {
                      LEFT JOIN {user_lastaccess} ula ON ula.userid = u.id AND ula.courseid = :courseid2
                      LEFT JOIN {course_completions} cc ON cc.userid = u.id AND cc.course = :courseid3
                      WHERE u.deleted = 0 AND ue.status = 0
+                       AND u.id NOT IN (
+                           SELECT ra.userid 
+                           FROM {role_assignments} ra 
+                           JOIN {role} r ON r.id = ra.roleid 
+                           WHERE ra.contextid = :contextid 
+                             AND r.shortname IN ('editingteacher', 'teacher', 'manager', 'coursecreator')
+                       )
+                       AND u.id NOT IN (
+                           SELECT ra_sys.userid
+                           FROM {role_assignments} ra_sys
+                           WHERE ra_sys.contextid = 1 AND ra_sys.roleid IN (1, 2)
+                       )
                      ORDER BY u.lastname ASC, u.firstname ASC";
 
     $raw_learners = $DB->get_records_sql($sql_students, [
         'courseid'  => $courseid,
         'courseid2' => $courseid,
         'courseid3' => $courseid,
+        'contextid' => $context->id,
     ]);
 
     // Module count pour calculer le progrès
@@ -604,34 +633,34 @@ echo $OUTPUT->header();
 
 <style>
 :root {
-    --green:  #145B37;
-    --green-light: #e8f5ee;
-    --red:    #D32F2F;
-    --gold:   #d4af37;
-    --blue:   #1565C0;
-    --grey:   #64748b;
-    --dark:   #1e293b;
-    --light:  #f8fafc;
-    --border: #e2e8f0;
-    --white:  #ffffff;
-    --shadow: 0 4px 15px rgba(20, 91, 55, 0.08);
+    --green:  var(--vert-700, #045527);
+    --green-light: var(--vert-50, #ecf7f0);
+    --red:    var(--rouge-500, #e30613);
+    --gold:   var(--ocre-500, #b07800);
+    --blue:   var(--bleu-500, #2a6d9b);
+    --grey:   var(--texte-attenue, #635c55);
+    --dark:   var(--texte, #211d1a);
+    --light:  var(--surface-basse, #fcfbf9);
+    --border: var(--bordure, #e2ddd6);
+    --white:  var(--surface, #ffffff);
+    --shadow: var(--ombre-sm);
 }
 
 .pact-trainer-wrapper {
     max-width: 1400px;
     margin: 0 auto 50px auto;
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-family: var(--police-texte, "Inter", system-ui, -apple-system, sans-serif);
     color: var(--dark);
 }
 
 /* ── Banner Header ─────────────────────────────────────────── */
 .trainer-hero {
-    background: linear-gradient(135deg, var(--green) 0%, #1e7a4a 100%);
-    border-radius: 16px;
+    background: linear-gradient(135deg, var(--vert-900, #032e16) 0%, var(--vert-700, #045527) 60%, var(--vert-500, #00843b) 100%);
+    border-radius: var(--rayon-lg, 12px);
     padding: 24px 30px;
     color: #fff;
     margin-bottom: 24px;
-    box-shadow: var(--shadow);
+    box-shadow: var(--ombre-md);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -639,6 +668,7 @@ echo $OUTPUT->header();
     gap: 16px;
 }
 .trainer-hero h1 {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     font-size: 1.5rem;
     font-weight: 700;
     margin: 0 0 6px 0;
@@ -669,7 +699,7 @@ echo $OUTPUT->header();
 .course-selector-bar {
     background: var(--white);
     padding: 16px 22px;
-    border-radius: 12px;
+    border-radius: var(--rayon-lg, 12px);
     border: 1px solid var(--border);
     margin-bottom: 24px;
     box-shadow: var(--shadow);
@@ -680,6 +710,7 @@ echo $OUTPUT->header();
     gap: 14px;
 }
 .course-selector-bar label {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     font-size: 0.85rem;
     font-weight: 700;
     color: var(--green);
@@ -691,8 +722,8 @@ echo $OUTPUT->header();
     min-width: 280px;
     max-width: 500px;
     padding: 9px 14px;
-    border-radius: 8px;
-    border: 1.5px solid var(--border);
+    border-radius: var(--rayon-md, 8px);
+    border: 1.5px solid var(--bordure-forte, #8e867f);
     font-size: 0.92rem;
     color: var(--dark);
     font-weight: 600;
@@ -700,13 +731,13 @@ echo $OUTPUT->header();
 }
 .course-select-input:focus {
     outline: none;
-    border-color: var(--green);
+    border-color: var(--vert-500, #00843b);
 }
 
 /* ── Notification Banner ─────────────────────────────────────── */
 .pact-alert {
     padding: 12px 18px;
-    border-radius: 8px;
+    border-radius: var(--rayon-md, 8px);
     margin-bottom: 20px;
     font-size: 0.9rem;
     font-weight: 600;
@@ -714,8 +745,8 @@ echo $OUTPUT->header();
     align-items: center;
     gap: 10px;
 }
-.pact-alert-success { background: #e8f5ee; color: var(--green); border-left: 4px solid var(--green); }
-.pact-alert-error   { background: #fee2e2; color: var(--red); border-left: 4px solid var(--red); }
+.pact-alert-success { background: var(--vert-50, #ecf7f0); color: var(--green); border-left: 4px solid var(--vert-500, #00843b); }
+.pact-alert-error   { background: var(--rouge-50, #fdecef); color: var(--rouge-700, #a2040e); border-left: 4px solid var(--red); }
 
 /* ── KPIs Grid ───────────────────────────────────────────────── */
 .kpi-grid {
@@ -726,10 +757,10 @@ echo $OUTPUT->header();
 }
 .kpi-box {
     background: var(--white);
-    border-radius: 12px;
+    border-radius: var(--rayon-lg, 12px);
     padding: 18px 20px;
     border: 1px solid var(--border);
-    border-left: 4px solid var(--green);
+    border-left: 4px solid var(--vert-500, #00843b);
     box-shadow: var(--shadow);
     display: flex;
     flex-direction: column;
@@ -741,6 +772,7 @@ echo $OUTPUT->header();
 .kpi-box.gold { border-left-color: var(--gold); }
 .kpi-box.blue { border-left-color: var(--blue); }
 .kpi-box .label {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     font-size: 0.76rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -748,13 +780,14 @@ echo $OUTPUT->header();
     letter-spacing: 0.5px;
 }
 .kpi-box .val {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     font-size: 1.85rem;
     font-weight: 800;
     color: var(--green);
     line-height: 1.1;
 }
 .kpi-box.red .val  { color: var(--red); }
-.kpi-box.gold .val { color: #b8860b; }
+.kpi-box.gold .val { color: var(--ocre-700, #7d5500); }
 .kpi-box.blue .val { color: var(--blue); }
 .kpi-box .sub {
     font-size: 0.75rem;
@@ -771,6 +804,7 @@ echo $OUTPUT->header();
     padding-bottom: 2px;
 }
 .tab-btn {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     background: transparent;
     border: none;
     padding: 12px 18px;
@@ -792,7 +826,7 @@ echo $OUTPUT->header();
 }
 .tab-btn.active {
     color: var(--green);
-    border-bottom-color: var(--green);
+    border-bottom-color: var(--vert-500, #00843b);
     background: #fff;
     font-weight: 700;
 }
@@ -820,7 +854,7 @@ echo $OUTPUT->header();
 
 .panel-card {
     background: var(--white);
-    border-radius: 12px;
+    border-radius: var(--rayon-lg, 12px);
     border: 1px solid var(--border);
     padding: 22px;
     box-shadow: var(--shadow);
@@ -835,6 +869,7 @@ echo $OUTPUT->header();
     margin-bottom: 18px;
 }
 .panel-header h3 {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     margin: 0;
     font-size: 1.05rem;
     font-weight: 700;
@@ -855,7 +890,8 @@ table.pact-table {
     font-size: 0.86rem;
 }
 table.pact-table th {
-    background: var(--green);
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
+    background: var(--vert-800, #04411f);
     color: #fff;
     text-align: left;
     padding: 10px 14px;
@@ -871,11 +907,12 @@ table.pact-table td {
     vertical-align: middle;
 }
 table.pact-table tr:hover td {
-    background: #f7faf8;
+    background: var(--surface-basse, #fcfbf9);
 }
 
 /* ── Badges & Status ─────────────────────────────────────────── */
 .badge-pill {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     padding: 3px 9px;
     border-radius: 20px;
     font-size: 0.72rem;
@@ -884,15 +921,15 @@ table.pact-table tr:hover td {
     align-items: center;
     gap: 4px;
 }
-.badge-green { background: #dcfce7; color: #15803d; }
-.badge-red   { background: #fee2e2; color: #b91c1c; }
-.badge-gold  { background: #fef3c7; color: #b45309; }
-.badge-blue  { background: #e0f2fe; color: #0369a1; }
+.badge-green { background: var(--vert-50, #ecf7f0); color: var(--vert-700, #045527); }
+.badge-red   { background: var(--rouge-50, #fdecef); color: var(--rouge-700, #a2040e); }
+.badge-gold  { background: var(--ocre-50, #fdf4e3); color: var(--ocre-700, #7d5500); }
+.badge-blue  { background: var(--bleu-50, #eef4f9); color: var(--bleu-700, #173f5f); }
 
 .progress-track {
     width: 100px;
     height: 7px;
-    background: #e2e8f0;
+    background: var(--bordure, #e2ddd6);
     border-radius: 4px;
     overflow: hidden;
     display: inline-block;
@@ -901,14 +938,15 @@ table.pact-table tr:hover td {
 }
 .progress-fill {
     height: 100%;
-    background: var(--green);
+    background: var(--vert-500, #00843b);
     border-radius: 4px;
 }
 
 /* ── Action Buttons ──────────────────────────────────────────── */
 .btn-pact {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     padding: 7px 14px;
-    border-radius: 6px;
+    border-radius: var(--rayon-md, 8px);
     border: none;
     font-size: 0.82rem;
     font-weight: 600;
@@ -919,12 +957,12 @@ table.pact-table tr:hover td {
     gap: 6px;
     transition: all 0.15s;
 }
-.btn-pact-green { background: var(--green); color: #fff; }
-.btn-pact-green:hover { background: #0e4428; color: #fff; }
-.btn-pact-outline { background: #fff; color: var(--green); border: 1.5px solid var(--green); }
+.btn-pact-green { background: var(--action, #00843b); color: #fff; }
+.btn-pact-green:hover { background: var(--action-survol, #026c31); color: #fff; }
+.btn-pact-outline { background: #fff; color: var(--green); border: 1.5px solid var(--vert-500, #00843b); }
 .btn-pact-outline:hover { background: var(--green-light); }
 .btn-pact-red { background: var(--red); color: #fff; }
-.btn-pact-red:hover { background: #a82222; }
+.btn-pact-red:hover { background: var(--rouge-700, #a2040e); }
 
 /* ── Message Form ────────────────────────────────────────────── */
 .msg-form-group {
@@ -965,11 +1003,8 @@ table.pact-table tr:hover td {
   <!-- Header Banner -->
   <div class="trainer-hero">
     <div>
-      <h1>🧑‍🏫 Espace Formateur & Tutorat PACTDIGITAL</h1>
+      <h1>Espace Formateur & Tutorat PACTDIGITAL</h1>
       <p>Suivi pédagogique, baromètre d'avancement, notation des devoirs et relances bienveillantes</p>
-    </div>
-    <div class="trainer-badge-readonly">
-      🛡️ Mode Accompagnement & Notation (Contenu non modifiable)
     </div>
   </div>
 
@@ -982,7 +1017,7 @@ table.pact-table tr:hover td {
   <!-- Selecteur de cours -->
   <div class="course-selector-bar">
     <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;flex:1;">
-      <label for="course-picker">👨‍🏫 Cohorte / Cours sous votre responsabilité :</label>
+      <label for="course-picker">Cohorte / Cours sous votre responsabilité :</label>
       <select id="course-picker" class="course-select-input" onchange="window.location.href='formateur.php?id=' + this.value;">
         <?php if (empty($my_courses)): ?>
           <option value="0">Aucun cours sous votre encadrement</option>
@@ -1000,7 +1035,7 @@ table.pact-table tr:hover td {
       <div>
         <a href="<?= (new moodle_url('/course/view.php', ['id' => $courseid]))->out(false) ?>" 
            class="btn-pact btn-pact-outline" target="_blank" title="Consulter la vue de la classe">
-          👁️ Accéder à la classe
+          Accéder à la classe
         </a>
       </div>
     <?php endif; ?>
@@ -1009,7 +1044,6 @@ table.pact-table tr:hover td {
   <?php if ($courseid === 0 || empty($course)): ?>
     <!-- Écran d'accueil sans cours sélectionné -->
     <div class="panel-card empty-box">
-      <div class="icon">🎓</div>
       <h3>Veuillez sélectionner une cohorte à superviser ci-dessus</h3>
       <p>Choisissez l'un de vos cours pour accéder au tableau de bord de vos apprenants et corriger leurs devoirs.</p>
     </div>
@@ -1018,22 +1052,22 @@ table.pact-table tr:hover td {
     <!-- ── 4 KPI CARDS ─────────────────────────────────────────── -->
     <div class="kpi-grid">
       <div class="kpi-box">
-        <div class="label">👥 Apprenants inscrits</div>
+        <div class="label">Apprenants inscrits</div>
         <div class="val"><?= $kpis['total_learners'] ?></div>
         <div class="sub">Cohorte active</div>
       </div>
       <div class="kpi-box blue">
-        <div class="label">📈 Progression moyenne</div>
+        <div class="label">Progression moyenne</div>
         <div class="val"><?= $kpis['avg_progress'] ?>%</div>
         <div class="sub">Avancement global</div>
       </div>
       <div class="kpi-box red">
-        <div class="label">⚠️ Inactifs (> 7 jours)</div>
+        <div class="label">Inactifs (> 7 jours)</div>
         <div class="val"><?= $kpis['inactive_learners'] ?></div>
         <div class="sub">Apprenants à relancer</div>
       </div>
       <div class="kpi-box <?= ($kpis['pending_grades'] > 0) ? 'gold' : '' ?>">
-        <div class="label">📬 Devoirs à noter</div>
+        <div class="label">Devoirs à noter</div>
         <div class="val"><?= $kpis['pending_grades'] ?></div>
         <div class="sub">En attente d'évaluation</div>
       </div>
@@ -1042,28 +1076,28 @@ table.pact-table tr:hover td {
     <!-- ── ONGLETS DU COCKPIT ──────────────────────────────────── -->
     <div class="trainer-tabs">
       <button class="tab-btn active" onclick="switchTab('tab-progression')">
-        📊 Suivi & Avancement (<?= $kpis['total_learners'] ?>)
+        Suivi & Avancement (<?= $kpis['total_learners'] ?>)
       </button>
       <button class="tab-btn" onclick="switchTab('tab-evaluations')">
-        ✍️ Évaluations & Devoirs
+        Évaluations & Devoirs
         <?php if ($kpis['pending_grades'] > 0): ?>
           <span class="tab-badge"><?= $kpis['pending_grades'] ?></span>
         <?php endif; ?>
       </button>
       <button class="tab-btn" onclick="switchTab('tab-relance')">
-        📢 Relance & Messagerie
+        Relance & Messagerie
         <?php if ($kpis['inactive_learners'] > 0): ?>
           <span class="tab-badge"><?= $kpis['inactive_learners'] ?> inactifs</span>
         <?php endif; ?>
       </button>
       <button class="tab-btn" onclick="switchTab('tab-certifications')">
-        🏆 Certifications délivrées (<?= $kpis['completed_learners'] ?>)
+        Certifications délivrées (<?= $kpis['completed_learners'] ?>)
       </button>
       <button class="tab-btn" onclick="switchTab('tab-import')">
-        📥 Inscription & Cohorte (CSV)
+        Inscription & Cohorte (CSV)
       </button>
       <button class="tab-btn" onclick="switchTab('tab-cloture')">
-        🏁 Clôture & Rapport officiel
+        Clôture & Rapport officiel
       </button>
     </div>
 
@@ -1073,17 +1107,17 @@ table.pact-table tr:hover td {
     <div class="tab-panel active" id="tab-progression">
       <div class="panel-card">
         <div class="panel-header">
-          <h3>👥 Tableau d'avancement des apprenants</h3>
+          <h3>Tableau d'avancement des apprenants</h3>
           <div style="display:flex;gap:10px;align-items:center;">
-            <input type="text" id="search-student" placeholder="🔍 Rechercher un nom…" 
+            <input type="text" id="search-student" placeholder="Rechercher un nom…" 
                    oninput="filterLearners()" 
                    style="padding:7px 12px;border:1px solid var(--border);border-radius:6px;font-size:0.85rem;">
             <select id="filter-status" onchange="filterLearners()" 
                     style="padding:7px 12px;border:1px solid var(--border);border-radius:6px;font-size:0.85rem;">
               <option value="all">Tous les statuts</option>
-              <option value="inactive">⚠️ Inactifs (> 7 jours)</option>
-              <option value="completed">✅ Formation terminée</option>
-              <option value="in_progress">🔄 En cours</option>
+              <option value="inactive">Inactifs (> 7 jours)</option>
+              <option value="completed">Formation terminée</option>
+              <option value="in_progress">En cours</option>
             </select>
           </div>
         </div>
@@ -1110,7 +1144,7 @@ table.pact-table tr:hover td {
                       data-status="<?= $l['is_completed'] ? 'completed' : ($l['is_inactive'] ? 'inactive' : 'in_progress') ?>">
                     <td>
                       <strong><?= htmlspecialchars($l['name']) ?></strong><br>
-                      <small style="color:var(--grey);"><?= htmlspecialchars($l['email']) ?></small>
+                      <small style="color:var(--grey);"><?= htmlspecialchars($l['email']) ?><?= (!empty($l['phone1']) && $l['phone1'] !== '–') ? ' · ' . htmlspecialchars($l['phone1']) : '' ?></small>
                     </td>
                     <td>
                       <?= htmlspecialchars($l['region']) ?><br>
@@ -1125,17 +1159,17 @@ table.pact-table tr:hover td {
                     </td>
                     <td>
                       <?php if ($l['is_completed']): ?>
-                        <span class="badge-pill badge-green">✅ Terminé</span>
+                        <span class="badge-pill badge-green">Terminé</span>
                       <?php elseif ($l['is_inactive']): ?>
-                        <span class="badge-pill badge-red">⚠️ Inactif > 7j</span>
+                        <span class="badge-pill badge-red">Inactif > 7j</span>
                       <?php else: ?>
-                        <span class="badge-pill badge-blue">🔄 En cours</span>
+                        <span class="badge-pill badge-blue">En cours</span>
                       <?php endif; ?>
                     </td>
                     <td>
                       <button type="button" class="btn-pact btn-pact-outline" 
                               onclick="prefillReminder(<?= $l['id'] ?>, '<?= addslashes(htmlspecialchars($l['name'])) ?>')">
-                        💬 Relancer
+                        Relancer
                       </button>
                     </td>
                   </tr>
@@ -1154,16 +1188,15 @@ table.pact-table tr:hover td {
       <!-- Section Devoirs (Assign) -->
       <div class="panel-card">
         <div class="panel-header">
-          <h3>📬 Devoirs & Travaux pratiques à corriger</h3>
+          <h3>Devoirs & Travaux pratiques à corriger</h3>
           <a href="<?= (new moodle_url('/grade/report/grader/index.php', ['id' => $courseid]))->out(false) ?>" 
              class="btn-pact btn-pact-green" target="_blank">
-            📊 Ouvrir le carnet de notes complet
+            Ouvrir le carnet de notes complet
           </a>
         </div>
 
         <?php if (empty($assignments_data)): ?>
           <div class="empty-box">
-            <div class="icon">📝</div>
             <p>Ce cours ne comporte aucun devoir de type "Dépôt de travail".</p>
           </div>
         <?php else: ?>
@@ -1188,16 +1221,16 @@ table.pact-table tr:hover td {
                     <td><?= $as['graded'] ?></td>
                     <td>
                       <?php if ($as['pending'] > 0): ?>
-                        <span class="badge-pill badge-red">🚨 <?= $as['pending'] ?> en attente</span>
+                        <span class="badge-pill badge-red"><?= $as['pending'] ?> en attente</span>
                       <?php else: ?>
-                        <span class="badge-pill badge-green">✅ Tout est noté</span>
+                        <span class="badge-pill badge-green">Tout est noté</span>
                       <?php endif; ?>
                     </td>
                     <td>
                       <!-- Lien direct vers l'écran de notation du devoir (sans édition) -->
                       <a href="<?= (new moodle_url('/mod/assign/view.php', ['id' => $as['cmid'], 'action' => 'grading']))->out(false) ?>" 
                          class="btn-pact btn-pact-green" target="_blank">
-                        ✍️ Noter les copies
+                        Noter les copies
                       </a>
                     </td>
                   </tr>
@@ -1211,12 +1244,11 @@ table.pact-table tr:hover td {
       <!-- Section Quiz / Auto-évaluations -->
       <div class="panel-card">
         <div class="panel-header">
-          <h3>🎯 Quiz & Tests d'auto-évaluation</h3>
+          <h3>Quiz & Tests d'auto-évaluation</h3>
         </div>
 
         <?php if (empty($quizzes_data)): ?>
           <div class="empty-box">
-            <div class="icon">❓</div>
             <p>Ce cours ne comporte pas de Quiz.</p>
           </div>
         <?php else: ?>
@@ -1241,7 +1273,7 @@ table.pact-table tr:hover td {
                     <td>
                       <a href="<?= (new moodle_url('/mod/quiz/report.php', ['id' => $qz['cmid'], 'mode' => 'overview']))->out(false) ?>" 
                          class="btn-pact btn-pact-outline" target="_blank">
-                        📊 Voir les résultats & questions
+                        Voir les résultats & questions
                       </a>
                     </td>
                   </tr>
@@ -1259,7 +1291,7 @@ table.pact-table tr:hover td {
     <div class="tab-panel" id="tab-relance">
       <div class="panel-card">
         <div class="panel-header">
-          <h3>📢 Envoyer une relance ou un encouragement ciblé</h3>
+          <h3>Envoyer une relance ou un encouragement ciblé</h3>
           <span style="font-size:0.85rem;color:var(--grey);">
             Les messages sont délivrés instantanément dans l'espace Moodle de l'apprenant.
           </span>
@@ -1271,11 +1303,11 @@ table.pact-table tr:hover td {
           <!-- Pré-sélection rapide -->
           <div style="background:var(--light);padding:14px;border-radius:8px;margin-bottom:16px;border:1px solid var(--border);">
             <div style="font-weight:700;font-size:0.85rem;color:var(--green);margin-bottom:8px;">
-              ⚡ Sélection rapide des destinataires :
+              Sélection rapide des destinataires :
             </div>
             <div style="display:flex;gap:12px;flex-wrap:wrap;">
               <button type="button" class="btn-pact btn-pact-outline" onclick="selectInactivesOnly()">
-                ⚠️ Cocher tous les inactifs (> 7 jours)
+                Cocher tous les inactifs (> 7 jours)
               </button>
               <button type="button" class="btn-pact btn-pact-outline" onclick="toggleAllReminders(true)">
                 Tout cocher
@@ -1309,9 +1341,9 @@ table.pact-table tr:hover td {
             <label>Modèle de message pré-rempli :</label>
             <select onchange="applyTemplate(this.value)" style="background:#fff;">
               <option value="">Sélectionner un modèle rapide…</option>
-              <option value="inactivity">⚠️ Relance d'inactivité bienveillante</option>
-              <option value="assignment">📝 Rappel de rendu de devoir</option>
-              <option value="congrats">👏 Félicitations pour la progression</option>
+              <option value="inactivity">Relance d'inactivité bienveillante</option>
+              <option value="assignment">Rappel de rendu de devoir</option>
+              <option value="congrats">Félicitations pour la progression</option>
             </select>
           </div>
 
@@ -1329,7 +1361,7 @@ table.pact-table tr:hover td {
 
           <div style="display:flex;justify-content:flex-end;">
             <button type="submit" class="btn-pact btn-pact-green" style="padding:10px 22px;font-size:0.92rem;">
-              🚀 Envoyer la relance
+              Envoyer la relance
             </button>
           </div>
         </form>
@@ -1342,9 +1374,9 @@ table.pact-table tr:hover td {
     <div class="tab-panel" id="tab-certifications">
       <div class="panel-card">
         <div class="panel-header">
-          <h3>🏆 Apprenants certifiés / Formation validée</h3>
+          <h3>Apprenants certifiés / Formation validée</h3>
           <button type="button" class="btn-pact btn-pact-outline" onclick="exportCertifiedCSV()">
-            📥 Télécharger la liste (.csv)
+            Télécharger la liste (.csv)
           </button>
         </div>
 
@@ -1356,7 +1388,6 @@ table.pact-table tr:hover td {
 
         <?php if (empty($certified_list)): ?>
           <div class="empty-box">
-            <div class="icon">🎖️</div>
             <p>Aucun apprenant n'a encore validé l'intégralité du cours pour le moment.</p>
           </div>
         <?php else: ?>
@@ -1378,7 +1409,7 @@ table.pact-table tr:hover td {
                     <td><?= htmlspecialchars($c['email']) ?></td>
                     <td><?= htmlspecialchars($c['region']) ?></td>
                     <td><span class="badge-pill badge-green">100% Validé</span></td>
-                    <td><span class="badge-pill badge-green">🏆 Éligible à l'attestation</span></td>
+                    <td><span class="badge-pill badge-green">Éligible à l'attestation</span></td>
                   </tr>
                 <?php endforeach; ?>
               </tbody>
@@ -1394,14 +1425,14 @@ table.pact-table tr:hover td {
     <div class="tab-panel" id="tab-import">
       <div class="panel-card" style="margin-bottom:20px;">
         <div class="panel-header">
-          <h3>📥 Inscription massive & Rattachement à votre cohorte</h3>
+          <h3>Inscription massive & Rattachement à votre cohorte</h3>
           <a href="formateur.php?id=<?= $courseid ?>&action=download_template" class="btn-pact btn-pact-outline">
-            📄 Télécharger le modèle de fichier CSV
+            Télécharger le modèle de fichier CSV
           </a>
         </div>
 
         <div style="background:#f0fdf4;border-left:4px solid var(--green);padding:14px 18px;border-radius:6px;margin-bottom:20px;font-size:0.88rem;color:#166534;line-height:1.5;">
-          <strong>💡 Instructions pour l'importation de votre cohorte :</strong>
+          <strong>Instructions pour l'importation de votre cohorte :</strong>
           <ul style="margin:8px 0 0 18px;padding:0;">
             <li>Format attendu : <strong>Fichier CSV (séparateur point-virgule <code>;</code> ou virgule <code>,</code>)</strong> encodé en UTF-8.</li>
             <li>Colonnes : <code>nom ; prenom ; telephone ; sexe ; annee_naissance ; region ; province ; commune ; statut ; niveau_instruction</code>.</li>
@@ -1422,7 +1453,7 @@ table.pact-table tr:hover td {
 
           <div style="display:flex;justify-content:flex-end;margin-top:14px;">
             <button type="submit" class="btn-pact btn-pact-green" style="padding:10px 22px;font-size:0.92rem;">
-              🚀 Importer et inscrire les apprenants
+              Importer et inscrire les apprenants
             </button>
           </div>
         </form>
@@ -1431,7 +1462,7 @@ table.pact-table tr:hover td {
       <!-- Aperçu de la cohorte actuelle -->
       <div class="panel-card">
         <div class="panel-header">
-          <h3>👥 Effectif de votre cohorte (<?= count($learners_data) ?> inscrits)</h3>
+          <h3>Effectif de votre cohorte (<?= count($learners_data) ?> inscrits)</h3>
           <span style="font-size:0.85rem;color:var(--grey);">
             Groupe : <strong>Cohorte — <?= htmlspecialchars(fullname($USER)) ?></strong>
           </span>
@@ -1489,15 +1520,14 @@ table.pact-table tr:hover td {
     <div class="tab-panel" id="tab-cloture">
       <div class="panel-card">
         <div class="panel-header">
-          <h3>🏁 Clôture de session & Procès-verbal officiel</h3>
+          <h3>Clôture de session & Procès-verbal officiel</h3>
           <a href="formateur.php?id=<?= $courseid ?>&action=export_session_report" class="btn-pact btn-pact-green">
-            📥 Télécharger le Rapport Officiel de Session (CSV)
+            Télécharger le Rapport Officiel de Session (CSV)
           </a>
         </div>
 
         <?php if (!empty($session_closed_time)): ?>
           <div style="background:#ecfdf5;border:1.5px solid #10b981;border-radius:10px;padding:18px 22px;margin-bottom:24px;display:flex;align-items:center;gap:16px;">
-            <div style="font-size:2.2rem;">🏆</div>
             <div>
               <h4 style="margin:0 0 4px 0;color:#065f46;font-size:1.1rem;font-weight:700;">
                 Session officiellement clôturée et attestée
@@ -1509,7 +1539,6 @@ table.pact-table tr:hover td {
           </div>
         <?php else: ?>
           <div style="background:#eff6ff;border:1.5px solid #3b82f6;border-radius:10px;padding:18px 22px;margin-bottom:24px;display:flex;align-items:center;gap:16px;">
-            <div style="font-size:2.2rem;">⏳</div>
             <div>
               <h4 style="margin:0 0 4px 0;color:#1e40af;font-size:1.1rem;font-weight:700;">
                 Session en cours d'encadrement pédagogique
@@ -1535,7 +1564,7 @@ table.pact-table tr:hover td {
               <?= $female_pct ?>% <small style="font-size:0.9rem;font-weight:600;">(<?= $female_count ?>)</small>
             </div>
             <div style="font-size:0.78rem;color:<?= ($female_pct >= 30) ? '#15803d' : '#b45309' ?>;">
-              <?= ($female_pct >= 30) ? '🎯 Cible nationale atteinte (≥ 30%)' : '⚠️ En dessous de la cible (30%)' ?>
+              <?= ($female_pct >= 30) ? 'Cible nationale atteinte (≥ 30%)' : 'En dessous de la cible (30%)' ?>
             </div>
           </div>
 
@@ -1569,7 +1598,7 @@ table.pact-table tr:hover td {
                   onsubmit="return confirm('Êtes-vous certain de vouloir clôturer officiellement cette session de formation ? Le procès-verbal officiel sera figé et validé.');">
               <input type="hidden" name="sesskey" value="<?= sesskey() ?>">
               <button type="submit" class="btn-pact btn-pact-green" style="padding:11px 24px;font-size:0.92rem;">
-                🏁 Clôturer officiellement la session
+                Clôturer officiellement la session
               </button>
             </form>
           </div>
@@ -1581,7 +1610,7 @@ table.pact-table tr:hover td {
               </span>
             </div>
             <a href="formateur.php?id=<?= $courseid ?>&action=export_session_report" class="btn-pact btn-pact-green" style="padding:11px 24px;">
-              📄 Télécharger le Procès-Verbal Officiel (.csv)
+              Télécharger le Procès-Verbal Officiel (.csv)
             </a>
           </div>
         <?php endif; ?>
@@ -1669,10 +1698,10 @@ function applyTemplate(type) {
     const body = document.getElementById('msg-body');
 
     if (type === 'inactivity') {
-        sub.value = "⚠️ PACTDIGITAL — Nous espérons vous revoir très vite !";
+        sub.value = "PACTDIGITAL — Nous espérons vous revoir très vite !";
         body.value = "Bonjour,\n\nNous avons remarqué que vous ne vous êtes pas connecté à la formation depuis quelques jours. Tout va bien ?\n\nN'hésitez pas à revenir sur la plateforme pour finaliser vos modules et obtenir votre certification PACTDIGITAL. Si vous avez besoin d'aide ou si vous rencontrez un blocage technique, écrivez-moi directement ici.\n\nBonne continuation !";
     } else if (type === 'assignment') {
-        sub.value = "📝 PACTDIGITAL — Rappel pour le rendu de votre devoir";
+        sub.value = "PACTDIGITAL — Rappel pour le rendu de votre devoir";
         body.value = "Bonjour,\n\nCeci est un petit rappel amical concernant l'évaluation du module en cours. Pensez à déposer votre travail avant la date limite pour recevoir vos commentaires et valider votre attestation.\n\nBon courage pour vos travaux !";
     } else if (type === 'congrats') {
         sub.value = "👏 PACTDIGITAL — Félicitations pour votre avancement !";

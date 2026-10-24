@@ -86,9 +86,12 @@ $welcome_url     = (new moodle_url('/local/pactdigital/course_welcome.php', ['id
 $my_results_url  = (new moodle_url('/local/pactdigital/apprenant.php'))->out(false);
 $review_url      = (new moodle_url('/mod/quiz/review.php', ['attempt' => $attemptid]))->out(false);
 
-// Récupérer l'attestation si disponible
+// Récupérer et délivrer l'attestation si l'examen est réussi
 $user_cert_issue = null;
 if ($passed) {
+    require_once(__DIR__ . '/lib.php');
+    pactdigital_auto_award_credentials($attempt->userid, $attempt->courseid);
+
     $sql_issue = "SELECT ci.id, ci.code, ci.timecreated, cm.id AS cmid
                   FROM {customcert_issues} ci
                   JOIN {customcert} cert ON cert.id = ci.customcertid
@@ -109,29 +112,31 @@ echo $OUTPUT->header();
 ?>
 
 <style>
-/* ═══ EXAM RESULT PAGE — PACTDIGITAL-BF ══════════════════════════════════ */
+/* ═══ EXAM RESULT PAGE — CONFORME CHARTE GRAPHIQUE V2.0 (MTDPCE) ═══════════ */
 .result-page {
     max-width: 680px;
     margin: 0 auto;
     padding: 1rem 1.5rem 4rem;
-    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-family: var(--police-texte, "Inter", system-ui, sans-serif);
+    color: var(--texte, #211d1a);
     text-align: center;
 }
 
 /* ── Score visuel ────────────────────────────────────────────────────── */
 .result-hero {
-    border-radius: 20px;
+    border-radius: var(--rayon-lg, 12px);
     padding: 3rem 2rem;
     margin-bottom: 2rem;
     position: relative;
     overflow: hidden;
     color: white;
+    box-shadow: var(--ombre-md);
 }
 .result-hero.pass {
-    background: linear-gradient(135deg, #0d7a32 0%, #129b40 60%, #16a34a 100%);
+    background: linear-gradient(135deg, var(--vert-900, #032e16) 0%, var(--vert-700, #045527) 60%, var(--vert-500, #00843b) 100%);
 }
 .result-hero.fail {
-    background: linear-gradient(135deg, #991b1b 0%, #dc2626 60%, #ef4444 100%);
+    background: linear-gradient(135deg, #7a030a 0%, var(--rouge-700, #a2040e) 60%, var(--rouge-500, #e30613) 100%);
 }
 .result-hero::before {
     content: '';
@@ -154,16 +159,18 @@ echo $OUTPUT->header();
     100% { transform: scale(1); }
 }
 .result-status-text {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     font-size: 1.6rem;
     font-weight: 800;
     margin: 0 0 0.5rem;
     position: relative; z-index: 1;
 }
 .result-score-big {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     font-size: 4.5rem;
     font-weight: 900;
     line-height: 1;
-    color: #fad615;
+    color: var(--or-300, #ffed00);
     margin: 0.5rem 0;
     position: relative; z-index: 1;
 }
@@ -173,6 +180,7 @@ echo $OUTPUT->header();
     position: relative; z-index: 1;
 }
 .result-threshold {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     display: inline-block;
     background: rgba(255,255,255,0.2);
     padding: 5px 14px;
@@ -193,20 +201,20 @@ echo $OUTPUT->header();
 @media (max-width: 500px) { .result-stats { grid-template-columns: 1fr 1fr; } }
 .stat-box {
     background: white;
-    border-radius: 12px;
+    border-radius: var(--rayon-md, 8px);
     padding: 1.2rem;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    border: 1px solid var(--bordure, #e2ddd6);
+    box-shadow: var(--ombre-sm);
 }
 .stat-icon { font-size: 1.5rem; margin-bottom: 0.3rem; }
-.stat-label { font-size: 0.72rem; text-transform: uppercase; color: #64748b; font-weight: 700; letter-spacing: 0.04em; }
-.stat-value { font-size: 1.3rem; font-weight: 800; color: #1a1a1a; }
+.stat-label { font-family: var(--police-titre, "Archivo", system-ui, sans-serif); font-size: 0.72rem; text-transform: uppercase; color: var(--texte-attenue, #635c55); font-weight: 700; letter-spacing: 0.04em; }
+.stat-value { font-family: var(--police-titre, "Archivo", system-ui, sans-serif); font-size: 1.3rem; font-weight: 800; color: var(--texte, #211d1a); }
 
 /* ── Badge numérique ─────────────────────────────────────────────────── */
 .digital-badge {
-    background: linear-gradient(135deg, #fef3c7, #fde68a);
-    border: 3px solid #fbbf24;
-    border-radius: 16px;
+    background: linear-gradient(135deg, var(--or-50, #fffde6), #faeccd);
+    border: 2px solid var(--or-500, #d4bc00);
+    border-radius: var(--rayon-lg, 12px);
     padding: 1.5rem;
     margin-bottom: 1.5rem;
     animation: badgeAppear 0.6s ease-out 0.3s both;
@@ -216,8 +224,8 @@ echo $OUTPUT->header();
     to   { opacity: 1; transform: scale(1) rotate(0); }
 }
 .badge-icon-big { font-size: 4rem; margin-bottom: 0.5rem; }
-.badge-title-text { font-size: 1.15rem; font-weight: 800; color: #92400e; }
-.badge-subtitle   { font-size: 0.82rem; color: #b45309; margin-top: 0.2rem; }
+.badge-title-text { font-family: var(--police-titre, "Archivo", system-ui, sans-serif); font-size: 1.15rem; font-weight: 800; color: var(--neutre-900, #211d1a); }
+.badge-subtitle   { font-size: 0.82rem; color: var(--ocre-700, #7d5500); margin-top: 0.2rem; }
 
 /* ── Actions ─────────────────────────────────────────────────────────── */
 .result-actions {
@@ -227,63 +235,64 @@ echo $OUTPUT->header();
     margin-bottom: 1.5rem;
 }
 .btn-result {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
     padding: 0.85rem 1.5rem;
-    border-radius: 12px;
+    border-radius: var(--rayon-md, 8px);
     font-size: 0.96rem;
     font-weight: 700;
     text-decoration: none;
     transition: all 0.2s;
     cursor: pointer;
     border: none;
-    font-family: inherit;
 }
 .btn-result.primary {
-    background: linear-gradient(135deg, #129b40, #0d7a32);
+    background: var(--action, #00843b);
     color: white;
 }
 .btn-result.primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(18,155,64,0.3);
+    background: var(--action-survol, #026c31);
+    transform: translateY(-1px);
+    box-shadow: var(--ombre-md);
     color: white;
 }
 .btn-result.secondary {
     background: white;
-    color: #1565C0;
-    border: 2px solid #1565C0;
+    color: var(--bleu-700, #173f5f);
+    border: 2px solid var(--bleu-500, #2a6d9b);
 }
-.btn-result.secondary:hover { background: #dbeafe; color: #1565C0; }
+.btn-result.secondary:hover { background: var(--bleu-50, #eef4f9); color: var(--bleu-700, #173f5f); }
 .btn-result.outline {
     background: white;
-    color: #64748b;
-    border: 1.5px solid #e2e8f0;
+    color: var(--texte-attenue, #635c55);
+    border: 1.5px solid var(--bordure, #e2ddd6);
 }
-.btn-result.outline:hover { background: #f1f5f9; color: #64748b; }
+.btn-result.outline:hover { background: var(--surface-enfoncee, #f7f5f2); color: var(--texte, #211d1a); }
 .btn-result.share-btn {
-    background: linear-gradient(135deg, #0A66C2, #004d99);
+    background: var(--bleu-500, #2a6d9b);
     color: white;
 }
-.btn-result.share-btn:hover { opacity: 0.9; color: white; }
+.btn-result.share-btn:hover { background: var(--bleu-700, #173f5f); color: white; }
 
 /* ── Message d'encouragement ─────────────────────────────────────────── */
 .encouragement {
-    background: #f0faf5;
-    border: 1px solid #a7f3d0;
-    border-radius: 12px;
+    background: var(--vert-50, #ecf7f0);
+    border: 1px solid var(--vert-200, #a2e0bc);
+    border-radius: var(--rayon-md, 8px);
     padding: 1rem 1.2rem;
     margin-bottom: 1.5rem;
     font-size: 0.9rem;
-    color: #065f46;
+    color: var(--vert-700, #045527);
     line-height: 1.5;
     text-align: left;
 }
 .encouragement.warn {
-    background: #fffbeb;
-    border-color: #fcd34d;
-    color: #78350f;
+    background: var(--ocre-50, #fdf4e3);
+    border-color: var(--ocre-500, #b07800);
+    color: var(--ocre-700, #7d5500);
 }
 
 /* ── Share modal ─────────────────────────────────────────────────────── */
@@ -424,7 +433,7 @@ echo $OUTPUT->header();
     <div class="result-actions">
         <?php if ($passed): ?>
             <?php if ($user_cert_issue && !empty($user_cert_issue->cmid)): ?>
-            <a href="<?= (new moodle_url('/mod/customcert/view.php', ['id' => $user_cert_issue->cmid, 'downloadissue' => $user_cert_issue->id]))->out(false) ?>" target="_blank" class="btn-result primary" style="background: linear-gradient(135deg, #129b40, #0d7a32); text-decoration: none;">
+            <a href="<?= (new moodle_url('/mod/customcert/view.php', ['id' => $user_cert_issue->cmid, 'downloadown' => 1]))->out(false) ?>" target="_blank" class="btn-result primary" style="background: linear-gradient(135deg, #129b40, #0d7a32); text-decoration: none;">
                 📥 Télécharger mon attestation officielle (PDF)
             </a>
             <a href="<?= (new moodle_url('/local/pactdigital/verify.php', ['code' => $user_cert_issue->code]))->out(false) ?>" target="_blank" class="btn-result outline" style="text-decoration: none; border-color: #129b40; color: #129b40;">

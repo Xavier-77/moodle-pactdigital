@@ -19,33 +19,34 @@ echo $OUTPUT->header();
 
 <style>
 :root {
-    --pact-green: #145B37;
-    --pact-green-light: #e8f5ee;
-    --pact-yellow: #fad615;
-    --pact-red: #D32F2F;
-    --pact-dark: #1e293b;
-    --pact-grey: #64748b;
-    --pact-border: #e2e8f0;
+    --pact-green: var(--vert-700, #045527);
+    --pact-green-light: var(--vert-50, #ecf7f0);
+    --pact-yellow: var(--or-300, #ffed00);
+    --pact-red: var(--rouge-500, #e30613);
+    --pact-dark: var(--texte, #211d1a);
+    --pact-grey: var(--texte-attenue, #635c55);
+    --pact-border: var(--bordure, #e2ddd6);
 }
 
 .legal-wrapper {
     max-width: 1000px;
     margin: 0 auto 60px auto;
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-family: var(--police-texte, "Inter", system-ui, -apple-system, sans-serif);
     color: var(--pact-dark);
     line-height: 1.65;
 }
 
 .legal-hero {
-    background: linear-gradient(135deg, #145B37 0%, #1e7a4a 100%);
-    border-radius: 16px;
+    background: linear-gradient(135deg, var(--vert-900, #032e16) 0%, var(--vert-700, #045527) 60%, var(--vert-500, #00843b) 100%);
+    border-radius: var(--rayon-lg, 12px);
     padding: 35px 30px;
     color: #fff;
     margin-bottom: 30px;
-    box-shadow: 0 4px 20px rgba(20, 91, 55, 0.15);
+    box-shadow: var(--ombre-md);
     text-align: center;
 }
 .legal-hero h1 {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     font-size: 2.1rem;
     font-weight: 800;
     margin: 0 0 10px 0;
@@ -60,13 +61,14 @@ echo $OUTPUT->header();
 
 .legal-card {
     background: #fff;
-    border-radius: 14px;
+    border-radius: var(--rayon-lg, 12px);
     border: 1px solid var(--pact-border);
     padding: 32px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    box-shadow: var(--ombre-sm);
     margin-bottom: 24px;
 }
 .legal-card h2 {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     font-size: 1.35rem;
     font-weight: 800;
     color: var(--pact-green);
@@ -78,6 +80,7 @@ echo $OUTPUT->header();
     gap: 10px;
 }
 .legal-card h3 {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     font-size: 1.05rem;
     font-weight: 700;
     color: var(--pact-dark);
@@ -85,7 +88,7 @@ echo $OUTPUT->header();
 }
 .legal-card p, .legal-card ul {
     font-size: 0.93rem;
-    color: #334155;
+    color: var(--pact-dark);
     margin: 0 0 14px 0;
 }
 .legal-card ul {
@@ -96,16 +99,16 @@ echo $OUTPUT->header();
 }
 
 .law-badge {
-    background: #f0fdf4;
-    border-left: 4px solid var(--pact-green);
-    border-radius: 8px;
+    background: var(--vert-50, #ecf7f0);
+    border-left: 4px solid var(--vert-500, #00843b);
+    border-radius: var(--rayon-md, 8px);
     padding: 16px 20px;
     margin: 18px 0;
     font-size: 0.9rem;
-    color: #166534;
+    color: var(--vert-700, #045527);
 }
 .law-badge strong {
-    color: #145B37;
+    color: var(--vert-800, #04411f);
 }
 </style>
 
@@ -113,13 +116,13 @@ echo $OUTPUT->header();
 
     <!-- Hero Header -->
     <div class="legal-hero">
-        <h1>⚖️ Mentions Légales & Protection des Données</h1>
+        <h1>Mentions Légales &amp; Protection des Données</h1>
         <p>Cadre juridique officiel, politique de confidentialité et conformité nationale avec la Loi N° 001-2021/AN du Burkina Faso.</p>
     </div>
 
     <!-- Section 1 : Éditeur officiel -->
     <div class="legal-card">
-        <h2>🏛️ 1. Éditeur de la Plateforme</h2>
+        <h2>1. Éditeur de la Plateforme</h2>
         <p>
             La plateforme nationale <strong>PACTDIGITAL-BF</strong> (Programme National de Littératie Numérique) est un service public officiel édité et administré par :
         </p>
@@ -133,11 +136,11 @@ echo $OUTPUT->header();
     </div>
 
     <!-- Section 2 : Cadre légal et conformité CIL -->
-    <div class="legal-card">
-        <h2>🛡️ 2. Protection des Données Personnelles & Conformité CIL</h2>
+    <div class="legal-card" id="loi-001-2021">
+        <h2>2. Protection des Données Personnelles &amp; Conformité CIL</h2>
         
         <div class="law-badge">
-            <strong>📜 Cadre législatif applicable :</strong><br>
+            <strong>Cadre législatif officiel :</strong><br>
             Le traitement des données au sein de la plateforme PACTDIGITAL-BF est strictement encadré par la 
             <strong>Loi N° 001-2021/AN du 30 mars 2021 portant protection des personnes à l'égard du traitement des données à caractère personnel au Burkina Faso</strong>, 
             sous le contrôle de la <strong>Commission de l'Informatique et des Libertés (CIL)</strong>.
@@ -176,11 +179,48 @@ echo $OUTPUT->header();
         <p>
             Pour exercer ces droits, vous pouvez nous adresser une demande via le formulaire de contact ou par courriel à <strong>support@pactdigital.bf</strong>.
         </p>
+
+        <h3 id="articles-loi" style="margin-top: 24px; color: var(--pact-green);">E. Ce que spécifie la Loi N° 001-2021/AN (Articles clés)</h3>
+        <p style="font-size: 0.9rem; color: #475569;">
+            Voici les dispositions phares de la loi burkinabè garantissant la protection de vos renseignements personnels sur PACTDIGITAL-BF :
+        </p>
+        <div style="display: grid; gap: 12px; margin-top: 14px;">
+            <div style="background: #f8fafc; border-left: 4px solid #00843b; border-radius: 6px; padding: 12px 16px;">
+                <strong style="color: #045527; font-size: 0.95rem;">Article 14 — Principe de finalité et de proportionnalité :</strong>
+                <p style="margin: 4px 0 0 0; font-size: 0.88rem; color: #334155;">
+                    Les données doivent être collectées pour des finalités déterminées, explicites et légitimes. Elles ne peuvent être traitées ultérieurement de manière incompatible avec ces finalités, et doivent être adéquates, pertinentes et non excessives.
+                </p>
+            </div>
+            <div style="background: #f8fafc; border-left: 4px solid #00843b; border-radius: 6px; padding: 12px 16px;">
+                <strong style="color: #045527; font-size: 0.95rem;">Article 17 — Consentement préalable et éclairé :</strong>
+                <p style="margin: 4px 0 0 0; font-size: 0.88rem; color: #334155;">
+                    Le traitement des données personnelles n'est licite que si la personne concernée a donné son accord préalable, libre, spécifique et sans équivoque, après avoir été informée de la finalité du traitement.
+                </p>
+            </div>
+            <div style="background: #f8fafc; border-left: 4px solid #00843b; border-radius: 6px; padding: 12px 16px;">
+                <strong style="color: #045527; font-size: 0.95rem;">Articles 25 &amp; 26 — Droit d'information et droit d'accès :</strong>
+                <p style="margin: 4px 0 0 0; font-size: 0.88rem; color: #334155;">
+                    Toute personne a le droit de connaître l'identité du responsable de traitement, la nature des données enregistrées et d'en obtenir communication intégrale sans restriction.
+                </p>
+            </div>
+            <div style="background: #f8fafc; border-left: 4px solid #00843b; border-radius: 6px; padding: 12px 16px;">
+                <strong style="color: #045527; font-size: 0.95rem;">Articles 27 &amp; 28 — Droit de rectification et droit à l'oubli :</strong>
+                <p style="margin: 4px 0 0 0; font-size: 0.88rem; color: #334155;">
+                    Le citoyen peut exiger la mise à jour, la correction ou la suppression immédiate de ses données personnelles inexactes, périmées ou dont la conservation n'est plus justifiée.
+                </p>
+            </div>
+            <div style="background: #f8fafc; border-left: 4px solid #00843b; border-radius: 6px; padding: 12px 16px;">
+                <strong style="color: #045527; font-size: 0.95rem;">Article 46 — Sécurité, chiffrement et souveraineté :</strong>
+                <p style="margin: 4px 0 0 0; font-size: 0.88rem; color: #334155;">
+                    Le responsable de traitement est légalement tenu de mettre en œuvre toutes les mesures techniques pour préserver la confidentialité absolue des données et empêcher toute intrusion ou fuite vers des tiers non autorisés.
+                </p>
+            </div>
+        </div>
     </div>
 
     <!-- Section 3 : Hébergement & Sécurité souveraine -->
     <div class="legal-card">
-        <h2>🔒 3. Hébergement & Sécurité du Système</h2>
+        <h2>3. Hébergement &amp; Sécurité du Système</h2>
         <p>
             L'infrastructure technique de PACTDIGITAL-BF est hébergée sur le réseau informatique national du Gouvernement du Burkina Faso.
         </p>
@@ -193,7 +233,7 @@ echo $OUTPUT->header();
 
     <!-- Section 4 : Propriété intellectuelle -->
     <div class="legal-card">
-        <h2>📚 4. Propriété Intellectuelle & Licence des Contenus</h2>
+        <h2>4. Propriété Intellectuelle &amp; Licence des Contenus</h2>
         <p>
             Les parcours pédagogiques, supports de cours, vidéos, infographies et référentiels de compétences publiés sur PACTDIGITAL-BF sont la propriété exclusive du MTDPCE ou mis à disposition sous licence libre éducative avec l'accord de leurs auteurs respectifs.
         </p>
@@ -204,7 +244,7 @@ echo $OUTPUT->header();
 
     <!-- Section 5 : Conditions d'utilisation -->
     <div class="legal-card">
-        <h2>🤝 5. Règles de Conduite & Engagements de l'Apprenant</h2>
+        <h2>5. Règles de Conduite &amp; Engagements de l'Apprenant</h2>
         <p>En s'inscrivant sur la plateforme, l'apprenant s'engage à :</p>
         <ul>
             <li>Fournir des renseignements sincères lors de son inscription.</li>

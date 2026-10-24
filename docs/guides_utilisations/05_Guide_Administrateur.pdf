@@ -1,0 +1,149 @@
+%PDF-1.4
+%âãÏÓ
+1 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+2 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Oblique /Encoding /WinAnsiEncoding >>
+endobj
+4 0 obj
+<< /Length 2596 >>
+stream
+0.039 0.329 0.588 rg 0.00 745.00 595.28 96.89 re f
+0.929 0.110 0.141 rg 0.00 740.00 198.00 5.00 re f
+0.976 0.812 0.047 rg 198.00 740.00 198.00 5.00 re f
+0.055 0.616 0.286 rg 396.00 740.00 200.00 5.00 re f
+BT /F2 15 Tf 1.000 1.000 1.000 rg 45.00 795.00 Td (BURKINA FASO) Tj ET
+BT /F3 10 Tf 0.976 0.812 0.047 rg 45.00 780.00 Td (La Patrie ou la Mort, nous Vaincrons) Tj ET
+BT /F1 7.5 Tf 0.900 0.900 0.900 rg 45.00 762.00 Td (MINISTERE DE LA TRANSITION DIGITALE, DES POSTES ET DES COMMUNICATIONS ELECTRONIQUES) Tj ET
+BT /F1 7.5 Tf 0.850 0.850 0.850 rg 45.00 752.00 Td (Direction Generale de la Transition Digitale \(DGTD\)) Tj ET
+0.055 0.616 0.286 RG 0.925 0.968 0.941 rg 45.00 690.00 180.00 20.00 re B
+BT /F2 8.5 Tf 0.055 0.616 0.286 rg 52.00 696.00 Td (GUIDE OFFICIEL DE L'UTILISATEUR) Tj ET
+BT /F2 20 Tf 0.039 0.329 0.588 rg 45.00 640.00 Td (Guide de l'Administrateur  -  Exploitation, Sécurité & Pilotage SIG) Tj ET
+BT /F2 13 Tf 0.055 0.616 0.286 rg 45.00 615.00 Td (Plateforme Nationale PACTDIGITAL-BF) Tj ET
+BT /F3 11 Tf 0.400 0.380 0.360 rg 45.00 598.00 Td (Programme National de Litteratie Numerique du Burkina Faso) Tj ET
+0.880 0.860 0.840 RG 0.968 0.960 0.949 rg 45.00 460.00 505.00 115.00 re B
+0.039 0.329 0.588 rg 45.00 460.00 6.00 115.00 re f
+BT /F2 10.5 Tf 0.039 0.329 0.588 rg 65.00 550.00 Td (CADRE D'APPLICATION & PROFIL CONCERNE) Tj ET
+BT /F2 9.5 Tf 0.130 0.110 0.100 rg 65.00 532.00 Td (Profil cible : Administrateur technique, Administrateur système DGTD / MTDPCE) Tj ET
+BT /F1 9 Tf 0.300 0.300 0.300 rg 65.00 516.00 Td (Reference du document : 05_Guide_Administrateur) Tj ET
+BT /F1 9 Tf 0.300 0.300 0.300 rg 65.00 500.00 Td (Conformite technique : Base sur l'analyse de l'implementation reelle \(Moodle 4.3+\)) Tj ET
+BT /F1 9 Tf 0.300 0.300 0.300 rg 65.00 484.00 Td (Charte graphique : MTDPCE v1.0 \(mai 2026\) / v2.0 \(armoiries, filet national, polices souveraines\)) Tj ET
+BT /F1 9 Tf 0.300 0.300 0.300 rg 65.00 468.00 Td (Protection des donnees : Conforme Loi N 001-2021/AN relative a la protection des donnees \(CIL\)) Tj ET
+0.880 0.860 0.840 RG 45.00 120.00 505.00 1.00 re S
+BT /F2 8.5 Tf 0.039 0.329 0.588 rg 45.00 105.00 Td (SECRETARIAT GENERAL - DIRECTION GENERALE DE LA TRANSITION DIGITALE) Tj ET
+BT /F1 8.5 Tf 0.400 0.380 0.360 rg 45.00 93.00 Td (Avenue de l'Independance, Ouagadougou, Burkina Faso) Tj ET
+BT /F1 8.5 Tf 0.400 0.380 0.360 rg 45.00 81.00 Td (Assistance Citoyenne Gratuite : Numero Vert 34 34 | support@pactdigital.bf | www.mdenp.gov.bf) Tj ET
+BT /F2 8.5 Tf 0.055 0.616 0.286 rg 45.00 69.00 Td (Version 1.0 \(Octobre 2026\) - Diffusion officielle) Tj ET
+endstream
+endobj
+5 0 obj
+<< /Type /Page /Parent 4 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 1 0 R /F2 2 0 R /F3 3 0 R >> >> /Contents 4 0 R >>
+endobj
+6 0 obj
+<< /Length 6594 >>
+stream
+0.055 0.616 0.286 rg 45.00 758.00 505.00 1.50 re f
+BT /F2 12.5 Tf 0.039 0.329 0.588 rg 45.00 763.00 Td (1. Role de l'Administrateur Systeme) Tj ET
+BT /F1 9 Tf 0.130 0.110 0.100 rg 45.00 744.00 Td (L'Administrateur de PACTDIGITAL-BF assure la continuite d'exploitation, la securite, les) Tj ET
+BT /F1 9 Tf 0.130 0.110 0.100 rg 45.00 732.00 Td (sauvegardes et la conformite a la Loi N 001-2021/AN \(CIL\) sur la protection des donnees) Tj ET
+BT /F1 9 Tf 0.130 0.110 0.100 rg 45.00 720.00 Td (personnelles sous l'autorite de la DGTD / MTDPCE.) Tj ET
+0.055 0.616 0.286 rg 45.00 693.00 505.00 1.50 re f
+BT /F2 12.5 Tf 0.039 0.329 0.588 rg 45.00 698.00 Td (2. Administration Moodle & Gestion des Roles) Tj ET
+BT /F1 8.5 Tf 0.150 0.150 0.150 rg 45.00 679.00 Td (* Administration du site : Acces centralise via /admin/index.php.) Tj ET
+BT /F1 8.5 Tf 0.150 0.150 0.150 rg 45.00 666.00 Td (* Habilitation formateurs : Attribution des roles specifiques 9 \(formateur\) et 10) Tj ET
+BT /F1 8.5 Tf 0.150 0.150 0.150 rg 57.00 655.00 Td (\(formateur_pnln\).) Tj ET
+BT /F1 8.5 Tf 0.150 0.150 0.150 rg 45.00 642.00 Td (* Champs personnalises : Supervision des 9 attributs obligatoires \(annee naiss., region 17) Tj ET
+BT /F1 8.5 Tf 0.150 0.150 0.150 rg 57.00 631.00 Td (decoup., telephone...\).) Tj ET
+0.055 0.616 0.286 rg 45.00 606.00 505.00 1.50 re f
+BT /F2 12.5 Tf 0.039 0.329 0.588 rg 45.00 611.00 Td (3. Pilotage Strategique via Dashboard SIG \(dashboard.php\)) Tj ET
+BT /F1 9 Tf 0.130 0.110 0.100 rg 45.00 592.00 Td (Le Dashboard SIG national consolide les donnees des 60 cours a travers 8 filtres de) Tj ET
+BT /F1 9 Tf 0.130 0.110 0.100 rg 45.00 580.00 Td (segmentation, 6 KPI cards, 10 graphiques Chart.js et la carte Leaflet choroplethe du Burkina) Tj ET
+BT /F1 9 Tf 0.130 0.110 0.100 rg 45.00 568.00 Td (Faso.) Tj ET
+0.039 0.329 0.588 RG 0.039 0.329 0.588 rg 45.00 539.00 150.00 18.00 re B
+BT /F2 8 Tf 1.000 1.000 1.000 rg 49.00 543.00 Td (Outil d'administration) Tj ET
+0.039 0.329 0.588 RG 0.039 0.329 0.588 rg 195.00 539.00 165.00 18.00 re B
+BT /F2 8 Tf 1.000 1.000 1.000 rg 199.00 543.00 Td (URL / Script) Tj ET
+0.039 0.329 0.588 RG 0.039 0.329 0.588 rg 360.00 539.00 190.00 18.00 re B
+BT /F2 8 Tf 1.000 1.000 1.000 rg 364.00 543.00 Td (Fonction cle) Tj ET
+0.880 0.860 0.840 RG 1.000 1.000 1.000 rg 45.00 523.00 150.00 15.00 re B
+BT /F1 7.5 Tf 0.150 0.150 0.150 rg 49.00 526.00 Td (Dashboard National SIG) Tj ET
+0.880 0.860 0.840 RG 1.000 1.000 1.000 rg 195.00 523.00 165.00 15.00 re B
+BT /F1 7.5 Tf 0.150 0.150 0.150 rg 199.00 526.00 Td (/local/pactdigital/dashboard.ph) Tj ET
+0.880 0.860 0.840 RG 1.000 1.000 1.000 rg 360.00 523.00 190.00 15.00 re B
+BT /F1 7.5 Tf 0.150 0.150 0.150 rg 364.00 526.00 Td (Indicateurs d'impact, filtres 17 reg) Tj ET
+0.880 0.860 0.840 RG 0.988 0.984 0.976 rg 45.00 508.00 150.00 15.00 re B
+BT /F1 7.5 Tf 0.150 0.150 0.150 rg 49.00 511.00 Td (Sauvegarde automatisee) Tj ET
+0.880 0.860 0.840 RG 0.988 0.984 0.976 rg 195.00 508.00 165.00 15.00 re B
+BT /F1 7.5 Tf 0.150 0.150 0.150 rg 199.00 511.00 Td (scripts/backup_pactdigital.sh) Tj ET
+0.880 0.860 0.840 RG 0.988 0.984 0.976 rg 360.00 508.00 190.00 15.00 re B
+BT /F1 7.5 Tf 0.150 0.150 0.150 rg 364.00 511.00 Td (Dump SQL + archive moodledata + rota) Tj ET
+0.880 0.860 0.840 RG 1.000 1.000 1.000 rg 45.00 493.00 150.00 15.00 re B
+BT /F1 7.5 Tf 0.150 0.150 0.150 rg 49.00 496.00 Td (Maintenance du cron) Tj ET
+0.880 0.860 0.840 RG 1.000 1.000 1.000 rg 195.00 493.00 165.00 15.00 re B
+BT /F1 7.5 Tf 0.150 0.150 0.150 rg 199.00 496.00 Td (scripts/run_cron.sh) Tj ET
+0.880 0.860 0.840 RG 1.000 1.000 1.000 rg 360.00 493.00 190.00 15.00 re B
+BT /F1 7.5 Tf 0.150 0.150 0.150 rg 364.00 496.00 Td (Execution CLI des taches planifiees ) Tj ET
+0.880 0.860 0.840 RG 0.988 0.984 0.976 rg 45.00 478.00 150.00 15.00 re B
+BT /F1 7.5 Tf 0.150 0.150 0.150 rg 49.00 481.00 Td (Purge des caches) Tj ET
+0.880 0.860 0.840 RG 0.988 0.984 0.976 rg 195.00 478.00 165.00 15.00 re B
+BT /F1 7.5 Tf 0.150 0.150 0.150 rg 199.00 481.00 Td (admin/cli/purge_caches.php) Tj ET
+0.880 0.860 0.840 RG 0.988 0.984 0.976 rg 360.00 478.00 190.00 15.00 re B
+BT /F1 7.5 Tf 0.150 0.150 0.150 rg 364.00 481.00 Td (Invalidation et recompilation des st) Tj ET
+0.880 0.860 0.840 RG 0.996 0.976 0.905 rg 45.00 424.00 505.00 53.00 re B
+0.690 0.470 0.000 rg 45.00 424.00 4.00 53.00 re f
+BT /F2 8.5 Tf 0.690 0.470 0.000 rg 57.00 467.00 Td ([ATTENTION] Ecart JSON identifie) Tj ET
+BT /F1 8 Tf 0.200 0.200 0.200 rg 57.00 455.00 Td (Une anomalie de concordance de cles JSON a ete documentee dans le rapport d'audit pour) Tj ET
+BT /F1 8 Tf 0.200 0.200 0.200 rg 57.00 444.00 Td (le tableau Top 10 formations de dashboard.php. Un correctif de maintenance doit etre) Tj ET
+BT /F1 8 Tf 0.200 0.200 0.200 rg 57.00 433.00 Td (planifie.) Tj ET
+0.055 0.616 0.286 rg 45.00 400.00 505.00 1.50 re f
+BT /F2 12.5 Tf 0.039 0.329 0.588 rg 45.00 405.00 Td (4. Protocoles d'Exploitation et Continuite de Service) Tj ET
+BT /F1 8.5 Tf 0.150 0.150 0.150 rg 45.00 386.00 Td (* Sauvegarde quotidienne : Planifiee a 02h00 du matin via crontab avec retention de 7) Tj ET
+BT /F1 8.5 Tf 0.150 0.150 0.150 rg 57.00 375.00 Td (jours.) Tj ET
+BT /F1 8.5 Tf 0.150 0.150 0.150 rg 45.00 362.00 Td (* Frequence cron Moodle : Execution recommandee toutes les 1 a 5 minutes.) Tj ET
+BT /F1 8.5 Tf 0.150 0.150 0.150 rg 45.00 349.00 Td (* Conformite CIL : Surveillance des journaux de connexion et interdiction de divulgation) Tj ET
+BT /F1 8.5 Tf 0.150 0.150 0.150 rg 57.00 338.00 Td (des identifiants.) Tj ET
+0.055 0.616 0.286 rg 45.00 313.00 505.00 1.50 re f
+BT /F2 12.5 Tf 0.039 0.329 0.588 rg 45.00 318.00 Td (5. Contacts d'astreinte technique) Tj ET
+BT /F1 9 Tf 0.130 0.110 0.100 rg 45.00 299.00 Td (En cas d'incident critique d'infrastructure : DGTD / MTDPCE - support@pactdigital.bf -) Tj ET
+BT /F1 9 Tf 0.130 0.110 0.100 rg 45.00 287.00 Td (Standard : +226 25 32 40 00.) Tj ET
+0.880 0.860 0.840 RG 45.00 808.00 505.00 1.00 re S
+0.929 0.110 0.141 rg 45.00 807.00 168.00 2.00 re f
+0.976 0.812 0.047 rg 213.00 807.00 168.00 2.00 re f
+0.055 0.616 0.286 rg 381.00 807.00 169.00 2.00 re f
+BT /F2 7.5 Tf 0.039 0.329 0.588 rg 45.00 814.00 Td (BURKINA FASO - MTDPCE) Tj ET
+BT /F1 7.5 Tf 0.400 0.380 0.360 rg 220.00 814.00 Td (PACTDIGITAL-BF | 05_Guide_Administrateur - Guide de l'Administrateur  -  Exploitation, Sécurité & Pilotage SIG) Tj ET
+0.880 0.860 0.840 RG 45.00 42.00 505.00 1.00 re S
+BT /F1 7.5 Tf 0.400 0.380 0.360 rg 45.00 30.00 Td (MTDPCE, le numerique au service d'un Burkina souverain et connecte. | Assistance : 34 34) Tj ET
+BT /F2 7.5 Tf 0.039 0.329 0.588 rg 495.00 30.00 Td (Page 2 / 2) Tj ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 4 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 1 0 R /F2 2 0 R /F3 3 0 R >> >> /Contents 6 0 R >>
+endobj
+8 0 obj
+<< /Type /Pages /Kids [5 0 R 7 0 R] /Count 2 >>
+endobj
+9 0 obj
+<< /Type /Catalog /Pages 8 0 R >>
+endobj
+xref
+0 10
+0000000000 65535 f 
+0000000015 00000 n 
+0000000112 00000 n 
+0000000214 00000 n 
+0000000319 00000 n 
+0000002967 00000 n 
+0000003119 00000 n 
+0000009765 00000 n 
+0000009917 00000 n 
+0000009980 00000 n 
+trailer
+<< /Size 10 /Root 9 0 R >>
+startxref
+10029
+%%EOF

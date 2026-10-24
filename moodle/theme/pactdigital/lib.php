@@ -39,11 +39,19 @@ function theme_pactdigital_get_pre_scss($theme) {
         }
     }
     
-    // Inject Partis Digital Logo Colors (Burkina Faso flag colors)
-    $scss .= '$primary: #129b40;' . "\n";   // Green
-    $scss .= '$secondary: #fad615;' . "\n"; // Yellow
-    $scss .= '$danger: #d02027;' . "\n";    // Red
-    $scss .= '$dark: #000000;' . "\n";      // Black
+    // Charte graphique de l'administration burkinabè v2.0 (MTDPCE)
+    $scss .= '$primary: #00843b;' . "\n";   // Vert drapeau (--vert-500 / --action)
+    $scss .= '$secondary: #ffed00;' . "\n"; // Or drapeau (--or-300 / --relief)
+    $scss .= '$success: #00843b;' . "\n";   // Succès (--vert-500)
+    $scss .= '$info: #2a6d9b;' . "\n";      // Bleu administratif (--bleu-500)
+    $scss .= '$warning: #b07800;' . "\n";   // Ocre d'alerte (--ocre-500)
+    $scss .= '$danger: #e30613;' . "\n";    // Rouge drapeau (--rouge-500 / --accent)
+    $scss .= '$light: #f7f5f2;' . "\n";     // Neutre chaud latérite (--neutre-50)
+    $scss .= '$dark: #211d1a;' . "\n";      // Neutre sombre chaud (--neutre-900)
+    $scss .= '$body-bg: #ffffff;' . "\n";
+    $scss .= '$body-color: #211d1a;' . "\n";
+    $scss .= '$font-family-sans-serif: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;' . "\n";
+    $scss .= '$headings-font-family: "Archivo", "Segoe UI", system-ui, -apple-system, sans-serif;' . "\n";
 
     
     // Add standard raw SCSS from Boost
@@ -86,6 +94,10 @@ function theme_pactdigital_page_init(\moodle_page $page) {
     if (isloggedin() && !isguestuser()) {
         if (is_siteadmin($USER->id)) {
             $page->add_body_class('pact-role-admin');
+        } else if (has_capability('local/pactdigital:viewdashboard', context_system::instance())
+                && has_capability('moodle/course:update', context_system::instance())) {
+            // Gestionnaire (rôle manager au niveau site) : accès gestion, dashboard et espace formateur.
+            $page->add_body_class('pact-role-manager');
         } else {
             $trainer_count = $DB->count_records_sql(
                 "SELECT COUNT(*) FROM {role_assignments} WHERE userid = :uid AND roleid IN (3, 4, 9, 10)",
@@ -149,20 +161,21 @@ function theme_pactdigital_before_footer() {
         top: 16px;
         right: 16px;
         z-index: 99990;
-        background: #1a1a2e;
-        color: white;
-        border-radius: 14px;
+        background: var(--vert-900, #032e16);
+        color: var(--neutre-0, #ffffff);
+        border-radius: var(--rayon-xl, 16px);
         padding: 1rem 1.3rem;
         min-width: 200px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-        font-family: 'Segoe UI', system-ui, sans-serif;
-        border: 1px solid rgba(255,255,255,0.1);
+        box-shadow: var(--ombre-xl, 0 10px 30px rgba(33,29,26,0.4));
+        font-family: var(--police-texte, 'Inter', 'Segoe UI', system-ui, sans-serif);
+        border: 1px solid rgba(255,255,255,0.14);
     }
     #pact-exam-overlay .overlay-title {
+        font-family: var(--police-titre, 'Archivo', sans-serif);
         font-size: 0.72rem;
         text-transform: uppercase;
-        letter-spacing: 0.06em;
-        opacity: 0.6;
+        letter-spacing: 0.08em;
+        opacity: 0.8;
         margin-bottom: 0.6rem;
         display: flex;
         align-items: center;
@@ -170,22 +183,22 @@ function theme_pactdigital_before_footer() {
     }
     #pact-timer-display {
         font-size: 2rem;
-        font-weight: 900;
+        font-weight: 800;
         letter-spacing: 2px;
-        font-family: 'Courier New', monospace;
-        color: #fad615;
+        font-family: var(--police-mono, ui-monospace, 'Cascadia Mono', monospace);
+        color: var(--or-300, #ffed00);
         line-height: 1;
         margin-bottom: 0.5rem;
     }
-    #pact-timer-display.warning { color: #f97316; animation: pulse 1s infinite; }
-    #pact-timer-display.danger  { color: #ef4444; animation: pulse 0.5s infinite; }
+    #pact-timer-display.warning { color: var(--or-400, #e8d400); animation: pulse 1s infinite; }
+    #pact-timer-display.danger  { color: var(--rouge-400, #f0636e); animation: pulse 0.5s infinite; }
     @keyframes pulse {
         0%, 100% { opacity: 1; }
         50%       { opacity: 0.6; }
     }
     .overlay-info-row {
         font-size: 0.75rem;
-        opacity: 0.7;
+        opacity: 0.85;
         display: flex;
         align-items: center;
         gap: 6px;
@@ -193,7 +206,7 @@ function theme_pactdigital_before_footer() {
     }
     .overlay-save-status {
         font-size: 0.72rem;
-        color: #86efac;
+        color: var(--vert-200, #a8dbbc);
         margin-top: 0.5rem;
         display: flex;
         align-items: center;
@@ -213,25 +226,25 @@ function theme_pactdigital_before_footer() {
         border-radius: 50%;
         background: rgba(255,255,255,0.25);
     }
-    .progress-dot.answered { background: #4ade80; }
+    .progress-dot.answered { background: var(--vert-300, #74c296); }
 
     /* ── Notification sauvegarde ─────────────────────────────────────────── */
     #pact-save-notif {
         position: fixed;
         bottom: 20px;
         right: 20px;
-        background: #14532d;
-        color: #86efac;
+        background: var(--vert-800, #04411f);
+        color: var(--vert-100, #d3eddd);
         padding: 10px 18px;
-        border-radius: 10px;
+        border-radius: var(--rayon-lg, 10px);
         font-size: 0.88rem;
         font-weight: 600;
         z-index: 99999;
         display: none;
         align-items: center;
         gap: 8px;
-        box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-        border-left: 4px solid #22c55e;
+        box-shadow: var(--ombre-lg, 0 6px 20px rgba(33,29,26,0.3));
+        border-left: 4px solid var(--vert-500, #00843b);
         animation: slideRight 0.25s ease-out;
     }
     @keyframes slideRight {

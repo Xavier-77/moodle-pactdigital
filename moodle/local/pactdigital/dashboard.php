@@ -18,44 +18,55 @@ if (!has_capability('moodle/site:config', $context) && !has_capability('local/pa
 }
 
 $data_url = (new moodle_url('/local/pactdigital/dashboard_data.php'))->out(false);
+$burkina_regions_url = (new moodle_url('/local/pactdigital/burkina_regions.json'))->out(false);
 $current_user_name = fullname($USER);
 
+$armoiries_svg_path = $CFG->dirroot . '/theme/pactdigital/pix/armoiries.svg';
 $armoiries_path = $CFG->dirroot . '/theme/pactdigital/pix/armoiries.png';
 $armoiries_base64 = '';
-if (file_exists($armoiries_path)) {
+if (file_exists($armoiries_svg_path)) {
+    $armoiries_base64 = 'data:image/svg+xml;base64,' . base64_encode(file_get_contents($armoiries_svg_path));
+} elseif (file_exists($armoiries_path)) {
     $armoiries_base64 = 'data:image/png;base64,' . base64_encode(file_get_contents($armoiries_path));
 }
 
 echo $OUTPUT->header();
 ?>
 
+<!-- Leaflet.js pour la Cartographie SIG Interactive du Burkina Faso -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
 <style>
 :root {
-    --green:  #145B37;
-    --red:    #D32F2F;
-    --gold:   #d4af37;
-    --blue:   #1565C0;
-    --grey:   #757575;
-    --light:  #F5F7F5;
-    --border: #dce8e2;
-    --white:  #ffffff;
-    --shadow: 0 2px 12px rgba(20,91,55,.10);
+    --green:  var(--vert-700, #045527);
+    --red:    var(--rouge-500, #e30613);
+    --gold:   var(--ocre-500, #b07800);
+    --blue:   var(--bleu-500, #2a6d9b);
+    --grey:   var(--texte-attenue, #635c55);
+    --light:  var(--surface-basse, #fcfbf9);
+    --border: var(--bordure, #e2ddd6);
+    --white:  var(--surface, #ffffff);
+    --shadow: var(--ombre-sm);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:#f0f4f0;font-family:'Segoe UI',Arial,sans-serif}
+body{background:var(--surface-enfoncee, #f7f5f2);font-family:var(--police-texte, "Inter", Arial, sans-serif);color:var(--texte, #211d1a)}
 
 /* ── Layout ───────────────────────────────────────────────────────── */
+.secondary-navigation {
+    display: none !important;
+}
 .pact-dash{padding:20px;max-width:1600px;margin:0 auto}
 
 /* ── Header bar ──────────────────────────────────────────────────── */
 .pact-header{
-    background:linear-gradient(135deg,var(--green) 0%,#1e7a4a 100%);
-    color:#fff;padding:22px 28px;border-radius:12px;
+    background:linear-gradient(135deg,var(--vert-900, #032e16) 0%,var(--vert-700, #045527) 60%,var(--vert-500, #00843b) 100%);
+    color:#fff;padding:22px 28px;border-radius:var(--rayon-lg, 12px);
     display:flex;align-items:center;justify-content:space-between;
-    margin-bottom:24px;box-shadow:var(--shadow);
+    margin-bottom:24px;box-shadow:var(--ombre-md);
 }
-.pact-header h1{font-size:1.5rem;font-weight:700;letter-spacing:.5px}
-.pact-header p{font-size:.85rem;opacity:.85;margin-top:4px}
+.pact-header h1{font-family:var(--police-titre, "Archivo", sans-serif);font-size:1.5rem;font-weight:700;letter-spacing:.5px;color:#fff}
+.pact-header p{font-size:.85rem;opacity:.88;margin-top:4px}
 .pact-header .logo-area{display:flex;gap:12px;align-items:center}
 .pact-header .badge{
     background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);
@@ -65,34 +76,34 @@ body{background:#f0f4f0;font-family:'Segoe UI',Arial,sans-serif}
 /* ── Filter bar ──────────────────────────────────────────────────── */
 .filter-bar{
     background:var(--white);border:1px solid var(--border);
-    border-radius:12px;padding:18px 22px;margin-bottom:24px;
+    border-radius:var(--rayon-lg, 12px);padding:18px 22px;margin-bottom:24px;
     box-shadow:var(--shadow);
 }
-.filter-bar h3{color:var(--green);font-size:.95rem;margin-bottom:14px;
+.filter-bar h3{font-family:var(--police-titre, "Archivo", sans-serif);color:var(--green);font-size:.95rem;margin-bottom:14px;
     display:flex;align-items:center;gap:8px}
 .filter-grid{
     display:grid;
     grid-template-columns:repeat(auto-fill,minmax(175px,1fr));
     gap:12px;align-items:end
 }
-.filter-group label{font-size:.78rem;color:var(--grey);font-weight:600;
+.filter-group label{font-family:var(--police-titre, "Archivo", sans-serif);font-size:.78rem;color:var(--grey);font-weight:600;
     text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:4px}
 .filter-group select,.filter-group input{
-    width:100%;padding:8px 10px;border:1px solid var(--border);
-    border-radius:7px;font-size:.88rem;background:#fff;color:#333;
+    width:100%;padding:8px 10px;border:1px solid var(--bordure-forte, #8e867f);
+    border-radius:var(--rayon-md, 8px);font-size:.88rem;background:#fff;color:var(--texte, #211d1a);
     transition:border-color .2s;
 }
 .filter-group select:focus,.filter-group input:focus{
-    outline:none;border-color:var(--green)}
+    outline:none;border-color:var(--vert-500, #00843b)}
 .filter-actions{display:flex;gap:10px;align-items:flex-end}
-.btn{padding:8px 20px;border:none;border-radius:7px;cursor:pointer;
+.btn{font-family:var(--police-titre, "Archivo", sans-serif);padding:8px 20px;border:none;border-radius:var(--rayon-md, 8px);cursor:pointer;
     font-size:.88rem;font-weight:600;transition:all .2s}
-.btn-green{background:var(--green);color:#fff}
-.btn-green:hover{background:#0f4228}
-.btn-outline{background:#fff;color:var(--green);border:1.5px solid var(--green)}
-.btn-outline:hover{background:#e8f5ee}
+.btn-green{background:var(--action, #00843b);color:#fff}
+.btn-green:hover{background:var(--action-survol, #026c31)}
+.btn-outline{background:#fff;color:var(--green);border:1.5px solid var(--vert-500, #00843b)}
+.btn-outline:hover{background:var(--vert-50, #ecf7f0)}
 .btn-red{background:var(--red);color:#fff}
-.btn-red:hover{background:#b71c1c}
+.btn-red:hover{background:var(--rouge-700, #a2040e)}
 
 /* ── KPI Cards ───────────────────────────────────────────────────── */
 .kpi-grid{
@@ -101,24 +112,24 @@ body{background:#f0f4f0;font-family:'Segoe UI',Arial,sans-serif}
     gap:16px;margin-bottom:24px
 }
 .kpi-card{
-    background:var(--white);border-radius:12px;padding:20px;
-    box-shadow:var(--shadow);border-left:4px solid var(--green);
+    background:var(--white);border-radius:var(--rayon-lg, 12px);padding:20px;
+    box-shadow:var(--shadow);border:1px solid var(--border);border-left:4px solid var(--vert-500, #00843b);
     display:flex;flex-direction:column;gap:6px;position:relative;overflow:hidden
 }
 .kpi-card::before{
     content:'';position:absolute;right:-15px;top:-15px;
     width:70px;height:70px;border-radius:50%;
-    background:rgba(20,91,55,.06)
+    background:var(--vert-50, #ecf7f0)
 }
 .kpi-card.red{border-left-color:var(--red)}
 .kpi-card.gold{border-left-color:var(--gold)}
 .kpi-card.blue{border-left-color:var(--blue)}
 .kpi-card .icon{font-size:1.5rem}
-.kpi-card .label{font-size:.78rem;color:var(--grey);font-weight:600;
+.kpi-card .label{font-family:var(--police-titre, "Archivo", sans-serif);font-size:.78rem;color:var(--grey);font-weight:600;
     text-transform:uppercase;letter-spacing:.4px}
-.kpi-card .value{font-size:2rem;font-weight:800;color:var(--green);line-height:1}
+.kpi-card .value{font-family:var(--police-titre, "Archivo", sans-serif);font-size:2rem;font-weight:800;color:var(--green);line-height:1}
 .kpi-card.red .value{color:var(--red)}
-.kpi-card.gold .value{color:#b8860b}
+.kpi-card.gold .value{color:var(--ocre-700, #7d5500)}
 .kpi-card.blue .value{color:var(--blue)}
 .kpi-card .sub{font-size:.75rem;color:var(--grey)}
 
@@ -129,60 +140,90 @@ body{background:#f0f4f0;font-family:'Segoe UI',Arial,sans-serif}
     gap:20px;margin-bottom:24px
 }
 .chart-card{
-    background:var(--white);border-radius:12px;padding:22px;
-    box-shadow:var(--shadow);
+    background:var(--white);border-radius:var(--rayon-lg, 12px);padding:22px;
+    box-shadow:var(--shadow);border:1px solid var(--border);
 }
 .chart-card.full{grid-column:1/-1}
-.chart-card h3{color:var(--green);font-size:.95rem;font-weight:700;
+.chart-card h3{font-family:var(--police-titre, "Archivo", sans-serif);color:var(--green);font-size:.95rem;font-weight:700;
     margin-bottom:16px;display:flex;align-items:center;gap:8px}
 .chart-wrap{position:relative;height:260px}
 .chart-wrap.small{height:200px}
 .chart-wrap.tall{height:320px}
 
+/* ── Carte SIG Interactive Leaflet ──────────────────────────────── */
+.pact-map-container{
+    background:var(--white);border-radius:var(--rayon-lg, 12px);padding:22px;
+    box-shadow:var(--shadow);margin-bottom:24px;border:1px solid var(--border);
+}
+.map-grid-wrap{
+    display:grid;grid-template-columns:1fr 340px;gap:20px;align-items:stretch
+}
+@media(max-width:992px){
+    .map-grid-wrap{grid-template-columns:1fr}
+}
+#pact-map{
+    height:480px;border-radius:var(--rayon-md, 8px);overflow:hidden;
+    border:1px solid var(--border);background:var(--vert-50, #ecf7f0)
+}
+.map-legend{
+    background:rgba(255,255,255,0.96);padding:10px 14px;border-radius:8px;
+    font-size:0.78rem;line-height:1.5;box-shadow:0 2px 8px rgba(0,0,0,0.15);
+    border:1px solid var(--border)
+}
+.map-legend-item{
+    display:flex;align-items:center;gap:6px;margin-bottom:3px
+}
+.map-legend-color{
+    width:16px;height:12px;border-radius:3px;
+    border:1px solid rgba(0,0,0,0.2);display:inline-block
+}
+
 /* ── Table ────────────────────────────────────────────────────────── */
 .table-card{
-    background:var(--white);border-radius:12px;padding:22px;
-    box-shadow:var(--shadow);margin-bottom:24px
+    background:var(--white);border-radius:var(--rayon-lg, 12px);padding:22px;
+    box-shadow:var(--shadow);margin-bottom:24px;border:1px solid var(--border);
 }
-.table-card h3{color:var(--green);font-size:.95rem;font-weight:700;
+.table-card h3{font-family:var(--police-titre, "Archivo", sans-serif);color:var(--green);font-size:.95rem;font-weight:700;
     margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}
 .table-search{
-    padding:7px 12px;border:1px solid var(--border);border-radius:7px;
+    padding:7px 12px;border:1px solid var(--bordure-forte, #8e867f);border-radius:var(--rayon-md, 8px);
     font-size:.85rem;width:240px
 }
 .tbl-wrap{overflow-x:auto;max-height:480px;overflow-y:auto}
 table{width:100%;border-collapse:collapse;font-size:.82rem}
 thead{position:sticky;top:0;z-index:2}
 thead th{
-    background:var(--green);color:#fff;padding:10px 12px;
+    font-family:var(--police-titre, "Archivo", sans-serif);
+    background:var(--vert-800, #04411f);color:#fff;padding:10px 12px;
     text-align:left;font-weight:600;white-space:nowrap;cursor:pointer
 }
-thead th:hover{background:#0f4228}
+thead th:hover{background:var(--vert-900, #032e16)}
 tbody tr{border-bottom:1px solid var(--border);transition:background .15s}
-tbody tr:hover{background:#f0f9f4}
-tbody td{padding:9px 12px;white-space:nowrap;color:#333}
+tbody tr:hover{background:var(--vert-50, #ecf7f0)}
+tbody td{padding:9px 12px;white-space:nowrap;color:var(--texte, #211d1a)}
 .badge-pill{
+    font-family:var(--police-titre, "Archivo", sans-serif);
     display:inline-block;padding:2px 9px;border-radius:20px;
     font-size:.72rem;font-weight:700
 }
-.badge-bronze{background:#f5e6d3;color:#8B4513}
-.badge-or{background:#fff8e1;color:#b8860b}
-.badge-diamant{background:#e3f2fd;color:#1565C0}
+.badge-bronze{background:var(--ocre-50, #fdf4e3);color:var(--ocre-700, #7d5500)}
+.badge-or{background:var(--or-50, #fffde6);color:var(--neutre-900, #211d1a);border:1px solid var(--or-500, #d4bc00)}
+.badge-diamant{background:var(--bleu-50, #eef4f9);color:var(--bleu-700, #173f5f)}
 .taux-bar{
     display:flex;align-items:center;gap:6px
 }
 .taux-bar .bar{
-    flex:1;height:6px;background:#e0e0e0;border-radius:3px;overflow:hidden
+    flex:1;height:6px;background:var(--bordure, #e2ddd6);border-radius:3px;overflow:hidden
 }
-.taux-bar .fill{height:100%;background:var(--green);border-radius:3px}
+.taux-bar .fill{height:100%;background:var(--vert-500, #00843b);border-radius:3px}
 .pagination{display:flex;gap:6px;margin-top:14px;align-items:center;
     justify-content:flex-end}
 .pagination button{
     padding:5px 12px;border:1px solid var(--border);border-radius:6px;
     background:#fff;cursor:pointer;font-size:.82rem
 }
-.pagination button.active{background:var(--green);color:#fff;border-color:var(--green)}
-.pagination button:hover:not(.active){background:#e8f5ee}
+.pagination button.active{background:var(--action, #00843b);color:#fff;border-color:var(--action, #00843b)}
+.pagination button:hover:not(.active){background:var(--vert-50, #ecf7f0)}
 
 /* ── Loading / empty ─────────────────────────────────────────────── */
 .loading{display:flex;align-items:center;justify-content:center;
@@ -420,23 +461,21 @@ tbody td{padding:9px 12px;white-space:nowrap;color:#333}
   <!-- Header -->
   <div class="pact-header">
     <div>
-      <h1>📊 Tableau de bord PACTDIGITAL-BF</h1>
+      <h1>Tableau de bord PACTDIGITAL-BF</h1>
       <p>Statistiques complètes de la plateforme de formation numérique</p>
     </div>
     <div class="logo-area">
-      <span class="badge">🕐 Mis à jour: <span id="last-update">–</span></span>
-      <a href="<?= (new moodle_url('/local/pactdigital/formateur.php'))->out(false) ?>" class="btn" style="background:rgba(255,255,255,0.2);color:#fff;font-weight:700;border:1px solid rgba(255,255,255,0.4);border-radius:20px;padding:8px 16px;text-decoration:none;display:inline-flex;align-items:center;gap:6px;">
-        🧑‍🏫 Espace Formateur
-      </a>
+      <span class="badge">Mis à jour: <span id="last-update">–</span></span>
+      
       <button class="btn" onclick="openReportModal()" style="background:#fad615;color:#000;font-weight:700;border:none;border-radius:20px;padding:8px 18px;box-shadow:0 3px 8px rgba(0,0,0,0.2);display:inline-flex;align-items:center;gap:6px;cursor:pointer;transition:transform 0.15s;">
-        📄 Exporter le rapport (PDF / Excel)
+        Exporter le rapport (PDF / Excel)
       </button>
     </div>
   </div>
 
   <!-- Filter bar -->
   <div class="filter-bar">
-    <h3>🔍 Filtres</h3>
+    <h3>Filtres</h3>
     <div class="filter-grid">
       <div class="filter-group">
         <label>Sexe</label>
@@ -467,8 +506,8 @@ tbody td{padding:9px 12px;white-space:nowrap;color:#333}
         <select id="f-niveau">
           <option value="">Tous</option>
           <option value="Bronze">Bronze</option>
+          <option value="Argent">Argent</option>
           <option value="Or">Or</option>
-          <option value="Diamant">Diamant</option>
         </select>
       </div>
       <div class="filter-group">
@@ -497,31 +536,117 @@ tbody td{padding:9px 12px;white-space:nowrap;color:#333}
   <!-- Charts Row 1 -->
   <div class="charts-grid">
     <div class="chart-card">
-      <h3>📈 Inscriptions dans le temps</h3>
+      <h3>Inscriptions dans le temps</h3>
       <div class="chart-wrap"><canvas id="chart-timeline"></canvas></div>
     </div>
     <div class="chart-card">
-      <h3>⚧ Répartition par sexe</h3>
+      <h3>Répartition par sexe</h3>
       <div class="chart-wrap small"><canvas id="chart-gender"></canvas></div>
     </div>
     <div class="chart-card">
-      <h3>🎓 Statut des apprenants</h3>
+      <h3>Statut des apprenants</h3>
       <div class="chart-wrap small"><canvas id="chart-statut"></canvas></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!--  CARTE SIG INTERACTIVE DU BURKINA FASO (IMPACT TERRITORIAL)    -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <div class="pact-map-container">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
+      <div>
+        <h3 style="margin-bottom:4px;color:var(--green);font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:8px;">
+          Cartographie SIG de l'Impact Territorial (Burkina Faso)
+        </h3>
+        <p style="font-size:0.83rem;color:var(--grey);margin:0;">
+          Carte choroplèthe interactive des 13 régions — Cliquez sur une région pour filtrer l'ensemble du tableau de bord
+        </p>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+        <label style="font-size:0.78rem;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:0.5px;">Indicateur :</label>
+        <select id="map-metric" onchange="updateMapVisuals()" style="padding:7px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:0.86rem;font-weight:600;background:#fff;cursor:pointer;">
+          <option value="inscrits">Apprenants inscrits</option>
+          <option value="taux_completion">Taux de complétion (%)</option>
+          <option value="taux_femmes">Taux de féminisation (%)</option>
+          <option value="certificats">Attestations délivrées</option>
+        </select>
+        <button type="button" class="btn btn-outline" onclick="resetMapSelection()" style="padding:6px 14px;font-size:0.82rem;" title="Réinitialiser la sélection">
+          Vue Nationale
+        </button>
+      </div>
+    </div>
+
+    <div class="map-grid-wrap">
+      <!-- Conteneur Carte Leaflet -->
+      <div id="pact-map"></div>
+
+      <!-- Fiche synthétique Régionale / Nationale -->
+      <div id="region-info-card" style="background:#f7faf8;border:1px solid var(--border);border-radius:10px;padding:20px;display:flex;flex-direction:column;justify-content:space-between;">
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+            <span style="font-size:0.75rem;font-weight:700;text-transform:uppercase;color:var(--grey);letter-spacing:0.5px;">Fiche Territoriale</span>
+            <span id="badge-region-status" class="badge-pill badge-green" style="font-size:0.7rem;">Vue Globale</span>
+          </div>
+          <h4 id="info-region-name" style="color:var(--green);font-size:1.35rem;font-weight:800;margin:4px 0 16px 0;">
+            Burkina Faso
+          </h4>
+
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="background:#fff;padding:12px;border-radius:8px;border:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+              <div>
+                <div style="font-size:0.72rem;color:var(--grey);font-weight:700;text-transform:uppercase;">Apprenants Inscrits</div>
+                <div id="info-val-users" style="font-size:1.4rem;font-weight:800;color:var(--green);line-height:1.2;">0</div>
+              </div>
+              
+            </div>
+
+            <div style="background:#fff;padding:12px;border-radius:8px;border:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+              <div>
+                <div style="font-size:0.72rem;color:var(--grey);font-weight:700;text-transform:uppercase;">Taux de Complétion</div>
+                <div id="info-val-completion" style="font-size:1.4rem;font-weight:800;color:var(--blue);line-height:1.2;">0%</div>
+              </div>
+              
+            </div>
+
+            <div style="background:#fff;padding:12px;border-radius:8px;border:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+              <div>
+                <div style="font-size:0.72rem;color:var(--grey);font-weight:700;text-transform:uppercase;">Taux de Féminisation</div>
+                <div id="info-val-femmes" style="font-size:1.4rem;font-weight:800;color:var(--red);line-height:1.2;">0%</div>
+              </div>
+              
+            </div>
+
+            <div style="background:#fff;padding:12px;border-radius:8px;border:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+              <div>
+                <div style="font-size:0.72rem;color:var(--grey);font-weight:700;text-transform:uppercase;">Attestations Délivrées</div>
+                <div id="info-val-certs" style="font-size:1.4rem;font-weight:800;color:#b8860b;line-height:1.2;">0</div>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border);">
+          <button id="btn-filter-this-region" type="button" class="btn btn-green" style="width:100%;justify-content:center;display:flex;align-items:center;gap:8px;padding:10px 16px;font-size:0.88rem;" onclick="filterDashboardFromMap()">
+            <span>Filtrer ce tableau de bord</span>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 
   <!-- Charts Row 2 -->
   <div class="charts-grid">
     <div class="chart-card">
-      <h3>🗺️ Répartition par Région</h3>
+      <h3>Répartition par Région</h3>
       <div class="chart-wrap tall"><canvas id="chart-region"></canvas></div>
     </div>
     <div class="chart-card">
-      <h3>📍 Répartition par Province</h3>
+      <h3>Répartition par Province</h3>
       <div class="chart-wrap tall"><canvas id="chart-province"></canvas></div>
     </div>
     <div class="chart-card">
-      <h3>🏘️ Répartition par Commune</h3>
+      <h3>Répartition par Commune</h3>
       <div class="chart-wrap tall"><canvas id="chart-commune"></canvas></div>
     </div>
   </div>
@@ -529,15 +654,15 @@ tbody td{padding:9px 12px;white-space:nowrap;color:#333}
   <!-- Charts Row 3 -->
   <div class="charts-grid">
     <div class="chart-card">
-      <h3>📚 Inscriptions par catégorie</h3>
+      <h3>Inscriptions par catégorie</h3>
       <div class="chart-wrap tall"><canvas id="chart-categories"></canvas></div>
     </div>
     <div class="chart-card">
-      <h3>🏆 Niveaux Bronze / Or / Diamant</h3>
+      <h3>Niveaux Bronze / Argent / Or</h3>
       <div class="chart-wrap"><canvas id="chart-niveaux"></canvas></div>
     </div>
     <div class="chart-card">
-      <h3>🎓 Niveau d'instruction</h3>
+      <h3>Niveau d'instruction</h3>
       <div class="chart-wrap small"><canvas id="chart-instruction"></canvas></div>
     </div>
   </div>
@@ -546,7 +671,7 @@ tbody td{padding:9px 12px;white-space:nowrap;color:#333}
   <div class="charts-grid" style="margin-bottom:24px;">
     <!-- PIL-05 : Différentiel d'impact Pré-test vs Post-test -->
     <div class="chart-card">
-      <h3>📈 Impact Pédagogique (Pré-test vs Post-test)</h3>
+      <h3>Impact Pédagogique (Pré-test vs Post-test)</h3>
       <div style="padding:16px 10px;text-align:center;">
         <div style="display:flex;justify-content:space-around;align-items:center;margin-bottom:16px;">
           <div style="background:#f1f5f9;border-radius:10px;padding:12px 18px;min-width:110px;">
@@ -568,13 +693,13 @@ tbody td{padding:9px 12px;white-space:nowrap;color:#333}
 
     <!-- PIL-06 : Voie 1 (Parcours) vs Voie 2 (Examen direct) -->
     <div class="chart-card">
-      <h3>⚡ Certifications par Voie d'Accès</h3>
+      <h3>Certifications par Voie d'Accès</h3>
       <div class="chart-wrap small"><canvas id="chart-voies"></canvas></div>
     </div>
 
     <!-- PIL-09 : Indice de satisfaction des cours -->
     <div class="chart-card">
-      <h3>⭐ Indice de Satisfaction & Recommandation</h3>
+      <h3>Indice de Satisfaction & Recommandation</h3>
       <div style="padding:18px 10px;text-align:center;">
         <div style="font-size:2.4rem;font-weight:800;color:#eab308;line-height:1;margin-bottom:4px;">
           <span id="val-csat-score">4.7</span> <span style="font-size:1.3rem;color:var(--grey);font-weight:600;">/ 5</span>
@@ -591,7 +716,7 @@ tbody td{padding:9px 12px;white-space:nowrap;color:#333}
   <!-- Top Courses Table -->
   <div class="table-card">
     <h3>
-      🏅 Top 10 formations les plus suivies
+      Top 10 formations les plus suivies
     </h3>
     <div class="tbl-wrap">
       <table id="tbl-courses">
@@ -613,13 +738,13 @@ tbody td{padding:9px 12px;white-space:nowrap;color:#333}
   <div class="table-card">
     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
       <h3 style="margin-bottom:0;color:var(--green);font-size:1.05rem;font-weight:700;display:flex;align-items:center;gap:8px;">
-        👥 Liste des apprenants
+        Liste des apprenants
       </h3>
       <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
         <input type="text" class="table-search" id="learner-search"
-               placeholder="🔍 Rechercher un apprenant…" oninput="filterTable()">
+               placeholder="Rechercher un apprenant…" oninput="filterTable()">
         <button class="btn" onclick="openLearnerExportModal()" style="background:#fad615;color:#000;font-weight:700;border:none;border-radius:20px;padding:8px 16px;box-shadow:0 2px 6px rgba(0,0,0,0.15);display:inline-flex;align-items:center;gap:6px;cursor:pointer;font-size:.85rem;transition:all 0.15s;">
-          📥 Exporter la liste (CSV / Excel)
+          Exporter la liste (CSV / Excel)
         </button>
       </div>
     </div>
@@ -655,7 +780,7 @@ tbody td{padding:9px 12px;white-space:nowrap;color:#333}
 <div class="pact-modal-backdrop" id="modal-report-backdrop" onclick="if(event.target===this)closeReportModal()">
   <div class="pact-modal">
     <div class="pact-modal-header">
-      <h2>📄 Personnaliser le Rapport Global</h2>
+      <h2>Personnaliser le Rapport Global</h2>
       <button class="pact-modal-close" onclick="closeReportModal()">&times;</button>
     </div>
     <div class="pact-modal-body">
@@ -666,13 +791,13 @@ tbody td{padding:9px 12px;white-space:nowrap;color:#333}
         <div class="format-pills">
           <label class="format-pill selected" id="pill-report-pdf" onclick="selectReportFormat('pdf')">
             <input type="radio" name="report_format" value="pdf" checked>
-            <div class="icon">📄</div>
+            
             <div class="name">Rapport PDF</div>
             <div class="desc">Mise en page officielle A4 / Prêt à imprimer</div>
           </label>
           <label class="format-pill" id="pill-report-xlsx" onclick="selectReportFormat('xlsx')">
             <input type="radio" name="report_format" value="xlsx">
-            <div class="icon">📊</div>
+            
             <div class="name">Classeur Excel (.xlsx)</div>
             <div class="desc">Multi-feuilles (KPIs, Démographie, Formations)</div>
           </label>
@@ -686,12 +811,12 @@ tbody td{padding:9px 12px;white-space:nowrap;color:#333}
           <span style="font-size:.75rem;cursor:pointer;color:var(--green);text-transform:none;font-weight:600;" onclick="toggleAllReportSections(true)">Tout cocher</span>
         </div>
         <div class="checkbox-grid">
-          <label class="custom-check"><input type="checkbox" id="rep-sec-kpi" checked> 📈 Indicateurs clés (KPIs)</label>
-          <label class="custom-check"><input type="checkbox" id="rep-sec-demo" checked> ⚧ Sexe, Statut & Instruction</label>
-          <label class="custom-check"><input type="checkbox" id="rep-sec-geo" checked> 🗺️ Région, Province, Commune</label>
-          <label class="custom-check"><input type="checkbox" id="rep-sec-niveaux" checked> 🏆 Niveaux Bronze, Or, Diamant</label>
-          <label class="custom-check"><input type="checkbox" id="rep-sec-top" checked> 🏅 Top 10 Formations</label>
-          <label class="custom-check"><input type="checkbox" id="rep-sec-filters" checked> 🔍 Filtres actuellement appliqués</label>
+          <label class="custom-check"><input type="checkbox" id="rep-sec-kpi" checked> Indicateurs clés (KPIs)</label>
+          <label class="custom-check"><input type="checkbox" id="rep-sec-demo" checked> Sexe, Statut & Instruction</label>
+          <label class="custom-check"><input type="checkbox" id="rep-sec-geo" checked> Région, Province, Commune</label>
+          <label class="custom-check"><input type="checkbox" id="rep-sec-niveaux" checked> Niveaux Bronze, Argent, Or</label>
+          <label class="custom-check"><input type="checkbox" id="rep-sec-top" checked> Top 10 Formations</label>
+          <label class="custom-check"><input type="checkbox" id="rep-sec-filters" checked> Filtres actuellement appliqués</label>
         </div>
       </div>
 
@@ -724,7 +849,7 @@ tbody td{padding:9px 12px;white-space:nowrap;color:#333}
     <div class="pact-modal-footer">
       <button type="button" class="btn btn-outline" onclick="closeReportModal()">Annuler</button>
       <button type="button" class="btn btn-green" id="btn-run-report" onclick="generateReport()" style="display:inline-flex;align-items:center;gap:6px;">
-        📄 Générer le rapport
+        Générer le rapport
       </button>
     </div>
   </div>
@@ -736,7 +861,7 @@ tbody td{padding:9px 12px;white-space:nowrap;color:#333}
 <div class="pact-modal-backdrop" id="modal-learners-backdrop" onclick="if(event.target===this)closeLearnerExportModal()">
   <div class="pact-modal">
     <div class="pact-modal-header">
-      <h2>📥 Personnaliser l'Export des Apprenants</h2>
+      <h2>Personnaliser l'Export des Apprenants</h2>
       <button class="pact-modal-close" onclick="closeLearnerExportModal()">&times;</button>
     </div>
     <div class="pact-modal-body">
@@ -747,19 +872,19 @@ tbody td{padding:9px 12px;white-space:nowrap;color:#333}
         <div class="format-pills">
           <label class="format-pill selected" id="pill-learn-csv-semi" onclick="selectLearnerFormat('csv-semi')">
             <input type="radio" name="learner_format" value="csv-semi" checked>
-            <div class="icon">📑</div>
+            
             <div class="name">CSV (; point-virgule)</div>
             <div class="desc">Recommandé pour Excel (France / Francophone)</div>
           </label>
           <label class="format-pill" id="pill-learn-csv-comma" onclick="selectLearnerFormat('csv-comma')">
             <input type="radio" name="learner_format" value="csv-comma">
-            <div class="icon">📑</div>
+            
             <div class="name">CSV (, virgule)</div>
             <div class="desc">Standard international / Outils d'analyse</div>
           </label>
           <label class="format-pill" id="pill-learn-xlsx" onclick="selectLearnerFormat('xlsx')">
             <input type="radio" name="learner_format" value="xlsx">
-            <div class="icon">📊</div>
+            
             <div class="name">Excel (.xlsx)</div>
             <div class="desc">Classeur Excel avec colonnes stylisées</div>
           </label>
@@ -834,7 +959,7 @@ tbody td{padding:9px 12px;white-space:nowrap;color:#333}
     <div class="pact-modal-footer">
       <button type="button" class="btn btn-outline" onclick="closeLearnerExportModal()">Annuler</button>
       <button type="button" class="btn btn-green" onclick="generateLearnerExport()" style="display:inline-flex;align-items:center;gap:6px;">
-        📥 Télécharger la liste
+        Télécharger la liste
       </button>
     </div>
   </div>
@@ -851,13 +976,15 @@ tbody td{padding:9px 12px;white-space:nowrap;color:#333}
 
 <script>
 const DATA_URL = '<?= $data_url ?>';
+const BURKINA_REGIONS_GEOJSON_URL = '<?= $burkina_regions_url ?>';
 const ARMOIRIES_SRC = <?= json_encode($armoiries_base64) ?>;
 const CURRENT_USER_NAME = <?= json_encode($current_user_name) ?>;
-const GREEN  = '#145B37';
-const RED    = '#D32F2F';
-const GOLD   = '#d4af37';
-const BLUE   = '#1565C0';
-const COLORS = ['#145B37','#D32F2F','#d4af37','#1565C0','#6a1b9a','#00838f','#e65100','#33691e','#4e342e','#00695c','#283593','#880e4f'];
+const PACT_GEO_DATA = <?= file_get_contents($CFG->dirroot . '/local/pactdigital/burkina_geo.json') ?>;
+const GREEN  = '#00843b';
+const RED    = '#e30613';
+const GOLD   = '#b07800';
+const BLUE   = '#2a6d9b';
+const COLORS = ['#00843b','#2a6d9b','#b07800','#e30613','#045527','#173f5f','#7d5500','#a2040e','#14a052','#635c55','#d4bc00','#38332f'];
 
 let allLearners = [];
 let filteredLearners = [];
@@ -914,6 +1041,96 @@ function makeChart(id, type, labels, datasets, opts = {}) {
     });
 }
 
+// ── Cascading Dropdowns: Région -> Province -> Commune ────────────────────
+function updateDashboardProvinces(preferredProvince = '') {
+    const regEl = document.getElementById('f-region');
+    const prvEl = document.getElementById('f-province');
+    if (!prvEl) return;
+
+    const currentReg = regEl ? regEl.value : '';
+    const currentPrv = preferredProvince || prvEl.value;
+
+    // Conserver la 1ère option ("Toutes")
+    while (prvEl.options.length > 1) prvEl.remove(1);
+
+    let provinces = [];
+    if (currentReg && PACT_GEO_DATA && PACT_GEO_DATA[currentReg]) {
+        provinces = Object.keys(PACT_GEO_DATA[currentReg]).sort((a,b) => a.localeCompare(b, 'fr'));
+    } else if (PACT_GEO_DATA) {
+        const set = new Set();
+        Object.values(PACT_GEO_DATA).forEach(regObj => {
+            Object.keys(regObj).forEach(p => set.add(p));
+        });
+        provinces = Array.from(set).sort((a,b) => a.localeCompare(b, 'fr'));
+    }
+
+    provinces.forEach(p => {
+        const opt = document.createElement('option');
+        opt.value = p;
+        opt.textContent = p;
+        if (p === currentPrv) opt.selected = true;
+        prvEl.appendChild(opt);
+    });
+
+    if (currentPrv && !provinces.includes(currentPrv)) {
+        prvEl.value = '';
+    }
+
+    updateDashboardCommunes();
+}
+
+function updateDashboardCommunes(preferredCommune = '') {
+    const regEl = document.getElementById('f-region');
+    const prvEl = document.getElementById('f-province');
+    const comEl = document.getElementById('f-commune');
+    if (!comEl) return;
+
+    const currentReg = regEl ? regEl.value : '';
+    const currentPrv = prvEl ? prvEl.value : '';
+    const currentCom = preferredCommune || comEl.value;
+
+    while (comEl.options.length > 1) comEl.remove(1);
+
+    let communes = [];
+    if (currentReg && currentPrv && PACT_GEO_DATA && PACT_GEO_DATA[currentReg] && PACT_GEO_DATA[currentReg][currentPrv]) {
+        communes = [...PACT_GEO_DATA[currentReg][currentPrv]].sort((a,b) => a.localeCompare(b, 'fr'));
+    } else if (currentPrv && PACT_GEO_DATA) {
+        const set = new Set();
+        Object.values(PACT_GEO_DATA).forEach(regObj => {
+            if (regObj[currentPrv]) {
+                regObj[currentPrv].forEach(c => set.add(c));
+            }
+        });
+        communes = Array.from(set).sort((a,b) => a.localeCompare(b, 'fr'));
+    } else if (currentReg && PACT_GEO_DATA && PACT_GEO_DATA[currentReg]) {
+        const set = new Set();
+        Object.values(PACT_GEO_DATA[currentReg]).forEach(comList => {
+            comList.forEach(c => set.add(c));
+        });
+        communes = Array.from(set).sort((a,b) => a.localeCompare(b, 'fr'));
+    } else if (PACT_GEO_DATA) {
+        const set = new Set();
+        Object.values(PACT_GEO_DATA).forEach(regObj => {
+            Object.values(regObj).forEach(comList => {
+                comList.forEach(c => set.add(c));
+            });
+        });
+        communes = Array.from(set).sort((a,b) => a.localeCompare(b, 'fr'));
+    }
+
+    communes.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c;
+        opt.textContent = c;
+        if (c === currentCom) opt.selected = true;
+        comEl.appendChild(opt);
+    });
+
+    if (currentCom && !communes.includes(currentCom)) {
+        comEl.value = '';
+    }
+}
+
 // ── Load filters from API ─────────────────────────────────────────────────
 async function loadFilters() {
     const res = await fetch(DATA_URL + '?action=filters');
@@ -935,11 +1152,59 @@ async function loadFilters() {
         if (current) el.value = current;
     };
 
-    populateSelect('f-sexe',     fo.sexe);
-    populateSelect('f-region',   fo.region);
-    populateSelect('f-province', fo.province);
-    populateSelect('f-commune',  fo.commune);
-    populateSelect('f-statut',   fo.statut);
+    populateSelect('f-sexe',   fo.sexe);
+    populateSelect('f-statut', fo.statut);
+
+    // Initialisation des Régions avec optgroups (13 Administratives + 17 Territoriales)
+    const regEl = document.getElementById('f-region');
+    if (regEl) {
+        regEl.innerHTML = '<option value="">Toutes</option>';
+        const adminGroup = document.createElement('optgroup');
+        adminGroup.label = '13 Régions Administratives';
+        const adminRegions = [
+            'Boucle du Mouhoun', 'Cascades', 'Centre', 'Centre-Est', 'Centre-Nord',
+            'Centre-Ouest', 'Centre-Sud', 'Est', 'Hauts-Bassins', 'Nord',
+            'Plateau-Central', 'Sahel', 'Sud-Ouest'
+        ];
+        adminRegions.forEach(r => {
+            const opt = document.createElement('option');
+            opt.value = r; opt.textContent = r;
+            adminGroup.appendChild(opt);
+        });
+        regEl.appendChild(adminGroup);
+
+        const terrGroup = document.createElement('optgroup');
+        terrGroup.label = '17 Régions Territoriales';
+        const terrRegions = [
+            'Bankui', 'Djôrô', 'Goulmou', 'Guiriko', 'Kadiogo', 'Kuilsé',
+            'Liptako', 'Nakambé', 'Nando', 'Nazinon', 'Oubri', 'Sirba',
+            'Soum', 'Sourou', 'Tannounyan', 'Tapoa', 'Yaadga'
+        ];
+        terrRegions.forEach(r => {
+            const opt = document.createElement('option');
+            opt.value = r; opt.textContent = r;
+            terrGroup.appendChild(opt);
+        });
+        regEl.appendChild(terrGroup);
+
+        if (!regEl.dataset.cascadeInit) {
+            regEl.dataset.cascadeInit = '1';
+            regEl.addEventListener('change', () => {
+                updateDashboardProvinces();
+            });
+        }
+    }
+
+    const prvEl = document.getElementById('f-province');
+    if (prvEl && !prvEl.dataset.cascadeInit) {
+        prvEl.dataset.cascadeInit = '1';
+        prvEl.addEventListener('change', () => {
+            updateDashboardCommunes();
+        });
+    }
+
+    updateDashboardProvinces();
+    updateDashboardCommunes();
 
     // Categories with IDs
     const catEl = document.getElementById('f-catid');
@@ -968,6 +1233,7 @@ async function loadDashboard() {
     renderGender(d.gender || {});
     renderStatut(d.statut || {});
     renderRegion(d.region || {});
+    renderMap(d.region_details || {}, d.region || {}, d.kpi || {});
     renderProvince(d.province || {});
     renderCommune(d.commune || {});
     renderCategories(d.categories || {});
@@ -987,16 +1253,15 @@ async function loadDashboard() {
 // ── KPI ───────────────────────────────────────────────────────────────────
 function renderKPI(k) {
     const cards = [
-        { icon:'👥', label:'Total apprenants',       value: k.total_users     || 0, color:'' },
-        { icon:'✅', label:'Apprenants actifs (30j)', value: k.active_users    || 0, color:'' },
-        { icon:'📚', label:'Inscriptions',            value: k.total_enrolments|| 0, color:'blue' },
-        { icon:'🎓', label:'Cours complétés',         value: k.total_completions||0, color:'' },
-        { icon:'📜', label:'Attestations délivrées',  value: k.total_certificates||0, color:'gold' },
-        { icon:'🏆', label:'Taux de complétion',      value: (k.taux||0) + '%', color: (k.taux||0) >= 50 ? '' : 'red' },
+        { label:'Total apprenants',       value: k.total_users     || 0, color:'' },
+        { label:'Apprenants actifs (30j)', value: k.active_users    || 0, color:'' },
+        { label:'Inscriptions',            value: k.total_enrolments|| 0, color:'blue' },
+        { label:'Cours complétés',         value: k.total_completions||0, color:'' },
+        { label:'Attestations délivrées',  value: k.total_certificates||0, color:'gold' },
+        { label:'Taux de complétion',      value: (k.taux||0) + '%', color: (k.taux||0) >= 50 ? '' : 'red' },
     ];
     document.getElementById('kpi-grid').innerHTML = cards.map(c => `
         <div class="kpi-card ${c.color}">
-            <div class="icon">${c.icon}</div>
             <div class="label">${c.label}</div>
             <div class="value">${c.value}</div>
         </div>
@@ -1043,6 +1308,363 @@ function renderRegion(data) {
     }]);
 }
 
+// ── Carte SIG Interactive du Burkina Faso (Leaflet.js) ───────────────────
+let pactMap = null;
+let pactGeojsonLayer = null;
+let pactBurkinaGeojson = null;
+let pactRegionDetails = {};
+let pactNationalKpi = {};
+let pactSelectedRegion = null;
+let pactLegendControl = null;
+
+const REGION_ALIAS_MAP = {
+    'Bankui': 'Boucle du Mouhoun',
+    'Sourou': 'Boucle du Mouhoun',
+    'Djôrô': 'Cascades',
+    'Kadiogo': 'Centre',
+    'Nakambé': 'Centre-Est',
+    'Kuilsé': 'Centre-Nord',
+    'Nando': 'Centre-Ouest',
+    'Nazinon': 'Centre-Sud',
+    'Goulmou': 'Est',
+    'Sirba': 'Est',
+    'Tapoa': 'Est',
+    'Guiriko': 'Hauts-Bassins',
+    'Tuy': 'Hauts-Bassins',
+    'Yaadga': 'Nord',
+    'Oubri': 'Plateau-Central',
+    'Soum': 'Sahel',
+    'Liptako': 'Sahel',
+    'Tannounyan': 'Sud-Ouest'
+};
+
+const CANONICAL_TO_FILTER_MAP = {
+    'Boucle du Mouhoun': 'Bankui',
+    'Cascades': 'Djôrô',
+    'Centre': 'Kadiogo',
+    'Centre-Est': 'Nakambé',
+    'Centre-Nord': 'Kuilsé',
+    'Centre-Ouest': 'Nando',
+    'Centre-Sud': 'Nazinon',
+    'Est': 'Goulmou',
+    'Hauts-Bassins': 'Guiriko',
+    'Nord': 'Yaadga',
+    'Plateau-Central': 'Oubri',
+    'Sahel': 'Soum',
+    'Sud-Ouest': 'Tannounyan'
+};
+
+function getRegionColor(val, maxVal, metric) {
+    if (metric === 'taux_completion') {
+        if (val >= 80) return '#0b3d24';
+        if (val >= 60) return '#145B37';
+        if (val >= 40) return '#2e8b57';
+        if (val >= 20) return '#66bb6a';
+        if (val > 0)  return '#a5d6a7';
+        return '#f0f7f3';
+    } else if (metric === 'taux_femmes') {
+        if (val >= 50) return '#0b3d24';
+        if (val >= 40) return '#145B37';
+        if (val >= 30) return '#2e8b57'; // Cible nationale >= 30%
+        if (val >= 20) return '#f59e0b';
+        if (val > 0)  return '#ef4444';
+        return '#f0f7f3';
+    } else if (metric === 'certificats') {
+        const ratio = maxVal > 0 ? (val / maxVal) : 0;
+        if (ratio >= 0.8) return '#b45309';
+        if (ratio >= 0.6) return '#d97706';
+        if (ratio >= 0.4) return '#f59e0b';
+        if (ratio >= 0.2) return '#fbbf24';
+        if (ratio > 0)   return '#fde68a';
+        return '#fefce8';
+    } else {
+        // 'inscrits' (default)
+        const ratio = maxVal > 0 ? (val / maxVal) : 0;
+        if (ratio >= 0.8) return '#0b3d24';
+        if (ratio >= 0.6) return '#145B37';
+        if (ratio >= 0.4) return '#2e8b57';
+        if (ratio >= 0.2) return '#66bb6a';
+        if (ratio > 0)   return '#a5d6a7';
+        return '#f0f7f3';
+    }
+}
+
+function getRegionValue(regionName, metric) {
+    const data = pactRegionDetails[regionName] || {};
+    if (metric === 'taux_completion') return data.taux_completion || 0;
+    if (metric === 'taux_femmes') return data.taux_femmes || 0;
+    if (metric === 'certificats') return data.certs || 0;
+    return data.total_users || 0;
+}
+
+function getMaxMetricValue(metric) {
+    let max = 0;
+    Object.values(pactRegionDetails).forEach(d => {
+        let v = 0;
+        if (metric === 'taux_completion') v = d.taux_completion || 0;
+        else if (metric === 'taux_femmes') v = d.taux_femmes || 0;
+        else if (metric === 'certificats') v = d.certs || 0;
+        else v = d.total_users || 0;
+        if (v > max) max = v;
+    });
+    return max;
+}
+
+async function renderMap(regionDetails, rawRegionCounts, kpi) {
+    pactRegionDetails = regionDetails || {};
+    pactNationalKpi = kpi || {};
+
+    // Synchroniser avec le filtre région actuellement actif
+    const currentFilterRegion = document.getElementById('f-region')?.value || '';
+    if (currentFilterRegion) {
+        pactSelectedRegion = REGION_ALIAS_MAP[currentFilterRegion] || currentFilterRegion;
+    }
+
+    // Initialiser Leaflet si pas encore fait
+    if (!pactMap) {
+        const mapEl = document.getElementById('pact-map');
+        if (!mapEl) return;
+
+        pactMap = L.map('pact-map', {
+            center: [12.3714, -1.5197], // Centre du Burkina Faso
+            zoom: 7,
+            minZoom: 6,
+            maxZoom: 9,
+            scrollWheelZoom: false, // Empêche le zoom intempestif au scroll
+            attributionControl: false
+        });
+
+        // Fond de carte neutre clair et élégant (Esri Light Gray Canvas, 100% libre et sans clé API requise)
+        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+            maxZoom: 10,
+            attribution: '© Esri, © OpenStreetMap'
+        }).addTo(pactMap);
+
+        // Charger le GeoJSON des 13 régions
+        try {
+            const resp = await fetch(BURKINA_REGIONS_GEOJSON_URL);
+            pactBurkinaGeojson = await resp.json();
+        } catch (e) {
+            console.error('Erreur chargement GeoJSON Burkina Faso:', e);
+            return;
+        }
+    }
+
+    // Mettre à jour la couche GeoJSON et la fiche d'info
+    updateMapLayers();
+    updateInfoCard(pactSelectedRegion);
+}
+
+function updateMapLayers() {
+    if (!pactMap || !pactBurkinaGeojson) return;
+
+    if (pactGeojsonLayer) {
+        pactMap.removeLayer(pactGeojsonLayer);
+    }
+
+    const metric = document.getElementById('map-metric')?.value || 'inscrits';
+    const maxVal = getMaxMetricValue(metric);
+
+    pactGeojsonLayer = L.geoJSON(pactBurkinaGeojson, {
+        style: function(feature) {
+            const name = feature.properties.name;
+            const val = getRegionValue(name, metric);
+            const isSelected = pactSelectedRegion && (pactSelectedRegion.toLowerCase() === name.toLowerCase());
+
+            return {
+                fillColor: getRegionColor(val, maxVal, metric),
+                weight: isSelected ? 3.5 : 1.5,
+                opacity: 1,
+                color: isSelected ? '#d32f2f' : '#ffffff',
+                fillOpacity: isSelected ? 0.95 : 0.85
+            };
+        },
+        onEachFeature: function(feature, layer) {
+            const name = feature.properties.name;
+            const regData = pactRegionDetails[name] || { total_users: 0, taux_completion: 0, taux_femmes: 0, certs: 0 };
+
+            // Tooltip flottant au survol
+            const tooltipContent = `<div style="font-family:'Segoe UI',sans-serif;min-width:140px;">
+                <strong style="color:var(--green);font-size:0.9rem;">${name}</strong><br>
+                <div style="font-size:0.75rem;margin-top:4px;">
+                    <b>${regData.total_users || 0}</b> apprenant(s)<br>
+                    <b>${regData.taux_completion || 0}%</b> de réussite<br>
+                    <b>${regData.taux_femmes || 0}%</b> de femmes<br>
+                    <b>${regData.certs || 0}</b> attestation(s)
+                </div>
+            </div>`;
+            layer.bindTooltip(tooltipContent, { sticky: true, opacity: 0.96 });
+
+            // Événements souris
+            layer.on({
+                mouseover: function(e) {
+                    const l = e.target;
+                    l.setStyle({
+                        weight: 3,
+                        color: '#fad615',
+                        fillOpacity: 0.95
+                    });
+                    l.bringToFront();
+                    updateInfoCard(name);
+                },
+                mouseout: function(e) {
+                    if (pactGeojsonLayer) {
+                        pactGeojsonLayer.resetStyle(e.target);
+                    }
+                    updateInfoCard(pactSelectedRegion);
+                },
+                click: function(e) {
+                    pactSelectedRegion = name;
+                    updateInfoCard(name);
+                    filterDashboardFromMap(name);
+                }
+            });
+        }
+    }).addTo(pactMap);
+
+    updateMapLegend(metric, maxVal);
+}
+
+function updateMapVisuals() {
+    updateMapLayers();
+    updateInfoCard(pactSelectedRegion);
+}
+
+function updateMapLegend(metric, maxVal) {
+    if (!pactMap) return;
+
+    if (pactLegendControl) {
+        pactMap.removeControl(pactLegendControl);
+    }
+
+    pactLegendControl = L.control({ position: 'bottomright' });
+    pactLegendControl.onAdd = function() {
+        const div = L.DomUtil.create('div', 'map-legend');
+        let title = 'Inscrits';
+        if (metric === 'taux_completion') title = 'Complétion (%)';
+        else if (metric === 'taux_femmes') title = 'Femmes (%)';
+        else if (metric === 'certificats') title = 'Attestations';
+
+        let grades = [];
+        if (metric === 'taux_completion') {
+            grades = [0, 20, 40, 60, 80];
+        } else if (metric === 'taux_femmes') {
+            grades = [0, 20, 30, 40, 50];
+        } else {
+            const step = Math.max(1, Math.round(maxVal / 5));
+            grades = [0, step, step * 2, step * 3, step * 4];
+        }
+
+        div.innerHTML = `<div style="font-weight:700;margin-bottom:6px;color:var(--green);">${title}</div>`;
+        for (let i = 0; i < grades.length; i++) {
+            const from = grades[i];
+            const to = grades[i + 1];
+            const color = getRegionColor(from + 0.1, maxVal, metric);
+            div.innerHTML += `
+                <div class="map-legend-item">
+                    <span class="map-legend-color" style="background:${color};"></span>
+                    <span>${from}${to ? '&ndash;' + to : '+'}</span>
+                </div>`;
+        }
+        return div;
+    };
+    pactLegendControl.addTo(pactMap);
+}
+
+function updateInfoCard(regionName) {
+    const titleEl = document.getElementById('info-region-name');
+    const badgeEl = document.getElementById('badge-region-status');
+    const usersEl = document.getElementById('info-val-users');
+    const compEl  = document.getElementById('info-val-completion');
+    const femEl   = document.getElementById('info-val-femmes');
+    const certsEl = document.getElementById('info-val-certs');
+    const btnFilter = document.getElementById('btn-filter-this-region');
+
+    if (!titleEl) return;
+
+    if (regionName && pactRegionDetails[regionName]) {
+        const d = pactRegionDetails[regionName];
+        titleEl.textContent = regionName;
+        badgeEl.textContent = 'Région';
+        badgeEl.className = 'badge-pill badge-green';
+        usersEl.textContent = d.total_users || 0;
+        compEl.textContent = (d.taux_completion || 0) + '%';
+        femEl.textContent = (d.taux_femmes || 0) + '%';
+        certsEl.textContent = d.certs || 0;
+        if (btnFilter) {
+            btnFilter.style.display = 'flex';
+            btnFilter.innerHTML = `<span>Filtrer sur ${regionName}</span>`;
+        }
+    } else {
+        // Vue Nationale
+        titleEl.textContent = 'Burkina Faso';
+        badgeEl.textContent = 'Vue Globale';
+        badgeEl.className = 'badge-pill badge-diamant';
+        const k = pactNationalKpi || {};
+        usersEl.textContent = k.total_users || 0;
+        compEl.textContent = (k.taux || 0) + '%';
+        femEl.textContent = (k.taux_femmes || 0) + '%';
+        certsEl.textContent = k.total_certificates || 0;
+        if (btnFilter) {
+            btnFilter.style.display = 'none';
+        }
+    }
+}
+
+function filterDashboardFromMap(regionName) {
+    const targetRegion = regionName || pactSelectedRegion;
+    if (!targetRegion) return;
+
+    const sel = document.getElementById('f-region');
+    if (!sel) return;
+
+    let matched = false;
+    for (let i = 0; i < sel.options.length; i++) {
+        if (sel.options[i].value.toLowerCase() === targetRegion.toLowerCase()) {
+            sel.selectedIndex = i;
+            matched = true;
+            break;
+        }
+    }
+
+    if (!matched) {
+        const alias = CANONICAL_TO_FILTER_MAP[targetRegion];
+        if (alias) {
+            for (let i = 0; i < sel.options.length; i++) {
+                if (sel.options[i].value.toLowerCase() === alias.toLowerCase()) {
+                    sel.selectedIndex = i;
+                    matched = true;
+                    break;
+                }
+            }
+        }
+    }
+
+    pactSelectedRegion = targetRegion;
+    if (typeof updateDashboardProvinces === 'function') {
+        updateDashboardProvinces();
+    }
+    applyFilters();
+}
+
+function resetMapSelection() {
+    pactSelectedRegion = null;
+    const sel = document.getElementById('f-region');
+    if (sel) sel.value = '';
+    if (typeof updateDashboardProvinces === 'function') {
+        updateDashboardProvinces();
+    }
+    if (pactMap) {
+        pactMap.setView([12.3714, -1.5197], 7);
+    }
+    applyFilters();
+    updateMapVisuals();
+}
+
+function pactResetMapState() {
+    pactSelectedRegion = null;
+}
+
 // ── Province ──────────────────────────────────────────────────────────────
 function renderProvince(data) {
     makeChart('chart-province', 'bar', Object.keys(data), [{
@@ -1072,7 +1694,7 @@ function renderCategories(data) {
 
 // ── Niveaux ───────────────────────────────────────────────────────────────
 function renderNiveaux(data) {
-    const labels = ['Bronze', 'Or', 'Diamant'];
+    const labels = ['Bronze', 'Argent', 'Or'];
     const enrol  = labels.map(l => (data.enrol   || {})[l] || 0);
     const compl  = labels.map(l => (data.complete || {})[l] || 0);
     makeChart('chart-niveaux', 'bar', labels, [
@@ -1122,26 +1744,32 @@ function renderImpactAndQuality(impact, voies, sat) {
 
 // ── Top Courses ───────────────────────────────────────────────────────────
 function renderTopCourses(courses) {
-    const levelClass = n => n === 'Bronze' ? 'badge-bronze' : n === 'Or' ? 'badge-or' : 'badge-diamant';
+    const levelClass = n => (n && n.includes('Bronze')) ? 'badge-bronze' : (n && n.includes('Or')) ? 'badge-or' : (n && n.includes('Argent')) ? 'badge-or' : 'badge-diamant';
     const body = document.getElementById('tbl-courses-body');
-    if (!courses.length) {
+    if (!courses || !courses.length) {
         body.innerHTML = '<tr><td colspan="5" class="empty">Aucune donnée</td></tr>';
         return;
     }
-    body.innerHTML = courses.map(c => `
+    body.innerHTML = courses.map(c => {
+        const cCourse = c.course || c.name || 'Formation';
+        const cCat    = c.category || c.domain || 'Général';
+        const cEnr    = c.enroled ?? c.enrolled ?? 0;
+        const cComp   = c.completed ?? 0;
+        const cTaux   = c.taux ?? (cEnr > 0 ? Math.round((cComp / cEnr) * 100) : 0);
+        return `
         <tr>
-          <td><span class="badge-pill ${levelClass(c.course)}">${c.course}</span></td>
-          <td>${c.category}</td>
-          <td><strong>${c.enroled}</strong></td>
-          <td>${c.completed}</td>
+          <td><span class="badge-pill ${levelClass(cCourse)}">${cCourse}</span></td>
+          <td>${cCat}</td>
+          <td><strong>${cEnr}</strong></td>
+          <td>${cComp}</td>
           <td>
             <div class="taux-bar">
-              <div class="bar"><div class="fill" style="width:${c.taux}%"></div></div>
-              <span>${c.taux}%</span>
+              <div class="bar"><div class="fill" style="width:${cTaux}%"></div></div>
+              <span>${cTaux}%</span>
             </div>
           </td>
-        </tr>
-    `).join('');
+        </tr>`;
+    }).join('');
 }
 
 // ── Learners Table ────────────────────────────────────────────────────────
@@ -1187,25 +1815,31 @@ function renderPage() {
     }
 
     body.innerHTML = page.map(l => {
-        const taux = l.enroled > 0 ? Math.round((l.completed / l.enroled) * 100) : 0;
+        const nom = l.nom || l.name || 'Apprenant';
+        const enroled = l.enroled ?? l.enrolments ?? 0;
+        const completed = l.completed ?? 0;
+        const certs = l.certificates ?? l.certs ?? 0;
+        const lastAccess = l.last_access || l.lastaccess || 'Jamais';
+        const instruction = l.niveau_instruction || l.instruction || '–';
+        const taux = enroled > 0 ? Math.round((completed / enroled) * 100) : 0;
         return `<tr>
-          <td><strong>${l.nom}</strong><br><small style="color:var(--grey)">${l.email||''}</small></td>
+          <td><strong>${nom}</strong><br><small style="color:var(--grey)">${l.email||''}</small></td>
           <td>${l.sexe||'–'}</td>
           <td>${l.region||'–'}</td>
           <td>${l.province||'–'}</td>
           <td>${l.commune||'–'}</td>
           <td>${l.statut||'–'}</td>
-          <td>${l.niveau_instruction||'–'}</td>
-          <td>${l.enroled}</td>
-          <td>${l.completed}</td>
-          <td>${l.certificates}</td>
+          <td>${instruction}</td>
+          <td>${enroled}</td>
+          <td>${completed}</td>
+          <td>${certs}</td>
           <td>
             <div class="taux-bar">
               <div class="bar"><div class="fill" style="width:${taux}%"></div></div>
               <span>${taux}%</span>
             </div>
           </td>
-          <td>${l.last_access}</td>
+          <td>${lastAccess}</td>
         </tr>`;
     }).join('');
 
@@ -1264,9 +1898,9 @@ function selectReportFormat(fmt) {
     document.getElementById('pill-report-xlsx').classList.toggle('selected', fmt === 'xlsx');
     const btn = document.getElementById('btn-run-report');
     if (fmt === 'pdf') {
-        btn.innerHTML = '📄 Imprimer / Enregistrer en PDF';
+        btn.innerHTML = 'Imprimer / Enregistrer en PDF';
     } else {
-        btn.innerHTML = '📊 Télécharger en Excel (.xlsx)';
+        btn.innerHTML = 'Télécharger en Excel (.xlsx)';
     }
 }
 
@@ -1404,7 +2038,7 @@ function buildReportHtml(opts) {
         const k = d.kpi;
         body += `
         <div class="print-section">
-          <div class="print-sec-title">📈 Indicateurs Clés de Performance (KPIs)</div>
+          <div class="print-sec-title">Indicateurs Clés de Performance (KPIs)</div>
           <div class="print-kpis">
             <div class="print-kpi-card"><div class="print-kpi-label">Total apprenants</div><div class="print-kpi-val">${k.total_users||0}</div></div>
             <div class="print-kpi-card"><div class="print-kpi-label">Apprenants actifs (30j)</div><div class="print-kpi-val">${k.active_users||0}</div></div>
@@ -1420,7 +2054,7 @@ function buildReportHtml(opts) {
         const g=d.gender||{}, s=d.statut||{}, inst=d.instruction||{};
         body += `
         <div class="print-section">
-          <div class="print-sec-title">⚧ Répartition Démographique des Apprenants</div>
+          <div class="print-sec-title">Répartition Démographique des Apprenants</div>
           <table class="print-table"><thead><tr><th style="width:33%;">Répartition par Sexe</th><th style="width:33%;">Répartition par Statut</th><th style="width:34%;">Niveau d'Instruction</th></tr></thead>
           <tbody><tr>
             <td style="vertical-align:top;">${Object.entries(g).map(([k,v])=>`<div><strong>${k||'Non précisé'}:</strong> ${v}</div>`).join('')||'<em>Aucune donnée</em>'}</td>
@@ -1434,7 +2068,7 @@ function buildReportHtml(opts) {
         const reg=d.region||{}, prov=d.province||{}, com=d.commune||{};
         body += `
         <div class="print-section">
-          <div class="print-sec-title">🗺️ Répartition Géographique (Territoire)</div>
+          <div class="print-sec-title">Répartition Géographique (Territoire)</div>
           <table class="print-table"><thead><tr><th style="width:33%;">Régions</th><th style="width:33%;">Provinces</th><th style="width:34%;">Communes</th></tr></thead>
           <tbody><tr>
             <td style="vertical-align:top;">${Object.entries(reg).map(([k,v])=>`<div><strong>${k||'Non renseignée'}:</strong> ${v}</div>`).join('')||'<em>Aucune donnée</em>'}</td>
@@ -1445,10 +2079,10 @@ function buildReportHtml(opts) {
     }
 
     if (incNiveaux && d.niveaux) {
-        const labels=['Bronze','Or','Diamant'], enr=d.niveaux.enrol||{}, comp=d.niveaux.complete||{};
+        const labels=['Bronze','Argent','Or'], enr=d.niveaux.enrol||{}, comp=d.niveaux.complete||{};
         body += `
         <div class="print-section">
-          <div class="print-sec-title">🏆 Niveaux de Certification (Bronze / Or / Diamant)</div>
+          <div class="print-sec-title">Niveaux de Certification (Bronze / Argent / Or)</div>
           <table class="print-table"><thead><tr><th>Niveau</th><th>Inscrits</th><th>Complétés</th><th>Taux de réussite</th></tr></thead>
           <tbody>${labels.map(l=>{const e=enr[l]||0,c=comp[l]||0,tx=e>0?Math.round((c/e)*100):0;return`<tr><td><strong>${l}</strong></td><td>${e}</td><td>${c}</td><td><strong>${tx}%</strong></td></tr>`;}).join('')}</tbody>
           </table>
@@ -1458,7 +2092,7 @@ function buildReportHtml(opts) {
     if (incTop && d.top_courses && d.top_courses.length) {
         body += `
         <div class="print-section">
-          <div class="print-sec-title">🏅 Top 10 des Formations les Plus Suivies</div>
+          <div class="print-sec-title">Top 10 des Formations les Plus Suivies</div>
           <table class="print-table"><thead><tr><th>Formation</th><th>Catégorie</th><th>Inscrits</th><th>Complétés</th><th>Taux</th></tr></thead>
           <tbody>${d.top_courses.map(c=>`<tr><td><strong>${c.course}</strong></td><td>${c.category}</td><td>${c.enroled}</td><td>${c.completed}</td><td><strong>${c.taux}%</strong></td></tr>`).join('')}</tbody>
           </table>
@@ -1468,7 +2102,7 @@ function buildReportHtml(opts) {
     if (notes) {
         body += `
         <div class="print-section" style="background:#fdfdfd;border:1px solid #ddd;padding:10px 14px;border-radius:4px;">
-          <div class="print-sec-title" style="margin-bottom:4px;border:none;">📝 Notes &amp; Remarques</div>
+          <div class="print-sec-title" style="margin-bottom:4px;border:none;">Notes &amp; Remarques</div>
           <div style="font-size:8.5pt;color:#333;white-space:pre-wrap;">${notes}</div>
         </div>`;
     }
@@ -1696,7 +2330,7 @@ function generateExcelReport(opts) {
         const nivRows = [
             ["PROGRESSION PAR NIVEAU"],
             ["Niveau", "Inscrits", "Complétés", "Taux de réussite (%)"],
-            ...['Bronze', 'Or', 'Diamant'].map(l => {
+            ...['Bronze', 'Argent', 'Or'].map(l => {
                 const e = enr[l] || 0;
                 const c = comp[l] || 0;
                 const tx = e > 0 ? Math.round((c / e) * 100) : 0;
@@ -1730,20 +2364,20 @@ function generateExcelReport(opts) {
 let currentLearnerFormat = 'csv-semi';
 
 const LEARNER_COLUMNS = {
-    nom:                { label: 'Nom et prénom',          val: l => l.nom || '' },
+    nom:                { label: 'Nom et prénom',          val: l => l.nom || l.name || '' },
     email:              { label: 'Adresse email',          val: l => l.email || '' },
     sexe:               { label: 'Sexe',                   val: l => l.sexe || '–' },
     region:             { label: 'Région',                 val: l => l.region || '–' },
     province:           { label: 'Province',               val: l => l.province || '–' },
     commune:            { label: 'Commune',                val: l => l.commune || '–' },
     statut:             { label: 'Statut',                 val: l => l.statut || '–' },
-    niveau_instruction: { label: "Niveau d'instruction",   val: l => l.niveau_instruction || '–' },
+    niveau_instruction: { label: "Niveau d'instruction",   val: l => l.niveau_instruction || l.instruction || '–' },
     inscription:        { label: "Date d'inscription",     val: l => l.inscription || '–' },
-    enroled:            { label: 'Formations inscrites',   val: l => l.enroled ?? 0 },
+    enroled:            { label: 'Formations inscrites',   val: l => l.enroled ?? l.enrolments ?? 0 },
     completed:          { label: 'Formations complétées',  val: l => l.completed ?? 0 },
-    certificates:       { label: 'Attestations délivrées', val: l => l.certificates ?? 0 },
-    taux:               { label: 'Taux de complétion',     val: l => l.enroled > 0 ? Math.round((l.completed / l.enroled) * 100) + '%' : '0%' },
-    last_access:        { label: 'Dernière connexion',     val: l => l.last_access || '–' }
+    certificates:       { label: 'Attestations délivrées', val: l => l.certificates ?? l.certs ?? 0 },
+    taux:               { label: 'Taux de complétion',     val: l => (l.enroled ?? l.enrolments ?? 0) > 0 ? Math.round(((l.completed ?? 0) / (l.enroled ?? l.enrolments ?? 1)) * 100) + '%' : '0%' },
+    last_access:        { label: 'Dernière connexion',     val: l => l.last_access || l.lastaccess || '–' }
 };
 
 function openLearnerExportModal() {
@@ -1845,10 +2479,17 @@ function applyFilters() { loadDashboard(); }
 
 function resetFilters() {
     ['f-sexe','f-region','f-province','f-commune','f-statut','f-niveau'].forEach(id => {
-        document.getElementById(id).value = '';
+        const el = document.getElementById(id);
+        if (el) el.value = '';
     });
+    if (typeof updateDashboardProvinces === 'function') {
+        updateDashboardProvinces();
+    }
     document.getElementById('f-catid').value  = '0';
     document.getElementById('f-period').value = '0';
+    if (typeof pactResetMapState === 'function') {
+        pactResetMapState();
+    }
     loadDashboard();
 }
 

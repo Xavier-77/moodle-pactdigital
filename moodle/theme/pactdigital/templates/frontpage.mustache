@@ -10,18 +10,31 @@
 
     {{{ output.standard_top_of_body_html }}}
 
-    <!-- ── TOP NAVBAR STYLE UDEMY ─────────────────────────────────────────── -->
-    <header class="pact-udemy-navbar">
+    <!-- ── BANDEAU D'IDENTIFICATION OFFICIELLE & FILET NATIONAL (CHARTE V2.0) ── -->
+    <div class="fs-officiel">
+        <div class="fs-conteneur">
+            <span class="fs-officiel-sceau">Site officiel de l'administration burkinabè</span>
+            <span class="fs-masque-mobile">MTDPCE — Domaine officiel <code>gov.bf</code></span>
+        </div>
+    </div>
+    <div class="fs-filet"></div>
+
+    <!-- ── EN-TÊTE INSTITUTIONNEL PACTDIGITAL-BF ───────────────────────────── -->
+    <header class="pact-udemy-navbar fs-entete">
         <div class="pact-udemy-nav-inner">
-            <!-- Brand & Armoiries collés à gauche -->
-            <a href="{{{ urls.catalogue }}}" class="pact-nav-brand">
+            <!-- Bloc-marque officiel (.fs-marque) -->
+            <a href="{{{ urls.catalogue }}}" class="fs-marque pact-nav-brand">
                 {{#armoiries_url}}
-                    <img src="{{armoiries_url}}" alt="Armoiries Burkina Faso" class="pact-nav-flag">
+                    <img src="{{armoiries_url}}" alt="Armoiries du Burkina Faso" class="pact-nav-flag" height="52" style="height: 52px; width: auto;">
                 {{/armoiries_url}}
-                <div class="pact-nav-brand-text">
-                    <span class="pact-nav-ministry-title">Ministère de la Transition Digitale, des Postes et des Communications Électroniques</span>
-                    <span class="pact-nav-project-subtitle">Pact Digital</span>
-                </div>
+                {{^armoiries_url}}
+                    <img src="{{{ config.wwwroot }}}/theme/pactdigital/pix/armoiries.svg" alt="Armoiries du Burkina Faso" class="pact-nav-flag" height="52" style="height: 52px; width: auto;">
+                {{/armoiries_url}}
+                <span class="fs-marque-texte pact-nav-brand-text">
+                    <span class="fs-marque-pays">Burkina Faso</span>
+                    <span class="fs-marque-devise">La Patrie ou la Mort, nous Vaincrons</span>
+                    <span class="fs-marque-entite pact-nav-ministry-title">MTDPCE — Plateforme Nationale PACTDIGITAL-BF</span>
+                </span>
             </a>
 
             <!-- Liens directs & Actions -->
@@ -66,9 +79,11 @@
                         <section class="pact-hero-section">
                             <div class="pact-hero-container">
                                 <div class="pact-hero-card pact-hero-card-fullwidth">
-                                    <div class="pact-hero-badge">
-                                        <span class="flag-dot">🇧🇫</span>
-                                        <span>Projet Pact Digital</span>
+                                    <div class="d-flex align-items-center gap-3 mb-3 flex-wrap">
+                                        <span class="fs-repere"></span>
+                                        <span class="pact-hero-badge mb-0">
+                                            <span>Service public numérique — Projet Pact Digital</span>
+                                        </span>
                                     </div>
                                     <h1 class="pact-hero-title">
                                         Projet PACTDIGITAL-BF : La formation aux compétences numériques au Burkina Faso
@@ -80,7 +95,7 @@
                                         Ce projet met à disposition <strong>60 parcours de formation certifiants et gratuits</strong> couvrant 20 domaines essentiels du numérique (du niveau débutant Bronze au niveau expert Or). Chaque formation permet d'acquérir des compétences pratiques reconnues par l'État et de décrocher une <strong>attestation officielle avec QR Code de vérification</strong>.
                                     </p>
 
-                                    <!-- CTA bouton épuré centré sans icône ni flèche -->
+                                    <!-- CTA bouton épuré centré -->
                                     <div class="pact-hero-ctas justify-content-center text-center">
                                         <a href="{{{ urls.catalogue }}}" class="btn-hero-primary">
                                             Explorer les sessions de formation
@@ -89,6 +104,9 @@
                                 </div>
                             </div>
                         </section>
+
+                        <!-- Motif tissé Faso Dan Fani en lisière du bandeau d'accueil -->
+                        <div class="fs-tissage"></div>
 
 
 
@@ -283,7 +301,7 @@
                                         <div class="feature-icon-box">🤝</div>
                                         <h3 class="feature-title">Réseau de formateurs certifiés</h3>
                                         <p class="feature-text">
-                                            Bénéficiez d'ateliers en présentiel animés par des formateurs relais certifiés dans les 13 régions et 45 provinces du Burkina Faso.
+                                            Bénéficiez d'ateliers en présentiel animés par des formateurs relais certifiés dans les 17 régions et 47 provinces du Burkina Faso.
                                         </p>
                                     </div>
                                 </div>
@@ -325,7 +343,9 @@
                         </section>
 
 
-                        {{{ output.main_content }}}
+                        <div class="site-announcements-wrapper {{^has_announcements}}{{^is_editing}}d-none{{/is_editing}}{{/has_announcements}}">
+                            {{{ output.main_content }}}
+                        </div>
 
                     </div>
                 </div>
@@ -333,20 +353,25 @@
         </div>
     </div>
 
-    <!-- ── 7. FOOTER INSTITUTIONNEL PACTDIGITAL-BF ────────────────────────── -->
-    <footer class="pact-udemy-footer">
+    <!-- ── 7. FOOTER INSTITUTIONNEL PACTDIGITAL-BF (CONFORME CHARTE V2.0) ──── -->
+    <footer class="pact-udemy-footer fs-pied">
+        <div class="fs-tissage" style="--tissage-fond: var(--surface-enfoncee);"></div>
         <div class="footer-top">
             <div class="footer-container">
                 <div class="footer-col brand-col">
-                    <div class="footer-brand">
+                    <a href="{{{ config.wwwroot }}}" class="fs-marque footer-brand" style="padding: 0;">
                         {{#armoiries_url}}
-                            <img src="{{armoiries_url}}" alt="Armoiries Burkina Faso" class="footer-flag">
+                            <img src="{{armoiries_url}}" alt="Armoiries du Burkina Faso" class="footer-flag">
                         {{/armoiries_url}}
-                        <div>
-                            <div class="footer-country">BURKINA FASO</div>
-                            <div class="footer-ministry">Ministère de la Transition Digitale, des Postes et des Communications Électroniques</div>
-                        </div>
-                    </div>
+                        {{^armoiries_url}}
+                            <img src="{{{ config.wwwroot }}}/theme/pactdigital/pix/armoiries.svg" alt="Armoiries du Burkina Faso" class="footer-flag">
+                        {{/armoiries_url}}
+                        <span class="fs-marque-texte">
+                            <span class="fs-marque-pays footer-country">Burkina Faso</span>
+                            <span class="fs-marque-devise">La Patrie ou la Mort, nous Vaincrons</span>
+                            <span class="fs-marque-entite footer-ministry">Ministère de la Transition Digitale, des Postes et des Communications Électroniques</span>
+                        </span>
+                    </a>
                     <p class="footer-about">
                         PACTDIGITAL-BF est la plateforme nationale de renforcement des compétences numériques portée par la Direction Générale de la Transition Digitale (DGTD).
                     </p>
@@ -377,10 +402,10 @@
                 <div class="footer-col">
                     <h4 class="footer-col-title">Cadre Légal & Support</h4>
                     <p class="footer-legal-note">
-                        Plateforme conforme à la <strong>Loi n°001-2021/AN</strong> portant protection des données à caractère personnel au Burkina Faso.
+                        Plateforme conforme à la <strong>Loi n°001-2021/AN</strong> portant protection des données à caractère personnel et à la <strong>Charte graphique v2.0</strong> des services numériques de l'État burkinabè.
                     </p>
                     <div class="footer-badge-pact">
-                        🇧🇫 Un Peuple • Un Progrès • Une Justice
+                        🇧🇫 La Patrie ou la Mort, nous Vaincrons
                     </div>
                 </div>
             </div>
@@ -388,7 +413,7 @@
 
         <div class="footer-bottom">
             <div class="footer-bottom-inner">
-                <div>© 2026 PACTDIGITAL-BF — Tous droits réservés. République du Burkina Faso.</div>
+                <div>© 2026 PACTDIGITAL-BF — Service officiel de l'administration burkinabè.</div>
                 <div class="footer-bottom-links">
                     <a href="{{{ urls.verify }}}">Vérification QR Code</a>
                     <span>•</span>

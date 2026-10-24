@@ -35,12 +35,12 @@ if ($ajax_action === 'check_username') {
     if ($exists) {
         echo json_encode([
             'available' => false,
-            'message'   => '❌ Ce nom d\'utilisateur est déjà pris. Veuillez en choisir un autre.'
+            'message'   => 'Ce nom d\'utilisateur est déjà pris. Veuillez en choisir un autre.'
         ]);
     } else {
         echo json_encode([
             'available' => true,
-            'message'   => '✅ Nom d\'utilisateur disponible !'
+            'message'   => 'Nom d\'utilisateur disponible !'
         ]);
     }
     exit;
@@ -59,7 +59,7 @@ if ($ajax_action === 'check_email') {
     if (!validate_email($email_norm)) {
         echo json_encode([
             'available' => false,
-            'message'   => '❌ Format d\'adresse e-mail invalide.'
+            'message'   => 'Format d\'adresse e-mail invalide.'
         ]);
         exit;
     }
@@ -68,12 +68,12 @@ if ($ajax_action === 'check_email') {
     if ($exists) {
         echo json_encode([
             'available' => false,
-            'message'   => '❌ Cette adresse e-mail est déjà associée à un compte existant.'
+            'message'   => 'Cette adresse e-mail est déjà associée à un compte existant.'
         ]);
     } else {
         echo json_encode([
             'available' => true,
-            'message'   => '✅ Adresse e-mail disponible !'
+            'message'   => 'Adresse e-mail disponible !'
         ]);
     }
     exit;
@@ -224,6 +224,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $newuser->firstname   = $form_data['firstname'];
             $newuser->lastname    = $form_data['lastname'];
             $newuser->phone1      = $form_data['phone'];
+            $newuser->phone2      = $form_data['phone'];
             $newuser->email       = $final_email;
             $newuser->auth        = 'manual';
             $newuser->confirmed   = 1; // Activation immédiate sans mail requis
@@ -311,35 +312,36 @@ echo $OUTPUT->header();
 
 <style>
 :root {
-    --green: #129b40;
-    --green-dark: #0d7a32;
-    --yellow: #fad615;
-    --red: #d02027;
-    --border: #e2e8f0;
-    --bg-light: #f8fafc;
+    --green: var(--vert-500, #00843b);
+    --green-dark: var(--vert-700, #045527);
+    --yellow: var(--or-300, #ffed00);
+    --red: var(--rouge-500, #e30613);
+    --border: var(--bordure, #e2ddd6);
+    --bg-light: var(--surface-basse, #fcfbf9);
 }
 
 body.pagelayout-login {
-    background: #f1f5f9;
+    background: var(--surface-enfoncee, #f7f5f2);
 }
 
 .pact-signup-container {
     max-width: 640px;
     margin: 2rem auto 4rem;
     padding: 0 1rem;
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-family: var(--police-texte, "Inter", system-ui, -apple-system, sans-serif);
+    color: var(--texte, #211d1a);
 }
 
 .pact-signup-card {
     background: white;
-    border-radius: 20px;
-    box-shadow: 0 10px 40px rgba(18, 155, 64, 0.10);
+    border-radius: var(--rayon-lg, 12px);
+    box-shadow: var(--ombre-lg);
     border: 1px solid var(--border);
     overflow: hidden;
 }
 
 .pact-signup-header {
-    background: linear-gradient(135deg, #0d7a32 0%, #129b40 60%, #1db954 100%);
+    background: linear-gradient(135deg, var(--vert-900, #032e16) 0%, var(--vert-700, #045527) 60%, var(--vert-500, #00843b) 100%);
     color: white;
     padding: 2.2rem 2rem 1.8rem;
     text-align: center;
@@ -352,11 +354,12 @@ body.pagelayout-login {
     height: 6px;
     display: flex;
 }
-.flag-red    { flex: 1; background: var(--red); }
-.flag-yellow { width: 30px; background: var(--yellow); }
-.flag-green  { flex: 1; background: var(--green); }
+.flag-red    { flex: 1; background: var(--rouge-500, #e30613); }
+.flag-yellow { width: 30px; background: var(--or-300, #ffed00); }
+.flag-green  { flex: 1; background: var(--vert-500, #00843b); }
 
 .pact-signup-header h1 {
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
     font-size: 1.6rem;
     font-weight: 800;
     margin: 0.5rem 0 0.3rem;
@@ -374,16 +377,16 @@ body.pagelayout-login {
 }
 
 .pact-info-box {
-    background: #fefce8;
-    border: 1.5px solid #fef08a;
-    border-radius: 12px;
+    background: var(--ocre-50, #fdf4e3);
+    border: 1.5px solid var(--ocre-500, #b07800);
+    border-radius: var(--rayon-md, 8px);
     padding: 0.9rem 1.1rem;
     margin-bottom: 1.5rem;
     display: flex;
     gap: 12px;
     align-items: flex-start;
     font-size: 0.88rem;
-    color: #854d0e;
+    color: var(--ocre-700, #7d5500);
     line-height: 1.45;
 }
 
@@ -393,10 +396,10 @@ body.pagelayout-login {
 }
 
 .alert-danger-custom {
-    background: #fee2e2;
-    border: 1px solid #fca5a5;
-    color: #991b1b;
-    border-radius: 12px;
+    background: var(--rouge-50, #fdecef);
+    border: 1px solid var(--rouge-500, #e30613);
+    color: var(--rouge-700, #a2040e);
+    border-radius: var(--rayon-md, 8px);
     padding: 1rem 1.2rem;
     margin-bottom: 1.5rem;
     font-size: 0.88rem;
@@ -426,13 +429,13 @@ body.pagelayout-login {
     display: block;
     font-size: 0.86rem;
     font-weight: 700;
-    color: #1e293b;
+    color: var(--texte, #211d1a);
     margin-bottom: 0.4rem;
 }
 
 .form-group-pact label .badge-optional {
-    background: #e2e8f0;
-    color: #475569;
+    background: var(--surface-enfoncee, #f7f5f2);
+    color: var(--texte-attenue, #635c55);
     padding: 2px 7px;
     border-radius: 10px;
     font-size: 0.72rem;
@@ -450,9 +453,10 @@ body.pagelayout-login {
 .input-pact {
     width: 100%;
     padding: 0.75rem 1rem;
-    border: 1.5px solid var(--border);
-    border-radius: 10px;
+    border: 1.5px solid var(--bordure-forte, #8e867f);
+    border-radius: var(--rayon-md, 8px);
     font-size: 0.95rem;
+    color: var(--texte, #211d1a);
     box-sizing: border-box;
     transition: all 0.2s;
     background: white;
@@ -461,23 +465,24 @@ body.pagelayout-login {
 .input-pact:focus {
     outline: none;
     border-color: var(--green);
-    box-shadow: 0 0 0 3px rgba(18, 155, 64, 0.15);
+    box-shadow: 0 0 0 3px var(--vert-50, #ecf7f0);
 }
 
 .input-helper {
     font-size: 0.78rem;
-    color: #64748b;
+    color: var(--texte-attenue, #635c55);
     margin-top: 0.35rem;
     line-height: 1.4;
 }
 
 .btn-signup-pact {
-    background: linear-gradient(135deg, #129b40, #0d7a32);
+    font-family: var(--police-titre, "Archivo", system-ui, sans-serif);
+    background: var(--action, #00843b);
     color: white;
     width: 100%;
     padding: 0.9rem;
     border: none;
-    border-radius: 12px;
+    border-radius: var(--rayon-md, 8px);
     font-size: 1.05rem;
     font-weight: 800;
     cursor: pointer;
@@ -487,13 +492,13 @@ body.pagelayout-login {
     justify-content: center;
     gap: 8px;
     margin-top: 1rem;
-    box-shadow: 0 4px 15px rgba(18, 155, 64, 0.25);
+    box-shadow: var(--ombre-sm);
 }
 
 .btn-signup-pact:hover {
-    background: linear-gradient(135deg, #0d7a32, #075a24);
+    background: var(--action-survol, #026c31);
     transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(18, 155, 64, 0.35);
+    box-shadow: var(--ombre-md);
     color: white;
 }
 
@@ -501,11 +506,11 @@ body.pagelayout-login {
     text-align: center;
     margin-top: 1.5rem;
     font-size: 0.9rem;
-    color: #64748b;
+    color: var(--texte-attenue, #635c55);
 }
 
 .signup-footer-links a {
-    color: var(--green);
+    color: var(--green-dark);
     font-weight: 700;
     text-decoration: none;
 }
@@ -533,7 +538,6 @@ body.pagelayout-login {
 
             <!-- Encadré explicatif : pas besoin d'email -->
             <div class="pact-info-box">
-                <span class="icon">💡</span>
                 <div>
                     <strong>Vous n'avez pas d'adresse e-mail ?</strong>
                     <br>Aucun problème ! Le champ e-mail est <strong>facultatif</strong>. Vous utiliserez uniquement votre <strong>nom d'utilisateur</strong> et votre mot de passe pour vous connecter.
@@ -589,7 +593,7 @@ body.pagelayout-login {
 
                     <div class="form-group-pact">
                         <label for="phone">
-                            📞 Téléphone (contact) <span class="req">*</span>
+                            Téléphone (contact) <span class="req">*</span>
                         </label>
                         <input type="tel" id="phone" name="phone" class="input-pact"
                                value="<?= htmlspecialchars($form_data['phone']) ?>"
@@ -625,44 +629,63 @@ body.pagelayout-login {
                 <!-- 4. Répartition territoriale (Région, Province, Commune) -->
                 <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 12px; padding: 1.1rem; margin-bottom: 1.2rem;">
                     <div style="font-weight: 700; font-size: 0.9rem; color: #1e293b; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 6px;">
-                        📍 Localisation territoriale (Burkina Faso)
+                        Localisation territoriale (Burkina Faso)
                     </div>
                     <div class="form-grid-2">
                         <div class="form-group-pact">
-                            <label for="region">Région</label>
-                            <select id="region" name="region" class="input-pact">
+                            <label for="region">Région <span class="req">*</span></label>
+                            <select id="region" name="region" class="input-pact" required>
                                 <option value="">Sélectionnez votre région...</option>
-                                <?php foreach ($regions_bf as $reg): ?>
-                                    <option value="<?= htmlspecialchars($reg) ?>" <?= ($form_data['region'] === $reg) ? 'selected' : '' ?>>
-                                        <?= htmlspecialchars($reg) ?>
-                                    </option>
-                                <?php endforeach; ?>
+                                <optgroup label="13 Régions Administratives">
+                                    <option value="Centre" <?= ($form_data['region'] === 'Centre') ? 'selected' : '' ?>>Centre</option>
+                                    <option value="Hauts-Bassins" <?= ($form_data['region'] === 'Hauts-Bassins') ? 'selected' : '' ?>>Hauts-Bassins</option>
+                                    <option value="Boucle du Mouhoun" <?= ($form_data['region'] === 'Boucle du Mouhoun') ? 'selected' : '' ?>>Boucle du Mouhoun</option>
+                                    <option value="Cascades" <?= ($form_data['region'] === 'Cascades') ? 'selected' : '' ?>>Cascades</option>
+                                    <option value="Centre-Est" <?= ($form_data['region'] === 'Centre-Est') ? 'selected' : '' ?>>Centre-Est</option>
+                                    <option value="Centre-Nord" <?= ($form_data['region'] === 'Centre-Nord') ? 'selected' : '' ?>>Centre-Nord</option>
+                                    <option value="Centre-Ouest" <?= ($form_data['region'] === 'Centre-Ouest') ? 'selected' : '' ?>>Centre-Ouest</option>
+                                    <option value="Centre-Sud" <?= ($form_data['region'] === 'Centre-Sud') ? 'selected' : '' ?>>Centre-Sud</option>
+                                    <option value="Est" <?= ($form_data['region'] === 'Est') ? 'selected' : '' ?>>Est</option>
+                                    <option value="Nord" <?= ($form_data['region'] === 'Nord') ? 'selected' : '' ?>>Nord</option>
+                                    <option value="Plateau-Central" <?= ($form_data['region'] === 'Plateau-Central') ? 'selected' : '' ?>>Plateau-Central</option>
+                                    <option value="Sahel" <?= ($form_data['region'] === 'Sahel') ? 'selected' : '' ?>>Sahel</option>
+                                    <option value="Sud-Ouest" <?= ($form_data['region'] === 'Sud-Ouest') ? 'selected' : '' ?>>Sud-Ouest</option>
+                                </optgroup>
+                                <optgroup label="Dénominations Territoriales">
+                                    <option value="Bankui" <?= ($form_data['region'] === 'Bankui') ? 'selected' : '' ?>>Bankui</option>
+                                    <option value="Djôrô" <?= ($form_data['region'] === 'Djôrô') ? 'selected' : '' ?>>Djôrô</option>
+                                    <option value="Goulmou" <?= ($form_data['region'] === 'Goulmou') ? 'selected' : '' ?>>Goulmou</option>
+                                    <option value="Guiriko" <?= ($form_data['region'] === 'Guiriko') ? 'selected' : '' ?>>Guiriko</option>
+                                    <option value="Kadiogo" <?= ($form_data['region'] === 'Kadiogo') ? 'selected' : '' ?>>Kadiogo</option>
+                                    <option value="Kuilsé" <?= ($form_data['region'] === 'Kuilsé') ? 'selected' : '' ?>>Kuilsé</option>
+                                    <option value="Liptako" <?= ($form_data['region'] === 'Liptako') ? 'selected' : '' ?>>Liptako</option>
+                                    <option value="Nakambé" <?= ($form_data['region'] === 'Nakambé') ? 'selected' : '' ?>>Nakambé</option>
+                                    <option value="Nando" <?= ($form_data['region'] === 'Nando') ? 'selected' : '' ?>>Nando</option>
+                                    <option value="Nazinon" <?= ($form_data['region'] === 'Nazinon') ? 'selected' : '' ?>>Nazinon</option>
+                                    <option value="Oubri" <?= ($form_data['region'] === 'Oubri') ? 'selected' : '' ?>>Oubri</option>
+                                    <option value="Sirba" <?= ($form_data['region'] === 'Sirba') ? 'selected' : '' ?>>Sirba</option>
+                                    <option value="Soum" <?= ($form_data['region'] === 'Soum') ? 'selected' : '' ?>>Soum</option>
+                                    <option value="Sourou" <?= ($form_data['region'] === 'Sourou') ? 'selected' : '' ?>>Sourou</option>
+                                    <option value="Tannounyan" <?= ($form_data['region'] === 'Tannounyan') ? 'selected' : '' ?>>Tannounyan</option>
+                                    <option value="Tapoa" <?= ($form_data['region'] === 'Tapoa') ? 'selected' : '' ?>>Tapoa</option>
+                                    <option value="Yaadga" <?= ($form_data['region'] === 'Yaadga') ? 'selected' : '' ?>>Yaadga</option>
+                                </optgroup>
                             </select>
                         </div>
 
                         <div class="form-group-pact">
-                            <label for="province">Province</label>
-                            <select id="province" name="province" class="input-pact">
-                                <option value="">Sélectionnez votre province...</option>
-                                <?php foreach ($provinces_bf as $prv): ?>
-                                    <option value="<?= htmlspecialchars($prv) ?>" <?= ($form_data['province'] === $prv) ? 'selected' : '' ?>>
-                                        <?= htmlspecialchars($prv) ?>
-                                    </option>
-                                <?php endforeach; ?>
+                            <label for="province">Province <span class="req">*</span></label>
+                            <select id="province" name="province" class="input-pact" required disabled>
+                                <option value="">Sélectionnez d'abord une région...</option>
                             </select>
                         </div>
                     </div>
 
                     <div class="form-group-pact" style="margin-bottom: 0;">
-                        <label for="commune">Commune / Ville</label>
-                        <input list="communes-list" id="commune" name="commune" class="input-pact"
-                               value="<?= htmlspecialchars($form_data['commune']) ?>"
-                               placeholder="Tapez pour rechercher votre commune (ex. Ouagadougou, Bobo-Dioulasso...)">
-                        <datalist id="communes-list">
-                            <?php foreach ($communes_bf as $com): ?>
-                                <option value="<?= htmlspecialchars($com) ?>"></option>
-                            <?php endforeach; ?>
-                        </datalist>
+                        <label for="commune">Commune / Ville <span class="req">*</span></label>
+                        <select id="commune" name="commune" class="input-pact" required disabled>
+                            <option value="">Sélectionnez d'abord une province...</option>
+                        </select>
                     </div>
                 </div>
 
@@ -709,7 +732,7 @@ body.pagelayout-login {
                 <!-- 6. EMAIL — OPTIONNEL ! -->
                 <div class="form-group-pact" style="background: #f0faf5; padding: 1rem; border-radius: 12px; border: 1.5px dashed var(--green);">
                     <label for="email" style="color: var(--green-dark);">
-                        📧 Adresse e-mail
+                        Adresse e-mail
                         <span class="badge-optional">Facultatif</span>
                         <span id="email-status" style="font-size: 0.78rem; font-weight: 600; margin-left: 8px;"></span>
                     </label>
@@ -717,7 +740,7 @@ body.pagelayout-login {
                            value="<?= htmlspecialchars($form_data['email']) ?>"
                            placeholder="laissez vide si vous n'avez pas d'e-mail">
                     <div class="input-helper" style="color: #065f46;">
-                        ✅ Si vous n'avez pas d'adresse e-mail, <strong>laissez ce champ vide</strong>. Votre nom d'utilisateur suffira pour vous connecter.
+                        Si vous n'avez pas d'adresse e-mail, <strong>laissez ce champ vide</strong>. Votre nom d'utilisateur suffira pour vous connecter.
                     </div>
                 </div>
 
@@ -741,14 +764,18 @@ body.pagelayout-login {
                         <input type="checkbox" name="consentement" value="1" <?= $form_data['consentement'] ? 'checked' : '' ?> required
                                style="width: 18px; height: 18px; margin-top: 2px; accent-color: var(--green); flex-shrink: 0;">
                         <span>
-                            <strong>J'accepte le traitement de mes données personnelles</strong> dans le cadre du Programme National de Littératie Numérique (PACTDIGITAL-BF), conformément à la <strong>loi n°001-2021/AN</strong> du Burkina Faso relative à la protection des personnes à l'égard du traitement des données à caractère personnel. <span class="req">*</span>
+                            <strong>J'accepte le traitement de mes données personnelles</strong> dans le cadre du Programme National de Littératie Numérique (PACTDIGITAL-BF), conformément à la 
+                            <a href="legal.php#loi-001-2021" target="_blank" onclick="event.stopPropagation(); openLawModal(event);" 
+                               style="color: #045527; font-weight: 700; text-decoration: underline; cursor: pointer;" 
+                               title="Cliquer pour afficher les articles de la loi">loi n°001-2021/AN</a>
+                            du Burkina Faso relative à la protection des personnes à l'égard du traitement des données à caractère personnel. <span class="req">*</span>
                         </span>
                     </label>
                 </div>
 
                 <!-- Bouton de soumission -->
                 <button type="submit" id="btn-submit-signup" class="btn-signup-pact">
-                    🚀 Créer mon compte citoyen et commencer
+                    Créer mon compte citoyen et commencer
                 </button>
             </form>
 
@@ -761,19 +788,122 @@ body.pagelayout-login {
     </div>
 </div>
 
+<!-- Modale d'information sur la Loi 001-2021/AN -->
+<div id="law-modal-backdrop" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(4px); z-index: 99999; align-items: center; justify-content: center; padding: 20px;">
+    <div style="background: #ffffff; border-radius: 16px; max-width: 680px; width: 100%; max-height: 88vh; overflow-y: auto; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35); border: 1px solid #e2e8f0; position: relative;">
+        <!-- Entête -->
+        <div style="background: linear-gradient(135deg, #032e16 0%, #045527 60%, #00843b 100%); color: #fff; padding: 20px 24px; border-radius: 15px 15px 0 0; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 2;">
+            <div>
+                <h3 style="margin: 0; font-size: 1.15rem; font-weight: 800; color: #fff; line-height: 1.2;">Loi N° 001-2021/AN du Burkina Faso</h3>
+                <p style="margin: 3px 0 0 0; font-size: 0.8rem; opacity: 0.92; color: #ecfdf5;">Protection des personnes à l'égard du traitement des données à caractère personnel</p>
+            </div>
+            <button type="button" onclick="closeLawModal()" aria-label="Fermer" style="background: rgba(255,255,255,0.2); border: none; color: #fff; font-size: 1.4rem; cursor: pointer; border-radius: 50%; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; line-height: 1; transition: background 0.2s;">&times;</button>
+        </div>
+
+        <!-- Corps -->
+        <div style="padding: 24px;">
+            <div style="background: #ecf7f0; border-left: 4px solid #00843b; border-radius: 8px; padding: 12px 16px; margin-bottom: 20px; font-size: 0.88rem; color: #045527; line-height: 1.45;">
+                <strong>Garantie de l'État :</strong> La plateforme <strong>PACTDIGITAL-BF</strong> est un service public officiel opéré sous le contrôle de la <strong>Commission de l'Informatique et des Libertés (CIL)</strong>. Vos données sont souveraines et strictement protégées.
+            </div>
+
+            <h4 style="margin: 0 0 14px 0; font-size: 0.98rem; color: #0f172a; font-weight: 800;">Que spécifie la loi pour chaque citoyen apprenant ?</h4>
+
+            <div style="display: grid; gap: 12px;">
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 16px;">
+                    <div style="font-weight: 700; font-size: 0.9rem; color: #045527;">
+                        Article 14 — Finalité pédagogique exclusive
+                    </div>
+                    <div style="font-size: 0.85rem; color: #475569; margin-top: 5px; line-height: 1.45;">
+                        Vos renseignements ne sont collectés que pour la création de votre compte citoyen, le suivi de votre parcours de formation et la délivrance de vos attestations sécurisées. <strong>Aucune exploitation commerciale, aucune cession ni publicité.</strong>
+                    </div>
+                </div>
+
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 16px;">
+                    <div style="font-weight: 700; font-size: 0.9rem; color: #045527;">
+                        Article 17 — Consentement préalable, libre et éclairé
+                    </div>
+                    <div style="font-size: 0.85rem; color: #475569; margin-top: 5px; line-height: 1.45;">
+                        Tout traitement de vos données requiert obligatoirement votre accord explicite. La plateforme est tenue de vous informer clairement avant toute validation.
+                    </div>
+                </div>
+
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 16px;">
+                    <div style="font-weight: 700; font-size: 0.9rem; color: #045527;">
+                        Articles 25 à 28 — Vos droits (Accès, Rectification, Suppression)
+                    </div>
+                    <div style="font-size: 0.85rem; color: #475569; margin-top: 5px; line-height: 1.45;">
+                        Vous disposez d'un droit permanent d'accéder à l'intégralité de vos données, de corriger toute coordonnée inexacte et d'exiger la suppression sans frais de votre compte citoyen sur simple demande.
+                    </div>
+                </div>
+
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 16px;">
+                    <div style="font-weight: 700; font-size: 0.9rem; color: #045527;">
+                        Article 46 — Sécurité, chiffrement et souveraineté
+                    </div>
+                    <div style="font-size: 0.85rem; color: #475569; margin-top: 5px; line-height: 1.45;">
+                        L'État et le responsable technique garantissent la confidentialité absolue de vos données, hébergées sur le réseau national sécurisé du Burkina Faso avec chiffrement cryptographique fort.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Boutons actions -->
+            <div style="margin-top: 22px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; border-top: 1px solid #e2e8f0; padding-top: 16px;">
+                <a href="legal.php#loi-001-2021" target="_blank" style="color: #045527; font-weight: 700; font-size: 0.86rem; text-decoration: underline;">
+                    Consulter les mentions légales complètes
+                </a>
+                <button type="button" onclick="closeLawModal()" class="btn-signup-pact" style="width: auto; padding: 9px 24px; font-size: 0.9rem; margin-top: 0;">
+                    J'ai compris
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function openLawModal(e) {
+    if (e) e.preventDefault();
+    const modal = document.getElementById('law-modal-backdrop');
+    if (modal) {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeLawModal() {
+    const modal = document.getElementById('law-modal-backdrop');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+}
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeLawModal();
+});
+
+document.addEventListener('click', function(e) {
+    const modal = document.getElementById('law-modal-backdrop');
+    if (modal && e.target === modal) {
+        closeLawModal();
+    }
+});
+</script>
+
 <script>
 (function() {
     const usernameInput  = document.getElementById('username');
     const usernameStatus = document.getElementById('username-status');
     const emailInput     = document.getElementById('email');
     const emailStatus    = document.getElementById('email-status');
+    const birthYearInput = document.getElementById('birth_year');
     const submitBtn      = document.getElementById('btn-submit-signup');
 
     let usernameAvailable = true;
     let emailAvailable    = true;
+    let birthYearValid    = true;
 
     function updateSubmitState() {
-        if (!usernameAvailable || !emailAvailable) {
+        if (!usernameAvailable || !emailAvailable || !birthYearValid) {
             submitBtn.disabled = true;
             submitBtn.style.opacity = '0.6';
             submitBtn.style.cursor = 'not-allowed';
@@ -782,6 +912,28 @@ body.pagelayout-login {
             submitBtn.style.opacity = '1';
             submitBtn.style.cursor = 'pointer';
         }
+    }
+
+    if (birthYearInput) {
+        const birthYearHelper = birthYearInput.nextElementSibling;
+        const maxValidYr = <?= (int)$max_valid_yr ?>;
+        birthYearInput.addEventListener('input', function() {
+            const val = parseInt(this.value, 10);
+            if (val && val > maxValidYr) {
+                if (birthYearHelper) {
+                    birthYearHelper.innerHTML = '<span style="color:#b91c1c;font-weight:700;">L\'inscription est strictement réservée aux personnes de 18 ans et plus (année maximum : ' + maxValidYr + ').</span>';
+                }
+                this.style.borderColor = '#ef4444';
+                birthYearValid = false;
+            } else {
+                if (birthYearHelper) {
+                    birthYearHelper.innerHTML = 'Réservé aux personnes de 18 ans et plus (≤ ' + maxValidYr + ').';
+                }
+                this.style.borderColor = '';
+                birthYearValid = true;
+            }
+            updateSubmitState();
+        });
     }
 
     // Debounce timer pour vérification du nom d'utilisateur
@@ -859,6 +1011,87 @@ body.pagelayout-login {
             updateSubmitState();
         }, 350);
     });
+
+    // ── Cascading Dropdowns: Région -> Province -> Commune ────────────────────
+    const geoData = <?= file_get_contents($CFG->dirroot . '/local/pactdigital/burkina_geo.json') ?>;
+    const regionSelect   = document.getElementById('region');
+    const provinceSelect = document.getElementById('province');
+    const communeSelect  = document.getElementById('commune');
+
+    function updateProvinces(selectedProvince = '') {
+        const reg = regionSelect.value;
+        provinceSelect.innerHTML = '';
+        communeSelect.innerHTML = '';
+
+        if (!reg || !geoData[reg]) {
+            provinceSelect.disabled = true;
+            provinceSelect.innerHTML = '<option value="">Sélectionnez d\'abord une région...</option>';
+            communeSelect.disabled = true;
+            communeSelect.innerHTML = '<option value="">Sélectionnez d\'abord une province...</option>';
+            return;
+        }
+
+        provinceSelect.disabled = false;
+        provinceSelect.innerHTML = '<option value="">Sélectionnez votre province...</option>';
+
+        const provs = Object.keys(geoData[reg]).sort((a,b) => a.localeCompare(b, 'fr'));
+        provs.forEach(p => {
+            const opt = document.createElement('option');
+            opt.value = p;
+            opt.textContent = p;
+            if (p === selectedProvince) opt.selected = true;
+            provinceSelect.appendChild(opt);
+        });
+
+        if (selectedProvince && geoData[reg][selectedProvince]) {
+            updateCommunes();
+        } else {
+            communeSelect.disabled = true;
+            communeSelect.innerHTML = '<option value="">Sélectionnez d\'abord une province...</option>';
+        }
+    }
+
+    function updateCommunes(selectedCommune = '') {
+        const reg = regionSelect.value;
+        const prv = provinceSelect.value;
+        communeSelect.innerHTML = '';
+
+        if (!reg || !prv || !geoData[reg] || !geoData[reg][prv]) {
+            communeSelect.disabled = true;
+            communeSelect.innerHTML = '<option value="">Sélectionnez d\'abord une province...</option>';
+            return;
+        }
+
+        communeSelect.disabled = false;
+        communeSelect.innerHTML = '<option value="">Sélectionnez votre commune / ville...</option>';
+
+        const comms = [...geoData[reg][prv]].sort((a,b) => a.localeCompare(b, 'fr'));
+        comms.forEach(c => {
+            const opt = document.createElement('option');
+            opt.value = c;
+            opt.textContent = c;
+            if (c === selectedCommune) opt.selected = true;
+            communeSelect.appendChild(opt);
+        });
+    }
+
+    if (regionSelect && provinceSelect && communeSelect) {
+        regionSelect.addEventListener('change', () => updateProvinces());
+        provinceSelect.addEventListener('change', () => updateCommunes());
+
+        // Initialisation si valeurs pré-remplies
+        const initReg = '<?= addslashes($form_data['region'] ?? '') ?>';
+        const initPrv = '<?= addslashes($form_data['province'] ?? '') ?>';
+        const initCom = '<?= addslashes($form_data['commune'] ?? '') ?>';
+
+        if (initReg && geoData[initReg]) {
+            regionSelect.value = initReg;
+            updateProvinces(initPrv);
+            if (initPrv && geoData[initReg][initPrv]) {
+                updateCommunes(initCom);
+            }
+        }
+    }
 })();
 </script>
 

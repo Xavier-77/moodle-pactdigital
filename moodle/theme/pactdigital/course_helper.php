@@ -105,20 +105,20 @@ function pactdigital_get_course_context($course) {
                         $cm = $modinfo->cms[$cmid];
                         $processed_cmids[$cmid] = true;
 
-                        $badge = '🔒 Espace Formateur';
-                        $icon = '📁';
+                        $badge = 'Espace Formateur';
+                        $icon = '';
                         if ($cm->modname === 'attendance') {
-                            $badge = '📋 Présence & Émargement';
-                            $icon = '📅';
+                            $badge = 'Présence & Émargement';
+                            $icon = '';
                         } elseif ($cm->modname === 'folder') {
-                            $badge = '📂 Supports & Corrigés';
-                            $icon = '📁';
+                            $badge = 'Supports & Corrigés';
+                            $icon = '';
                         } elseif (stripos($cm->name, 'guide') !== false) {
-                            $badge = '📘 Guide Pédagogique';
-                            $icon = '📘';
+                            $badge = 'Guide Pédagogique';
+                            $icon = '';
                         } elseif (stripos($cm->name, 'corrig') !== false || stripos($cm->name, 'barème') !== false) {
-                            $badge = '🔑 Corrigé & Barème';
-                            $icon = '🔑';
+                            $badge = 'Corrigé & Barème';
+                            $icon = '';
                         }
 
                         $trainer_guides[] = [
@@ -147,19 +147,19 @@ function pactdigital_get_course_context($course) {
             if (strpos($name_lower, 'guide') !== false) {
                 $is_trainer_resource = true;
                 $guide_badge = 'Guide Pédagogique';
-                $guide_icon = '📘';
+                $guide_icon = '';
             } elseif (strpos($name_lower, 'formateur') !== false || strpos($name_lower, 'tuteur') !== false || strpos($name_lower, 'enseignant') !== false) {
                 $is_trainer_resource = true;
                 $guide_badge = 'Document Formateur';
-                $guide_icon = '🧑‍🏫';
+                $guide_icon = '';
             } elseif (strpos($name_lower, 'corrig') !== false || strpos($name_lower, 'barème') !== false || strpos($name_lower, 'bareme') !== false) {
                 $is_trainer_resource = true;
                 $guide_badge = 'Corrigé & Barème';
-                $guide_icon = '🔑';
+                $guide_icon = '';
             } elseif (!$cm->visible) {
                 $is_trainer_resource = true;
                 $guide_badge = 'Élément réservé (Masqué)';
-                $guide_icon = '🔒';
+                $guide_icon = '';
             }
 
             if ($is_trainer_resource) {

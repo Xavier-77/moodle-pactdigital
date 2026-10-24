@@ -1,7 +1,8 @@
 {{!
     @template theme_pactdigital/navbar
 }}
-<nav class="navbar fixed-top bg-body navbar-expand" aria-label="{{#str}}sitemenubar, admin{{/str}}">
+<nav class="navbar fixed-top bg-body navbar-expand pact-main-navbar" aria-label="{{#str}}sitemenubar, admin{{/str}}">
+    <div class="fs-filet fs-filet--fin pact-navbar-filet"></div>
     <div class="container-fluid position-relative">
         <button class="navbar-toggler aabtn d-block d-md-none px-1 my-1 border-0" data-toggler="drawers" data-action="toggle" data-target="theme_boost-drawers-primary">
             <span class="navbar-toggler-icon"></span>
@@ -9,6 +10,14 @@
         </button>
 
         <div class="d-flex align-items-center me-auto">
+            <a href="{{{ config.homeurl }}}" class="fs-marque pact-navbar-marque d-none d-lg-flex me-3">
+                <img src="{{{ config.wwwroot }}}/theme/pactdigital/pix/armoiries.svg" alt="Armoiries du Burkina Faso" style="height: 40px; width: auto;">
+                <span class="fs-marque-texte">
+                    <span class="fs-marque-pays" style="font-size: 0.85rem;">Burkina Faso</span>
+                    <span class="fs-marque-devise" style="font-size: 0.62rem;">La Patrie ou la Mort, nous Vaincrons</span>
+                </span>
+            </a>
+
             {{#primarymoremenu}}
                 <div class="primary-navigation">
                     {{> core/moremenu}}
@@ -25,10 +34,10 @@
 
         <a href="{{{ config.homeurl }}}" class="navbar-brand position-absolute top-50 start-50 translate-middle m-0 p-0 aabtn">
             {{# output.should_display_navbar_logo }}
-                <img src="{{output.get_compact_logo_url}}" class="logo" alt="{{sitename}}" style="height: 50px;">
+                <img src="{{output.get_compact_logo_url}}" class="logo" alt="{{sitename}}" style="height: 44px;">
             {{/ output.should_display_navbar_logo }}
             {{^ output.should_display_navbar_logo }}
-                {{{ sitename }}}
+                <span class="fw-bold" style="font-family: var(--police-titre); color: var(--vert-500, #00843b);">{{{ sitename }}}</span>
             {{/ output.should_display_navbar_logo }}
         </a>
 

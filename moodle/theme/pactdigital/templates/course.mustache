@@ -115,16 +115,13 @@
                         </style>
                         <div class="pact-trainer-course-banner mb-4">
                             <!-- Bandeau Principal -->
-                            <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-3" style="background: linear-gradient(135deg, #145B37 0%, #1e7a4a 100%); color: #fff;">
+                            <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-3" style="background: linear-gradient(135deg, var(--vert-800, #04411f) 0%, var(--vert-500, #00843b) 100%); color: #fff;">
                                 <div class="card-body p-4">
                                     <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3">
                                         <div>
                                             <div class="d-flex align-items-center gap-2 mb-2 flex-wrap">
                                                 <span class="badge bg-white text-success px-3 py-1 rounded-pill fw-bold">
-                                                    🧑‍🏫 Espace Formateur
-                                                </span>
-                                                <span class="badge bg-white bg-opacity-20 text-white border border-white border-opacity-25 px-3 py-1 rounded-pill">
-                                                    🛡️ Mode Accompagnement (Contenu non modifiable)
+                                                    Espace Formateur
                                                 </span>
                                             </div>
                                             <h2 class="h4 fw-bold mb-1 text-white">Cockpit Pédagogique — {{course_fullname}}</h2>
@@ -133,11 +130,11 @@
 
                                         <!-- Boutons d'action prioritaires -->
                                         <div class="d-flex gap-2 flex-wrap">
-                                            <a href="{{{trainer_cockpit_url}}}" class="btn btn-warning text-dark fw-bold rounded-pill px-4 shadow-sm" style="background: #fad615; border: none;">
-                                                📊 Ouvrir le Grand Cockpit ➔
+                                            <a href="{{{trainer_cockpit_url}}}" class="btn fw-bold rounded-pill px-4 shadow-sm" style="background: var(--or-300, #ffed00); color: var(--neutre-900, #211d1a); border: none;">
+                                                Ouvrir le Grand Cockpit
                                             </a>
                                             <a href="{{{grader_report_url}}}" class="btn btn-outline-light rounded-pill px-3" target="_blank" title="Ouvrir le carnet de notes">
-                                                ✍️ Noter les devoirs
+                                                Carnet de notes
                                             </a>
                                         </div>
                                     </div>
@@ -147,13 +144,13 @@
                                         <div class="col-6 col-md-3">
                                             <div class="bg-white bg-opacity-10 py-2 px-3 rounded-3">
                                                 <div class="h4 fw-bold mb-0 text-white">{{total_students}}</div>
-                                                <div class="small opacity-75">👥 Inscrits</div>
+                                                <div class="small opacity-75">Inscrits</div>
                                             </div>
                                         </div>
                                         <div class="col-6 col-md-3">
                                             <div class="bg-white bg-opacity-10 py-2 px-3 rounded-3">
                                                 <div class="h4 fw-bold mb-0 text-white">{{avg_progress}}%</div>
-                                                <div class="small opacity-75">📈 Progression moy.</div>
+                                                <div class="small opacity-75">Progression moy.</div>
                                             </div>
                                         </div>
                                         <div class="col-6 col-md-3">
@@ -161,7 +158,7 @@
                                                 <div class="h4 fw-bold mb-0 {{#has_inactive}}text-warning{{/has_inactive}}{{^has_inactive}}text-white{{/has_inactive}}">
                                                     {{inactive_students}}
                                                 </div>
-                                                <div class="small opacity-75">⚠️ Inactifs (> 7j)</div>
+                                                <div class="small opacity-75">Inactifs (> 7j)</div>
                                             </div>
                                         </div>
                                         <div class="col-6 col-md-3">
@@ -169,7 +166,7 @@
                                                 <div class="h4 fw-bold mb-0 {{#has_pending_grades}}text-warning{{/has_pending_grades}}{{^has_pending_grades}}text-white{{/has_pending_grades}}">
                                                     {{pending_grades}}
                                                 </div>
-                                                <div class="small opacity-75">📬 À corriger</div>
+                                                <div class="small opacity-75">À corriger</div>
                                             </div>
                                         </div>
                                     </div>
@@ -180,7 +177,7 @@
                             <div class="card border shadow-sm rounded-4 mb-4">
                                 <div class="card-header bg-white border-0 pt-3 px-4 pb-2 d-flex justify-content-between align-items-center flex-wrap gap-2">
                                     <h3 class="h6 fw-bold mb-0 text-dark d-flex align-items-center gap-2">
-                                        📚 Guides Pédagogiques &amp; Ressources Formateur
+                                        Guides Pédagogiques &amp; Ressources Formateur
                                     </h3>
                                     <button class="btn btn-sm btn-outline-success rounded-pill px-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTrainerGuides" aria-expanded="true">
                                         Afficher / Masquer les Guides ▾
@@ -191,23 +188,23 @@
 
                                         <!-- 1. Éléments & Ressources spécifiques trouvés dans ce cours -->
                                         {{#has_trainer_guides}}
-                                        <div class="mb-3">
+                                        <div class="mb-4">
                                             <div class="text-muted small fw-semibold text-uppercase mb-2" style="letter-spacing: 0.5px;">
                                                 Ressources &amp; Corrigés intégrés à ce cours :
                                             </div>
-                                            <div class="row g-2">
+                                            <div class="row g-3">
                                                 {{#trainer_guides}}
-                                                <div class="col-md-6 col-lg-4">
-                                                    <div class="border rounded-3 p-3 bg-light d-flex align-items-center justify-content-between h-100">
-                                                        <div class="me-2 overflow-hidden">
-                                                            <span class="badge bg-success-subtle text-success border border-success-subtle mb-1">
+                                                <div class="col-12 col-md-6">
+                                                    <div class="border rounded-3 p-3 d-flex align-items-center justify-content-between h-100 shadow-sm" style="background: #faf8f5; border-color: #e2ddd6 !important;">
+                                                        <div class="me-3 overflow-hidden">
+                                                            <span class="badge bg-success-subtle text-success border border-success-subtle mb-1 fw-semibold">
                                                                 {{badge}}
                                                             </span>
-                                                            <div class="fw-semibold text-truncate small" title="{{name}}">
-                                                                {{icon}} {{name}}
+                                                            <div class="fw-bold text-truncate" style="font-size: 0.95rem; color: #211d1a;" title="{{name}}">
+                                                                {{name}}
                                                             </div>
                                                         </div>
-                                                        <a href="{{{url}}}" class="btn btn-sm btn-success rounded-pill px-3 text-nowrap" target="_blank">
+                                                        <a href="{{{url}}}" class="btn btn-sm btn-success rounded-pill px-4 py-2 text-nowrap fw-semibold shadow-sm" target="_blank" style="background: var(--vert-600, #00843b); border: none;">
                                                             Consulter
                                                         </a>
                                                     </div>
@@ -223,7 +220,7 @@
                                             <div class="accordion-item">
                                                 <h4 class="accordion-header" id="headingGuideOne">
                                                     <button class="accordion-button collapsed py-2 px-3 fw-semibold small text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGuideOne">
-                                                        🎯 Fiche d'Animation &amp; Objectifs Clés du Module
+                                                        Fiche d'Animation &amp; Objectifs Clés du Module
                                                     </button>
                                                 </h4>
                                                 <div id="collapseGuideOne" class="accordion-collapse collapse" data-bs-parent="#accordionTrainerPact">
@@ -242,7 +239,7 @@
                                             <div class="accordion-item">
                                                 <h4 class="accordion-header" id="headingGuideTwo">
                                                     <button class="accordion-button collapsed py-2 px-3 fw-semibold small text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGuideTwo">
-                                                        📋 Barème Type &amp; Critères d'Évaluation des Devoirs
+                                                        Barème Type &amp; Critères d'Évaluation des Devoirs
                                                     </button>
                                                 </h4>
                                                 <div id="collapseGuideTwo" class="accordion-collapse collapse" data-bs-parent="#accordionTrainerPact">
@@ -262,12 +259,12 @@
                                             <div class="accordion-item">
                                                 <h4 class="accordion-header" id="headingGuideThree">
                                                     <button class="accordion-button collapsed py-2 px-3 fw-semibold small text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGuideThree">
-                                                        💡 Guide de Relance &amp; Accompagnement Bienveillant
+                                                        Guide de Relance &amp; Accompagnement Bienveillant
                                                     </button>
                                                 </h4>
                                                 <div id="collapseGuideThree" class="accordion-collapse collapse" data-bs-parent="#accordionTrainerPact">
                                                     <div class="accordion-body small text-muted bg-white">
-                                                        <p>Dans l'onglet <strong>📢 Relance &amp; Messagerie</strong> du grand cockpit, vous pouvez cocher en un clic tous les étudiants n'ayant pas ouvert le cours depuis 7 jours et leur envoyer un rappel positif pré-rédigé.</p>
+                                                        <p>Dans l'onglet <strong>Relance &amp; Messagerie</strong> du grand cockpit, vous pouvez cocher en un clic tous les étudiants n'ayant pas ouvert le cours depuis 7 jours et leur envoyer un rappel positif pré-rédigé.</p>
                                                         <p class="mb-0">Une simple relance à J+7 réduit le taux d'abandon de près de 45% sur les formations à distance !</p>
                                                     </div>
                                                 </div>
